@@ -1,3 +1,9 @@
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Library code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Package legacy420 implements the named sms-fw general/refund dialect. Profile fixes
 // CCR/456/437/420 as Grouped money; standard CC-Time at that path is unsupported.
 // Use a dedicated Bundle and an explicitly approved OCS deployment. This package

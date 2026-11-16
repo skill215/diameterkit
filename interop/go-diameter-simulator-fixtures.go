@@ -1,5 +1,11 @@
 //go:build ignore
 
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Example or tooling code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Offline projection of the frozen simulator construction paths. This does not
 // run their services, configuration loader, TPDU library or network client.
 package main

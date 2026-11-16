@@ -1,3 +1,9 @@
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Library code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Package sh implements a finite Sh AVP slice: Ref24 pull/update, bounded
 // Ref11/12/25 subscriptions and unsubscriptions, and independent notifications. UserData remains opaque;
 // successful wire validation does not validate XML or accept a business operation.

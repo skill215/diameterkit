@@ -1,3 +1,9 @@
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Example or tooling code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Command sgd demonstrates bounded SGd/Gdd MO and MT over loopback TCP.
 // The access endpoint and a combined IWMSC/GMSC endpoint use only public APIs.
 package main

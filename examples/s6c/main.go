@@ -1,3 +1,9 @@
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Example or tooling code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Command s6c runs two bounded, nonpersistent S6c GMSC/HSS endpoints on loopback TCP.
 // GMSC sends one SRR and HSS answers it using only public APIs.
 package main

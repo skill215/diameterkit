@@ -1,5 +1,8 @@
 # Diameter SCTP adapter
 
+> **AI-written:** generated and revised with OpenAI Codex under maintainer direction.
+> Historical model identities are unrecorded; see [AI disclosure](../../AI_DISCLOSURE.md).
+
 This independent module uses pure Go 1.26 and the published upstream release
 `github.com/skill215/sctp v0.8.0`.
 The core module has no SCTP dependency. Linux except 386 is supported by the
@@ -165,90 +168,30 @@ borrowers until actual return. Reconnect passes through REOPEN and never replays
 business requests. Formal v0.8.0 regression is in [batch67](../../spec/history/batch-67.json); migration evidence is in [batch66](../../spec/history/batch-66.json). Prior managed
 contracts remain in [batch65](../../spec/history/batch-65.json).
 
-## Development and module verification
+## Installation and development
 
-The adapter's core requirement `v0.0.0-diameterkit.batch85` is an **offline-only
-production-source candidate**, not a published core version. Its source manifest
-and archive hash are in the [batch evidence](../../spec/evidence/batch-85-ro-abort-example.json). The 138-file core source package
-includes Relay negotiation, bounded per-request terminal bindings and the Ro abort/generic DCCA profiles. Publication
-must replace it with a real immutable core version and re-run both modules with
-GOWORK=off. A local workspace/replace is not a release dependency lock.
-
-Reconstruct the exact local core package, then test the independent module:
+The independent adapter candidate is `v0.1.0-rc.1`, targeting core
+`v0.1.0-rc.2` and upstream SCTP `v0.8.0`. Consult the
+[publication record](../../doc/releases/v0.1.0-rc.md) for actual availability.
 
 ```sh
-python3 spec/tools/core_candidate.py . /tmp/diameterkit-core-proxy
-GOWORK=off GOMODCACHE=/tmp/diameterkit-sctp-cache \
-  GOPROXY=file:///tmp/diameterkit-core-proxy,https://proxy.golang.org \
-  GONOSUMDB=github.com/skill215/diameterkit \
-  go -C adapters/sctp mod download
-GOWORK=off GOMODCACHE=/tmp/diameterkit-sctp-cache CGO_ENABLED=0 \
-  go -C adapters/sctp test -mod=readonly ./...
-GOWORK=off GOMODCACHE=/tmp/diameterkit-sctp-cache \
-  go -C adapters/sctp test -mod=readonly -race ./...
+go get github.com/skill215/diameterkit/adapters/sctp@v0.1.0-rc.1
+GOWORK=off CGO_ENABLED=0 go -C adapters/sctp test -mod=readonly ./...
+GOWORK=off go -C adapters/sctp test -mod=readonly -race ./...
 ```
 
-Run from the repository root with a kernel allowing local SCTP sockets. Tests
-fail when the facility is unavailable; they do not silently skip SCTP coverage.
-The batch67 checks downloaded the public v0.8.0 module into a fresh cache,
-verified its sum and all70 Go sources, and used no replacement directive.
-Only the unpublished core candidate came from a reconstructed offline proxy. Root `go test ./...` does not include this
-nested module.
+Run checkout tests from the repository root on Linux with SCTP support. A root
+`go test ./...` does not include this nested module. Missing SCTP support fails
+rather than skips. [Checkout CI](../../doc/release-checks.md) explicitly tests both
+current modules; [real installation](../../doc/version-install-policy.md) instead
+uses two empty external caches, GOWORK=off, no replace and authenticated downloads.
+Old offline batch candidates and reconstructed proxies are historical evidence,
+not current release dependencies. Public API drift requires review.
 
-Batch68 verifies Relay-only active/passive handshake, the CEA/DWR barrier and
-two selected terminals on one real SCTP association using the new core candidate.
-See [DRA integration](../../spec/history/batch-68.json); upstream remains v0.8.0.
+## Benchmarks
 
-Batch69 advances the offline core candidate to `v0.0.0-diameterkit.batch69`
-(117 production-package files) for the new Ro abort profile. Upstream v0.8.0
-and adapter production code are unchanged; this module is regressed separately.
-See [batch69](../../spec/history/batch-69.json). The new ASR/ASA application scenarios
-use TCP/TLS; SCTP evidence remains the existing Base/S6c/lifecycle suite.
-
-Batch70 consumes offline core `v0.0.0-diameterkit.batch70` (120 files).
-Upstream remains v0.8.0 and adapter production sources are unchanged.
-Generic DCCA application tests use TCP/TLS; this module separately reruns its
-existing complete SCTP suite. See [batch70](../../spec/history/batch-70.json).
-
-Batch71 consumes offline core `v0.0.0-diameterkit.batch71` (121 files).
-Published SCTP v0.8.0 and adapter production sources remain unchanged. New
-standard SMS Ro result/2022 network cases use TCP/TLS; the complete existing
-SCTP suite is regressed against the new core. See [batch71](../../spec/history/batch-71.json).
-
-Batch72 implements explicit ordered multi-stream and PPID0 policies using the
-same core batch71 and published upstream v0.8.0. Real asymmetric negotiation,
-single-stream fallback, Base/S6c, CEA/DWR barrier, admission and cancel/close
-are covered; see [batch72](../../spec/history/batch-72.json). Public module release and
-actual DRA/OCS acceptance remain separate exits.
-
-Batch73 consumes offline core `v0.0.0-diameterkit.batch73` with the explicit legacy SGd Alert binding. Adapter production and upstream v0.8.0 are unchanged. The new application lifecycle tests use TCP/TLS; this module runs its full real SCTP regression separately. See [batch73](../../spec/history/batch-73.json).
-
-Batch74 consumes offline core `v0.0.0-diameterkit.batch74` with explicit Router Alert evidence. Adapter production and upstream v0.8.0 remain unchanged; this module is regressed separately. New Router application flows are tested over TCP/TLS. See [batch74](../../spec/history/batch-74.json).
-
-Batch75 consumes offline core `v0.0.0-diameterkit.batch75` with bounded Router TFR/TFA token output. Adapter production and upstream v0.8.0 are unchanged; separate full regression uses a fresh module cache without replace. New application flows use TCP/TLS; see [batch75](../../spec/history/batch-75.json).
-
-Batch76 consumes offline core `v0.0.0-diameterkit.batch76` for bounded SRA Router/MCCMNC purposes. Adapter production and SCTP v0.8.0 remain unchanged; fresh-cache no-replace regression is independent of the new TCP/TLS application tests. See [batch76](../../spec/history/batch-76.json).
-
-Batch77 adds simulator-input tests and documentation only. Core remains the identical 125-file batch76 candidate and SCTP remains v0.8.0. Both adapter CGO0/race suites pass (113 each); new application flows use TCP/TLS, not old simulator processes. See [batch77](../../spec/history/batch-77.json).
-
-Batch78 consumes the new 126-file offline core `v0.0.0-diameterkit.batch78` with peer-scoped SCAP1 handshake compatibility. Fresh-cache, GOWORK=off/no-replace checks retain formal SCTP v0.8.0; no adapter production changes or new SCAP1 SCTP deployment claim. See [batch78](../../spec/history/batch-78.json).
-
-Batch79 consumes offline core `v0.0.0-diameterkit.batch79`, adding the public SCAP1 TCP example and correcting API documentation without runtime behavior changes. Fresh-cache no-replace regression retains SCTP v0.8.0. The example is not a new SCTP deployment test; see [batch79](../../spec/history/batch-79.json).
-
-Batch80 consumes offline core `v0.0.0-diameterkit.batch80`, adding the public Sh Ref24 TCP example. All existing library/adapter production behavior and SCTP v0.8.0 remain unchanged. Fresh-cache no-replace CGO0/race regression passes; this example does not claim a new Sh SCTP deployment. See [batch80](../../spec/history/batch-80.json).
-
-Batch81 consumes offline core `v0.0.0-diameterkit.batch81`, adding the S6c GMSC/HSS public TCP example. Existing core/adapter sources and SCTP v0.8.0 remain unchanged. Fresh-cache no-replace CGO0/race suites pass (113 each); this is not new S6c SCTP deployment evidence. See [batch81](../../spec/evidence/batch-81-s6c-example.json).
-
-Batch82 consumes offline core `v0.0.0-diameterkit.batch82`, adding the SGd/Gdd MO/MT public TCP example. Existing library/adapter Go sources and formal SCTP v0.8.0 stay unchanged. Fresh-cache no-replace CGO0/race regression passes (113 each); this is not new SGd/Gdd SCTP deployment evidence. See [acceptance evidence](../../spec/evidence/batch-82-sgd-example.json).
-
-Batch83 consumes offline core `v0.0.0-diameterkit.batch83`, adding the standard Ro SMS IEC public TCP example. Existing Go sources and formal SCTPv0.8.0 remain unchanged. Fresh-cache no-replace CGO0/race suites pass (113 each); no new Ro SCTP/target OCS deployment claim. See [evidence](../../spec/evidence/batch-83-ro-example.json).
-
-Batch84 consumes offline core `v0.0.0-diameterkit.batch84`, extending the standard Ro example with no-UPDATE ECUR. Library/adapter production behavior and formal SCTPv0.8.0 remain unchanged. Fresh-cache no-replace CGO0/race suites pass (113 each); this TCP example adds no Ro SCTP/target OCS acceptance claim. See [evidence](../../spec/evidence/batch-84-ro-ecur-example.json).
-
-Batch85 consumes offline core `v0.0.0-diameterkit.batch85`, adding the independent Ro ASR/ASA TCP example. Library/adapter runtime and formal SCTPv0.8.0 remain unchanged. Fresh-cache no-replace CGO0/race suites pass (113 each); this adds no Ro SCTP/target acceptance claim. See [evidence](../../spec/evidence/batch-85-ro-abort-example.json).
-
-## Current checkout CI (batch91)
-
-Use `python3 spec/tools/release_check.py` from the repository root for current core+adapter acceptance. The runner creates a temporary workspace with a versioned replacement for the offline core requirement, validates both Main module paths, then runs both CGO0 and race suites. It does not edit this module's dependency lock or claim that the old batch85 candidate is the current release. See [checkout checks](../../doc/release-checks.md) for offline prerequisites, zero-skip native SCTP policy and the separate GOWORK=off release-installation gate.
-
-Batch93 defines the [independent v0 module/API and installation policy](../../doc/version-install-policy.md). The batch85 requirement is still an unpublished historical placeholder. Publish a reviewed core tag first, then update this requirement and real checksums before publishing the adapter tag. The new cold-install gate rejects replacements and fails on the currently missing versions; checkout/probe tests do not establish a published installation.
+The 256/4096-byte frame benchmarks measure one-way loopback send plus owned frame
+receive. Connection setup is excluded; allocations include receive ownership.
+They do not measure remote RTT or production network capacity. See the final
+[README table](../../README.md#benchmarks), [raw baseline](../../spec/release/performance-baseline.json)
+and [reproduction commands](../../doc/load-checks.md).

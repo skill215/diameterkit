@@ -1,3 +1,9 @@
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Library code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Package smsfwro implements the explicitly selected sms-fw IEC and no-UPDATE ECUR template dialect.
 // Compile its Profile in a dedicated Bundle, separately from app/ro. The caller
 // binds that Bundle to an approved OCS deployment; application ID 4 alone does

@@ -1,3 +1,9 @@
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Example or tooling code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Command sh runs two bounded, nonpersistent Sh endpoints on loopback TCP.
 // Each endpoint sends one Ref24 pull and answers one pull using only public APIs.
 package main

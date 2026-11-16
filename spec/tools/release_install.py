@@ -97,7 +97,7 @@ def tag_commit(tag):
 def validate_origin(row, tag, commit):
     origin = row.get("Origin", {})
     if (origin.get("VCS") != "git" or origin.get("URL") != "https://github.com/skill215/diameterkit"
-            or origin.get("Hash") != commit or origin.get("Ref") != "refs/tags/" + tag):
+            or origin.get("Hash") != commit or origin.get("Ref", "") not in ("", "refs/tags/" + tag)):
         raise RuntimeError("missing or mismatched tag/download origin: " + tag)
 
 

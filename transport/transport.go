@@ -1,3 +1,9 @@
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Library code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Package transport defines the bounded frame transport used by the endpoint.
 // Receive methods may return an owned *Event continuation. See Event for the
 // required resume/terminal behavior; stream adapters return only frames/errors.

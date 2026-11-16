@@ -1,3 +1,9 @@
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Library code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Package dcca implements a bounded RFC4006 single-service EVENT binding.
 // Its top-level units and explicit non-3GPP service context are independent of
 // the SMS/MSCC and legacy bindings. Choose one CCR profile per Bundle.

@@ -1,3 +1,9 @@
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Library code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Package shdata explicitly interprets a bounded Ref11/12/24/25 subset of TS 29.328
 // V18.1.0 Sh-Data. It is independent of Diameter decoding and business state.
 // Parse checks XML and selected structural rules, not the entire Sh XSD.

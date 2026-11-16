@@ -1,3 +1,9 @@
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Library code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Package sgd implements selected SGd/Gdd MO/MT, T4 and IMS forwarding slices.
 // TPDU bytes are opaque. Delivery, retry, subscriber lookup and persistence belong
 // to the application; the selected grammar is not full TS 29.338 support.

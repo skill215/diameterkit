@@ -1,3 +1,9 @@
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Library code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Package scap1 implements a fixed sms-fw SCAP1 event dialect.
 // Its legacy header is App0/271, with a distinct Vendor193/Acct19302 declaration.
 // This is not standard Ro or Base Accounting. Runtime use requires an explicit

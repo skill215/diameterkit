@@ -82,6 +82,11 @@ class InstallGateTests(unittest.TestCase):
         commit = 'a' * 40
         origin = {'VCS':'git','URL':'https://github.com/skill215/diameterkit','Hash':commit,'Ref':'refs/tags/'+tag}
         gate.validate_origin({'Origin':origin},tag,commit)
+        # Go's Origin.Ref is optional (codehost.Origin); exact version plus the
+        # independently resolved tag commit still binds the downloaded source.
+        without_ref = dict(origin)
+        without_ref.pop('Ref')
+        gate.validate_origin({'Origin':without_ref},tag,commit)
         for change in ({'Hash':'b'*40},{'URL':'https://example.com/fake'},{'Ref':'refs/heads/main'},{'VCS':''}):
             with self.assertRaises(RuntimeError):gate.validate_origin({'Origin':{**origin,**change}},tag,commit)
         with self.assertRaises(RuntimeError):gate.validate_origin({},tag,commit)

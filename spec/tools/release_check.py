@@ -157,6 +157,7 @@ def execute(suite, output):
             # offline mode. No new core candidate or edited sum file is needed.
             checks.run("dependency-download", ["go", "mod", "download", UPSTREAM + "@" + requirements[UPSTREAM]], MODULES["adapter"])
             if suite in ("all", "static"):
+                checks.run("ai-disclosure", [sys.executable, "spec/tools/check_ai_headers.py"])
                 checks.run("tooling-tests", [sys.executable, "-m", "unittest", "discover", "-s", "spec/tools", "-p", "test_release*.py", "-v"])
                 check_generated(checks, temp)
                 checks.run("generator-determinism", ["go", "test", "-count=1", "-json", "./internal/codegen", "-run", "^TestGeneratedFilesCurrentAndDeterministic$"], tests=True)

@@ -1,3 +1,9 @@
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Library code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Package sgdalert supplies the explicit legacy-sgd-alert-v1 deployment binding.
 // It binds only ALR/ALA to application 16777313, using the implemented S6c field
 // and context rules. It is not a standard SGd command or a general app-ID alias.

@@ -1,5 +1,11 @@
 //go:build ignore
 
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Example or tooling code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Run in a disposable module with the original go-diameter dependency.
 // No diameterkit code, dictionary or generated expectations are imported.
 package main

@@ -1,3 +1,9 @@
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Library code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Package tls performs a bounded TLS handshake on an established TCP socket,
 // then exposes the shared Diameter stream frame contract. Its optional Dialer
 // includes TCP/TLS establishment; Listener defers TLS until socket admission.

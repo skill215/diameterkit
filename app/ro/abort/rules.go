@@ -1,3 +1,9 @@
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Library code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Package abort implements the bounded Ro ASR/ASA protocol (App 4, command 274).
 // Compose Profile with one chosen CCR profile. The application decides whether
 // a session was terminated and explicitly selects the ASA result. This package

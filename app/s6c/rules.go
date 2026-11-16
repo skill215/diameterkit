@@ -1,3 +1,9 @@
+// SPDX-AI-Disclosure: ai-generated
+// SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
+// SPDX-AI-Provider: OpenAI
+// SPDX-AI-Scope: Library code generated and revised with Codex under maintainer direction.
+// SPDX-AI-Date: 2026-11-16
+
 // Package s6c contains bounded SMS routing, reporting and alert codec slices.
 // Each command has its own selected result and field branches.
 // Common E envelopes are separate; this is not the complete S6c grammar.

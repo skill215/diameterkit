@@ -1,6 +1,9 @@
 name: Published module installation
 
 on:
+  push:
+    tags:
+      - 'adapters/sctp/v*'
   workflow_dispatch:
     inputs:
       core_version:
@@ -31,10 +34,14 @@ jobs:
         env:
           CORE_VERSION: ${{ inputs.core_version }}
           ADAPTER_VERSION: ${{ inputs.adapter_version }}
-        run: >-
-          python3 spec/tools/release_install.py
-          --core-version "$CORE_VERSION"
-          --adapter-version "$ADAPTER_VERSION"
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "push" ]; then
+            CORE_VERSION=$(go -C adapters/sctp mod edit -json | python3 -c 'import json,sys; print(next(r["Version"] for r in json.load(sys.stdin)["Require"] if r["Path"] == "github.com/skill215/diameterkit"))')
+            ADAPTER_VERSION=${GITHUB_REF_NAME#adapters/sctp/}
+          fi
+          python3 spec/tools/release_install.py \
+          --core-version "$CORE_VERSION" \
+          --adapter-version "$ADAPTER_VERSION" \
           --output .cache/published-install
       - name: Retain success or failure evidence
         if: always()
