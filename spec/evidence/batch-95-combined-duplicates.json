@@ -1,0 +1,939 @@
+{
+  "batch": 95,
+  "date": "2026-11-16",
+  "status": "local_verified_hosted_pending",
+  "scope": "Fixed compat/smsfwro/combined server-side volatile duplicate suppression and cached replay on TCP/TLS; no runtime or API changes.",
+  "priority_selection": {
+    "source": "spec/history/batch-94.json",
+    "requirement_refs": [
+      "SPEC-DUP-01",
+      "SPEC-OWN-01",
+      "SPEC-CLOSE-01"
+    ],
+    "reason": "Existing combined tests exercised individual request/answer and client recovery. Server multi-arrival/cached-result combinations remained unverified under SPEC-DUP-01. Existing fixed template and duplicate contracts support a bounded acceptance batch.",
+    "separate_gap": "Deep/instance Failed-AVP diagnostics remain unimplemented beyond the existing finite mappings; this batch does not count duplicate acceptance as diagnostic implementation."
+  },
+  "checks": [
+    {
+      "name": "combined-duplicates",
+      "command": [
+        "go",
+        "test",
+        ".",
+        "-run=^TestCombinedDuplicate",
+        "-count=1",
+        "-json",
+        "-timeout=4m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-initial/combined-duplicates.log",
+      "status": "passed",
+      "sha256": "872989caf8eb45d7c3049fdb577426d2ba1edbf3a618d0575c8690e29b3040c0",
+      "test_subtest_seed_passes": 65,
+      "test_skips": 0,
+      "suite": "initial"
+    },
+    {
+      "name": "combined-duplicates",
+      "command": [
+        "go",
+        "test",
+        ".",
+        "-run=^TestCombinedDuplicate",
+        "-count=20",
+        "-json",
+        "-timeout=4m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-repeat-pure/combined-duplicates.log",
+      "status": "passed",
+      "sha256": "e04b50e02ae67562380e6475df52a992a8d876f92a3e7364677ea5d24336f836",
+      "test_subtest_seed_passes": 1300,
+      "test_skips": 0,
+      "suite": "repeat-pure"
+    },
+    {
+      "name": "combined-duplicates",
+      "command": [
+        "go",
+        "test",
+        ".",
+        "-run=^TestCombinedDuplicate",
+        "-count=20",
+        "-json",
+        "-timeout=4m",
+        "-race"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-repeat-race/combined-duplicates.log",
+      "status": "passed",
+      "sha256": "2f68eef945a3ad012027ad809de5e3ba6dc15bbeed501568855f7d6b47d2baca",
+      "test_subtest_seed_passes": 1300,
+      "test_skips": 0,
+      "suite": "repeat-race"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
+      "suite": "static"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b95-static/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
+      "suite": "static"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-278aqpjt",
+      "log": ".cache/b95-static/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-278aqpjt",
+      "log": ".cache/b95-static/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b95-static/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
+      "suite": "static"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b95-static/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "ai-disclosure",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/check_ai_headers.py"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/ai-disclosure.log",
+      "status": "passed",
+      "sha256": "d989b926b143c91d98508cb24a18bfffeaabe6a8387920e885b76d84ba839776",
+      "suite": "static"
+    },
+    {
+      "name": "tooling-tests",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "spec/tools",
+        "-p",
+        "test_release*.py",
+        "-v"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/tooling-tests.log",
+      "status": "passed",
+      "sha256": "2f1addffa18af2799d299a5eb36271f5bcd1f8748fd1a1bcba8e02fa20456419",
+      "suite": "static"
+    },
+    {
+      "name": "generator-build",
+      "command": [
+        "go",
+        "build",
+        "-o",
+        "/tmp/diameterkit-ci-278aqpjt/diameter-schema",
+        "./cmd/diameter-schema"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/generator-build.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-base",
+      "command": [
+        "/tmp/diameterkit-ci-278aqpjt/diameter-schema",
+        "-in",
+        "spec/base.json",
+        "-out",
+        "base/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/generated-base.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-sh",
+      "command": [
+        "/tmp/diameterkit-ci-278aqpjt/diameter-schema",
+        "-in",
+        "spec/sh.json",
+        "-out",
+        "app/sh/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/generated-sh.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-s6c",
+      "command": [
+        "/tmp/diameterkit-ci-278aqpjt/diameter-schema",
+        "-in",
+        "spec/s6c.json",
+        "-out",
+        "app/s6c/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/generated-s6c.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-sgd",
+      "command": [
+        "/tmp/diameterkit-ci-278aqpjt/diameter-schema",
+        "-in",
+        "spec/sgd.json",
+        "-out",
+        "app/sgd/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/generated-sgd.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-ro",
+      "command": [
+        "/tmp/diameterkit-ci-278aqpjt/diameter-schema",
+        "-in",
+        "spec/ro.json",
+        "-out",
+        "app/ro/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/generated-ro.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-roabort",
+      "command": [
+        "/tmp/diameterkit-ci-278aqpjt/diameter-schema",
+        "-in",
+        "spec/roabort.json",
+        "-out",
+        "app/ro/abort/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/generated-roabort.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-dcca",
+      "command": [
+        "/tmp/diameterkit-ci-278aqpjt/diameter-schema",
+        "-in",
+        "spec/dcca.json",
+        "-out",
+        "app/ro/dcca/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/generated-dcca.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-smsfwro",
+      "command": [
+        "/tmp/diameterkit-ci-278aqpjt/diameter-schema",
+        "-in",
+        "spec/smsfwro.json",
+        "-out",
+        "compat/smsfwro/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/generated-smsfwro.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-legacy420",
+      "command": [
+        "/tmp/diameterkit-ci-278aqpjt/diameter-schema",
+        "-in",
+        "spec/legacy420.json",
+        "-out",
+        "compat/smsfwro/legacy420/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/generated-legacy420.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-combined",
+      "command": [
+        "/tmp/diameterkit-ci-278aqpjt/diameter-schema",
+        "-in",
+        "spec/combined.json",
+        "-out",
+        "compat/smsfwro/combined/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/generated-combined.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-scap1",
+      "command": [
+        "/tmp/diameterkit-ci-278aqpjt/diameter-schema",
+        "-in",
+        "spec/scap1.json",
+        "-out",
+        "compat/scap1/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/generated-scap1.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-negative-control",
+      "command": [
+        "/tmp/diameterkit-ci-278aqpjt/diameter-schema",
+        "-in",
+        "/home/skill/workspace/git/diameterkit/spec/base.json",
+        "-out",
+        "/tmp/diameterkit-ci-278aqpjt/stale.go",
+        "-check"
+      ],
+      "status": "passed",
+      "expected_failure": true,
+      "log": ".cache/b95-static/generated-negative-control.log",
+      "sha256": "67c36853f5ec53a13a324de8610354183efe9df6ef689b119df07f87475a997c",
+      "suite": "static"
+    },
+    {
+      "name": "generator-determinism",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-json",
+        "./internal/codegen",
+        "-run",
+        "^TestGeneratedFilesCurrentAndDeterministic$"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/generator-determinism.log",
+      "status": "passed",
+      "sha256": "c2c1e4dd702a37643f0e9dc0c7313cb4511d04a90a74b122336493d9d098ce9e",
+      "test_subtest_seed_passes": 1,
+      "test_skips": 0,
+      "suite": "static"
+    },
+    {
+      "name": "api-snapshot",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/public_api_snapshot.py",
+        "--check",
+        "--workspace",
+        "/tmp/diameterkit-ci-278aqpjt/go.work"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/api-snapshot.log",
+      "status": "passed",
+      "sha256": "1debc4cbb0d2bd5220fa0bdc632c40e3439560db79b82355c4d4a3c68d13dfcb",
+      "suite": "static"
+    },
+    {
+      "name": "api-negative-control",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/public_api_snapshot.py",
+        "--check",
+        "--output",
+        "/tmp/diameterkit-ci-278aqpjt/stale-api.json",
+        "--workspace",
+        "/tmp/diameterkit-ci-278aqpjt/go.work"
+      ],
+      "status": "passed",
+      "expected_failure": true,
+      "log": ".cache/b95-static/api-negative-control.log",
+      "sha256": "64fa65d5163692d7809a4935279b295a5c3033511bfb5244d3fa97ce72c44f4c",
+      "suite": "static"
+    },
+    {
+      "name": "core-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-static/core-vet.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "adapter-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b95-static/adapter-vet.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-pure/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
+      "suite": "pure"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b95-pure/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
+      "suite": "pure"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-d7bawiyw",
+      "log": ".cache/b95-pure/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "pure"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-d7bawiyw",
+      "log": ".cache/b95-pure/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "pure"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b95-pure/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
+      "suite": "pure"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b95-pure/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "pure"
+    },
+    {
+      "name": "core-pure",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-pure/core-pure.log",
+      "status": "passed",
+      "sha256": "310a2b8a219f5002c259043066aa55a4aeac9394d9d07c66561d65763db2393f",
+      "test_subtest_seed_passes": 3990,
+      "test_skips": 0,
+      "suite": "pure"
+    },
+    {
+      "name": "adapter-pure",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b95-pure/adapter-pure.log",
+      "status": "passed",
+      "sha256": "e8f27787f1100570c207b8f2cef2c863298dbd440efc2e8360e13e2475de88f6",
+      "test_subtest_seed_passes": 114,
+      "test_skips": 0,
+      "suite": "pure"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-race/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
+      "suite": "race"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b95-race/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
+      "suite": "race"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-26dgmn_o",
+      "log": ".cache/b95-race/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "race"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-26dgmn_o",
+      "log": ".cache/b95-race/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "race"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b95-race/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
+      "suite": "race"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b95-race/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "race"
+    },
+    {
+      "name": "core-race",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "-race",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b95-race/core-race.log",
+      "status": "passed",
+      "sha256": "db614e543baa52fe317767c73509d32829ca36562a043f287dc1c27f1490e463",
+      "test_subtest_seed_passes": 3990,
+      "test_skips": 0,
+      "suite": "race"
+    },
+    {
+      "name": "adapter-race",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "-race",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b95-race/adapter-race.log",
+      "status": "passed",
+      "sha256": "ebad90aaa07cb757c903343c6e58b4dfb81db9e72dfa500f8f3ea847f4438ae0",
+      "test_subtest_seed_passes": 114,
+      "test_skips": 0,
+      "suite": "race"
+    }
+  ],
+  "coverage": {
+    "transports": [
+      "TCP",
+      "TLS"
+    ],
+    "construction_paths": [
+      "iec",
+      "general",
+      "balance",
+      "refund",
+      "initial",
+      "term"
+    ],
+    "result_branches": [
+      "normal 2001",
+      "normal 5012",
+      "E/3004"
+    ],
+    "template_result_leaf_cases": 36,
+    "cross_template_scenarios": 12,
+    "directed_cross_template_conflicts_per_run": 60,
+    "lifecycle_leaf_cases": 8,
+    "total_leaf_cases": 56,
+    "test_subtest_passes_per_run": 65,
+    "repetitions_per_mode": 20,
+    "pass_inventory": {
+      "repeat-pure": {
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/iec/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/iec/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/iec/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/general/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/general/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/general/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/balance/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/balance/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/balance/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/refund/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/refund/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/refund/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/initial/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/initial/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/initial/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/term/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/term/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/term/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/iec/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/iec/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/iec/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/general/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/general/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/general/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/balance/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/balance/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/balance/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/refund/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/refund/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/refund/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/initial/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/initial/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/initial/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/term/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/term/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/term/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TCP/iec": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TCP/general": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TCP/balance": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TCP/refund": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TCP/initial": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TCP/term": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TCP": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TLS/iec": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TLS/general": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TLS/balance": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TLS/refund": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TLS/initial": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TLS/term": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TLS": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TCP/arrivals": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TCP/cache": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TCP/expiry": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TCP/close": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TCP": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TLS/arrivals": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TLS/cache": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TLS/expiry": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TLS/close": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TLS": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose": 20
+      },
+      "repeat-race": {
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/iec/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/iec/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/iec/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/general/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/general/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/general/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/balance/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/balance/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/balance/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/refund/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/refund/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/refund/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/initial/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/initial/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/initial/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/term/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/term/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP/term/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TCP": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/iec/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/iec/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/iec/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/general/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/general/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/general/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/balance/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/balance/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/balance/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/refund/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/refund/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/refund/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/initial/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/initial/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/initial/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/term/2001": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/term/5012": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS/term/3004": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults/TLS": 20,
+        "TestCombinedDuplicateTemplatesAndCachedResults": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TCP/iec": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TCP/general": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TCP/balance": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TCP/refund": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TCP/initial": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TCP/term": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TCP": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TLS/iec": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TLS/general": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TLS/balance": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TLS/refund": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TLS/initial": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TLS/term": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity/TLS": 20,
+        "TestCombinedDuplicateCrossTemplateIdentity": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TCP/arrivals": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TCP/cache": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TCP/expiry": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TCP/close": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TCP": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TLS/arrivals": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TLS/cache": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TLS/expiry": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TLS/close": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose/TLS": 20,
+        "TestCombinedDuplicateAdmissionRetentionAndClose": 20
+      }
+    }
+  },
+  "assertions": [
+    "One application delivery for processing duplicates, later T=0 cache hits do not redeliver",
+    "HBH and Proxy-Info are reconstructed per arrival for normal and E results",
+    "Changed second Subscription-Id with required UEI copy is a valid content conflict, both before and after commit",
+    "Cross-template same Origin/E2E conflicts preserve original work; no operation reinterpretation",
+    "Request-view and response-body mutation cannot change private evidence or cached bytes",
+    "Invalid/canceled response preparation leaves the response right available",
+    "Hits/conflicts never refresh original processing/retention deadlines",
+    "Full cache does not evict a promised result; arrival/cache exhaustion follows existing fail-closed policy",
+    "Controlled timer expiry releases cache and permits new logical work",
+    "Concurrent Respond/Close and final complete resource retirement"
+  ],
+  "hosted_ci": {
+    "status": "pending",
+    "scope": "Hosted checkout has not yet run for this batch."
+  },
+  "source_sha256": {
+    "smsfw_combined_duplicate_test.go": "3aa832f07a15f3d3ea628218e1f79b0ae812d3b806130cd2e0693bdc3b8709e9",
+    "doc/combined-duplicate-acceptance.md": "1721fa417850893c5068c8db1d841eee65fab1df5ea514e39dded2a5e47fec3c",
+    "doc/diameterkit-support-matrix.md": "11e20e1df17787b2fbf92e839c9fff4041b01fb1da6e769af17c56cba2961d80",
+    "examples/ro/README.md": "f37853a2abb86bb2aaf3ad7d15153a813aea8eb0e49ff9c185d997f064a6c386",
+    "README.md": "aa01ec976433d68e77a8842a7711a1248e707a9ffc6cdd298a1ff0e5a5392eed"
+  },
+  "fixture_correction": {
+    "status": "initial_fixture_failed_validation",
+    "log": ".cache/b95-fixture-failure.log",
+    "sha256": "7dd41948ac76f4d5ec8b07b562aa37353603df8607b3464365f49e639ba475cf",
+    "explanation": "Changing the subscription IMSI alone violated the existing IEC/INITIAL/TERMINATION UEI-copy rule. Corrected fixture changes both fields; production validation was unchanged. The failing probe is not a passed result."
+  },
+  "unchanged": [
+    "All production Go source",
+    "Public API snapshot",
+    "Module manifests and sums",
+    "Protocol definitions and generated code",
+    "Published immutable tags",
+    "Measured benchmark baseline"
+  ],
+  "limits": [
+    "No real OCS or original private six-template equivalence proof",
+    "No durable charging ledger, persistent duplicate store or automatic financial retry",
+    "Controlled timer input is not long-soak retention evidence",
+    "Other mixed-profile/cache workloads and cross-peer combined scenarios remain separate",
+    "Deep diagnostics, private ACA/PSP/1292 and deployment capacity/target recovery remain open"
+  ],
+  "reproduce": [
+    "CGO_ENABLED=0 go test . -run ^TestCombinedDuplicate -count=20 -timeout=4m",
+    "CGO_ENABLED=1 go test -race . -run ^TestCombinedDuplicate -count=20 -timeout=4m",
+    "python3 spec/tools/release_check.py --suite static",
+    "python3 spec/tools/release_check.py --suite pure",
+    "python3 spec/tools/release_check.py --suite race"
+  ]
+}

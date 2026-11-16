@@ -41,6 +41,11 @@ kernel SCTP. Recovery consumption covers selected independent bindings, explicit
 cross-target authorization and no-answer/import cases. Neither synthetic peers nor
 application-provided evidence prove acceptance by a real HSS/MME/SGSN/DRA/OCS.
 
+The [combined server-cache checks](combined-duplicate-acceptance.md) cover selected
+normal/E result replay, per-arrival envelopes, cross-template identity conflicts,
+bounded admission, expiry and Close on TCP/TLS. They do not establish durable
+financial deduplication or full mixed-profile/cache coverage.
+
 ## Remaining gates
 
 - **Release:** exact available versions, commits, authenticated checksums and cold

@@ -169,6 +169,7 @@ endpoint. Local duplicate handling is not a durable charging ledger.
 - [Bounded fuzz, pressure and measurement methodology](doc/load-checks.md)
 - [S6c helper semantics](doc/s6c-routing-helpers.md)
 - [Application-owned Ro handoff](doc/ro-recovery-handoff.md)
+- [Combined binding: volatile duplicate acceptance](doc/combined-duplicate-acceptance.md)
 - [Machine-readable progress and historical evidence](spec/README.md)
 - [AI authorship and review limits](AI_DISCLOSURE.md)
 

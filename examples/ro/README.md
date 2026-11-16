@@ -67,6 +67,10 @@ includes admission negatives, cancellation, late answers, ownership, independent
 bindings and no-answer/import flows. [Application handoff](../../doc/ro-recovery-handoff.md)
 separates financial decisions from protocol evidence.
 
+The fixed combined binding also has [server-side duplicate acceptance](../../doc/combined-duplicate-acceptance.md)
+for its selected constructions on TCP/TLS. Cached replay and content conflicts
+are distinct from client recovery permission and durable charging deduplication.
+
 ## Lifecycle and limits
 
 These examples use public APIs, real loopback TCP and synthetic endpoint data.
