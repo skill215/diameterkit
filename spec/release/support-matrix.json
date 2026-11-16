@@ -1,0 +1,439 @@
+{
+  "format": 1,
+  "date": "2026-11-16",
+  "basis": "batch93 version/API policy and tested gate; actual immutable installation pending publication,24SPEC remainpartial",
+  "release_status": "not_ready",
+  "api_snapshot": "spec/release/public-api.json",
+  "profiles": [
+    {
+      "binding": "base",
+      "profile": "base-rfc6733-controls-slice-v1",
+      "version": "0.1.0-slice.8",
+      "definition": "spec/base.json",
+      "definition_sha256": "62eb048eaf5431df7a257798fc951e4a10e309fc1450180704479198c32e7051",
+      "requests": [
+        {
+          "name": "CER",
+          "application": 0,
+          "command": 257
+        },
+        {
+          "name": "DWR",
+          "application": 0,
+          "command": 280
+        },
+        {
+          "name": "DPR",
+          "application": 0,
+          "command": 282
+        }
+      ],
+      "implementation": "implemented_selected_slice",
+      "implemented": "Base所选CER/DWR/DPR与公共包络",
+      "limits": "由Node握手/看门狗/关闭驱动；非路由代理或Redirect全实现",
+      "public_consumption": "examples/ro/main.go"
+    },
+    {
+      "binding": "sh",
+      "profile": "sh-29.329-sms-opaque-slice-v1",
+      "version": "0.1.0-slice.11",
+      "definition": "spec/sh.json",
+      "definition_sha256": "88df238299ecb1d92e2229f77cb96d8645f2b107e1b52273d79869d665ad1260",
+      "requests": [
+        {
+          "name": "UDR",
+          "application": 16777217,
+          "command": 306
+        },
+        {
+          "name": "PUR",
+          "application": 16777217,
+          "command": 307
+        },
+        {
+          "name": "SNR",
+          "application": 16777217,
+          "command": 308
+        },
+        {
+          "name": "PNR",
+          "application": 16777217,
+          "command": 309
+        }
+      ],
+      "implementation": "implemented_selected_slice",
+      "implemented": "四对命令及Ref11/12/24/25有限Sh-Data；具名特性/上下文",
+      "limits": "公开运行例仅Ref24 UDR/UDA，其他过程用既有协议/运行时测试；非完整XML/订阅服务",
+      "public_consumption": "examples/sh/README.md"
+    },
+    {
+      "binding": "s6c",
+      "profile": "s6c-29.338-ordinary-mme-slice-v1",
+      "version": "0.1.0-slice.22",
+      "definition": "spec/s6c.json",
+      "definition_sha256": "985dc61d69c8b516549e6c47469013422f5e83a58fedb0dec204614bccc46ff2",
+      "requests": [
+        {
+          "name": "SRR",
+          "application": 16777312,
+          "command": 8388647
+        },
+        {
+          "name": "RDR",
+          "application": 16777312,
+          "command": 8388649
+        },
+        {
+          "name": "ALR",
+          "application": 16777312,
+          "command": 8388648
+        }
+      ],
+      "implementation": "implemented_selected_slice",
+      "implemented": "SRR/RDR/ALR及已选普通/IMS/T4/Router用途",
+      "limits": "固定Profile范围；纯NewSRR/InterpretSRA和Route薄客户端已实现。头关联/来源需codec/runtime验证；无存储、投递/优先级策略。",
+      "public_consumption": "doc/s6c-routing-helpers.md"
+    },
+    {
+      "binding": "sgd",
+      "profile": "sgd-gdd-29.338-ordinary-slice-v1",
+      "version": "0.1.0-slice.15",
+      "definition": "spec/sgd.json",
+      "definition_sha256": "cc0a054e0c0654302bd6a9225285a2c30778d91a9481db346d9a0e139c7e6634",
+      "requests": [
+        {
+          "name": "OFR",
+          "application": 16777313,
+          "command": 8388645
+        },
+        {
+          "name": "TFR",
+          "application": 16777313,
+          "command": 8388646
+        }
+      ],
+      "implementation": "implemented_selected_slice",
+      "implemented": "SGd/Gdd OFR/TFR及已选IMS/T4/Router上下文",
+      "limits": "公开运行例普通MO/MT；透明TPDU，无自动投递/提醒；标准ALR走S6c",
+      "public_consumption": "examples/sgd/README.md"
+    },
+    {
+      "binding": "ro",
+      "profile": "ro-32.299-sms-iec-slice-v1",
+      "version": "0.1.0-slice.6",
+      "definition": "spec/ro.json",
+      "definition_sha256": "0241a058f35d31d4522cf0e6cf330b834c74f0d149e2161d21f0b4982c273030",
+      "requests": [
+        {
+          "name": "CCR",
+          "application": 4,
+          "command": 272
+        }
+      ],
+      "implementation": "implemented_selected_slice",
+      "implemented": "标准SMS IEC DIRECT_DEBITING、无UPDATE ECUR；所选结果及2022 helper",
+      "limits": "不支持标准SMS REFUND_ACCOUNT/CHECK_BALANCE发送；2022检查不授权退款；单服务等限制见rules",
+      "public_consumption": "examples/ro/README.md"
+    },
+    {
+      "binding": "dcca",
+      "profile": "dcca-rfc4006-single-event-v1",
+      "version": "0.1.0-slice.1",
+      "definition": "spec/dcca.json",
+      "definition_sha256": "5cf64e77bcf0f8a771e618c4462e6bc2141a23354f044b10d75c8e2fee473f4b",
+      "requests": [
+        {
+          "name": "CCR",
+          "application": 4,
+          "command": 272
+        }
+      ],
+      "implementation": "implemented_selected_slice",
+      "implemented": "独立RFC4006单服务EVENT debit/balance/refund及CheckRefundRelation",
+      "limits": "不是3GPP SMS或完整RFC8506；无R33/RO-06许可；本批是离线消费，不是新网络示例",
+      "public_consumption": "examples/contracts/contracts_test.go"
+    },
+    {
+      "binding": "roabort",
+      "profile": "ro-rfc6733-abort-slice-v1",
+      "version": "0.1.0-slice.1",
+      "definition": "spec/roabort.json",
+      "definition_sha256": "8fa506af2b2d3e66ffe06e0bf78743bcb64d0e0104f67110f52c1216d89da5b6",
+      "requests": [
+        {
+          "name": "ASR",
+          "application": 4,
+          "command": 274
+        }
+      ],
+      "implementation": "implemented_selected_slice",
+      "implemented": "独立ASR/ASA与原Session关联",
+      "limits": "OCS→CTF显式应用决策，无自动TERM/CCR完成/恢复许可",
+      "public_consumption": "examples/ro/README.md"
+    },
+    {
+      "binding": "smsfwro",
+      "profile": "smsfw-ro-iec-template-v1",
+      "version": "0.1.0-slice.6",
+      "definition": "spec/smsfwro.json",
+      "definition_sha256": "b4d360dbad1b0dcb2c7511be95c280f3dc85a1fdc860dc087f2177ca4dbfc403",
+      "requests": [
+        {
+          "name": "CCR",
+          "application": 4,
+          "command": 272
+        }
+      ],
+      "implementation": "implemented_selected_slice",
+      "implemented": "具名旧IEC/ECUR及失败TERM字段/精确输入",
+      "limits": "原标准/私有表示不能混猜；真实槽/答案/业务映射仍需限定材料",
+      "public_consumption": "examples/ro/README.md",
+      "batch90_evidence": "spec/evidence/batch-90-binding-recovery-consumption.json"
+    },
+    {
+      "binding": "legacy420",
+      "profile": "smsfw-ro-legacy420-v1",
+      "version": "0.1.0-slice.6",
+      "definition": "spec/legacy420.json",
+      "definition_sha256": "df8f9997f753961f9cd375f596705ccdd3a2febad120a91ef68ec0d66035160d",
+      "requests": [
+        {
+          "name": "CCR",
+          "application": 4,
+          "command": 272
+        }
+      ],
+      "implementation": "implemented_selected_slice",
+      "implemented": "旧Address/420绑定与balance/debit/refund构造",
+      "limits": "1292显式presence且不等于标准2022；本批验证具名EVENT公开恢复，私有答案映射/真实目标和完整业务迁移仍待。",
+      "public_consumption": "examples/ro/README.md",
+      "batch90_evidence": "spec/evidence/batch-90-binding-recovery-consumption.json"
+    },
+    {
+      "binding": "combined",
+      "profile": "smsfw-ro-five-template-wire-v1",
+      "version": "0.1.0-slice.5",
+      "definition": "spec/combined.json",
+      "definition_sha256": "a6c115d4ab5a30c4faadb8623b4fbde9e51a3ea0760e873206ba476154745df6",
+      "requests": [
+        {
+          "name": "CCR",
+          "application": 4,
+          "command": 272
+        }
+      ],
+      "implementation": "implemented_selected_slice",
+      "implemented": "一个显式绑定承接旧五CCR模板，不猜ClientAddressWire类型",
+      "limits": "同Bundle不能再装其他4/272；第六模板SCAP1单列；私有定义/目标接受门保持",
+      "public_consumption": "examples/ro/README.md",
+      "batch90_evidence": "spec/evidence/batch-90-binding-recovery-consumption.json"
+    },
+    {
+      "binding": "scap1",
+      "profile": "smsfw-scap1-event-v1",
+      "version": "0.1.0-slice.2",
+      "definition": "spec/scap1.json",
+      "definition_sha256": "659516e8b1b22c6a75ad870126528feeaed1b487963618a47c031ee2c13a30da",
+      "requests": [
+        {
+          "name": "ACR",
+          "application": 0,
+          "command": 271
+        }
+      ],
+      "implementation": "implemented_selected_slice",
+      "implemented": "头0/271、Vendor193/Acct19302、具名旧广告与有限重复处理",
+      "limits": "不是Ro；真实私有ACA/SCAP1恢复证据未闭合，不继承CCR许可",
+      "public_consumption": "examples/scap1/README.md"
+    },
+    {
+      "binding": "sgdalert",
+      "profile": "legacy-sgd-alert-v1",
+      "version": "legacy-sgd-alert-v1.1",
+      "definition": "compat/sgdalert/profile.go",
+      "definition_sha256": "f1277ca9c79d32343ad5b71a1fde4531ed4229e5fbd8c90f9f61e41ed1275d09",
+      "requests": [
+        {
+          "name": "ALR",
+          "application": 16777313,
+          "command": 8388648
+        }
+      ],
+      "implementation": "implemented_delegated_slice",
+      "implemented": "具名旧SGd ALR/ALA委托S6c字段/上下文",
+      "limits": "非标准SGd提醒；不授权TransportReplay，目标实际旧App接受另验",
+      "public_consumption": "sgdalert_test.go"
+    }
+  ],
+  "counts": {
+    "generated_definitions": 11,
+    "delegated_profiles": 1,
+    "request_answer_pairs_including_overlapping_bindings": 20
+  },
+  "transports": [
+    {
+      "name": "TCP/TLS",
+      "status": "implemented_bounded",
+      "evidence": [
+        "transport_integration_test.go",
+        "tls_integration_test.go"
+      ],
+      "limits": "固定Peer Listener/Serve；多Peer共享监听入口和完整诊断范围仍受限；真实部署另验"
+    },
+    {
+      "name": "SCTP",
+      "status": "implemented_linux_kernel_adapter",
+      "upstream": "github.com/skill215/sctp v0.8.0",
+      "evidence": [
+        "spec/evidence/batch-85-ro-abort-example.json",
+        "adapters/sctp/README.md",
+        "spec/evidence/batch-91-release-checks.json"
+      ],
+      "limits": "Linux/amd64真实验收；arm64为交叉build证据，Windows及386为不支持stub，API快照不证明SCTP可运行"
+    }
+  ],
+  "remaining": [
+    {
+      "name": "发布级自动验收",
+      "priority": "P1 release engineering",
+      "requirement_refs": [
+        "SPEC-RELEASE-01",
+        "SPEC-BUDGET-01",
+        "SPEC-SECURITY-01"
+      ],
+      "usage_ref": "P7/性能与资源验收",
+      "status": "partial",
+      "evidence": [
+        "codec/codec_test.go",
+        "codec/envelope_test.go",
+        "codec/canonical_test.go",
+        "app/sh/shdata/data_test.go",
+        "adapters/sctp/mode_test.go",
+        "spec/evidence/batch-91-release-checks.json",
+        ".github/workflows/ci.yml",
+        "spec/tools/release_check.py",
+        "doc/release-checks.md",
+        "spec/evidence/batch-92-bounded-load.json",
+        "spec/release/performance-baseline.json",
+        "doc/load-checks.md",
+        "spec/tools/load_checks.py"
+      ],
+      "exit": "Bounded local engineering slice complete. Verify hostedCI when authorized; production workload/long-soak/saturation/statistical comparisons require declared budgets. Keep immutable module installation under its separate release gate.",
+      "batch91_completed": [
+        "fixed toolchain/workflow and temporary current-checkout module graph",
+        "11 generated files/determinism, API two-platform snapshot and actual negative controls",
+        "both-module pureGo/race/vet,6 cross builds, zero native test skips"
+      ],
+      "batch92_completed": [
+        "5 fuzz targets30s/two workers",
+        "TCP1/8/16 windows andSCTP4pairs pressure20x per pure/race mode, zero skips",
+        "logical/heap/RSS observations and8 benchmarks200x5 with environment/workload hashes"
+      ]
+    },
+    {
+      "name": "API与双module发行",
+      "priority": "P1 release gate",
+      "requirement_refs": [
+        "SPEC-RELEASE-01"
+      ],
+      "usage_ref": "P7",
+      "status": "partial_pending_publication",
+      "evidence": [
+        "spec/release/public-api.json",
+        "adapters/sctp/go.mod",
+        "spec/evidence/batch-93-version-install.json",
+        "spec/release/version-policy.json",
+        "doc/version-install-policy.md",
+        "spec/tools/release_install.py",
+        ".github/workflows/release-install.yml"
+      ],
+      "exit": "真实核心/adapter安装失败404，远端无标签。发布核心后更新adapter真实依赖和校验和并发布，完成两个GOWORK=off/无replace/冷缓存实际消费；工具与checkout成功不关闭此门。",
+      "batch93_completed": [
+        "v0 independent module/tag/API policy",
+        "strict cold-install gate and public consumer probes; local tests passed"
+      ]
+    },
+    {
+      "name": "六模板与私有恢复证据",
+      "priority": "P1 external evidence for affected capability",
+      "requirement_refs": [
+        "SPEC-APP-01",
+        "SPEC-BIND-01",
+        "SPEC-REPLAY-01"
+      ],
+      "usage_ref": "TEMPLATE/COMPAT/RO-06",
+      "status": "pending_evidence",
+      "evidence": [
+        "doc/diameterkit-usage-coverage.md",
+        "doc/diameterkit-implementation-review.md"
+      ],
+      "exit": "限定原六模板输入输出/槽版本、PSP/私有ACA及1292映射、420/2018接受与恢复域/保留期/ECUR连续性。材料齐后补相应定义/消费/互通，不猜值且不宣称完全替代sms-fw。"
+    },
+    {
+      "name": "真实部署与应用迁移",
+      "priority": "target/application acceptance",
+      "requirement_refs": [
+        "SPEC-BIND-01",
+        "SPEC-TRANSPORT-01"
+      ],
+      "usage_ref": "DRA/OCS与旧应用接线",
+      "status": "pending_target_acceptance",
+      "evidence": [
+        "doc/diameterkit-usage-coverage.md"
+      ],
+      "exit": "部署方核验DRA/最终HSS/MME/OCS角色、保护条件、目标恢复许可及业务映射。库端受控验收与现场投产分开，不以本机双Node代替目标验收。"
+    }
+  ],
+  "completed": [
+    {
+      "name": "S6c使用便利层",
+      "priority": "P1 local implementation",
+      "requirement_refs": [
+        "SPEC-APP-01",
+        "SPEC-RELEASE-01"
+      ],
+      "usage_ref": "UX-02",
+      "status": "completed_selected_slice",
+      "evidence": [
+        "spec/evidence/batch-87-s6c-helpers.json",
+        "doc/s6c-routing-helpers.md"
+      ],
+      "exit": "在已实现SRR/SRA切片内提供纯请求构造/结果解释，保留原结果、主/Additional/组合节点、身份/诊断和限制；薄client/s6c复用Route与CompletionPort，无新业务状态/投递策略。不得只改文档删除UX-02。"
+    },
+    {
+      "name": "Ro已选操作的独立消费闭环",
+      "priority": "P1 local acceptance",
+      "requirement_refs": [
+        "SPEC-APP-01",
+        "SPEC-REPLAY-01",
+        "SPEC-RELEASE-01"
+      ],
+      "usage_ref": "覆盖§37十二行/§38十六组",
+      "status": "completed_selected_slice",
+      "evidence": [
+        "examples/contracts/contracts_test.go",
+        "ro_handoff_example_test.go",
+        "ro_handoff_test.go",
+        "ro_import_test.go",
+        "spec/evidence/batch-88-ro-recovery-consumption.json",
+        "spec/evidence/batch-89-combined-cross-target.json",
+        "spec/evidence/batch-90-binding-recovery-consumption.json"
+      ],
+      "exit": "Selected local consumption complete across batches88-90. Private mappings, actual target/continuity and release remain separate; no all-profile or durable crash-recovery claim.",
+      "batch88_completed": [
+        "same-OCS public DIRECT_DEBITING error/no-answer/import",
+        "five original business operation mappings and Tx/late/cancel",
+        "independent module public API execution"
+      ],
+      "batch89_completed": [
+        "combined debit/balance/refund/initial/term realTCP",
+        "explicit error-answer cross-target and six admission negatives"
+      ],
+      "batch90_completed": [
+        "standalone smsfwro IEC/INITIAL/TERM and legacy420 debit/balance/refund",
+        "three named bindings error/no-answer same-Node cross-target and new-Node import; late primary answer isolation",
+        "24 import refusal cases and independent local-source consumer"
+      ]
+    }
+  ]
+}

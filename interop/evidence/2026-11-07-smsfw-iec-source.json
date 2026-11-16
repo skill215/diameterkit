@@ -1,0 +1,628 @@
+{
+  "kind": "source projection only",
+  "inputs": {
+    "SUBSCRIPTIONID_MSISDN": "15551234567",
+    "SUBSCRIPTIONID_IMSI": "001010123456789",
+    "TIMESTAMP": 1700000000,
+    "SMSC_ADDR": "15550000001",
+    "VMSC_ORIG": "15550000002",
+    "VMSC_RECP": "15550000003",
+    "DCS": 8,
+    "INTERFACE_TYPE_DEST": 2,
+    "PID": "00ff",
+    "REPLY_PATH": 0,
+    "UDH": "0500037f020100ff",
+    "ORIG_MSISDN": "15551234567",
+    "DEST_MSISDN": "15557654321",
+    "PRIORITY": 0,
+    "UDL": 140,
+    "SMSKEY": "sms-0001",
+    "SRR_ON": 1
+  },
+  "template_mapping": [
+    {
+      "name": "SUBSCRIPTION_ID",
+      "path": "0/443",
+      "type": "GROUPED",
+      "value": [
+        "SUBSCRIPTION_ID_TYPE",
+        "SUBSCRIPTION_ID_DATA"
+      ]
+    },
+    {
+      "name": "SUBSCRIPTION_ID_TYPE",
+      "path": "0/443/0/450",
+      "type": "INT32",
+      "value": [
+        "0"
+      ]
+    },
+    {
+      "name": "SUBSCRIPTION_ID_DATA",
+      "path": "0/443/0/444",
+      "type": "STRING",
+      "value": [
+        "$SUBSCRIPTIONID_MSISDN"
+      ]
+    },
+    {
+      "name": "SUBSCRIPTION_ID",
+      "path": "0/443",
+      "type": "GROUPED",
+      "value": [
+        "SUBSCRIPTION_ID_TYPE",
+        "SUBSCRIPTION_ID_DATA"
+      ]
+    },
+    {
+      "name": "SUBSCRIPTION_ID_TYPE",
+      "path": "0/443/0/450",
+      "type": "INT32",
+      "value": [
+        "1"
+      ]
+    },
+    {
+      "name": "SUBSCRIPTION_ID_DATA",
+      "path": "0/443/0/444",
+      "type": "STRING",
+      "value": [
+        "$SUBSCRIPTIONID_IMSI"
+      ]
+    },
+    {
+      "name": "EVENT_TIMESTAMP",
+      "path": "0/55",
+      "type": "TIME",
+      "value": [
+        "$TIMESTAMP"
+      ]
+    },
+    {
+      "name": "MULTIPLE_SERVICES_INDICATOR",
+      "path": "0/455",
+      "type": "INT32",
+      "value": [
+        "1"
+      ]
+    },
+    {
+      "name": "MULTIPLE_SERVICE_CREDITCONTROL",
+      "path": "0/456",
+      "type": "GROUPED",
+      "value": [
+        "REQUESTED_SERVICE_UNIT"
+      ]
+    },
+    {
+      "name": "REQUESTED_SERVICE_UNIT",
+      "path": "0/456/0/437",
+      "type": "GROUPED",
+      "value": [
+        "CC_SERVICE_SPECIFIC_UNIT"
+      ]
+    },
+    {
+      "name": "CC_SERVICE_SPECIFIC_UNIT",
+      "path": "0/456/0/437/0/417",
+      "type": "UINT64",
+      "value": [
+        "1"
+      ]
+    },
+    {
+      "name": "USER_EQUIPMENT_INFO",
+      "path": "0/458",
+      "type": "GROUPED",
+      "value": [
+        "USER_EQUIPMENT_INFO_TYPE",
+        "USER_EQUIPMENT_INFO_VALUE"
+      ]
+    },
+    {
+      "name": "USER_EQUIPMENT_INFO_TYPE",
+      "path": "0/458/0/459",
+      "type": "INT32",
+      "value": [
+        "0"
+      ]
+    },
+    {
+      "name": "USER_EQUIPMENT_INFO_VALUE",
+      "path": "0/458/0/460",
+      "type": "STRING",
+      "value": [
+        "$SUBSCRIPTIONID_IMSI"
+      ]
+    },
+    {
+      "name": "SERVICE_INFORMATION",
+      "path": "10415/873",
+      "type": "GROUPED",
+      "value": [
+        "SMS_INFORMATION",
+        "MMS_INFORMATION"
+      ]
+    },
+    {
+      "name": "SMS_INFORMATION",
+      "path": "10415/873/10415/2000",
+      "type": "GROUPED",
+      "value": [
+        "SMS_NODE",
+        "CLIENT_ADDRESS",
+        "VMSC_ORIG",
+        "VMSC_RECP",
+        "SMSC_ADDR",
+        "SM_DCS",
+        "SM_DEST_IF",
+        "SM_MESSAGE_TYPE",
+        "SM_ORIG_IF",
+        "SM_PID",
+        "REPLY_PATH",
+        "UDH"
+      ]
+    },
+    {
+      "name": "SMS_NODE",
+      "path": "10415/873/10415/2000/10415/2016",
+      "type": "ENUMERATED",
+      "value": [
+        "0"
+      ]
+    },
+    {
+      "name": "CLIENT_ADDRESS",
+      "path": "10415/873/10415/2000/10415/2018",
+      "type": "STRING",
+      "value": [
+        "$SMSC_ADDR"
+      ]
+    },
+    {
+      "name": "VMSC_ORIG",
+      "path": "10415/873/10415/2000/10415/2008",
+      "type": "STRING",
+      "value": [
+        "$VMSC_ORIG"
+      ]
+    },
+    {
+      "name": "VMSC_RECP",
+      "path": "10415/873/10415/2000/10415/2010",
+      "type": "STRING",
+      "value": [
+        "$VMSC_RECP"
+      ]
+    },
+    {
+      "name": "SMSC_ADDR",
+      "path": "10415/873/10415/2000/10415/2017",
+      "type": "STRING",
+      "value": [
+        "$SMSC_ADDR"
+      ]
+    },
+    {
+      "name": "SM_DCS",
+      "path": "10415/873/10415/2000/10415/2001",
+      "type": "INTEGER32",
+      "value": [
+        "$DCS"
+      ]
+    },
+    {
+      "name": "SM_DEST_IF",
+      "path": "10415/873/10415/2000/10415/2002",
+      "type": "GROUPED",
+      "value": [
+        "SM_IF"
+      ]
+    },
+    {
+      "name": "SM_IF",
+      "path": "10415/873/10415/2000/10415/2002/10415/2006",
+      "type": "ENUMERATED",
+      "value": [
+        "$INTERFACE_TYPE_DEST"
+      ]
+    },
+    {
+      "name": "SM_MESSAGE_TYPE",
+      "path": "10415/873/10415/2000/10415/2007",
+      "type": "ENUMERATED",
+      "value": [
+        "0"
+      ]
+    },
+    {
+      "name": "SM_ORIG_IF",
+      "path": "10415/873/10415/2000/10415/2009",
+      "type": "GROUPED",
+      "value": [
+        "SM_IF"
+      ]
+    },
+    {
+      "name": "SM_IF",
+      "path": "10415/873/10415/2000/10415/2009/10415/2006",
+      "type": "ENUMERATED",
+      "value": [
+        "1"
+      ]
+    },
+    {
+      "name": "SM_PID",
+      "path": "10415/873/10415/2000/10415/2013",
+      "type": "OCTETSTRING",
+      "value": [
+        "$PID"
+      ]
+    },
+    {
+      "name": "REPLY_PATH",
+      "path": "10415/873/10415/2000/10415/2011",
+      "type": "INT32",
+      "value": [
+        "$REPLY_PATH"
+      ]
+    },
+    {
+      "name": "UDH",
+      "path": "10415/873/10415/2000/10415/2015",
+      "type": "OCTETSTRING",
+      "value": [
+        "$UDH"
+      ]
+    },
+    {
+      "name": "MMS_INFORMATION",
+      "path": "10415/873/10415/877",
+      "type": "GROUPED",
+      "value": [
+        "ORIGINATOR_ADDRESS",
+        "RECIPIENT_ADDRESS",
+        "SUB_TIME",
+        "PRIORITY",
+        "UDL",
+        "SMS_KEY",
+        "SRR_ON"
+      ]
+    },
+    {
+      "name": "ORIGINATOR_ADDRESS",
+      "path": "10415/873/10415/877/10415/886",
+      "type": "GROUPED",
+      "value": [
+        "ADDRESS_TYPE",
+        "ADDRESS_DATA"
+      ]
+    },
+    {
+      "name": "ADDRESS_TYPE",
+      "path": "10415/873/10415/877/10415/886/10415/899",
+      "type": "ENUMERATED",
+      "value": [
+        "1"
+      ]
+    },
+    {
+      "name": "ADDRESS_DATA",
+      "path": "10415/873/10415/877/10415/886/10415/897",
+      "type": "STRING",
+      "value": [
+        "$ORIG_MSISDN"
+      ]
+    },
+    {
+      "name": "RECIPIENT_ADDRESS",
+      "path": "10415/873/10415/877/10415/1201",
+      "type": "GROUPED",
+      "value": [
+        "ADDRESS_TYPE",
+        "ADDRESS_DATA"
+      ]
+    },
+    {
+      "name": "ADDRESS_TYPE",
+      "path": "10415/873/10415/877/10415/1201/10415/899",
+      "type": "ENUMERATED",
+      "value": [
+        "1"
+      ]
+    },
+    {
+      "name": "ADDRESS_DATA",
+      "path": "10415/873/10415/877/10415/1201/10415/897",
+      "type": "STRING",
+      "value": [
+        "$DEST_MSISDN"
+      ]
+    },
+    {
+      "name": "SUB_TIME",
+      "path": "10415/873/10415/877/10415/1202",
+      "type": "TIME",
+      "value": [
+        "$TIMESTAMP"
+      ]
+    },
+    {
+      "name": "PRIORITY",
+      "path": "10415/873/10415/877/10415/1209",
+      "type": "INT32",
+      "value": [
+        "$PRIORITY"
+      ]
+    },
+    {
+      "name": "UDL",
+      "path": "10415/873/10415/877/10415/1212",
+      "type": "UINT32",
+      "value": [
+        "$UDL"
+      ]
+    },
+    {
+      "name": "SMS_KEY",
+      "path": "10415/873/10415/877/10415/1210",
+      "type": "STRING",
+      "value": [
+        "$SMSKEY"
+      ]
+    },
+    {
+      "name": "SRR_ON",
+      "path": "10415/873/10415/877/10415/1216",
+      "type": "INT32",
+      "value": [
+        "$SRR_ON"
+      ]
+    }
+  ],
+  "source_files": [
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/yppdia_iec_avptemplate.cf",
+      "sha256": "8da958f71cc8deead116dc6bf9c3b7b84abb1aa49ba2457f8bb968679b5f0da3"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dcca-wrapper/AvpsTemplate.cc",
+      "sha256": "063ed87a7a5d807ce7d68a4d3ec4c890f8fe84b18e24f0701f6fb938175b75d0"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dcca-wrapper/AvpImpl.cc",
+      "sha256": "58e363aa1d08da12a6fff155a0d87d4298702fb8867b18a61450d4235b6ff828"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dia-base/dia-message.cc",
+      "sha256": "9400dac621c906379c006bfc0cf80c68b35dcd974719de1a97b1ce9a7b09d268"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dia-cc/dia-cc.cc",
+      "sha256": "3254a1456d2591467a245f29c73174aed95892994174dfaedff0d5452a1e62be"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dcca-wrapper/DccaClientWrapper.cc",
+      "sha256": "8c6c650c87304bbbf7072a1f290ab708f101a8a921a6723d275e39dc989859ff"
+    }
+  ],
+  "fixtures": [
+    {
+      "file": "b41-iec-request.hex",
+      "bytes": 852,
+      "sha256": "baa61454a8ba40086e8956cbe01f241be11fad0c6fae0fcb9a022314a6a6ef14",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-iec-enhanced.hex",
+      "bytes": 884,
+      "sha256": "5edd2cc1e11d27f75c8537ae6ca993cfffc0e8f2738331633176cb65ab9d73c0",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-cca-success.hex",
+      "bytes": 140,
+      "sha256": "db727dae3e178c3f57664064e1dcc9b832ae1b5da29f36ccb380e283e69f41a8",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-cca-denied.hex",
+      "bytes": 140,
+      "sha256": "2e26a12ce39737bc74d9f1c14a8c1b0244e5961edf3e076fa8ece693d81b5178",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-cca-failed.hex",
+      "bytes": 140,
+      "sha256": "cfe0c565728e72b11e909e71d521feb9471b621bea4f1d56ac8017d67010d508",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-cca-error.hex",
+      "bytes": 104,
+      "sha256": "67a7bda7a8187fb3d38e2b5f51ee7aacd12ab5f72bdb1e0adfe7e85888bc833f",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-cca-grant-ddfh.hex",
+      "bytes": 176,
+      "sha256": "d2ee4494897a1e93ce81067e66d991d30d6460125089665fc9c0fe1bfb9f6f2a",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-cca-ddfh-zero.hex",
+      "bytes": 152,
+      "sha256": "df2d614d76b4c75d9dfa9a7a8968b0fe0ef054a216beb4b264bc896eb82b823c",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-signed-min.hex",
+      "bytes": 852,
+      "sha256": "75cef56196030e51d1e3a26a73260137bc74ad2e06e1269b5396741e8858bab6",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-signed-max.hex",
+      "bytes": 852,
+      "sha256": "782e8c172fc2a353c29cd1df7b45543e74b17de58db283f4d730f0d0c2fd3000",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-signed-width.hex",
+      "bytes": 852,
+      "sha256": "6f1dfe97fa1bab6335fa9cfe343adb71c9cc26fc74ea7783954104c5086858e3",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-string-nul.hex",
+      "bytes": 848,
+      "sha256": "94b46d3e0bdf3ba043f33c2e7421eae65750b80ebf4f20fdce5d5bc78ef48553",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-string-nonutf8.hex",
+      "bytes": 848,
+      "sha256": "ef46a6a2e5851dd2969fd592167a3ca2a7e85ad66d91676e60b58b1194bf9edc",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-string-empty.hex",
+      "bytes": 844,
+      "sha256": "677c97a96919782065d0200fe4a8c878142456e96d37d6baef477d4f4b410825",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-wrong-ue.hex",
+      "bytes": 852,
+      "sha256": "fba4c96160160756d1232ac29067763eff6e7c2378b74a99de92243675a9dba0",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-wrong-time.hex",
+      "bytes": 852,
+      "sha256": "82b8f12d5012286429bd8b5249c03ad8e3097fff8209447a11117aaac3c05d8c",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-wrong-smsc.hex",
+      "bytes": 848,
+      "sha256": "dd02d6901f427eeb9c330f771699c6168a659d0e89bc7800ea00df3e98daf38e",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-wrong-node.hex",
+      "bytes": 852,
+      "sha256": "306641051da64bd84ff5a6c6402b993c345cf0ed3d28b57e4b9595c042208494",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-wrong-action.hex",
+      "bytes": 852,
+      "sha256": "7f886577c0edeabc0bd36bc3bb7ecdba9c5ef9942329501e8156177f52420cc9",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-wrong-units.hex",
+      "bytes": 852,
+      "sha256": "31488038e45c201bb49116e377f9f6efc939bc4176dafb82284419d262aade96",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-missing-udh.hex",
+      "bytes": 832,
+      "sha256": "691964d402ada89a837a6ec501130820bd9d4c32385600d51342338ee9914822",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-duplicate-interface.hex",
+      "bytes": 880,
+      "sha256": "3c33f519bc8f849b43251a301ef7672a623251baaeb4bca0a1774655683504ac",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-wrong-vendor.hex",
+      "bytes": 848,
+      "sha256": "356bb4bd06a7b8dbb0f9e0f91e81ded92cff4dc805763f64d2f7fe132a89a014",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-wrong-parent.hex",
+      "bytes": 864,
+      "sha256": "04db2ea9de72a4fef2f5c9f948463328a2c4d09c603c8fefcd46d069e2e826fa",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-420-scalar.hex",
+      "bytes": 864,
+      "sha256": "14297c7d5720de05744556176d1139f3a435cf36e57791daed38f7dcaf94d7db",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-420-grouped.hex",
+      "bytes": 880,
+      "sha256": "5b97955c560d968b90c465b0cb82538c242da76a26570e00e6b26c4407cb74ee",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-token1292.hex",
+      "bytes": 864,
+      "sha256": "c320a6e8752759dc53dfdc9a514673a5df03c7441827e68db201665a8a24d2a1",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-cca-psp.hex",
+      "bytes": 180,
+      "sha256": "502e97e4594115003a8f99a3ec03bba5e48131c03405223681d49302beffb109",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-cca-number.hex",
+      "bytes": 140,
+      "sha256": "6f05e01b4f07300a820af26ba75d1fb90fb785ffa9b35cbb2ef2d0fc12e720b4",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-cca-ddfh-unknown.hex",
+      "bytes": 176,
+      "sha256": "1cac546d7422b9dcd3aabe5c4d99a0fe584e936fedf9cf85cf2ae38a150dc553",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b41-subscriptions-reversed.hex",
+      "bytes": 852,
+      "sha256": "a4f67679f9d6307624ab4f24486a805eae35cef07ee0f4a5ba17998622ebd0d5",
+      "source": "interop/smsfw-iec-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    }
+  ]
+}

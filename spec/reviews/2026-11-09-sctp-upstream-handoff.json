@@ -1,0 +1,218 @@
+{
+  "date": "2026-11-09",
+  "kind": "documentation_only_upstream_handoff",
+  "status": "design_ready_implementation_planned",
+  "requirements_document": "doc/sctp-upstream-improvement-plan.md",
+  "session_prompt": "doc/sctp-upstream-session-prompt.md",
+  "implementation_baseline": {
+    "batch": 65,
+    "baseline": "Draft 0.66",
+    "contract": "spec/batch-65.md",
+    "new_implementation_batch": false,
+    "production_code_changed": false,
+    "dependencies_changed": false,
+    "tests_rerun": false
+  },
+  "upstream_baseline": {
+    "module": "github.com/skill215/sctp",
+    "version": "v0.7.5-0.20261109044437-1649569dd9b8",
+    "commit": "1649569dd9b851b95664fef36f575c88a3547a78",
+    "local_checkout_head": "62ad388be958f0bd19d29d63dfc05743726779a1",
+    "local_checkout_dirty": true,
+    "checked_files": [
+      {
+        "path": "sctp.go",
+        "sha256": "21cceffeb3dcec2b21ec1845f7511d8c1e1c7478a96aac0c7e82dd74e7be5a98",
+        "matches_installed_candidate": true
+      },
+      {
+        "path": "sctp_linux.go",
+        "sha256": "4d612beb5a9a3f25b5a97f60aaa8da905cda1f2d3922d91c4eb11bb44a92df35",
+        "matches_installed_candidate": true
+      },
+      {
+        "path": "socket_io_linux.go",
+        "sha256": "397f3be775f1ae875fbd04adff503a0ccd2fee65ca21b0521521c99f19431cdc",
+        "matches_installed_candidate": true
+      },
+      {
+        "path": "socket_deadline.go",
+        "sha256": "312a4851507a8ee1a83bf6d7b64c393c0f6cf2ec250b664fef0f41e249b017d4",
+        "matches_installed_candidate": true
+      },
+      {
+        "path": "context.go",
+        "sha256": "9465579e0f79173754da20762565a67c2d8884a6a1f992096bef288c2bbc4700",
+        "matches_installed_candidate": true
+      },
+      {
+        "path": "message.go",
+        "sha256": "5e9b64c08104a0bc45ac2f8c1dfd71e401665f62ee08a2313cef4cfb719b67fb",
+        "matches_installed_candidate": true
+      },
+      {
+        "path": "message_io_linux.go",
+        "sha256": "0f014a0048d908b19bbdd08ba3946cfc8f800f564b6ee68cf36867d7407c8326",
+        "matches_installed_candidate": true
+      },
+      {
+        "path": "message_options_linux.go",
+        "sha256": "a150dd79b5f43c5f5a420a7c299b73c641bcc16f3e870798f7888f21d332fd44",
+        "matches_installed_candidate": true
+      },
+      {
+        "path": "notification.go",
+        "sha256": "fdafd137fa7657699768c85b979e4eab3672e492c2fc150c0543ebde29fc9e87",
+        "matches_installed_candidate": true
+      },
+      {
+        "path": "docs/diameterkit-u5-resources.md",
+        "sha256": "c1cde4a6c11b0ef40726f7294d75ece29b0c58028172e1ec64277812c835263d",
+        "matches_installed_candidate": true
+      }
+    ],
+    "scope": "10 selected files only;not full-working-tree identity;do not reset or overwrite local changes",
+    "remote_PR_status_checked_this_review": false,
+    "upstream_files_modified": false
+  },
+  "work_items": [
+    {
+      "item": "A",
+      "priority": "P0",
+      "upstream_contracts": [
+        "U3"
+      ],
+      "status": "planned",
+      "capability": "AcceptSCTPContext and listener SetDeadline using existing poller/operation gates",
+      "removes": "adapter periodic 20ms Accept loop",
+      "acceptance": [
+        "current/future deadline updates and clear",
+        "queued/active context cancellation",
+        "close/init failure/final handoff races",
+        "cancel then reuse;post-handoff context isolation",
+        "old Accept compatibility;no idle timeout polling"
+      ]
+    },
+    {
+      "item": "B",
+      "priority": "P0",
+      "upstream_contracts": [
+        "U1",
+        "U3"
+      ],
+      "status": "planned",
+      "capability": "bounded owned setup facade with combined N/Z/D preflight and one absolute context",
+      "removes": "adapter endpoint parsing/cloning/resolution implementation",
+      "acceptance": [
+        "limits before allocation/resolution/fd",
+        "numeric port grammar and owned input",
+        "IPv4/IPv6/zones/explicit multihoming",
+        "DNS cancellation and resolve/connect shared deadline",
+        "late success closes;existing entries compatible"
+      ]
+    },
+    {
+      "item": "C",
+      "priority": "P0",
+      "upstream_contracts": [
+        "U1",
+        "U4"
+      ],
+      "status": "planned",
+      "capability": "public SOL_SOCKET timeout reset and owned frozen bind snapshot",
+      "removes": "adapter setsockopt/getsockname SyscallConn callbacks",
+      "acceptance": [
+        "zero/invalid/partial error semantics",
+        "wildcard and ephemeral port without interface enumeration",
+        "owned snapshot and unavailable imported listener",
+        "actual message options/status reuse"
+      ]
+    },
+    {
+      "item": "D",
+      "priority": "P0",
+      "upstream_contracts": [
+        "U5"
+      ],
+      "status": "planned",
+      "capability": "versioned no-I/O setup/connection/listener resource requirements",
+      "removes": "adapter upstream8192 constant and copied upstream address-ledger formula",
+      "acceptance": [
+        "explicit include/exclude relationships",
+        "overflow/platform/config rejection",
+        "sizeof/scratch/peak overlap evidence",
+        "no RSS or DNS internal-memory guarantee"
+      ]
+    },
+    {
+      "item": "E",
+      "priority": "P1",
+      "upstream_contracts": [
+        "U2",
+        "U4"
+      ],
+      "status": "planned",
+      "capability": "single fixed message-continuity cursor,portable EOR view and negotiated stream validation/evidence",
+      "removes": "duplicate adapter SCTP metadata-continuity checks only after upstream proof",
+      "acceptance": [
+        "notification interleaving preserves cursor",
+        "ordered SSN vs unordered;malformed metadata and CloseRequired",
+        "no payload buffering or multiple readers",
+        "asymmetric streams SID>0 and PPID0/46",
+        "existing short-write and actual byte evidence retained"
+      ]
+    }
+  ],
+  "delivery_stages": [
+    [
+      "A",
+      "C"
+    ],
+    [
+      "B",
+      "D"
+    ],
+    [
+      "E"
+    ]
+  ],
+  "migration_gates": {
+    "setup_adapter": "A-D accepted on one exact candidate;then diameterkit upgrade/refactor/regression",
+    "message_continuity": "E accepted and resource ledger updated;then delete duplicated checks",
+    "production_release": "immutable consumable versions,matching native CI and actual deployment evidence;not implied by local tests"
+  },
+  "retained_diameterkit_responsibilities": [
+    "Diameter prefix/body/discard and declared length/EOR comparison",
+    "PPID policy and Session stream mapping",
+    "CEA barrier and Peer/watchdog/REOPEN/DPR/DPA",
+    "notification rate and whole-frame timeout policy",
+    "transport.Event projection,ConnectionID and first terminal cause",
+    "Node resource admission,pending,attempts,one completion and retirement",
+    "thin transport adapters;no generic socket logic"
+  ],
+  "superseded_design": [
+    "No need for AcceptContext in original U3 minimal slice",
+    "Adapter permanently owns N/Z/D resolver and upstream-specific accounting formulas",
+    "Immediately implementing named Diameter multi-stream before the requested upstream handoff"
+  ],
+  "preserved_history": [
+    "batch65 implementation and tests remain valid",
+    "64 frozen ledgers unchanged",
+    "24 SPEC IDs and partial/planned statuses unchanged",
+    "new upstream capabilities not claimed tested or implemented"
+  ],
+  "references": [
+    {
+      "url": "https://pkg.go.dev/net@go1.26.0#TCPListener.SetDeadline",
+      "use": "listener deadline precedent;AcceptContext is proposed extension"
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc6458.html#section-3.1.4",
+      "use": "SCTP partial user-message reception and EOR;single-cursor design restricted to level0"
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc6733.html#section-2.1.1",
+      "use": "Diameter SCTP stream/barrier policy belongs in Diameter"
+    }
+  ]
+}

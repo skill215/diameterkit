@@ -1,0 +1,569 @@
+{
+  "batch": 80,
+  "date": "2026-11-10",
+  "scope": "Derived local definition/version/path catalog; no new protocol conformance claim",
+  "generator_version": 13,
+  "operations_version": 8,
+  "generated_profiles": [
+    {
+      "definition": "spec/base.json",
+      "generated": "base/zz_generated_messages.go",
+      "profile": "base-rfc6733-controls-slice-v1",
+      "version": "0.1.0-slice.8",
+      "definition_digest": "03c201c836d69dc35145855fa9a9c179a769789d412ad32c785986c4f6485b91",
+      "source_baseline": "RFC 6733 sections 5.3, 5.4, 5.5 and 6.11: six normal controls and CER/CEA VSAI",
+      "commands": [
+        {
+          "name": "CER",
+          "application": 0,
+          "code": 257,
+          "request": true
+        },
+        {
+          "name": "CEA",
+          "application": 0,
+          "code": 257,
+          "request": false
+        },
+        {
+          "name": "DWR",
+          "application": 0,
+          "code": 280,
+          "request": true
+        },
+        {
+          "name": "DWA",
+          "application": 0,
+          "code": 280,
+          "request": false
+        },
+        {
+          "name": "DPR",
+          "application": 0,
+          "code": 282,
+          "request": true
+        },
+        {
+          "name": "DPA",
+          "application": 0,
+          "code": 282,
+          "request": false
+        }
+      ],
+      "manual_rules": {
+        "validateCEAResult": "base/rules.go",
+        "validateDPAResult": "base/rules.go",
+        "validateDWAResult": "base/rules.go"
+      },
+      "definition_sha256": "62eb048eaf5431df7a257798fc951e4a10e309fc1450180704479198c32e7051",
+      "generated_sha256": "3279e215da42295485303adec647c3f5e4958a963227a3d3533a6dc3fe1477de"
+    },
+    {
+      "definition": "spec/s6c.json",
+      "generated": "app/s6c/zz_generated_messages.go",
+      "profile": "s6c-29.338-ordinary-mme-slice-v1",
+      "version": "0.1.0-slice.22",
+      "definition_digest": "11fd640ba2d26a61aa51c903b5c469263536755f27ef8276df3ca1b1589c87d3",
+      "source_baseline": "3GPP TS 29.338 V18.2.0, S6c SRR/SRA ordinary MSISDN/MME subset",
+      "commands": [
+        {
+          "name": "SRR",
+          "application": 16777312,
+          "code": 8388647,
+          "request": true
+        },
+        {
+          "name": "SRA",
+          "application": 16777312,
+          "code": 8388647,
+          "request": false
+        },
+        {
+          "name": "RDR",
+          "application": 16777312,
+          "code": 8388649,
+          "request": true
+        },
+        {
+          "name": "RDA",
+          "application": 16777312,
+          "code": 8388649,
+          "request": false
+        },
+        {
+          "name": "ALR",
+          "application": 16777312,
+          "code": 8388648,
+          "request": true
+        },
+        {
+          "name": "ALA",
+          "application": 16777312,
+          "code": 8388648,
+          "request": false
+        }
+      ],
+      "manual_rules": {
+        "checkAlertRole": "app/s6c/alert.go",
+        "checkReportContext": "app/s6c/t4.go",
+        "checkRoutingContext": "app/s6c/t4.go",
+        "checkSRANodeRequest": "app/s6c/routing.go",
+        "validateALAResult": "app/s6c/rules.go",
+        "validateALRSubset": "app/s6c/alert.go",
+        "validateAdditionalNodeSubset": "app/s6c/routing.go",
+        "validateAlertCorrelation": "app/s6c/ims_alert.go",
+        "validateAlertIdentity": "app/s6c/alert.go",
+        "validateIPSMGWOutcomeSubset": "app/s6c/ipsmgw_outcome.go",
+        "validateMMEOutcomeSubset": "app/s6c/rules.go",
+        "validateMSCOutcomeSubset": "app/s6c/rules.go",
+        "validateOutcomeSubset": "app/s6c/rules.go",
+        "validateRDAResult": "app/s6c/rules.go",
+        "validateRDRSubset": "app/s6c/rules.go",
+        "validateReportCorrelation": "app/s6c/ims_report.go",
+        "validateReportIdentity": "app/s6c/alert.go",
+        "validateRoutingCorrelation": "app/s6c/ims_routing.go",
+        "validateSGSNOutcomeSubset": "app/s6c/rules.go",
+        "validateSRAResult": "app/s6c/rules.go",
+        "validateSRRSubset": "app/s6c/rules.go",
+        "validateServingNodeSubset": "app/s6c/routing.go",
+        "validateUserIdentifierSubset": "app/s6c/rules.go"
+      },
+      "definition_sha256": "985dc61d69c8b516549e6c47469013422f5e83a58fedb0dec204614bccc46ff2",
+      "generated_sha256": "5eb8e4c699715d719860d0c19ccc73ecf9cf33212f97ec6752f173be79e38d0b"
+    },
+    {
+      "definition": "spec/sgd.json",
+      "generated": "app/sgd/zz_generated_messages.go",
+      "profile": "sgd-gdd-29.338-ordinary-slice-v1",
+      "version": "0.1.0-slice.15",
+      "definition_digest": "918e6ba09e772bf194472f761e9df0c09b761a1db213eedc8c9f06a89f1e4b5d",
+      "source_baseline": "3GPP TS 29.338 V18.2.0 sections 6.2, 6.3 and 7: ordinary IMSI MO / MME or SGSN MT subset; SGd and Gdd share application 16777313",
+      "commands": [
+        {
+          "name": "OFR",
+          "application": 16777313,
+          "code": 8388645,
+          "request": true
+        },
+        {
+          "name": "OFA",
+          "application": 16777313,
+          "code": 8388645,
+          "request": false
+        },
+        {
+          "name": "TFR",
+          "application": 16777313,
+          "code": 8388646,
+          "request": true
+        },
+        {
+          "name": "TFA",
+          "application": 16777313,
+          "code": 8388646,
+          "request": false
+        }
+      ],
+      "manual_rules": {
+        "checkRetransmission": "app/sgd/retransmission.go",
+        "checkT4Charging": "app/sgd/t4.go",
+        "validateAlertIdentity": "app/sgd/rules.go",
+        "validateEPSSubset": "app/sgd/rules.go",
+        "validateIMSOutcome": "app/sgd/ims.go",
+        "validateIdentitySubset": "app/sgd/rules.go",
+        "validateMMELocationSubset": "app/sgd/rules.go",
+        "validateMOCorrelation": "app/sgd/ims.go",
+        "validateMOOutcome": "app/sgd/ims.go",
+        "validateMTCorrelation": "app/sgd/ims_mt.go",
+        "validateOFARelation": "app/sgd/rules.go",
+        "validateOFAResult": "app/sgd/rules.go",
+        "validateOFRSubset": "app/sgd/rules.go",
+        "validateTFARelation": "app/sgd/rules.go",
+        "validateTFAResult": "app/sgd/rules.go",
+        "validateTFRSubset": "app/sgd/rules.go"
+      },
+      "definition_sha256": "cc0a054e0c0654302bd6a9225285a2c30778d91a9481db346d9a0e139c7e6634",
+      "generated_sha256": "834baf2f636cdedb4fafe23291b831bc06097e16fb912ca39ce6a1e4963b31c4"
+    },
+    {
+      "definition": "spec/sh.json",
+      "generated": "app/sh/zz_generated_messages.go",
+      "profile": "sh-29.329-sms-opaque-slice-v1",
+      "version": "0.1.0-slice.11",
+      "definition_digest": "659215f2f39679d747cd2d800243224a2cd41d0fe5899080578897ec0de407f4",
+      "source_baseline": "3GPP TS 29.329 V18.0.0 sections 6.1-6.3 and TS 29.328 V18.1.0 sections 6.1.1-6.1.4: Ref24 pull/update, single Ref11/12/25 subscribe/unsubscribe and independent notification",
+      "commands": [
+        {
+          "name": "UDR",
+          "application": 16777217,
+          "code": 306,
+          "request": true
+        },
+        {
+          "name": "UDA",
+          "application": 16777217,
+          "code": 306,
+          "request": false
+        },
+        {
+          "name": "PUR",
+          "application": 16777217,
+          "code": 307,
+          "request": true
+        },
+        {
+          "name": "PUA",
+          "application": 16777217,
+          "code": 307,
+          "request": false
+        },
+        {
+          "name": "SNR",
+          "application": 16777217,
+          "code": 308,
+          "request": true
+        },
+        {
+          "name": "SNA",
+          "application": 16777217,
+          "code": 308,
+          "request": false
+        },
+        {
+          "name": "PNR",
+          "application": 16777217,
+          "code": 309,
+          "request": true
+        },
+        {
+          "name": "PNA",
+          "application": 16777217,
+          "code": 309,
+          "request": false
+        }
+      ],
+      "manual_rules": {
+        "checkPNAFeatures": "app/sh/features.go",
+        "checkPUAFeatures": "app/sh/features.go",
+        "checkPeerFeatures": "app/sh/features.go",
+        "checkSNAFeatures": "app/sh/features.go",
+        "checkUDAFeatures": "app/sh/features.go",
+        "validateIdentitySubset": "app/sh/rules.go",
+        "validatePNAResult": "app/sh/rules.go",
+        "validatePNRSubset": "app/sh/rules.go",
+        "validatePUAResult": "app/sh/rules.go",
+        "validatePURSubset": "app/sh/rules.go",
+        "validateSNAResult": "app/sh/rules.go",
+        "validateSNRSubset": "app/sh/rules.go",
+        "validateUDAResult": "app/sh/rules.go",
+        "validateUDRSubset": "app/sh/rules.go"
+      },
+      "definition_sha256": "88df238299ecb1d92e2229f77cb96d8645f2b107e1b52273d79869d665ad1260",
+      "generated_sha256": "9512fbf356623fbbe80be7e6788b7772bb0f7a7ae0de8cadf5c5f2c02c683d52"
+    },
+    {
+      "definition": "spec/ro.json",
+      "generated": "app/ro/zz_generated_messages.go",
+      "profile": "ro-32.299-sms-iec-slice-v1",
+      "version": "0.1.0-slice.6",
+      "definition_digest": "421d05bb213412c1fcebcc3af34bb54edbe63b80d15709fdbf732d3b02898f3b",
+      "source_baseline": "RFC4006 sections3,6.3,8.2-3,8.16-19 and9; TS32.299 V18.0.0 sections6.3.3,7.1 and7.2; frozen V-IEC-CCR-01/CCA-01/02 in doc/diameterkit-protocol-vectors.md",
+      "commands": [
+        {
+          "name": "CCR",
+          "application": 4,
+          "code": 272,
+          "request": true
+        },
+        {
+          "name": "CCA",
+          "application": 4,
+          "code": 272,
+          "request": false
+        }
+      ],
+      "manual_rules": {
+        "checkSMSCreditControl": "app/ro/rules.go",
+        "validateAnswerMSCCSubset": "app/ro/rules.go",
+        "validateCCARelation": "app/ro/rules.go",
+        "validateCCASubset": "app/ro/rules.go",
+        "validateCCRSubset": "app/ro/rules.go",
+        "validateCreditError": "app/ro/rules.go",
+        "validateEquipmentSubset": "app/ro/ps.go",
+        "validateInterfaceSubset": "app/ro/rules.go",
+        "validatePSSubset": "app/ro/ps.go",
+        "validateReceivedExperimentalResult": "app/ro/rules.go",
+        "validateReceivedSupportedFeatures": "app/ro/rules.go",
+        "validateRecipientSubset": "app/ro/rules.go",
+        "validateRequestMSCCSubset": "app/ro/rules.go",
+        "validateSMSSubset": "app/ro/rules.go",
+        "validateServiceSubset": "app/ro/rules.go",
+        "validateSubscriptionSubset": "app/ro/rules.go",
+        "validateUnitsSubset": "app/ro/rules.go"
+      },
+      "definition_sha256": "0241a058f35d31d4522cf0e6cf330b834c74f0d149e2161d21f0b4982c273030",
+      "generated_sha256": "e5197314d339c014a0d7bd415d6d9fcbe186eec11d9f3d6d2d3b9fe31a7ebf67"
+    },
+    {
+      "definition": "spec/roabort.json",
+      "generated": "app/ro/abort/zz_generated_messages.go",
+      "profile": "ro-rfc6733-abort-slice-v1",
+      "version": "0.1.0-slice.1",
+      "definition_digest": "cc04213990a5399a26e6ee9455d06a147a7afb060c73c84247ffeb867a62adea",
+      "source_baseline": "RFC6733 sections2.5,7.2,8.5.1 and8.5.2; TS32.299 section6.5.5; doc/diameterkit-mainflow-audit.md sections29.3/30.4",
+      "commands": [
+        {
+          "name": "ASR",
+          "application": 4,
+          "code": 274,
+          "request": true
+        },
+        {
+          "name": "ASA",
+          "application": 4,
+          "code": 274,
+          "request": false
+        }
+      ],
+      "manual_rules": {
+        "validateASASubset": "app/ro/abort/rules.go",
+        "validateASRSubset": "app/ro/abort/rules.go",
+        "validateAbortError": "app/ro/abort/rules.go"
+      },
+      "definition_sha256": "8fa506af2b2d3e66ffe06e0bf78743bcb64d0e0104f67110f52c1216d89da5b6",
+      "generated_sha256": "7099e729b0a7a5aa64d107ba18a8ac70f2500c287bc58610bc704f344bc363ea"
+    },
+    {
+      "definition": "spec/smsfwro.json",
+      "generated": "compat/smsfwro/zz_generated_messages.go",
+      "profile": "smsfw-ro-iec-template-v1",
+      "version": "0.1.0-slice.6",
+      "definition_digest": "e2d2b053c2b3d51fd45736769a74fcec71655e81322592fca9842c39beb21f9c",
+      "source_baseline": "sms-fw c-cpp/libsrc/kernel/dialib/yppdia_iec_avptemplate.cf; AvpsTemplate.cc, AvpImpl.cc, dia-cc.cc and dia-message.cc; source snapshots and full mapping in spec/batch-41.md",
+      "commands": [
+        {
+          "name": "CCR",
+          "application": 4,
+          "code": 272,
+          "request": true
+        },
+        {
+          "name": "CCA",
+          "application": 4,
+          "code": 272,
+          "request": false
+        }
+      ],
+      "manual_rules": {
+        "checkLegacySMS": "compat/smsfwro/rules.go",
+        "validateAddressSubset": "compat/smsfwro/rules.go",
+        "validateCCARelation": "compat/smsfwro/rules.go",
+        "validateCCASubset": "compat/smsfwro/rules.go",
+        "validateCCRSubset": "compat/smsfwro/rules.go",
+        "validateCostInformationSubset": "compat/smsfwro/rules.go",
+        "validateCostValueSubset": "compat/smsfwro/rules.go",
+        "validateCreditError": "compat/smsfwro/rules.go",
+        "validateInterfaceSubset": "compat/smsfwro/rules.go",
+        "validateMMSInformationSubset": "compat/smsfwro/rules.go",
+        "validateReceivedExperimentalResult": "compat/smsfwro/rules.go",
+        "validateReceivedSupportedFeatures": "compat/smsfwro/rules.go",
+        "validateRequestMSCCSubset": "compat/smsfwro/rules.go",
+        "validateSMSInformationSubset": "compat/smsfwro/rules.go",
+        "validateServiceInformationSubset": "compat/smsfwro/rules.go",
+        "validateServiceResultSubset": "compat/smsfwro/rules.go",
+        "validateServiceUnitSubset": "compat/smsfwro/rules.go",
+        "validateSubscriptionIDSubset": "compat/smsfwro/rules.go",
+        "validateUserEquipmentInfoSubset": "compat/smsfwro/rules.go"
+      },
+      "definition_sha256": "b4d360dbad1b0dcb2c7511be95c280f3dc85a1fdc860dc087f2177ca4dbfc403",
+      "generated_sha256": "12ed0a334f26364ddbebfd08ab4ad9f99efb2261be9e1118caa72898051e9d7d"
+    },
+    {
+      "definition": "spec/legacy420.json",
+      "generated": "compat/smsfwro/legacy420/zz_generated_messages.go",
+      "profile": "smsfw-ro-legacy420-v1",
+      "version": "0.1.0-slice.6",
+      "definition_digest": "2b6940665c9b29bdef9cdb3fd455e7e2892f5808ffabcbb6092bbeb2d73a6452",
+      "source_baseline": "sms-fw c-cpp/libsrc/kernel/dialib/yppdia_refund_avptemplate.cf and actual AvpsTemplate/AvpImpl/dia-message/dia-cc/DccaClientWrapper sources; spec/batch-42.md and source projection evidence",
+      "commands": [
+        {
+          "name": "CCR",
+          "application": 4,
+          "code": 272,
+          "request": true
+        },
+        {
+          "name": "CCA",
+          "application": 4,
+          "code": 272,
+          "request": false
+        }
+      ],
+      "manual_rules": {
+        "checkLegacyEvent": "compat/smsfwro/legacy420/rules.go",
+        "validateCCARelation": "compat/smsfwro/legacy420/rules.go",
+        "validateCCASubset": "compat/smsfwro/legacy420/rules.go",
+        "validateCCRSubset": "compat/smsfwro/legacy420/rules.go",
+        "validateCostInformationSubset": "compat/smsfwro/legacy420/rules.go",
+        "validateCostValueSubset": "compat/smsfwro/legacy420/rules.go",
+        "validateCreditError": "compat/smsfwro/legacy420/rules.go",
+        "validateGrantedUnitSubset": "compat/smsfwro/legacy420/rules.go",
+        "validateInterfaceSubset": "compat/smsfwro/legacy420/rules.go",
+        "validateMMSInformationSubset": "compat/smsfwro/legacy420/rules.go",
+        "validateMoneySubset": "compat/smsfwro/legacy420/rules.go",
+        "validateOriginatorAddressSubset": "compat/smsfwro/legacy420/rules.go",
+        "validateReceivedExperimentalResult": "compat/smsfwro/legacy420/rules.go",
+        "validateReceivedSupportedFeatures": "compat/smsfwro/legacy420/rules.go",
+        "validateRequestMSCCSubset": "compat/smsfwro/legacy420/rules.go",
+        "validateRequestedUnitSubset": "compat/smsfwro/legacy420/rules.go",
+        "validateSMSInformationSubset": "compat/smsfwro/legacy420/rules.go",
+        "validateServiceInformationSubset": "compat/smsfwro/legacy420/rules.go",
+        "validateServiceResultSubset": "compat/smsfwro/legacy420/rules.go",
+        "validateSubscriptionIDSubset": "compat/smsfwro/legacy420/rules.go",
+        "validateUnitValueSubset": "compat/smsfwro/legacy420/rules.go"
+      },
+      "definition_sha256": "df8f9997f753961f9cd375f596705ccdd3a2febad120a91ef68ec0d66035160d",
+      "generated_sha256": "ce31df60638012e02b5d366665d5f2a94066893bce1c81c3ac0b43de3b5fbd19"
+    },
+    {
+      "definition": "spec/scap1.json",
+      "generated": "compat/scap1/zz_generated_messages.go",
+      "profile": "smsfw-scap1-event-v1",
+      "version": "0.1.0-slice.2",
+      "definition_digest": "776822b9cd1dd096db5e72467c7afd0aa8ea128786461323cbade801fc26aefd",
+      "source_baseline": "Actual sms-fw yppdia_avptemplate_scap1.cf47 nodes/18 roots; AvpsTemplate SCAP1 base fields, DIACCConstructRequest and dia-attr.hpp fix271/App0; AvpImpl/String/Time writers and actual getters. Explicit P1 selected. Independent source proof in batch45; no C++ execution or OCS acceptance.",
+      "commands": [
+        {
+          "name": "ACR",
+          "application": 0,
+          "code": 271,
+          "request": true
+        },
+        {
+          "name": "ACA",
+          "application": 0,
+          "code": 271,
+          "request": false
+        }
+      ],
+      "manual_rules": {
+        "checkEvent": "compat/scap1/rules.go",
+        "validateACARelation": "compat/scap1/rules.go",
+        "validateACASubset": "compat/scap1/rules.go",
+        "validateACRSubset": "compat/scap1/rules.go",
+        "validateRequestedUnitSubset": "compat/scap1/rules.go",
+        "validateServiceParameterSubset": "compat/scap1/rules.go",
+        "validateSubscriptionIDSubset": "compat/scap1/rules.go",
+        "validateUnitValueSubset": "compat/scap1/rules.go",
+        "validateVendorApplicationSubset": "compat/scap1/rules.go"
+      },
+      "definition_sha256": "659516e8b1b22c6a75ad870126528feeaed1b487963618a47c031ee2c13a30da",
+      "generated_sha256": "425894ca9c103857d5ce9590c19af321d3ed08273f71ac681eeabba960e1b819"
+    },
+    {
+      "definition": "spec/combined.json",
+      "generated": "compat/smsfwro/combined/zz_generated_messages.go",
+      "profile": "smsfw-ro-five-template-wire-v1",
+      "version": "0.1.0-slice.5",
+      "definition_digest": "67e2979da52ecc65178ada116db775bbf46c335b571ffad9ef9ab5a70d20653d",
+      "source_baseline": "Actual sms-fw five CCR templates, AvpsTemplate/AvpImpl/dia-message sources and frozen batch41-44 source projections. spec/batch-47.md defines explicit combined deployment boundary; not standard Ro.",
+      "commands": [
+        {
+          "name": "CCR",
+          "application": 4,
+          "code": 272,
+          "request": true
+        },
+        {
+          "name": "CCA",
+          "application": 4,
+          "code": 272,
+          "request": false
+        }
+      ],
+      "manual_rules": {
+        "checkCombinedSMS": "compat/smsfwro/combined/rules.go",
+        "validateAddressSubset": "compat/smsfwro/combined/rules.go",
+        "validateCCARelation": "compat/smsfwro/combined/rules.go",
+        "validateCCASubset": "compat/smsfwro/combined/rules.go",
+        "validateCCRSubset": "compat/smsfwro/combined/rules.go",
+        "validateCostInformationSubset": "compat/smsfwro/combined/rules.go",
+        "validateCostValueSubset": "compat/smsfwro/combined/rules.go",
+        "validateCreditError": "compat/smsfwro/combined/rules.go",
+        "validateInterfaceSubset": "compat/smsfwro/combined/rules.go",
+        "validateMMSInformationSubset": "compat/smsfwro/combined/rules.go",
+        "validateMoneySubset": "compat/smsfwro/combined/rules.go",
+        "validateReceivedExperimentalResult": "compat/smsfwro/combined/rules.go",
+        "validateReceivedSupportedFeatures": "compat/smsfwro/combined/rules.go",
+        "validateRequestMSCCSubset": "compat/smsfwro/combined/rules.go",
+        "validateRequestedUnitSubset": "compat/smsfwro/combined/rules.go",
+        "validateSMSInformationSubset": "compat/smsfwro/combined/rules.go",
+        "validateServiceInformationSubset": "compat/smsfwro/combined/rules.go",
+        "validateServiceResultSubset": "compat/smsfwro/combined/rules.go",
+        "validateServiceUnitSubset": "compat/smsfwro/combined/rules.go",
+        "validateSubscriptionIDSubset": "compat/smsfwro/combined/rules.go",
+        "validateUnitValueSubset": "compat/smsfwro/combined/rules.go",
+        "validateUserEquipmentInfoSubset": "compat/smsfwro/combined/rules.go"
+      },
+      "definition_sha256": "a6c115d4ab5a30c4faadb8623b4fbde9e51a3ea0760e873206ba476154745df6",
+      "generated_sha256": "7cf678e3368c19dd0243f10715aa8534b94edc15db2b53500e471129d7c6672a"
+    },
+    {
+      "definition": "spec/dcca.json",
+      "generated": "app/ro/dcca/zz_generated_messages.go",
+      "profile": "dcca-rfc4006-single-event-v1",
+      "version": "0.1.0-slice.1",
+      "definition_digest": "d509b3aae1e7ef2d61ad5a7038e8e316296fa52ef204b763d471a8d35dc715bb",
+      "source_baseline": "RFC4006 sections3,6.2-6.4,8.6-8.12,8.16-8.19,8.28-8.29,8.41 and9; bounded single-service EVENT request number0,action0/1/2",
+      "commands": [
+        {
+          "name": "CCR",
+          "application": 4,
+          "code": 272,
+          "request": true
+        },
+        {
+          "name": "CCA",
+          "application": 4,
+          "code": 272,
+          "request": false
+        }
+      ],
+      "manual_rules": {
+        "checkOneTimeEvent": "app/ro/dcca/rules.go",
+        "validateCCARelation": "app/ro/dcca/rules.go",
+        "validateCCASubset": "app/ro/dcca/rules.go",
+        "validateCCRSubset": "app/ro/dcca/rules.go",
+        "validateCostSubset": "app/ro/dcca/rules.go",
+        "validateEventError": "app/ro/dcca/rules.go",
+        "validateMoneySubset": "app/ro/dcca/rules.go",
+        "validateSubscriptionSubset": "app/ro/dcca/rules.go",
+        "validateUnitSubset": "app/ro/dcca/rules.go",
+        "validateValueSubset": "app/ro/dcca/rules.go"
+      },
+      "definition_sha256": "5cf64e77bcf0f8a771e618c4462e6bc2141a23354f044b10d75c8e2fee473f4b",
+      "generated_sha256": "a35668bf114f11d52449d5cd24b2456582cc645a322f61c512445bcfdc57cacb"
+    }
+  ],
+  "delegated_profile": {
+    "source": "compat/sgdalert/profile.go",
+    "version": "legacy-sgd-alert-v1.1",
+    "application": 16777313,
+    "command": 8388648,
+    "requests_answers": [
+      "ALR",
+      "ALA"
+    ],
+    "delegate": "app/s6c",
+    "sha256": "f1277ca9c79d32343ad5b71a1fde4531ed4229e5fbd8c90f9f61e41ed1275d09"
+  },
+  "total_profiles": 12,
+  "request_answer_pairs_including_overlapping_bindings": 20,
+  "checks": [
+    "All eleven go:generate mappings resolved; JSON versions/profile names equal generated Go constants/Profile declarations",
+    "Each referenced manual rule resolves to exactly one non-generated, non-test Go file in the destination package",
+    "Application and command metadata read from authoritative JSON; delegated binding read from compat/sgdalert",
+    "Freshness and deterministic output are verified separately by existing internal/codegen tests"
+  ],
+  "guide": "doc/diameterkit-application-definitions.md"
+}

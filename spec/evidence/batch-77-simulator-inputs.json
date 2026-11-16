@@ -1,0 +1,257 @@
+{
+  "batch": 77,
+  "date": "2026-11-10",
+  "scope": "SIM-01 bounded actual simulator input acceptance/rejection and explicit migration; public pure-Go nonpersistent library",
+  "toolchain": "go1.26.10 linux/amd64",
+  "kernel": "6.6.114.1-microsoft-standard-WSL2",
+  "definitions": {
+    "generated": 11,
+    "changed": [],
+    "unchanged": 11,
+    "delegated_profiles": 1,
+    "total_profiles": 12,
+    "request_answer_pairs_including_overlapping_bindings": 20,
+    "generator": 13,
+    "operations": 8
+  },
+  "corpus": {
+    "wire": 1233,
+    "xml": 17,
+    "new_wire": 28,
+    "prior_wire_unchanged": 1205
+  },
+  "implemented": [
+    "Frozen three simulator source paths and nineteen source/config/module files; independent encoder projection and deterministic regeneration",
+    "Reject bad request P flag, host:port Origin, seventeen-digit IMSI, ALR dual identity, failed SRA productive fields, OFA state zero and successful UDA without data; explicit corrected inputs",
+    "Existing SMS VSAI receive-ignore/send-forbid retained; S6a deferred; ALR role facts explicit; no inferred identity rewriting",
+    "Original-request E2E/source/Proxy and owned answers; CompleteAnswer repairs envelope from authorized original request",
+    "Real TCP/TLS Sh/SMS/SRA response correction, canceled precommit, bounded multiArrival/cache, invalid matched answer/late answer single completion and resource release"
+  ],
+  "checks": [
+    {
+      "name": "simulator_race20",
+      "command": "go test ./... -race -json -run ^TestSimulator -count=20 -timeout=5m",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 760,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "881a31a22e5f6583c749b2f25f80e188d699b49a0bbbeebdce49bd99d2c82535",
+      "test_names": [
+        "TestSimulatorAcceptedPairs",
+        "TestSimulatorAcceptedPairs/mme-rda-2001",
+        "TestSimulatorAcceptedPairs/mme-rda-5012",
+        "TestSimulatorAcceptedPairs/mme-sra-2001",
+        "TestSimulatorAcceptedPairs/mme-sra-failure-fixed",
+        "TestSimulatorAcceptedPairs/mme-tfa-2001",
+        "TestSimulatorAcceptedPairs/mme-tfa-5012",
+        "TestSimulatorAcceptedPairs/poc-ofa-state1",
+        "TestSimulatorAcceptedPairs/sh-pua-2001",
+        "TestSimulatorAcceptedPairs/sh-pua-5012",
+        "TestSimulatorAcceptedPairs/sh-rda-vsai",
+        "TestSimulatorAcceptedPairs/sh-sna-2001",
+        "TestSimulatorAcceptedPairs/sh-sna-5012",
+        "TestSimulatorAcceptedPairs/sh-uda-5012",
+        "TestSimulatorAcceptedPairs/sh-uda-fixed",
+        "TestSimulatorInputDecisions",
+        "TestSimulatorInputDecisions/mme-alr-both-identities",
+        "TestSimulatorInputDecisions/mme-alr-original",
+        "TestSimulatorInputDecisions/mme-ofr-header-fixed",
+        "TestSimulatorInputDecisions/mme-ofr-host-fixed",
+        "TestSimulatorInputDecisions/mme-ofr-host-invalid",
+        "TestSimulatorInputDecisions/mme-ofr-original",
+        "TestSimulatorInputDecisions/mme-sra-5012",
+        "TestSimulatorInputDecisions/poc-ofa-state0",
+        "TestSimulatorInputDecisions/s6a-316",
+        "TestSimulatorInputDecisions/s6a-318",
+        "TestSimulatorInputDecisions/sh-uda-2001",
+        "TestSimulatorOriginalEnvelopeRepair",
+        "TestSimulatorRequestMigration",
+        "TestSimulatorSMSMigrationNetwork",
+        "TestSimulatorSMSMigrationNetwork/TCP",
+        "TestSimulatorSMSMigrationNetwork/TLS",
+        "TestSimulatorSRAFailureMigrationNetwork",
+        "TestSimulatorSRAFailureMigrationNetwork/TCP",
+        "TestSimulatorSRAFailureMigrationNetwork/TLS",
+        "TestSimulatorShMigrationNetwork",
+        "TestSimulatorShMigrationNetwork/TCP",
+        "TestSimulatorShMigrationNetwork/TLS"
+      ]
+    },
+    {
+      "name": "core_cgo0",
+      "command": "go test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 3239,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "018760d1c42df9bf5ae16214b4f0401bf11cca17dc2a1bc288e8950a0474a803"
+    },
+    {
+      "name": "core_race",
+      "command": "go test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 3239,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "f1f282ab77d4569139afbbf8f7df89dc6c0899d2b8d20f60d41d2aa778810f3b"
+    },
+    {
+      "name": "adapter_cgo0",
+      "command": "go -C adapters/sctp test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 113,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "5ba7a6447f243a4b91f6e82d82a2a463b302e42437f6838920f5b1fe4c2da746"
+    },
+    {
+      "name": "adapter_race",
+      "command": "go -C adapters/sctp test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 113,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "d7bf0826652fae165db56efce92305a404f076315c39192174122d83cefd6fce"
+    },
+    {
+      "name": "core_vet",
+      "command": "go vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_build",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_verify",
+      "command": "go mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "core_cross_windows_amd64",
+      "command": "go build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_386",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_arm64",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_deps",
+      "command": "go list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "ae77576366bea64209731dc1e8e24422426902724e3ea90f1d0e26329bd0bb6d",
+      "packages": 210,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit"
+      ]
+    },
+    {
+      "name": "adapter_vet",
+      "command": "go -C adapters/sctp vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_build",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_verify",
+      "command": "go -C adapters/sctp mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "adapter_cross_windows_amd64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_386",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_arm64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_deps",
+      "command": "go -C adapters/sctp list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "a49257c0154f148cb92f9e6dd29711f2cb0b907869af3f65ca6271d02321dc85",
+      "packages": 78,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit",
+        "github.com/skill215/diameterkit/adapters/sctp",
+        "github.com/skill215/sctp"
+      ]
+    },
+    {
+      "name": "selected_modules",
+      "command": "go -C adapters/sctp list -m -json all",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "ac42c4fbf2a5169d986971cc2a80a02aece79299bc6c2d5960ad310fee3735fe"
+    }
+  ],
+  "core_dependency": {
+    "version": "v0.0.0-diameterkit.batch76",
+    "sum": "h1:+EZCQPt0nrK6J9h6DOKZHY3XnirnSOQYKhhTfK29MKI=",
+    "files": 125,
+    "zip_sha256": "a928731f8daff3b6d4e889dbe19d3e42152836d9a47576c3f2642f500d646c92",
+    "manifest": "spec/evidence/batch-76-core-candidate-files.json",
+    "public_version": false
+  },
+  "module_isolation": "GOWORK=off, no replace, reused verified batch76 module cache; all installed core production files equal current sources; same immutable batch76 candidate, not republished as batch77",
+  "build_environment": "CGO_ENABLED=0 production builds and cross builds; race uses Go race runtime; no Cgo package files in either production dependency graph",
+  "interop_evidence": "interop/evidence/2026-11-10-simulator-inputs.json",
+  "production_code_changed": false,
+  "remaining": [
+    "SIM-01 old process migration and same-input old/new process comparison remain; no real target proof",
+    "Selected SCAP1 dual Auth/Acct compatibility and existing ACR/ACA multiArrival runtime mechanisms next; private ACA and recovery remain separately gated",
+    "Ro private fields/six-template/OCS evidence and final API/examples/CI/fuzz/stress/performance/public release gates unchanged"
+  ],
+  "release_status": "not_ready"
+}

@@ -1,0 +1,1344 @@
+{
+  "format": 1,
+  "package": "sh",
+  "profile": "sh-29.329-sms-opaque-slice-v1",
+  "version": "0.1.0-slice.11",
+  "sources": [
+    "3GPP TS 29.329 V18.0.0 sections 6.1-6.3 and TS 29.328 V18.1.0 sections 6.1.1-6.1.4: Ref24 pull/update, single Ref11/12/25 subscribe/unsubscribe and independent notification",
+    "doc/diameterkit-mainflow-audit.md sections 16.2, 20.4; doc/diameterkit-field-inventory.md sections 3.2,4.2,5,6: User-Data is opaque bytes, not XML validation or business acceptance",
+    "manual identity revision1: canonical global tel digits or ASCII sip:user@DNS-host; percent escapes retained; no IDNA, URI normalization, password/port/parameters/headers/IPv6 support",
+    "manual data revision1: bounded octet preservation only, no XML parser/helper/schema assertion or subscription state; selected UDA success requires UserData AVP, failed UDA/SNA excludes success payload; Time carries raw NTP bits, no era/clock/order judgement",
+    "manual subscription revision2: SubsReqType0/1, independent Expiry/SendData presence; SNA optional data is not required by a SHOULD or silently copied; no subscription history, expiry timer or post-unsubscribe PNR suppression",
+    "manual feature revision3: TS29.329 section7.1 / TS29.229 section7.2; capture outer M, full responder features, original-request 5011 deficit; bounded ShPeerFeatures context for exact command/requester/responder; mixed Ref11/12/25; no DRA feature inference or subscription state",
+    "generator9 / ops8: compiled CheckContext and M-preserving Grouped/Canonical; no transport replay permission",
+    "manual context-kind guard revision1: reject nonempty non-Sh evidence even for plain Sh; preserve missing-context fallback for genuinely empty context"
+  ],
+  "groups": [
+    {
+      "name": "ExperimentalResult",
+      "fields": [
+        {
+          "name": "VendorID",
+          "code": 266,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "ExperimentalResultCode",
+          "code": 298,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        }
+      ]
+    },
+    {
+      "name": "UserIdentity",
+      "fields": [
+        {
+          "name": "PublicIdentity",
+          "code": 601,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MSISDN",
+          "code": 701,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateIdentitySubset"
+    },
+    {
+      "name": "SupportedFeatures",
+      "capture_mandatory": true,
+      "fields": [
+        {
+          "name": "VendorID",
+          "code": 266,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "FeatureListID",
+          "code": 629,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "FeatureList",
+          "code": 630,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        }
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "name": "UDR",
+      "application": 16777217,
+      "code": 306,
+      "request": true,
+      "proxiable": true,
+      "no_context": false,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "VendorSpecificApplicationID",
+          "code": 260,
+          "vendor": 0,
+          "flags": 64,
+          "type": "vsai",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "DestinationHost",
+          "code": 293,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": 1,
+          "envelope": "DestinationHost"
+        },
+        {
+          "name": "DestinationRealm",
+          "code": 283,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationRealm"
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": 4
+        },
+        {
+          "name": "UserIdentity",
+          "code": 700,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "UserIdentity",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "DataReference",
+          "code": 703,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "rule": "validateUDRSubset",
+      "context_rule": "checkPeerFeatures",
+      "context_name": "ShPeerFeatures"
+    },
+    {
+      "name": "UDA",
+      "application": 16777217,
+      "code": 306,
+      "request": false,
+      "proxiable": true,
+      "no_context": false,
+      "error_answer": true,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "VendorSpecificApplicationID",
+          "code": 260,
+          "vendor": 0,
+          "flags": 64,
+          "type": "vsai",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ExperimentalResult",
+          "code": 297,
+          "vendor": 0,
+          "flags": 64,
+          "type": "ExperimentalResult",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": 4
+        },
+        {
+          "name": "UserData",
+          "code": 702,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "octets",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "ErrorMessage",
+          "code": 281,
+          "vendor": 0,
+          "flags": 0,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorReportingHost",
+          "code": 294,
+          "vendor": 0,
+          "flags": 0,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "FailedAVP",
+          "code": 279,
+          "vendor": 0,
+          "flags": 64,
+          "type": "diagnostic",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateUDAResult",
+      "context_rule": "checkPeerFeatures",
+      "context_name": "ShPeerFeatures",
+      "answer_rule": "checkUDAFeatures"
+    },
+    {
+      "name": "PUR",
+      "application": 16777217,
+      "code": 307,
+      "request": true,
+      "proxiable": true,
+      "no_context": false,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "VendorSpecificApplicationID",
+          "code": 260,
+          "vendor": 0,
+          "flags": 64,
+          "type": "vsai",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "DestinationHost",
+          "code": 293,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": 1,
+          "envelope": "DestinationHost"
+        },
+        {
+          "name": "DestinationRealm",
+          "code": 283,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationRealm"
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": 4
+        },
+        {
+          "name": "UserIdentity",
+          "code": 700,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "UserIdentity",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "DataReference",
+          "code": 703,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "UserData",
+          "code": 702,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "octets",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "rule": "validatePURSubset",
+      "context_rule": "checkPeerFeatures",
+      "context_name": "ShPeerFeatures"
+    },
+    {
+      "name": "PUA",
+      "application": 16777217,
+      "code": 307,
+      "request": false,
+      "proxiable": true,
+      "no_context": false,
+      "error_answer": true,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "VendorSpecificApplicationID",
+          "code": 260,
+          "vendor": 0,
+          "flags": 64,
+          "type": "vsai",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ExperimentalResult",
+          "code": 297,
+          "vendor": 0,
+          "flags": 64,
+          "type": "ExperimentalResult",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": 4
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "ErrorMessage",
+          "code": 281,
+          "vendor": 0,
+          "flags": 0,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorReportingHost",
+          "code": 294,
+          "vendor": 0,
+          "flags": 0,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "FailedAVP",
+          "code": 279,
+          "vendor": 0,
+          "flags": 64,
+          "type": "diagnostic",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validatePUAResult",
+      "context_rule": "checkPeerFeatures",
+      "context_name": "ShPeerFeatures",
+      "answer_rule": "checkPUAFeatures"
+    },
+    {
+      "name": "SNR",
+      "application": 16777217,
+      "code": 308,
+      "request": true,
+      "proxiable": true,
+      "no_context": false,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "VendorSpecificApplicationID",
+          "code": 260,
+          "vendor": 0,
+          "flags": 64,
+          "type": "vsai",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "DestinationHost",
+          "code": 293,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": 1,
+          "envelope": "DestinationHost"
+        },
+        {
+          "name": "DestinationRealm",
+          "code": 283,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationRealm"
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": 4
+        },
+        {
+          "name": "UserIdentity",
+          "code": 700,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "UserIdentity",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "DataReference",
+          "code": 703,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 1,
+          "max": 3
+        },
+        {
+          "name": "SubsReqType",
+          "code": 705,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "ExpiryTime",
+          "code": 709,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "time",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SendDataIndication",
+          "code": 710,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OneTimeNotification",
+          "code": 712,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "rule": "validateSNRSubset",
+      "context_rule": "checkPeerFeatures",
+      "context_name": "ShPeerFeatures"
+    },
+    {
+      "name": "SNA",
+      "application": 16777217,
+      "code": 308,
+      "request": false,
+      "proxiable": true,
+      "no_context": false,
+      "error_answer": true,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "VendorSpecificApplicationID",
+          "code": 260,
+          "vendor": 0,
+          "flags": 64,
+          "type": "vsai",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ExperimentalResult",
+          "code": 297,
+          "vendor": 0,
+          "flags": 64,
+          "type": "ExperimentalResult",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": 4
+        },
+        {
+          "name": "UserData",
+          "code": 702,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "octets",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ExpiryTime",
+          "code": 709,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "time",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "ErrorMessage",
+          "code": 281,
+          "vendor": 0,
+          "flags": 0,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorReportingHost",
+          "code": 294,
+          "vendor": 0,
+          "flags": 0,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "FailedAVP",
+          "code": 279,
+          "vendor": 0,
+          "flags": 64,
+          "type": "diagnostic",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateSNAResult",
+      "context_rule": "checkPeerFeatures",
+      "context_name": "ShPeerFeatures",
+      "answer_rule": "checkSNAFeatures"
+    },
+    {
+      "name": "PNR",
+      "application": 16777217,
+      "code": 309,
+      "request": true,
+      "proxiable": true,
+      "no_context": false,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "VendorSpecificApplicationID",
+          "code": 260,
+          "vendor": 0,
+          "flags": 64,
+          "type": "vsai",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "DestinationHost",
+          "code": 293,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationHost"
+        },
+        {
+          "name": "DestinationRealm",
+          "code": 283,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationRealm"
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": 4
+        },
+        {
+          "name": "UserIdentity",
+          "code": 700,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "UserIdentity",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "UserData",
+          "code": 702,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "octets",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "rule": "validatePNRSubset",
+      "context_rule": "checkPeerFeatures",
+      "context_name": "ShPeerFeatures"
+    },
+    {
+      "name": "PNA",
+      "application": 16777217,
+      "code": 309,
+      "request": false,
+      "proxiable": true,
+      "no_context": false,
+      "error_answer": true,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "VendorSpecificApplicationID",
+          "code": 260,
+          "vendor": 0,
+          "flags": 64,
+          "type": "vsai",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ExperimentalResult",
+          "code": 297,
+          "vendor": 0,
+          "flags": 64,
+          "type": "ExperimentalResult",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": 4
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "ErrorMessage",
+          "code": 281,
+          "vendor": 0,
+          "flags": 0,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorReportingHost",
+          "code": 294,
+          "vendor": 0,
+          "flags": 0,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "FailedAVP",
+          "code": 279,
+          "vendor": 0,
+          "flags": 64,
+          "type": "diagnostic",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validatePNAResult",
+      "context_rule": "checkPeerFeatures",
+      "context_name": "ShPeerFeatures",
+      "answer_rule": "checkPNAFeatures"
+    }
+  ]
+}

@@ -1,0 +1,498 @@
+{
+  "format": 1,
+  "package": "dcca",
+  "profile": "dcca-rfc4006-single-event-v1",
+  "version": "0.1.0-slice.1",
+  "sources": [
+    "RFC4006 sections3,6.2-6.4,8.6-8.12,8.16-8.19,8.28-8.29,8.41 and9; bounded single-service EVENT request number0,action0/1/2",
+    "Batch70 rules1: generic DCCA only,explicit non3gpp service context,one top-level Service-Identifier,MSISDN/IMSI subscriptions,optional exact money413 or event417 units;no MSCC,3GPP Service-Information or2022/private1292. Not a workaround for SMS failure3408/3409 restrictions.",
+    "Balance0/1 and absent/unknown retained on receive,conditional CheckOneTimeEvent report;no inferred financial outcome. Explicit new refund Session/operation and pure original-debit linkage helper,no ledger/authorization/token fabrication. SingleAttempt only;no automatic refund/retry or persistence."
+  ],
+  "groups": [
+    {
+      "name": "SubscriptionID",
+      "fields": [
+        {
+          "name": "SubscriptionIDType",
+          "code": 450,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "SubscriptionIDData",
+          "code": 444,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "nonempty": true
+        }
+      ],
+      "rule": "validateSubscriptionSubset"
+    },
+    {
+      "name": "UnitValue",
+      "fields": [
+        {
+          "name": "ValueDigits",
+          "code": 447,
+          "vendor": 0,
+          "flags": 64,
+          "type": "i64",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "Exponent",
+          "code": 429,
+          "vendor": 0,
+          "flags": 64,
+          "type": "i32",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateValueSubset"
+    },
+    {
+      "name": "Money",
+      "fields": [
+        {
+          "name": "UnitValue",
+          "code": 445,
+          "vendor": 0,
+          "flags": 64,
+          "type": "UnitValue",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "CurrencyCode",
+          "code": 425,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateMoneySubset"
+    },
+    {
+      "name": "ServiceUnit",
+      "fields": [
+        {
+          "name": "CCMoney",
+          "code": 413,
+          "vendor": 0,
+          "flags": 64,
+          "type": "Money",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "CCServiceSpecificUnits",
+          "code": 417,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u64",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateUnitSubset"
+    },
+    {
+      "name": "CostInformation",
+      "fields": [
+        {
+          "name": "UnitValue",
+          "code": 445,
+          "vendor": 0,
+          "flags": 64,
+          "type": "UnitValue",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "CurrencyCode",
+          "code": 425,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "CostUnit",
+          "code": 424,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateCostSubset"
+    }
+  ],
+  "commands": [
+    {
+      "name": "CCR",
+      "application": 4,
+      "code": 272,
+      "request": true,
+      "proxiable": true,
+      "context_rule": "checkOneTimeEvent",
+      "context_name": "DCCAOneTimeEvent",
+      "rule": "validateCCRSubset",
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "DestinationRealm",
+          "code": 283,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationRealm"
+        },
+        {
+          "name": "AuthApplicationID",
+          "code": 258,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            4
+          ]
+        },
+        {
+          "name": "ServiceContextID",
+          "code": 461,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "CCRequestType",
+          "code": 416,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "CCRequestNumber",
+          "code": 415,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "DestinationHost",
+          "code": 293,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": 1,
+          "envelope": "DestinationHost"
+        },
+        {
+          "name": "EventTimestamp",
+          "code": 55,
+          "vendor": 0,
+          "flags": 64,
+          "type": "time",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SubscriptionID",
+          "code": 443,
+          "vendor": 0,
+          "flags": 64,
+          "type": "SubscriptionID",
+          "min": 1,
+          "max": 2
+        },
+        {
+          "name": "RequestedAction",
+          "code": 436,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "ServiceIdentifier",
+          "code": 439,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "RequestedServiceUnit",
+          "code": 437,
+          "vendor": 0,
+          "flags": 64,
+          "type": "ServiceUnit",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        }
+      ]
+    },
+    {
+      "name": "CCA",
+      "application": 4,
+      "code": 272,
+      "request": false,
+      "proxiable": true,
+      "context_rule": "checkOneTimeEvent",
+      "context_name": "DCCAOneTimeEvent",
+      "rule": "validateCCASubset",
+      "answer_rule": "validateCCARelation",
+      "error_answer": true,
+      "error_rule": "validateEventError",
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "AuthApplicationID",
+          "code": 258,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            4
+          ]
+        },
+        {
+          "name": "CCRequestType",
+          "code": 416,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "CCRequestNumber",
+          "code": 415,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "CheckBalanceResult",
+          "code": 422,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "GrantedServiceUnit",
+          "code": 431,
+          "vendor": 0,
+          "flags": 64,
+          "type": "ServiceUnit",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "CostInformation",
+          "code": 423,
+          "vendor": 0,
+          "flags": 64,
+          "type": "CostInformation",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "DirectDebitingFailureHandling",
+          "code": 428,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "ErrorMessage",
+          "code": 281,
+          "vendor": 0,
+          "flags": 0,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorReportingHost",
+          "code": 294,
+          "vendor": 0,
+          "flags": 0,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "FailedAVP",
+          "code": 279,
+          "vendor": 0,
+          "flags": 64,
+          "type": "diagnostic",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    }
+  ]
+}

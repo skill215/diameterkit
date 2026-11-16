@@ -1,0 +1,152 @@
+{
+  "format": 1,
+  "date": "2026-11-06",
+  "kind": "independent offline XML Schema oracle; not Diameter network interoperability",
+  "scope": "Sh-Data finite Ref11/12 leaves, single-reference checks; no mixed subscription authorization",
+  "schema": {
+    "url": "https://www.etsi.org/deliver/etsi_ts/129300_129399/129328/18.01.00_60/ts_129328v180100p0.zip",
+    "member": "ShDataType_Rel18.xsd",
+    "bytes": 55518,
+    "sha256": "8e01bf2537df9460ede73dbcb39a275243681f7c1cda8d19061c924824371e79",
+    "modified": false
+  },
+  "oracle": {
+    "runtime": "OpenJDK 25.0.4.1+1-1-26.04.4-Ubuntu, built-in Xerces",
+    "source_sha256": "73b0b13ad14ce978ec0c2dc99a42bd19a17e1ef1f865233cc667a4331a39ff5f",
+    "source": "import java.io.*;\nimport java.nio.file.*;\nimport javax.xml.XMLConstants;\nimport javax.xml.transform.stream.StreamSource;\nimport javax.xml.validation.*;\npublic class DiameterkitShXSDCheck {\n public static void main(String[] args) throws Exception {\n  SchemaFactory f=SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);\n  f.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING,true);\n  f.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD,\"\");\n  f.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA,\"\");\n  Schema s=f.newSchema(Path.of(args[0]).toFile());\n  for(String line:Files.readAllLines(Path.of(args[1]))) {\n   String[] a=line.split(\"\\\\t\"); boolean valid=true;\n   try { Validator v=s.newValidator();v.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD,\"\");v.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA,\"\");v.validate(new StreamSource(Path.of(a[1]).toFile())); }\n   catch(org.xml.sax.SAXException e){valid=false;}\n   if(valid!=a[0].equals(\"valid\"))throw new Exception(\"unexpected XSD result: \"+a[1]+\" valid=\"+valid);\n   System.out.println(\"PASS \"+Path.of(a[1]).getFileName()+\": XSD \"+(valid?\"valid\":\"invalid\"));\n  }\n }\n}\n",
+    "command": "java <temporary>/DiameterkitShXSDCheck.java <unmodified ShDataType_Rel18.xsd> <temporary TSV: expected TAB absolute XML path>",
+    "external_dtd_access": "disabled",
+    "external_schema_access": "disabled",
+    "production_dependency": false
+  },
+  "cases": [
+    {
+      "name": "x-sh-cont-01.xml",
+      "xsd_expected": "valid",
+      "bytes": 76,
+      "sha256": "5b298a1e3f044c425d9a47967dfb2cd0032ac2660948e51fba0e4a429ef23843",
+      "path": "testdata/shdata/x-sh-cont-01.xml"
+    },
+    {
+      "name": "x-sh-multi-01.xml",
+      "xsd_expected": "valid",
+      "bytes": 120,
+      "sha256": "2d3ddb58f30bfae6f4fecc53fbc197ecc4bdd7d1c550bfdff6fcfaa4f2f9c1e8",
+      "path": "testdata/shdata/x-sh-multi-01.xml"
+    },
+    {
+      "name": "b19-scscf-12.xml",
+      "xsd_expected": "valid",
+      "bytes": 90,
+      "sha256": "d93a472f315112e705de97563749f86d6bac9bd82fa868347a6b9d4e57f6ce75",
+      "path": "testdata/shdata/b19-scscf-12.xml"
+    },
+    {
+      "name": "b19-scscf-empty.xml",
+      "xsd_expected": "valid",
+      "bytes": 69,
+      "sha256": "ec95f4c6fea29234f0585cc12cc7da1c57d9e21369bd30ec6acc239740afb5c7",
+      "path": "testdata/shdata/b19-scscf-empty.xml"
+    },
+    {
+      "name": "state-0.xml",
+      "xsd_expected": "valid",
+      "bytes": 76,
+      "sha256": "37b0f7fdbaee6d4a951c49e0abbef86442ce409d6814b939b9664689ece0fc91",
+      "xml": "<Sh-Data><Sh-IMS-Data><IMSUserState>0</IMSUserState></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "state-2.xml",
+      "xsd_expected": "valid",
+      "bytes": 76,
+      "sha256": "f6faf275f4f7aca841e4fd4db13a5224493a2230063506de753f4ef9fc178a0f",
+      "xml": "<Sh-Data><Sh-IMS-Data><IMSUserState>2</IMSUserState></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "state-3.xml",
+      "xsd_expected": "valid",
+      "bytes": 76,
+      "sha256": "4d0a2a92ecf1a3976c71fc3de6873c223275762a44cfac5845e9484fd76c3d38",
+      "xml": "<Sh-Data><Sh-IMS-Data><IMSUserState>3</IMSUserState></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "state-four.xml",
+      "xsd_expected": "invalid",
+      "bytes": 76,
+      "sha256": "79fcbf7689098786dc7d352a084dd4c7bd7eddb7212d3f3578879a02bb4bde45",
+      "xml": "<Sh-Data><Sh-IMS-Data><IMSUserState>4</IMSUserState></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "state-empty.xml",
+      "xsd_expected": "invalid",
+      "bytes": 75,
+      "sha256": "4bc54d64fc9a09bc5b1d4255dae1ca2dc7b23c1f0bdd416cba7c529e647f67fa",
+      "xml": "<Sh-Data><Sh-IMS-Data><IMSUserState></IMSUserState></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "state-duplicate.xml",
+      "xsd_expected": "invalid",
+      "bytes": 106,
+      "sha256": "99a8d5096a218d892f5c6b5f4a77434e56f75d7ce862d21b43a5c0272ab31836",
+      "xml": "<Sh-Data><Sh-IMS-Data><IMSUserState>1</IMSUserState><IMSUserState>0</IMSUserState></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "reversed-order.xml",
+      "xsd_expected": "invalid",
+      "bytes": 88,
+      "sha256": "ac4e04ade0f5cccda3686ee83353b66a06038a07d00fd055dd5201c65d07cc30",
+      "xml": "<Sh-Data><Sh-IMS-Data><IMSUserState>1</IMSUserState><SCSCFName/></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "wrong-parent.xml",
+      "xsd_expected": "invalid",
+      "bytes": 99,
+      "sha256": "23d5b4adb717909f91bf12c286e835ca72ebab778ae63f5cd464e052e15eb20b",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><IMSUserState>1</IMSUserState></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "uri-unicode.xml",
+      "xsd_expected": "valid",
+      "bytes": 88,
+      "sha256": "589a30faa0fb93b1592e4663fdc696470e5f4e9fe4fe9b925699bed923a48629",
+      "xml": "<Sh-Data><Sh-IMS-Data><SCSCFName>sip:域.example.net</SCSCFName></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "uri-port.xml",
+      "xsd_expected": "valid",
+      "bytes": 95,
+      "sha256": "a906d231cfaf88465ca48507a510c827261c60aa274e0507e0673fb294fb4bcd",
+      "xml": "<Sh-Data><Sh-IMS-Data><SCSCFName>sip:scscf.example.net:5060</SCSCFName></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "foreign-state.xml",
+      "xsd_expected": "valid",
+      "bytes": 96,
+      "sha256": "6f39f57ed10348be12f65ff7130bccdd4ddada6288cfb61d7fc21811430d574b",
+      "xml": "<Sh-Data><Sh-IMS-Data><x:IMSUserState xmlns:x=\"urn:x\">1</x:IMSUserState></Sh-IMS-Data></Sh-Data>"
+    }
+  ],
+  "output": [
+    "PASS x-sh-cont-01.xml: XSD valid",
+    "PASS x-sh-multi-01.xml: XSD valid",
+    "PASS b19-scscf-12.xml: XSD valid",
+    "PASS b19-scscf-empty.xml: XSD valid",
+    "PASS state-0.xml: XSD valid",
+    "PASS state-2.xml: XSD valid",
+    "PASS state-3.xml: XSD valid",
+    "PASS state-four.xml: XSD invalid",
+    "PASS state-empty.xml: XSD invalid",
+    "PASS state-duplicate.xml: XSD invalid",
+    "PASS reversed-order.xml: XSD invalid",
+    "PASS wrong-parent.xml: XSD invalid",
+    "PASS uri-unicode.xml: XSD valid",
+    "PASS uri-port.xml: XSD valid",
+    "PASS foreign-state.xml: XSD valid"
+  ],
+  "limitations": [
+    "15 offline original-XSD oracle checks; external Java only used during audit and not a production or ordinary test dependency",
+    "Four XML fixtures plus 11 derived/control cases; no peer capture",
+    "URI schema validity is separate from the finite sip:DNS-host helper subset; unsupported representation preserved with incomplete Check",
+    "Combined Ref11/12 XML can be structurally read but single-reference Check fails for extra data; feature negotiation/mixed subscriptions not implemented"
+  ]
+}

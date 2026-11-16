@@ -1,0 +1,74 @@
+{
+  "batch": 88,
+  "date": "2026-11-16",
+  "scope": "Public DIRECT_DEBITING recovery wiring and five business operation consumption mapping",
+  "checks": [
+    {
+      "name": "core-cgo0",
+      "status": "passed",
+      "test_subtest_seed_passes": 3696,
+      "log": ".cache/b88-core-cgo0-recheck.jsonl",
+      "sha256": "20e06662dbaa6d35f487c1f9e3040357fd03bce303223c81cdf9ffba601599f4"
+    },
+    {
+      "name": "core-race",
+      "status": "passed",
+      "test_subtest_seed_passes": 3696,
+      "log": ".cache/b88-core-race.jsonl",
+      "sha256": "8ab9642d4d82c33b975985bd9665c3955f6b5f96ec6ceb1c202255d8804382a5"
+    },
+    {
+      "name": "consumer-cgo0",
+      "status": "passed",
+      "test_subtest_seed_passes": 171,
+      "log": ".cache/b88-consumer-cgo0.jsonl",
+      "sha256": "5a8761a80772bdc269db0bb13ba18f4b630abf9f7b2a6a78a817c92bb56a726e"
+    },
+    {
+      "name": "consumer-race",
+      "status": "passed",
+      "test_subtest_seed_passes": 171,
+      "log": ".cache/b88-consumer-race.jsonl",
+      "sha256": "4a656e99f1531a9ce5fd7e637a402a02b158045b2ca26139c24740a2346a8ba4"
+    }
+  ],
+  "other_checks": [
+    "CGO_ENABLED=0 go vet ./...",
+    "public API snapshot --check: unchanged25 packages",
+    "CLI recovery error/restart/no-answer; resource snapshots zero"
+  ],
+  "initial_failure": {
+    "log": ".cache/b88-core-cgo0.jsonl",
+    "test": "TestSGDPublicTerminalSources/gdd/MT=true/answer=false",
+    "error": "peer is not ready",
+    "followup": "unchanged SGd test passed10 repetitions; core CGO0 rerun passed; no SGd fix claimed"
+  },
+  "consumer": {
+    "method": "independent module, public APIs only, local workspace replace",
+    "source": "examples/ro/*.go",
+    "limitations": "not an installed/published candidate"
+  },
+  "business_operations": [
+    "CHECK",
+    "CHARGE",
+    "RESERVE",
+    "COMMIT",
+    "CANCEL"
+  ],
+  "migration_choice": "SYSTEM_FAILURE is explicitly conservative, preserving caller diagnostics; no guessed legacy private success mapping",
+  "runtime": [
+    "same Node E3004 continuation",
+    "close/join old Node then import settled E3004",
+    "Tr no-answer then new Node import with T=1",
+    "five final answer cases including child rejection",
+    "Tx late answer/cancel, one completion and one business notification",
+    "unconfirmed/changed intent, import assertions, rollback, corruption, terminal and budget rejection"
+  ],
+  "limitations": [
+    "same synthetic OCS; no cross-OCS or live target proof",
+    "DDFH combined profile consumer tests are local unit tests; earlier wire evidence retained",
+    "no file/storage/queue/provider; in-memory intent acknowledgement is not durable commit",
+    "other binding/cross-target public consumers and private migration evidence remain",
+    "core production API, definitions and adapter unchanged; adapter not rerun"
+  ]
+}

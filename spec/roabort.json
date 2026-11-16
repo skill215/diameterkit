@@ -1,0 +1,234 @@
+{
+  "format": 1,
+  "package": "abort",
+  "profile": "ro-rfc6733-abort-slice-v1",
+  "version": "0.1.0-slice.1",
+  "sources": [
+    "RFC6733 sections2.5,7.2,8.5.1 and8.5.2; TS32.299 section6.5.5; doc/diameterkit-mainflow-audit.md sections29.3/30.4",
+    "Batch69 rules1: independent App4/274 ASR/ASA shared with exactly one standard or compatibility CCR profile. Explicit application-selected normal2001/5002/5012, separate E grammar; no CCR type/number correlation, remote Origin-State echo, session ownership, automatic TERM, replay authorization or persistence. Redirect and known charging fields remain outside this slice; unknown optional extensions retained. NoContext certifies protocol shape/association only, never session-state truth."
+  ],
+  "groups": [],
+  "commands": [
+    {
+      "name": "ASR",
+      "application": 4,
+      "code": 274,
+      "request": true,
+      "proxiable": true,
+      "no_context": true,
+      "rule": "validateASRSubset",
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "DestinationRealm",
+          "code": 283,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationRealm"
+        },
+        {
+          "name": "DestinationHost",
+          "code": 293,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationHost"
+        },
+        {
+          "name": "AuthApplicationID",
+          "code": 258,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            4
+          ]
+        },
+        {
+          "name": "UserName",
+          "code": 1,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        }
+      ]
+    },
+    {
+      "name": "ASA",
+      "application": 4,
+      "code": 274,
+      "request": false,
+      "proxiable": true,
+      "no_context": true,
+      "rule": "validateASASubset",
+      "error_answer": true,
+      "error_rule": "validateAbortError",
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "UserName",
+          "code": 1,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorMessage",
+          "code": 281,
+          "vendor": 0,
+          "flags": 0,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorReportingHost",
+          "code": 294,
+          "vendor": 0,
+          "flags": 0,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "FailedAVP",
+          "code": 279,
+          "vendor": 0,
+          "flags": 64,
+          "type": "diagnostic",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        }
+      ]
+    }
+  ]
+}

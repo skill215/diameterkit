@@ -1,0 +1,261 @@
+{
+  "batch": 79,
+  "date": "2026-11-10",
+  "scope": "SCAP1 bidirectional runnable example, finite public API audit and resource lifecycle; pure Go/no persistence",
+  "toolchain": "go1.26.10 linux/amd64",
+  "kernel": "6.6.114.1-microsoft-standard-WSL2",
+  "definitions": {
+    "generated": 11,
+    "changed": [],
+    "unchanged": 11,
+    "delegated_profiles": 1,
+    "total_profiles": 12,
+    "request_answer_pairs_including_overlapping_bindings": 20,
+    "generator": 13,
+    "operations": 8
+  },
+  "corpus": {
+    "wire": 1250,
+    "xml": 17,
+    "new_wire": 0,
+    "prior_wire_unchanged": 1250
+  },
+  "implemented": [
+    "Two real TCP Nodes with full public configuration, Serve/Dial, both directions ACR/ACA and normal/E results; named legacy advertising optional on both peers",
+    "Finite explicit resource plan, one completion port per Node, no cache or replay; application selects synthetic data and result",
+    "Public API tests distinguish admission context, completion-wait context and explicit request cancellation; slots/bytes, mutable view isolation, invalid/canceled Respond, late answers and cleanup",
+    "Standalone no-replace consumer module compiles and runs the copied example/tests against the installed offline core; twenty-one public go doc queries and CLI cases verified",
+    "Corrected historical root package and policy comments without changing library declarations, executable behavior or profiles"
+  ],
+  "checks": [
+    {
+      "name": "scap1_public_api_race20",
+      "command": "go test ./examples/scap1 -race -json -run ^TestSCAP1Public -count=20 -timeout=5m",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 460,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "cad359029ec949eef85b7bea55f58e423f28c194e1bfa8246f95936ae94e88c5",
+      "test_names": [
+        "TestSCAP1PublicAdvertisementMismatch",
+        "TestSCAP1PublicAdvertisementMismatch/false",
+        "TestSCAP1PublicAdvertisementMismatch/true",
+        "TestSCAP1PublicBudgetLifetimeCancelAndClose",
+        "TestSCAP1PublicBudgetLifetimeCancelAndClose/0",
+        "TestSCAP1PublicBudgetLifetimeCancelAndClose/1",
+        "TestSCAP1PublicCanceledAndInvalidRun",
+        "TestSCAP1PublicConfiguration",
+        "TestSCAP1PublicConfiguration/dual_local_capability",
+        "TestSCAP1PublicConfiguration/inbound_missing_binding",
+        "TestSCAP1PublicConfiguration/insufficient_control_budget",
+        "TestSCAP1PublicConfiguration/no_local_capability",
+        "TestSCAP1PublicConfiguration/outbound_missing_binding",
+        "TestSCAP1PublicConfiguration/unfixed_terminal",
+        "TestSCAP1PublicConfiguration/unknown_advertisement",
+        "TestSCAP1PublicConfiguration/wrong_vendor",
+        "TestSCAP1PublicExample",
+        "TestSCAP1PublicExample/mode0/result2001",
+        "TestSCAP1PublicExample/mode0/result3004",
+        "TestSCAP1PublicExample/mode0/result5012",
+        "TestSCAP1PublicExample/mode1/result2001",
+        "TestSCAP1PublicExample/mode1/result3004",
+        "TestSCAP1PublicExample/mode1/result5012"
+      ]
+    },
+    {
+      "name": "core_cgo0",
+      "command": "go test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 3322,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "c68237b417623997a0bf8eaafecee975952cefe4f1ab4be256a83ee5af1217f4"
+    },
+    {
+      "name": "core_race",
+      "command": "go test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 3322,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "452d41aca5bff40cf4b7515b12bce8a0a8d474ce3f1ca5ba0dd760b5690c0c3d"
+    },
+    {
+      "name": "adapter_cgo0",
+      "command": "go -C adapters/sctp test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 113,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "8dcea41a9c92e06c1ce29557d8ad778b1356bedc85a6e7d6d5fd6fc5443e9ab2"
+    },
+    {
+      "name": "adapter_race",
+      "command": "go -C adapters/sctp test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 113,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "280a0f7fbd9dd6c66a06a75c6fad5b236d3a7116ead5197dee72b9009055cc39"
+    },
+    {
+      "name": "core_vet",
+      "command": "go vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_build",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_verify",
+      "command": "go mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "core_cross_windows_amd64",
+      "command": "go build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_386",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_arm64",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_deps",
+      "command": "go list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "63d924cdd1303706520e0754280e693ba34389e16ae0a490ba0377f1b79b4805",
+      "packages": 211,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit"
+      ]
+    },
+    {
+      "name": "adapter_vet",
+      "command": "go -C adapters/sctp vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_build",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_verify",
+      "command": "go -C adapters/sctp mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "adapter_cross_windows_amd64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_386",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_arm64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_deps",
+      "command": "go -C adapters/sctp list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "4cf4a1e520a5fae65fa7afd3c127a89c69090853822885c8d199a6c16fb3c921",
+      "packages": 78,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit",
+        "github.com/skill215/diameterkit/adapters/sctp",
+        "github.com/skill215/sctp"
+      ]
+    },
+    {
+      "name": "selected_modules",
+      "command": "go -C adapters/sctp list -m -json all",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "7d62aa7c77bcaa258ce27e0b941eceaec4e6611c64848c0db46512449e8375c0"
+    }
+  ],
+  "public_api_evidence": "spec/evidence/batch-79-scap1-public-api.json",
+  "core_dependency": {
+    "version": "v0.0.0-diameterkit.batch79",
+    "sum": "h1:ptcLKRMQsNpyoTy/Wy+fZaAuQTVUsR4PWtOZPszXVIY=",
+    "files": 128,
+    "zip_sha256": "249445e11202cbf27bcc1bc9145bf3f4b6a240c6c823fd2d5ba38135655cb940",
+    "manifest": "spec/evidence/batch-79-core-candidate-files.json",
+    "public_version": false
+  },
+  "module_isolation": "New batch79 module cache; GOWORK=off/no replace; offline candidate from local file proxy; identical formal SCTP v0.8.0 archive reused and verified",
+  "existing_library_behavior_changed": false,
+  "existing_library_comment_changes": [
+    "doc.go",
+    "config.go"
+  ],
+  "new_example_sources": [
+    "examples/scap1/config.go",
+    "examples/scap1/main.go"
+  ],
+  "production_unchanged": [
+    "all eleven definitions and generated outputs",
+    "all existing library executable lines and compiler directives",
+    "SCTP adapter production sources and upstream v0.8.0"
+  ],
+  "requirement_status_change": {
+    "SPEC-RELEASE-01": {
+      "from": "planned",
+      "to": "partial",
+      "reason": "Bounded public consumer/example evidence now recorded; full release gates remain"
+    }
+  },
+  "remaining": [
+    "Private ACA/SCAP1 recovery and actual six-template/target OCS evidence remain",
+    "Other application examples, complete API/support matrix, CI/fuzz/stress/performance and public release still pending",
+    "SIM-01 old application migration and actual DRA/OCS acceptance remain separate"
+  ],
+  "release_status": "not_ready"
+}

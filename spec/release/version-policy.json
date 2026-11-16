@@ -1,0 +1,44 @@
+{
+  "format": 1,
+  "phase": "v0-development",
+  "release_status": "unpublished",
+  "modules": {
+    "core": {
+      "path": "github.com/skill215/diameterkit",
+      "tag_prefix": "",
+      "proposed_first_version": "v0.1.0-rc.1"
+    },
+    "adapter": {
+      "path": "github.com/skill215/diameterkit/adapters/sctp",
+      "tag_prefix": "adapters/sctp/",
+      "proposed_first_version": "v0.1.0-rc.1"
+    }
+  },
+  "upstream": {"path": "github.com/skill215/sctp", "version": "v0.8.0"},
+  "version_rules": {
+    "independent_module_versions": true,
+    "allowed_release_versions": "v0.MINOR.PATCH or v0.MINOR.PATCH-rc.N; MINOR >= 1, N >= 1; no build metadata, branch, latest or offline batch versions",
+    "patch": "Compatible corrections only; no removal, signature/field/interface break or newly required caller behavior.",
+    "minor": "New API or intentional breaking change during v0; describe migration, protocol/behavior and resource effects explicitly.",
+    "prerelease": "Increment rc.N for any changed candidate; no stable compatibility promise.",
+    "v1": "Requires separate reviewed readiness decision; this policy does not authorize v1.",
+    "immutability": "Never move, overwrite or reuse a published tag/version. Retract a bad version in a newer release; preserve old content. Record commit and checksum receipts."
+  },
+  "api_review": {
+    "baseline": "spec/release/public-api.json",
+    "targets": ["linux/amd64", "windows/amd64"],
+    "scope": "All exported non-internal library packages in both modules, generated declarations, errors, interfaces, ownership/cancellation/resource contracts; protocol slice versions are separate.",
+    "gate": "Exact documentation/source snapshot drift requires explicit review; snapshot equality does not prove semantic compatibility. Never auto-refresh in CI.",
+    "change_record": ["affected module and packages", "old/new signature or behavior", "compatibility classification and version choice", "migration and support limits", "tests and reviewed API snapshot"]
+  },
+  "installation": {
+    "proxy": "https://proxy.golang.org",
+    "sumdb": "sum.golang.org",
+    "workspace": "off",
+    "replace": "forbidden in consumer and downloaded module manifests and graph",
+    "cache": "fresh private GOMODCACHE, GOCACHE and GOPATH for each core-only and adapter consumer",
+    "core_dependency": "adapter must require exactly the tested, already published core version; MVS upgrade is an error",
+    "acceptance": "Remote tag commits, authenticated downloads, exact graph, go mod verify, reviewed API, public consumer pure/race execution; all required for passed.",
+    "checkout_checks": "Temporary workspace checks remain separate; offline candidate/proxy/cache is never release evidence."
+  }
+}

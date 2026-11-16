@@ -1,0 +1,706 @@
+{
+  "kind": "source projection only; ordinary RFC Address mode",
+  "inputs": {
+    "SUBSCRIPTIONID_MSISDN": "15551234567",
+    "SUBSCRIPTIONID_IMSI": "001010123456789",
+    "TIMESTAMP": 1700000000,
+    "DCS": 8,
+    "INTERFACE_TYPE_DEST": 2,
+    "MESSAGE_TYPE": 0,
+    "INTERFACE_TYPE_ORIG": 1,
+    "PID": "00ff",
+    "ORIG_MSISDN": "15551234567"
+  },
+  "template_mapping": [
+    {
+      "name": "SUBSCRIPTION_ID",
+      "path": "0/443",
+      "type": "GROUPED",
+      "value": [
+        "SUBSCRIPTION_ID_TYPE",
+        "SUBSCRIPTION_ID_DATA"
+      ]
+    },
+    {
+      "name": "SUBSCRIPTION_ID_TYPE",
+      "path": "0/443/0/450",
+      "type": "INT32",
+      "value": [
+        "0"
+      ]
+    },
+    {
+      "name": "SUBSCRIPTION_ID_DATA",
+      "path": "0/443/0/444",
+      "type": "STRING",
+      "value": [
+        "$SUBSCRIPTIONID_MSISDN"
+      ]
+    },
+    {
+      "name": "SUBSCRIPTION_ID",
+      "path": "0/443",
+      "type": "GROUPED",
+      "value": [
+        "SUBSCRIPTION_ID_TYPE",
+        "SUBSCRIPTION_ID_DATA"
+      ]
+    },
+    {
+      "name": "SUBSCRIPTION_ID_TYPE",
+      "path": "0/443/0/450",
+      "type": "INT32",
+      "value": [
+        "1"
+      ]
+    },
+    {
+      "name": "SUBSCRIPTION_ID_DATA",
+      "path": "0/443/0/444",
+      "type": "STRING",
+      "value": [
+        "$SUBSCRIPTIONID_IMSI"
+      ]
+    },
+    {
+      "name": "EVENT_TIMESTAMP",
+      "path": "0/55",
+      "type": "TIME",
+      "value": [
+        "$TIMESTAMP"
+      ]
+    },
+    {
+      "name": "SERVICE_ID",
+      "path": "0/439",
+      "type": "INT32",
+      "value": [
+        "1"
+      ]
+    },
+    {
+      "name": "TIMEZONE",
+      "path": "10425/23",
+      "type": "INT32",
+      "value": [
+        "0"
+      ]
+    },
+    {
+      "name": "MULTIPLE_SERVICE_CREDITCONTROL",
+      "path": "0/456",
+      "type": "GROUPED",
+      "value": [
+        "REQUESTED_SERVICE_UNIT"
+      ]
+    },
+    {
+      "name": "REQUESTED_SERVICE_UNIT",
+      "path": "0/456/0/437",
+      "type": "GROUPED",
+      "value": [
+        "CC_MONEY",
+        "CC_SERVICE_SPECIFIC_UNIT"
+      ]
+    },
+    {
+      "name": "CC_MONEY",
+      "path": "0/456/0/437/0/413",
+      "type": "GROUPED",
+      "value": [
+        "UNIT_VALUE",
+        "CURRENCY_CODE"
+      ]
+    },
+    {
+      "name": "UNIT_VALUE",
+      "path": "0/456/0/437/0/413/0/445",
+      "type": "GROUPED",
+      "value": [
+        "DIGI",
+        "EXP"
+      ]
+    },
+    {
+      "name": "DIGI",
+      "path": "0/456/0/437/0/413/0/445/0/447",
+      "type": "INTEGER64",
+      "value": [
+        "1"
+      ]
+    },
+    {
+      "name": "EXP",
+      "path": "0/456/0/437/0/413/0/445/0/429",
+      "type": "INTEGER32",
+      "value": [
+        "0"
+      ]
+    },
+    {
+      "name": "CURRENCY_CODE",
+      "path": "0/456/0/437/0/413/0/425",
+      "type": "INT32",
+      "value": [
+        "840"
+      ]
+    },
+    {
+      "name": "CC_SERVICE_SPECIFIC_UNIT",
+      "path": "0/456/0/437/0/417",
+      "type": "UINT64",
+      "value": [
+        "1"
+      ]
+    },
+    {
+      "name": "SERVICE_INFORMATION",
+      "path": "10415/873",
+      "type": "GROUPED",
+      "value": [
+        "SMS_INFORMATION",
+        "MMS_INFORMATION"
+      ]
+    },
+    {
+      "name": "SMS_INFORMATION",
+      "path": "10415/873/10415/2000",
+      "type": "GROUPED",
+      "value": [
+        "SMS_NODE",
+        "SM_DCS",
+        "SM_DEST_IF",
+        "SM_MESSAGE_TYPE",
+        "SM_ORIG_IF",
+        "SM_PID",
+        "CLIENT_ADDR"
+      ]
+    },
+    {
+      "name": "SMS_NODE",
+      "path": "10415/873/10415/2000/10415/2016",
+      "type": "ENUMERATED",
+      "value": [
+        "2"
+      ]
+    },
+    {
+      "name": "SM_DCS",
+      "path": "10415/873/10415/2000/10415/2001",
+      "type": "INTEGER32",
+      "value": [
+        "$DCS"
+      ]
+    },
+    {
+      "name": "SM_DEST_IF",
+      "path": "10415/873/10415/2000/10415/2002",
+      "type": "GROUPED",
+      "value": [
+        "SM_IF"
+      ]
+    },
+    {
+      "name": "SM_IF",
+      "path": "10415/873/10415/2000/10415/2002/10415/2006",
+      "type": "ENUMERATED",
+      "value": [
+        "$INTERFACE_TYPE_DEST"
+      ]
+    },
+    {
+      "name": "SM_MESSAGE_TYPE",
+      "path": "10415/873/10415/2000/10415/2007",
+      "type": "ENUMERATED",
+      "value": [
+        "$MESSAGE_TYPE"
+      ]
+    },
+    {
+      "name": "SM_ORIG_IF",
+      "path": "10415/873/10415/2000/10415/2009",
+      "type": "GROUPED",
+      "value": [
+        "SM_IF"
+      ]
+    },
+    {
+      "name": "SM_IF",
+      "path": "10415/873/10415/2000/10415/2009/10415/2006",
+      "type": "ENUMERATED",
+      "value": [
+        "$INTERFACE_TYPE_ORIG"
+      ]
+    },
+    {
+      "name": "SM_PID",
+      "path": "10415/873/10415/2000/10415/2013",
+      "type": "OCTETSTRING",
+      "value": [
+        "$PID"
+      ]
+    },
+    {
+      "name": "CLIENT_ADDR",
+      "path": "10415/873/10415/2000/10415/2018",
+      "type": "IPV4",
+      "value": [
+        "127.0.0.1"
+      ]
+    },
+    {
+      "name": "MMS_INFORMATION",
+      "path": "10415/873/10415/877",
+      "type": "GROUPED",
+      "value": [
+        "ORIG_ADDR"
+      ]
+    },
+    {
+      "name": "ORIG_ADDR",
+      "path": "10415/873/10415/877/10415/886",
+      "type": "GROUPED",
+      "value": [
+        "ADDR_TYPE",
+        "ADDR_DATA"
+      ]
+    },
+    {
+      "name": "ADDR_TYPE",
+      "path": "10415/873/10415/877/10415/886/10415/899",
+      "type": "ENUMERATED",
+      "value": [
+        "1"
+      ]
+    },
+    {
+      "name": "ADDR_DATA",
+      "path": "10415/873/10415/877/10415/886/10415/897",
+      "type": "UTF8STRING",
+      "value": [
+        "$ORIG_MSISDN"
+      ]
+    }
+  ],
+  "source_files": [
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/yppdia_avptemplate.cf",
+      "sha256": "84d9ab24998028541ecac23b1c856346326d7a298c27991835dcb39f739585f1"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dcca-wrapper/AvpsTemplate.cc",
+      "sha256": "063ed87a7a5d807ce7d68a4d3ec4c890f8fe84b18e24f0701f6fb938175b75d0"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dcca-wrapper/AvpImpl.cc",
+      "sha256": "58e363aa1d08da12a6fff155a0d87d4298702fb8867b18a61450d4235b6ff828"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dia-base/dia-message.cc",
+      "sha256": "9400dac621c906379c006bfc0cf80c68b35dcd974719de1a97b1ce9a7b09d268"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dia-base/dia-message.hpp",
+      "sha256": "1a8ae645b6cf684686610488fdb6819c7077885b3418b9c93122df5d19d9282f"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dia-cc/dia-cc.cc",
+      "sha256": "3254a1456d2591467a245f29c73174aed95892994174dfaedff0d5452a1e62be"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dcca-wrapper/DccaClientWrapper.cc",
+      "sha256": "8c6c650c87304bbbf7072a1f290ab708f101a8a921a6723d275e39dc989859ff"
+    },
+    {
+      "path": "c-cpp/appsrc/kernel/yppdia/yppdiaengmx.cc",
+      "sha256": "70319a363062d9681132881c2d10eb8ab901ab2bb05ca800f3cf022fa5285ec8"
+    }
+  ],
+  "fixtures": [
+    {
+      "file": "b44-general-request.hex",
+      "bytes": 636,
+      "sha256": "6e5eb81754d7ac098b96a9c7c13b92c8dd8ddf8d709a7f04dc56b9322f755204",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-general-enhanced.hex",
+      "bytes": 668,
+      "sha256": "3ee9ade7b94aa1426c494494f130c4c8b17effcfbf6a3126f72514899e2b77a4",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cca-success.hex",
+      "bytes": 144,
+      "sha256": "f56f3a719b417e82ba0d77f3d36bd500191d3735925f2d677983040aeef671ec",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cca-denied.hex",
+      "bytes": 144,
+      "sha256": "bbf864404111c14d42c390dd19d034d798ef90548e234b386a2f5a624dfdc57e",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cca-failed.hex",
+      "bytes": 144,
+      "sha256": "6def08edf8120ae8e0ca3fa515881130000c52525b3ad661ef7dad9d864d493f",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cca-error.hex",
+      "bytes": 108,
+      "sha256": "9ef591cfc5914e950d9ceb936fcabc65e3d249ab1d91912208e37bfbf0cd53ff",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cca-cost-units.hex",
+      "bytes": 224,
+      "sha256": "264b30945018490301e17680ee3e1a742c034d1953327f5a99a79c19be64f5fc",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cca-cost-absent-exponent.hex",
+      "bytes": 188,
+      "sha256": "d60d281119abcb2fa53e004d0a2c9fdf43a6d9a50d17cd89ebccf2e8b3d80473",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cca-cost-zero.hex",
+      "bytes": 224,
+      "sha256": "476403d9043ba1ca7369f1541943bc368fa407a91328d925a244fd323fac949b",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cca-cost-limits.hex",
+      "bytes": 224,
+      "sha256": "186306389f52c9ccbff56f5361a0ef0cb4ed70c4bbffd6fd72a7761f3b3bf283",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cca-cost-unit.hex",
+      "bytes": 204,
+      "sha256": "dd45acd83fc7248c6ebe81d9cba5ccd25dd2ea7f0be1a8f41213859a11a7a4dd",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-balance-request.hex",
+      "bytes": 636,
+      "sha256": "e786193a04170781343b2d35f9ad139d94043866a415aa0fe889fec52496fab9",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-balance-enough.hex",
+      "bytes": 156,
+      "sha256": "526295a2c2664cf727ddc3edfbbcb8addb8d4b37690acd3e57d9025fa760adff",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-balance-no-credit.hex",
+      "bytes": 156,
+      "sha256": "03ba10770347a7d652a6d192824f00f9a77d12799478a627e5f90b15275da91e",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-balance-grant.hex",
+      "bytes": 180,
+      "sha256": "21a7d775bd3a123f476b295695613db4b30de07f5c0e513d5ac3b06e69775050",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-balance-unknown.hex",
+      "bytes": 156,
+      "sha256": "ee14cbdf7b652b234bfaa94c17e5cb2104cdd958eaa447f23ad1c76c10592e71",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-failed-cost.hex",
+      "bytes": 200,
+      "sha256": "b86897887ad0d1e9bdccb38bb59c8d971d78d9eb148f72905e2e60087f0f6894",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-failed-balance.hex",
+      "bytes": 156,
+      "sha256": "1704b5e74a4dc1ff7722845a49d544bebe8ed24ae865f19a4a706ed92a7b608a",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-failed-grant.hex",
+      "bytes": 168,
+      "sha256": "e36b0bcb87ab9b2bfd87d030ca4aa9343345cac1c786ee798282031d9656fe10",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-money-negative.hex",
+      "bytes": 636,
+      "sha256": "e7486d6b57ae7913aa3354be8de917bea00daf462a8d4ff08cacb305ed50d703",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-currency-negative.hex",
+      "bytes": 636,
+      "sha256": "426fd3073858d92f50bf82d889d1c39a773d4e0667e539281c80209cd68a3093",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-raw-originator.hex",
+      "bytes": 632,
+      "sha256": "27821b0560a80c01b88bd10e87d5cd47da58777c705c83f712c2f28471157a27",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-nul-originator.hex",
+      "bytes": 628,
+      "sha256": "5422f83a4ad08832bf78daad63ece71f8de7c6b9ab0c423fdc3b8c9e148b30d1",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-digits-width4.hex",
+      "bytes": 632,
+      "sha256": "b49e5df74d76168c1f4dc18ba3a100836ee3f962cfcd6a0defb619db8d2fbd0d",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-units-width4.hex",
+      "bytes": 632,
+      "sha256": "3b35ae0ef6cf98071bf277bd13821fe89589757ae03f3c2c0bb208d3ef0ee77e",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-draft-address.hex",
+      "bytes": 632,
+      "sha256": "c681c8c09adf6917351dca277b28fae1d9e1d3f95fc31e3c51d0cebbf11d08bc",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-string-address.hex",
+      "bytes": 640,
+      "sha256": "b70599e3ad87b236751ed7fe3c8c1f870672c474cea126c8331f63908b047c6d",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-ipv6-address.hex",
+      "bytes": 648,
+      "sha256": "3a25e485efdb98d18e00f72f8b4743f5fe9876198ff4e3586124ff88b4f0f0c6",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-timezone-nonzero.hex",
+      "bytes": 636,
+      "sha256": "64622d234e25efb3571cd44470017c33bc4ec946b0f2b3c36fa8690deeae2878",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-service-nonliteral.hex",
+      "bytes": 636,
+      "sha256": "6f8324a9ad3104fc2cbc244a392e1647b6b8e4ef047b3f83ff1e6a2e45dbb9be",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-refund-action.hex",
+      "bytes": 636,
+      "sha256": "bc60f5e99ae7376a2831b4ba4c032e6a5bc74ea217c725eed7ce174357c6e0c0",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-price-action.hex",
+      "bytes": 636,
+      "sha256": "bb804e2b06848e5c13cbf596df9792962dc0c1033430b042aa464d81f8e14c94",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-missing-money.hex",
+      "bytes": 580,
+      "sha256": "878bfcc47911794ccac5d0e968d7e1f2f75fe984059feb86df0b325162bbb499",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-missing-exponent.hex",
+      "bytes": 624,
+      "sha256": "b7231ebacf5a4aeaaecad5a9ff1bff4266a6a74fbaf6b0eedb5df894d81f5d46",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-missing-currency.hex",
+      "bytes": 624,
+      "sha256": "1eab330bfe42afcd97ed90584090cd197bd1599124a06b1bb5eb877b939bbce6",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-missing-timezone.hex",
+      "bytes": 620,
+      "sha256": "87e3a97831915825776e32246cc48532b7bee0e0b120f9971ab0270778173252",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-missing-service.hex",
+      "bytes": 624,
+      "sha256": "ae343338c4a0a6cb0ac27fc2fce1e3b2ec8d686795dfc3651dcd96c6c48ba634",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-missing-client.hex",
+      "bytes": 616,
+      "sha256": "25aa5ec8e08ae087cf7daf33d44c652b5228ac4242bfa0855d641683d537ef66",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-missing-mms.hex",
+      "bytes": 572,
+      "sha256": "6c027a43ff599c73c5c962bdee41d469326d29fca2e67465b4bcf009c750cf5f",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-wrong-timezone-vendor.hex",
+      "bytes": 636,
+      "sha256": "eb581ebec2616ab2350d73bcd93fe03a25f2e14f5eda16b07b642a966d644d33",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-money420-alias.hex",
+      "bytes": 636,
+      "sha256": "f276fe422ee2c838282787cc42e23b220914e6c3cf79392b45e1cdd3e9e674fc",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-both-money.hex",
+      "bytes": 692,
+      "sha256": "49e7118b942366b7018909fe315cc03339520a68974adaaa57842e413743f323",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-duplicate-money.hex",
+      "bytes": 692,
+      "sha256": "e696786eafc3ae722eb99cb2c732f8c03386f8acf223afe7c81e92276f9cd627",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-unexpected-token.hex",
+      "bytes": 652,
+      "sha256": "2c296416f1a3be91c5ff7f8a9de945f76756f42cf49df97af13edc3c9f2b6442",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cost-missing-unit-value.hex",
+      "bytes": 188,
+      "sha256": "a757b7c4b7a406ea9439dd7b84d24755d0ce2220af0e6d1dde999b9f324a3b34",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cost-missing-digits.hex",
+      "bytes": 208,
+      "sha256": "d6cda46c8e0d32bbf8e7464a2121fa2277fac94c597600db6cb56d90b8c7ffc5",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cost-missing-currency.hex",
+      "bytes": 212,
+      "sha256": "4dd48a5ce904be7c247f04153f1221fef34d3229ae7e9ab093eef0e45fae843a",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cost-missing-units.hex",
+      "bytes": 208,
+      "sha256": "35421e92c70dcae902ca8ec4acd33c2fd7028987b012e155b585aff56975b200",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cost-bad-digits.hex",
+      "bytes": 220,
+      "sha256": "f47eefd53590fb9c3726390d4980eef23536666d7b4bc4f19113115241f440bc",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cost-bad-exponent.hex",
+      "bytes": 228,
+      "sha256": "332452a26c91303932dcae137fa6815583dd089b79a3da08bfd3e1e44294e1f3",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cost-bad-currency.hex",
+      "bytes": 228,
+      "sha256": "d2a2ca578af2600daad9611b44d20b942a72d4199afec9fe23b57199a16dfe8e",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-duplicate-cost.hex",
+      "bytes": 280,
+      "sha256": "fc7285836056d1a0fd370e5f78b6cffc6430606affb969bb236c823ef5aab0bb",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cost-wrong-parent.hex",
+      "bytes": 232,
+      "sha256": "0287c9b39e573b3e7471a85be38730610d94be0811e8698e1a0fbf8adc34d2eb",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-unknown-cost-child.hex",
+      "bytes": 236,
+      "sha256": "d54a454104ff7aad453a2ecd4b6a4fc7be6f03a67f5a9ecbb97dea77e1731634",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    },
+    {
+      "file": "b44-cca-number.hex",
+      "bytes": 144,
+      "sha256": "0ebaad11e2ef05aea07188f10f6befa33e4f570eccf2b1be699735863f49d1f0",
+      "source": "interop/smsfw-general-fixtures.py",
+      "provenance": "Actual template source projection with explicit inputs; synthetic answers/negative cases, NOT executed C++ or OCS capture"
+    }
+  ]
+}

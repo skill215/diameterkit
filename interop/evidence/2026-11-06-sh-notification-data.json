@@ -1,0 +1,87 @@
+{
+  "format": 1,
+  "date": "2026-11-06",
+  "kind": "independent offline XML Schema oracle; not Diameter network interoperability",
+  "scope": "Seven finite Ref11/12/25 notification combinations, no subscription authorization",
+  "schema": {
+    "url": "https://www.etsi.org/deliver/etsi_ts/129300_129399/129328/18.01.00_60/ts_129328v180100p0.zip",
+    "member": "ShDataType_Rel18.xsd",
+    "bytes": 55518,
+    "sha256": "8e01bf2537df9460ede73dbcb39a275243681f7c1cda8d19061c924824371e79",
+    "modified": false
+  },
+  "oracle": {
+    "runtime": "OpenJDK 25.0.4.1+1-1-26.04.4-Ubuntu, built-in Xerces",
+    "source_sha256": "73b0b13ad14ce978ec0c2dc99a42bd19a17e1ef1f865233cc667a4331a39ff5f",
+    "source": "import java.io.*;\nimport java.nio.file.*;\nimport javax.xml.XMLConstants;\nimport javax.xml.transform.stream.StreamSource;\nimport javax.xml.validation.*;\npublic class DiameterkitShXSDCheck {\n public static void main(String[] args) throws Exception {\n  SchemaFactory f=SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);\n  f.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING,true);\n  f.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD,\"\");\n  f.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA,\"\");\n  Schema s=f.newSchema(Path.of(args[0]).toFile());\n  for(String line:Files.readAllLines(Path.of(args[1]))) {\n   String[] a=line.split(\"\\\\t\"); boolean valid=true;\n   try { Validator v=s.newValidator();v.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD,\"\");v.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA,\"\");v.validate(new StreamSource(Path.of(a[1]).toFile())); }\n   catch(org.xml.sax.SAXException e){valid=false;}\n   if(valid!=a[0].equals(\"valid\"))throw new Exception(\"unexpected XSD result: \"+a[1]+\" valid=\"+valid);\n   System.out.println(\"PASS \"+Path.of(a[1]).getFileName()+\": XSD \"+(valid?\"valid\":\"invalid\"));\n  }\n }\n}\n",
+    "command": "java <temporary>/DiameterkitShXSDCheck.java <unmodified ShDataType_Rel18.xsd> <temporary TSV: expected TAB absolute XML path>",
+    "external_dtd_access": "disabled",
+    "external_schema_access": "disabled",
+    "production_dependency": false
+  },
+  "cases": [
+    {
+      "name": "diameterkit-b20-notification-1.xml",
+      "xsd_expected": "valid",
+      "bytes": 76,
+      "sha256": "5b298a1e3f044c425d9a47967dfb2cd0032ac2660948e51fba0e4a429ef23843",
+      "xml": "<Sh-Data><Sh-IMS-Data><IMSUserState>1</IMSUserState></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "diameterkit-b20-notification-2.xml",
+      "xsd_expected": "valid",
+      "bytes": 69,
+      "sha256": "ec95f4c6fea29234f0585cc12cc7da1c57d9e21369bd30ec6acc239740afb5c7",
+      "xml": "<Sh-Data><Sh-IMS-Data><SCSCFName></SCSCFName></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "diameterkit-b20-notification-3.xml",
+      "xsd_expected": "valid",
+      "bytes": 99,
+      "sha256": "c4423dfa636b24dc4380d3d3b9632639895f7e88e9c40b196338496cc40acee7",
+      "xml": "<Sh-Data><Sh-IMS-Data><SCSCFName></SCSCFName><IMSUserState>1</IMSUserState></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "diameterkit-b20-notification-4.xml",
+      "xsd_expected": "valid",
+      "bytes": 202,
+      "sha256": "466010c9b092c8adc284010e6d601574b67f5e8712f4d7f388dfc9803ca603e0",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><Extension><Extension><UEReachabilityForIP><UEIPReachabilityMME>0</UEIPReachabilityMME></UEReachabilityForIP></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "diameterkit-b20-notification-5.xml",
+      "xsd_expected": "valid",
+      "bytes": 232,
+      "sha256": "f8b64b9303a763a4b1aebbc7f8f5bb37b31d4e42e4ed62412648f06f19ebc356",
+      "xml": "<Sh-Data><Sh-IMS-Data><IMSUserState>1</IMSUserState><Extension><Extension><Extension><UEReachabilityForIP><UEIPReachabilityMME>0</UEIPReachabilityMME></UEReachabilityForIP></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "diameterkit-b20-notification-6.xml",
+      "xsd_expected": "valid",
+      "bytes": 225,
+      "sha256": "74caea70dba515287041bb45febb78d8673eeee575af67e42366ca0d292009ae",
+      "xml": "<Sh-Data><Sh-IMS-Data><SCSCFName></SCSCFName><Extension><Extension><Extension><UEReachabilityForIP><UEIPReachabilityMME>0</UEIPReachabilityMME></UEReachabilityForIP></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "diameterkit-b20-notification-7.xml",
+      "xsd_expected": "valid",
+      "bytes": 255,
+      "sha256": "e9517b2449af13d202d7a131a0d4a9ed943a3c917a0d745063bb23e9a47c9d31",
+      "xml": "<Sh-Data><Sh-IMS-Data><SCSCFName></SCSCFName><IMSUserState>1</IMSUserState><Extension><Extension><Extension><UEReachabilityForIP><UEIPReachabilityMME>0</UEIPReachabilityMME></UEReachabilityForIP></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    }
+  ],
+  "output": [
+    "PASS diameterkit-b20-notification-1.xml: XSD valid",
+    "PASS diameterkit-b20-notification-2.xml: XSD valid",
+    "PASS diameterkit-b20-notification-3.xml: XSD valid",
+    "PASS diameterkit-b20-notification-4.xml: XSD valid",
+    "PASS diameterkit-b20-notification-5.xml: XSD valid",
+    "PASS diameterkit-b20-notification-6.xml: XSD valid",
+    "PASS diameterkit-b20-notification-7.xml: XSD valid"
+  ],
+  "limitations": [
+    "7 original XSD positive combination cases; Go suite independently checks missing/extra/unknown data, empty name, limits and invalid values",
+    "Java audit only; no production or ordinary-test dependency",
+    "Does not certify subscription history, feature use, complete schema interpretation or network interoperability"
+  ]
+}

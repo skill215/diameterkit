@@ -1,0 +1,753 @@
+{
+  "format": 1,
+  "package": "ro",
+  "profile": "ro-32.299-sms-iec-slice-v1",
+  "version": "0.1.0-slice.6",
+  "sources": [
+    "RFC4006 sections3,6.3,8.2-3,8.16-19 and9; TS32.299 V18.0.0 sections6.3.3,7.1 and7.2; frozen V-IEC-CCR-01/CCA-01/02 in doc/diameterkit-protocol-vectors.md",
+    "Bounded standard SMS 18.32274@3gpp.org before delivery: EVENT_REQUEST4, CCNumber0, DIRECT_DEBITING0, one MSCC/ServiceIdentifier; RSU optional and GSU417 Unsigned64; nested IP-SM-GW context. Explicit child ResultCode selected; no default financial result or rating",
+    "generator10/ops8: exact u64; owned token2022 and Address family8; unknown optional extensions retained but known unselected Ro fields blocked, including standard420 Unsigned32 and SMSResult3409; no private binding, auto replay, Tx/Tr engine or persistence",
+    "ECUR revision2: RFC4006 5.4/8.2-3, TS32.299 V18.0.0 6.3.4/7.1.9/7.2.175 and frozen V-SMS/V-TERM pairs; INITIAL1/0 -> TERMINATION3/1 noUPDATE subset. Used-Service-Unit446 event417, direct MSCC FINAL10415/872=2; TERM2001 no GSU and5002. Pure CheckECURContinuation checks caller-supplied requests, not stored charging state or grant/delivery proof. Top IMEISV16, PS RAT1..9/ULI128-129/timezone per audited TS29.061 V18.1.0/23.003; no failed-SMS3409/sequence3408, private binding or RO-06",
+    "Batch49: RFC4006 sections4.1.3/9.2 rating5031 requires quoted Failed-AVP; RFC6733 base5011 is unsupported version, distinct from TS32.299 experimental10415/5011. Normal CCA keeps mandatory268 plus optional297 and received628; unknown namespaces/features preserved with incomplete semantic report, top2001/experimental5011 reports conflict. All experimental/features transmission blocked pending audited pairing/negotiation. Selected E grammar rejects experimental pairing and requires5031 diagnostic. No rating, automatic retries, generated experimental pair or persistence.",
+    "Batch50: runtime contract1.6/R33 scoped RO-06 first slice; audited CCR subset grants TransportReplay for fixed sameOCS activeexchange only. ExplicitRetransmit or TransportFailover require prebound DestinationHost/Realm, sole terminal source, declared ReplayDomain retention, finite attempts and originaldeadline. Immutable body/Session/CCType/Number/Action/E2E, perconnectionHBH and cumulativewrite-evidence T. Valid answers including errors/conflicts terminate without recovery. No responsewait/Tx/Tr, changedOCS, restartimport, DDFHpolicy, automatic businessretry or persistence. RFC4006 sections5.7/6.5 and RFC6733 section3; deployment deduplication evidence not established by local mechanism tests.",
+    "Batch54: bounded receive-only normal CCA base4002 for the existing smsfw-ro-recovery-v1 error set. Owned answer and incomplete semantic report; standard 4002 meaning is not broadened and local generation remains prohibited. Named local ErrorAnswer continuation is opt-in, original OCS only, valid top-level base codes only, pre-Tx cutoff for the legacy extra set; no child/experimental error authorization, persistence or automatic business retry.",
+    "Batch71 rules6: standardSMS top/MSCC4010,4011,5030 selected on IEC/INITIAL/TERMINATION;no grant required for nonsuccess,raw top/child outcomes remain independent. Bounded pure2022 inspection/echo checks bind explicit originalIEC and single service,retainAbsent/Present-empty/unknown,require separately validated exchange/source association;no refundauthorization,amountlogic,SMSfailed-event send expansion or persistence."
+  ],
+  "groups": [
+    {
+      "name": "ServiceUnit",
+      "fields": [
+        {
+          "name": "CCServiceSpecificUnits",
+          "code": 417,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u64",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateUnitsSubset"
+    },
+    {
+      "name": "SubscriptionID",
+      "fields": [
+        {
+          "name": "SubscriptionIDType",
+          "code": 450,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "SubscriptionIDData",
+          "code": 444,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateSubscriptionSubset"
+    },
+    {
+      "name": "Interface",
+      "fields": [
+        {
+          "name": "InterfaceType",
+          "code": 2006,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "InterfaceID",
+          "code": 2003,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "InterfacePort",
+          "code": 2004,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "InterfaceText",
+          "code": 2005,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateInterfaceSubset"
+    },
+    {
+      "name": "RecipientInfo",
+      "fields": [
+        {
+          "name": "DestinationInterface",
+          "code": 2002,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "Interface",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "RecipientSCCPAddress",
+          "code": 2010,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "address",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateRecipientSubset"
+    },
+    {
+      "name": "SMSInformation",
+      "fields": [
+        {
+          "name": "SMSNode",
+          "code": 2016,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SMMessageType",
+          "code": 2007,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginatorInterface",
+          "code": 2009,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "Interface",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "RecipientInfo",
+          "code": 2026,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "RecipientInfo",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "rule": "validateSMSSubset"
+    },
+    {
+      "name": "ServiceInformation",
+      "fields": [
+        {
+          "name": "PSInformation",
+          "code": 874,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "PSInformation",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SMSInformation",
+          "code": 2000,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "SMSInformation",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateServiceSubset"
+    },
+    {
+      "name": "RequestMSCC",
+      "fields": [
+        {
+          "name": "RequestedServiceUnit",
+          "code": 437,
+          "vendor": 0,
+          "flags": 64,
+          "type": "ServiceUnit",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "UsedServiceUnit",
+          "code": 446,
+          "vendor": 0,
+          "flags": 64,
+          "type": "ServiceUnit",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "ServiceIdentifier",
+          "code": 439,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "ReportingReason",
+          "code": 872,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "rule": "validateRequestMSCCSubset"
+    },
+    {
+      "name": "AnswerMSCC",
+      "fields": [
+        {
+          "name": "GrantedServiceUnit",
+          "code": 431,
+          "vendor": 0,
+          "flags": 64,
+          "type": "ServiceUnit",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ServiceIdentifier",
+          "code": 439,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "RefundInformation",
+          "code": 2022,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "octets",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateAnswerMSCCSubset"
+    },
+    {
+      "name": "UserEquipmentInfo",
+      "fields": [
+        {
+          "name": "UserEquipmentInfoType",
+          "code": 459,
+          "vendor": 0,
+          "flags": 0,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "UserEquipmentInfoValue",
+          "code": 460,
+          "vendor": 0,
+          "flags": 0,
+          "type": "octets",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateEquipmentSubset"
+    },
+    {
+      "name": "PSInformation",
+      "fields": [
+        {
+          "name": "RATType",
+          "code": 21,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "octets",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "UserLocationInfo",
+          "code": 22,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "octets",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MSTimeZone",
+          "code": 23,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "octets",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validatePSSubset"
+    },
+    {
+      "name": "ExperimentalResult",
+      "fields": [
+        {
+          "name": "VendorID",
+          "code": 266,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "ExperimentalResultCode",
+          "code": 298,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateReceivedExperimentalResult"
+    },
+    {
+      "name": "SupportedFeatures",
+      "capture_mandatory": true,
+      "fields": [
+        {
+          "name": "VendorID",
+          "code": 266,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "FeatureListID",
+          "code": 629,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "FeatureList",
+          "code": 630,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateReceivedSupportedFeatures"
+    }
+  ],
+  "commands": [
+    {
+      "name": "CCR",
+      "application": 4,
+      "code": 272,
+      "request": true,
+      "proxiable": true,
+      "context_rule": "checkSMSCreditControl",
+      "context_name": "SMSCreditControl",
+      "rule": "validateCCRSubset",
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "DestinationRealm",
+          "code": 283,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationRealm"
+        },
+        {
+          "name": "AuthApplicationID",
+          "code": 258,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            4
+          ]
+        },
+        {
+          "name": "ServiceContextID",
+          "code": 461,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "CCRequestType",
+          "code": 416,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "CCRequestNumber",
+          "code": 415,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "DestinationHost",
+          "code": 293,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": 1,
+          "envelope": "DestinationHost"
+        },
+        {
+          "name": "EventTimestamp",
+          "code": 55,
+          "vendor": 0,
+          "flags": 64,
+          "type": "time",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SubscriptionID",
+          "code": 443,
+          "vendor": 0,
+          "flags": 64,
+          "type": "SubscriptionID",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "MultipleServicesIndicator",
+          "code": 455,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "RequestedAction",
+          "code": 436,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MultipleServicesCreditControl",
+          "code": 456,
+          "vendor": 0,
+          "flags": 64,
+          "type": "RequestMSCC",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "UserEquipmentInfo",
+          "code": 458,
+          "vendor": 0,
+          "flags": 0,
+          "type": "UserEquipmentInfo",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ServiceInformation",
+          "code": 873,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "ServiceInformation",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "transport_replay": true
+    },
+    {
+      "name": "CCA",
+      "application": 4,
+      "code": 272,
+      "request": false,
+      "proxiable": true,
+      "context_rule": "checkSMSCreditControl",
+      "context_name": "SMSCreditControl",
+      "rule": "validateCCASubset",
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "AuthApplicationID",
+          "code": 258,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            4
+          ]
+        },
+        {
+          "name": "CCRequestType",
+          "code": 416,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "CCRequestNumber",
+          "code": 415,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "MultipleServicesCreditControl",
+          "code": 456,
+          "vendor": 0,
+          "flags": 64,
+          "type": "AnswerMSCC",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "ErrorMessage",
+          "code": 281,
+          "vendor": 0,
+          "flags": 0,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorReportingHost",
+          "code": 294,
+          "vendor": 0,
+          "flags": 0,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "FailedAVP",
+          "code": 279,
+          "vendor": 0,
+          "flags": 64,
+          "type": "diagnostic",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ExperimentalResult",
+          "code": 297,
+          "vendor": 0,
+          "flags": 64,
+          "type": "ExperimentalResult",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "error_answer": true,
+      "answer_rule": "validateCCARelation",
+      "error_rule": "validateCreditError"
+    }
+  ]
+}

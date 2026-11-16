@@ -1,0 +1,1034 @@
+{
+  "format": 1,
+  "package": "sgd",
+  "profile": "sgd-gdd-29.338-ordinary-slice-v1",
+  "version": "0.1.0-slice.15",
+  "sources": [
+    "3GPP TS 29.338 V18.2.0 sections 6.2, 6.3 and 7: ordinary IMSI MO / MME or SGSN MT subset; SGd and Gdd share application 16777313",
+    "3GPP TS 29.272 location groups and 23.003 PLMN/ECGI/TAI encoding as audited in doc/diameterkit-mainflow-audit.md section 13.3",
+    "manual rules revision 2: prior ordinary SMS rules plus TFR 3330 requires3332; TFA3331 only10415/5550 and original3330; raw Time zero preserved",
+    "manual relation revision 2: original MME/SGSN target, direct terminal role and same-PLMN evidence; explicit eras and power-saving facts; strict-before send, equal receive NeedsApplication; no Router token or application retry",
+    "generator9 / ops8: SGDRetransmission for TFR/TFA and T4Charging for OFR/OFA; ordinary MO zero-context retained, independent E and Canonical; TransportReplay not audited",
+    "TS29.338 V18.2.0 table6.3.3.1/2 overrides External-Identifier toM0; TS29.337 V18.0.0 T4 MO and SCTP; TS29.336 6.4.11, fixed23.003/RFC4282 ASCII escaped NAI subset",
+    "manual rules/context revision3: top-level OFA3111 UTF8; T4Charging bounded original IMSI/MSISDN/SC and endpoint binding, required charging identity and optional exact external mapping; no mapping service or native T4 commands",
+    "manual rules/context revision4: TS29.338 V18.2.0 section7.3.2 OFA experimental10415/5001 only SGd SMS-IWMSC and original MSISDN; MOForwarding explicit interface/sender/SC/endpoints, Gdd/T4 unsupported report, zero-context NeedsApplication; base5001/E independent",
+    "manual IMS MO revision5: TS29.338 V18.2.0 table6.2.1.1/1-2,6.2.1.2,5.3.3.18-20,6.3.3.13-16; IMS OFR no-IMSI/no-MSISDN source uses15zero dummy, required3324 contains3325 HSSID UTF8 and3326/3327 URI, required3316/3320 cause0/1 and optional cause1 diagnostic11/12. Explicit IMSMOForwarding binds IP-SM-GW/IWMSC, HSSID, URI digest, SC; normal experimental5001 and T4 External-Identifier not selected. No delivery history, MWD, persistence, automatic retry or transport replay; generator9/ops8 unchanged",
+    "manual IMS MT revision6: TS29.338 V18.2.0 table6.2.2.1/1-2 and6.3.3.13-16; TFR top UserName HSSID6..15 with dedicated3324/3326/3327 UTF8 V1M0, no nestedHSSID or MME/SGSN number. Explicit IMSMTForwarding binds GMSC/IP-SM-GW, HSSID/SC and domain-separated URI digest. Selected TFA2001/base errors/5552/5555cause0..2/E; access-node results/diagnostics/location and3330/3331/3332 not selected. Timer/Start/flags retained, no clock inference, retry scheduling or TransportReplay; generator9/ops8 unchanged",
+    "manual IMS MO identity revision7: TS29.338 V18.2.0 table6.2.1.1/1; known originatingIMSI plus optional actualMSISDN, no dummy withIMSI. IMSMOForwarding SenderIMSI/SenderMSISDN optional evidence binds exact source identities and presence; absent both retains prior noIMSI/dummy branch. Reuse inactive source slots, no Context size or budget growth, no new purpose kind. IMS5001/T4ExternalIdentifier remain unselected even with realMSISDN; no subscriber lookup, automatic forwarding or replay; generator9/ops8 unchanged",
+    "manual Router MT revision8: TS29.338 V18.2.0 table6.2.2.1/1-2 and6.2.2.3; dedicated TFA UserIdentifier/AlertUserIdentifier required UserName token UTF8/noNUL1..256 byte local subset, no MSISDN/ExternalID/LMSI. Selected token only on5550with3331; Router context requires token with3331. Explicit RetransmissionToRouter, optional-known RouterAlertSupported requiredtrue with3330 alongside SamePLMN. TFR zero accessnumbers wire-possible only completes with Router context; direct MME/SGSN still requires appropriate number. Original3330/GMSCaddress/PowerSaving/explicitera andstrict-before/equalreceiveNeedsApplication unchanged. No token store/generation, proxy forwarding or automatic retry; generator13/ops8 unchanged."
+  ],
+  "groups": [
+    {
+      "name": "ExperimentalResult",
+      "fields": [
+        {
+          "name": "VendorID",
+          "code": 266,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "ExperimentalResultCode",
+          "code": 298,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        }
+      ]
+    },
+    {
+      "name": "SupportedFeatures",
+      "fields": [
+        {
+          "name": "VendorID",
+          "code": 266,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "FeatureListID",
+          "code": 629,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "FeatureList",
+          "code": 630,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        }
+      ]
+    },
+    {
+      "name": "UserIdentifier",
+      "fields": [
+        {
+          "name": "UserName",
+          "code": 1,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MSISDN",
+          "code": 701,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateIdentitySubset"
+    },
+    {
+      "name": "SMDeliveryFailureCause",
+      "fields": [
+        {
+          "name": "SMEnumeratedDeliveryFailureCause",
+          "code": 3304,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "SMDiagnosticInfo",
+          "code": 3305,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "octets",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    {
+      "name": "MMELocationInformation",
+      "fields": [
+        {
+          "name": "EUTRANCellGlobalIdentity",
+          "code": 1602,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "octets",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "TrackingAreaIdentity",
+          "code": 1603,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "octets",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateMMELocationSubset"
+    },
+    {
+      "name": "EPSLocationInformation",
+      "fields": [
+        {
+          "name": "MMELocationInformation",
+          "code": 1600,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "MMELocationInformation",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateEPSSubset"
+    },
+    {
+      "name": "MOSMSMICorrelationID",
+      "fields": [
+        {
+          "name": "HSSID",
+          "code": 3325,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "utf8",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "OriginatingSIPURI",
+          "code": 3326,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "utf8",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "DestinationSIPURI",
+          "code": 3327,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "utf8",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateMOCorrelation"
+    },
+    {
+      "name": "IPSMGWSMDeliveryOutcome",
+      "fields": [
+        {
+          "name": "SMDeliveryCause",
+          "code": 3321,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "AbsentUserDiagnosticSM",
+          "code": 3322,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateIMSOutcome"
+    },
+    {
+      "name": "MOSMDeliveryOutcome",
+      "fields": [
+        {
+          "name": "IPSMGWSMDeliveryOutcome",
+          "code": 3320,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "IPSMGWSMDeliveryOutcome",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateMOOutcome"
+    },
+    {
+      "name": "MTSMSMICorrelationID",
+      "fields": [
+        {
+          "name": "OriginatingSIPURI",
+          "code": 3326,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "utf8",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "DestinationSIPURI",
+          "code": 3327,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "utf8",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateMTCorrelation"
+    },
+    {
+      "name": "AlertUserIdentifier",
+      "fields": [
+        {
+          "name": "UserName",
+          "code": 1,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "nonempty": true
+        }
+      ],
+      "rule": "validateAlertIdentity"
+    }
+  ],
+  "commands": [
+    {
+      "name": "OFR",
+      "application": 16777313,
+      "code": 8388645,
+      "request": true,
+      "proxiable": true,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "DestinationHost",
+          "code": 293,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": 1,
+          "envelope": "DestinationHost"
+        },
+        {
+          "name": "DestinationRealm",
+          "code": 283,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationRealm"
+        },
+        {
+          "name": "UserIdentifier",
+          "code": 3102,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "UserIdentifier",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "SCAddress",
+          "code": 3300,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "SMRPUI",
+          "code": 3301,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "octets",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "SMSMICorrelationID",
+          "code": 3324,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "MOSMSMICorrelationID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SMDeliveryOutcome",
+          "code": 3316,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "MOSMDeliveryOutcome",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OFRFlags",
+          "code": 3328,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "EPSLocationInformation",
+          "code": 1496,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "EPSLocationInformation",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "rule": "validateOFRSubset",
+      "ignore_vsai": true,
+      "context_rule": "checkT4Charging",
+      "context_name": "MOForwardingPurpose"
+    },
+    {
+      "name": "OFA",
+      "application": 16777313,
+      "code": 8388645,
+      "request": false,
+      "proxiable": true,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ExperimentalResult",
+          "code": 297,
+          "vendor": 0,
+          "flags": 64,
+          "type": "ExperimentalResult",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "SMRPUI",
+          "code": 3301,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "octets",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SMDeliveryFailureCause",
+          "code": 3303,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "SMDeliveryFailureCause",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ExternalIdentifier",
+          "code": 3111,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "ErrorMessage",
+          "code": 281,
+          "vendor": 0,
+          "flags": 0,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorReportingHost",
+          "code": 294,
+          "vendor": 0,
+          "flags": 0,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "FailedAVP",
+          "code": 279,
+          "vendor": 0,
+          "flags": 64,
+          "type": "diagnostic",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "rule": "validateOFAResult",
+      "ignore_vsai": true,
+      "error_answer": true,
+      "context_rule": "checkT4Charging",
+      "context_name": "MOForwardingPurpose",
+      "answer_rule": "validateOFARelation"
+    },
+    {
+      "name": "TFR",
+      "application": 16777313,
+      "code": 8388646,
+      "request": true,
+      "proxiable": true,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "DestinationHost",
+          "code": 293,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationHost"
+        },
+        {
+          "name": "DestinationRealm",
+          "code": 283,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationRealm"
+        },
+        {
+          "name": "UserName",
+          "code": 1,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "SMSMICorrelationID",
+          "code": 3324,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "MTSMSMICorrelationID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SCAddress",
+          "code": 3300,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "SMRPUI",
+          "code": 3301,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "octets",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "MMENumberForMTSMS",
+          "code": 1645,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "tbcd",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SGSNNumber",
+          "code": 1489,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "tbcd",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "TFRFlags",
+          "code": 3302,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SMDeliveryTimer",
+          "code": 3306,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SMDeliveryStartTime",
+          "code": 3307,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "time",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MaximumRetransmissionTime",
+          "code": 3330,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "time",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SMSGMSCAddress",
+          "code": 3332,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "tbcd",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "rule": "validateTFRSubset",
+      "ignore_vsai": true,
+      "context_rule": "checkRetransmission",
+      "context_name": "MTForwardingPurpose"
+    },
+    {
+      "name": "TFA",
+      "application": 16777313,
+      "code": 8388646,
+      "request": false,
+      "proxiable": true,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ExperimentalResult",
+          "code": 297,
+          "vendor": 0,
+          "flags": 64,
+          "type": "ExperimentalResult",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "SMRPUI",
+          "code": 3301,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "octets",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SMDeliveryFailureCause",
+          "code": 3303,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "SMDeliveryFailureCause",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "AbsentUserDiagnosticSM",
+          "code": 3322,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "EPSLocationInformation",
+          "code": 1496,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "EPSLocationInformation",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "RequestedRetransmissionTime",
+          "code": 3331,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "time",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "UserIdentifier",
+          "code": 3102,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "AlertUserIdentifier",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "ErrorMessage",
+          "code": 281,
+          "vendor": 0,
+          "flags": 0,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorReportingHost",
+          "code": 294,
+          "vendor": 0,
+          "flags": 0,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "FailedAVP",
+          "code": 279,
+          "vendor": 0,
+          "flags": 64,
+          "type": "diagnostic",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "rule": "validateTFAResult",
+      "ignore_vsai": true,
+      "error_answer": true,
+      "answer_rule": "validateTFARelation",
+      "context_rule": "checkRetransmission",
+      "context_name": "MTForwardingPurpose"
+    }
+  ]
+}

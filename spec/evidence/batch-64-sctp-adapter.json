@@ -1,0 +1,225 @@
+{
+  "batch": 64,
+  "date": "2026-11-09",
+  "scope": "pure Go;no persistence;established one-to-one SCTP adapter,core events/budget/CEA barrier;managed establishment not yet implemented",
+  "toolchain": "go1.26.10 linux/amd64",
+  "upstream": {
+    "module": "github.com/skill215/sctp",
+    "version": "v0.7.5-0.20261109044437-1649569dd9b8",
+    "sha": "1649569dd9b851b95664fef36f575c88a3547a78",
+    "provenance": "spec/evidence/batch-63-sctp-delivery.json"
+  },
+  "core_dependency": {
+    "module": "github.com/skill215/diameterkit",
+    "version": "v0.0.0-diameterkit.batch64",
+    "scope": "offline production-source candidate;not a published release",
+    "manifest": "spec/evidence/batch-64-core-candidate-files.json",
+    "files": 114,
+    "zip_sha256": "548cad385780d79d7002d110f237ad09e420fde358fa7ab48e5fc8ab56136d54",
+    "public_version": false
+  },
+  "module_isolation": {
+    "GOWORK": "off",
+    "replace_used": false,
+    "module_cache": "fresh offline proxy containing reconstructed core and byte-identical previously downloaded upstream",
+    "go_sum": [
+      "github.com/skill215/diameterkit v0.0.0-diameterkit.batch64 h1:90aoBRmZLbxjsd6SOYz0vMUp0WHgJdJb8nH15btiILs=",
+      "github.com/skill215/diameterkit v0.0.0-diameterkit.batch64/go.mod h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk=",
+      "github.com/skill215/sctp v0.7.5-0.20261109044437-1649569dd9b8 h1:NEMl6dUspDuuvuKtAhugXu5NFNSRb5+VHsFWwcuuZOQ=",
+      "github.com/skill215/sctp v0.7.5-0.20261109044437-1649569dd9b8/go.mod h1:g/XAScdNEAqQa2cjZdtxXVkxIJZEy77f7/fmCkTD2gg="
+    ],
+    "root_go_mod_unchanged": true
+  },
+  "budget": {
+    "upstream_fixed": 8192,
+    "adapter_fixed_allowance": 4096,
+    "measured_adapter_values": 880,
+    "notification_default": 4096,
+    "oob_amd64": 48,
+    "default_info": 16432,
+    "core_event_reserve_per_candidate": 2048,
+    "control_emergency": "existing independent Node reservations,not double counted",
+    "exclusions": "runtime/allocator/stacks/kernel queues;external prebuilt establishment before takeover"
+  },
+  "checks": [
+    {
+      "name": "core_cgo0",
+      "status": "passed",
+      "test_subtest_seed_passes": 2603,
+      "skipped_tests": 0,
+      "output_sha256": "2a60b17ea19d9f2b6b91739e5817e2f7311b1a86f9450dad9c4ba6e23e4a0ec0",
+      "test_names": null
+    },
+    {
+      "name": "core_race",
+      "status": "passed",
+      "test_subtest_seed_passes": 2603,
+      "skipped_tests": 0,
+      "output_sha256": "fe59f07da9e062be603ce551adb259773bd905ebe1829ac369bc59bcc15c82ca",
+      "test_names": null
+    },
+    {
+      "name": "adapter_cgo0",
+      "status": "passed",
+      "test_subtest_seed_passes": 35,
+      "skipped_tests": 0,
+      "output_sha256": "037682af1886df86f616b49f74d5bca5f452f9ed4b91893fcaad1cbccdee60e1",
+      "test_names": [
+        "TestContinuationInEveryReceiveStage",
+        "TestFragmentsNeverRefreshDeadlineOrBorrowAfterReturn",
+        "TestNotificationBoundsAndFragmentMetadata",
+        "TestNotificationBoundsAndFragmentMetadata/changed_ssn",
+        "TestNotificationBoundsAndFragmentMetadata/changed_stream",
+        "TestNotificationBoundsAndFragmentMetadata/malformed_notification",
+        "TestNotificationBoundsAndFragmentMetadata/missing_info",
+        "TestNotificationBoundsAndFragmentMetadata/oversized_notification",
+        "TestNotificationBoundsAndFragmentMetadata/truncation",
+        "TestNotificationLimitAndTypedTerminal",
+        "TestRealSCTPBlockedWriteCancellationAndClose",
+        "TestRealSCTPBlockedWriteCancellationAndClose/cancel",
+        "TestRealSCTPBlockedWriteCancellationAndClose/close",
+        "TestRealSCTPBlockedWriteCancellationAndClose/deadline",
+        "TestRealSCTPCompletedContextsAndFrameDeadline",
+        "TestRealSCTPFramesDiscardAndMetadata",
+        "TestRealSCTPInvalidMessageBoundary",
+        "TestRealSCTPInvalidMessageBoundary/early_eor",
+        "TestRealSCTPInvalidMessageBoundary/missing_eor",
+        "TestRealSCTPInvalidMessageBoundary/ppid",
+        "TestRealSCTPInvalidMessageBoundary/short",
+        "TestRealSCTPInvalidMessageBoundary/two_frames",
+        "TestRealSCTPReadCancellationCloseAndDeadline",
+        "TestRealSCTPReadCancellationCloseAndDeadline/cancel",
+        "TestRealSCTPReadCancellationCloseAndDeadline/close",
+        "TestRealSCTPReadCancellationCloseAndDeadline/deadline",
+        "TestRealSCTPShutdownNotificationSealsWriter",
+        "TestResourceLedgerAndConstructor",
+        "TestSCTPHandshakeCancellationReleasesCandidate",
+        "TestSCTPNodeAssociationTerminationSettlesPending",
+        "TestSCTPNodeReserveRejectedBeforeHandshake",
+        "TestSCTPNodesBaseS6cSuccessFailureAndShutdown",
+        "TestSCTPNodesCancelLateAnswerAndCloseRace",
+        "TestSCTPResponderOrderedBarrierAndTimeout",
+        "TestWriteEvidenceAndNoTailRetry"
+      ]
+    },
+    {
+      "name": "adapter_race_20",
+      "status": "passed",
+      "test_subtest_seed_passes": 700,
+      "skipped_tests": 0,
+      "output_sha256": "217d0ba717d25a51f4e9335fbc70e6dc2cb9b39d398ac60e4c0f0ee826f12d87",
+      "test_names": null
+    },
+    {
+      "name": "vet_and_build",
+      "status": "passed",
+      "scope": "both modules CGO_ENABLED=0"
+    },
+    {
+      "name": "dependency_boundary",
+      "status": "passed",
+      "details": [
+        {
+          "module": "core",
+          "packages": 207,
+          "cgo_files": 0,
+          "dependencies": [
+            "github.com/skill215/diameterkit"
+          ],
+          "output_sha256": "dba6f4faaa70fc7431dbf8cf0b26627b6b8473102f1f0d57f30727100279f3cc"
+        },
+        {
+          "module": "adapter",
+          "packages": 74,
+          "cgo_files": 0,
+          "dependencies": [
+            "github.com/skill215/diameterkit",
+            "github.com/skill215/diameterkit/adapters/sctp",
+            "github.com/skill215/sctp"
+          ],
+          "output_sha256": "9f74f6c65a4dcb43a125644d6ad054c2bb07c40c448c13c4d6ad11c6560afb31"
+        }
+      ]
+    },
+    {
+      "name": "cross_build",
+      "status": "passed",
+      "targets": [
+        "windows/amd64 unsupported",
+        "linux/386 unsupported",
+        "linux/arm64"
+      ],
+      "native_network_proof": false
+    },
+    {
+      "name": "core_source_install_identity",
+      "status": "passed",
+      "files": 114
+    },
+    {
+      "name": "generated_freshness",
+      "status": "passed",
+      "evidence": [
+        "TestGeneratedFilesCurrentAndDeterministic",
+        "TestStrictInputAndReferences/vendor",
+        "TestStrictInputAndReferences/duplicate_command",
+        "TestStrictInputAndReferences/error_rule_without_E",
+        "TestStrictInputAndReferences/error_rule_collision",
+        "TestStrictInputAndReferences/invalid_error_rule",
+        "TestStrictInputAndReferences/correlation_identity",
+        "TestStrictInputAndReferences/request_E",
+        "TestStrictInputAndReferences/blank_package",
+        "TestStrictInputAndReferences/unknown_type",
+        "TestStrictInputAndReferences/duplicate_field",
+        "TestStrictInputAndReferences/identifier",
+        "TestStrictInputAndReferences/cycle",
+        "TestStrictInputAndReferences/request_error_rule",
+        "TestStrictInputAndReferences/base_replay",
+        "TestStrictInputAndReferences/duplicate_enum",
+        "TestStrictInputAndReferences/group_envelope",
+        "TestStrictInputAndReferences/bad_first",
+        "TestStrictInputAndReferences/answer_replay",
+        "TestStrictInputAndReferences/fake_Origin_binding",
+        "TestStrictInputAndReferences/rule_collision",
+        "TestStrictInputAndReferences",
+        "TestGroupDepthDeterministic",
+        "TestExternalGeneratedConsumer",
+        "TestAnswerRuleContract/request",
+        "TestAnswerRuleContract/identifier",
+        "TestAnswerRuleContract/symbol",
+        "TestAnswerRuleContract/same_static_rule",
+        "TestAnswerRuleContract/missing_pair",
+        "TestAnswerRuleContract",
+        "TestFeatureContextAndCapturedMandatoryContracts"
+      ]
+    }
+  ],
+  "native_evidence": [
+    "message boundaries/PPID/asymmetric streams/discard",
+    "cancel/deadline/Close unblock and callback retirement via buffer reuse",
+    "CER/CEA and S6c success/experimental failure/E",
+    "DPR/DPA close and candidate retirement",
+    "late answer,Cancel/answer/Close race and one completion",
+    "COMM_UP/SHUTDOWN/association termination",
+    "CEA/DWR ordered barrier,pre/post DWA flags and silent barrier timeout"
+  ],
+  "controlled_evidence": [
+    "all three receive continuation phases",
+    "terminal association/restart/partial/shutdown state effects",
+    "owned path/sendfailure diagnostics and unknown values",
+    "metadata/length/EOR/notification bounds and rate",
+    "no tail retry and exact write facts"
+  ],
+  "remaining": [
+    "SCTP Dialer/Maintain and Listener/Serve with N/Z/D setup/listener quotas",
+    "OrderedMultiStream/PPID0 named compatibility and wider DRA/OCS deployment tests",
+    "Public immutable core/adapter dependency publication and upstream review/merge",
+    "Existing independent Ro/SCAP1 and v1 release gates"
+  ],
+  "corrected_failure": {
+    "output_sha256": "f6824798907bb7229cb2c6f46efe27b1e25c9a09535a86086b275fa771c4cc36",
+    "case": "writer may receive ESHUTDOWN before terminal read notification",
+    "fix": "map ESHUTDOWN to StopTransport and assert either terminal notification or actual kernel shutdown; preserve single completion/budgets"
+  },
+  "release_status": "not_ready"
+}

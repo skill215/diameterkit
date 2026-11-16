@@ -1,0 +1,343 @@
+{
+  "batch": 65,
+  "date": "2026-11-09",
+  "scope": "pure Go;no persistence;bounded SCTP Dialer/Maintain and Listener/Serve with setup budgets and ownership handoff",
+  "toolchain": "go1.26.10 linux/amd64",
+  "upstream": {
+    "module": "github.com/skill215/sctp",
+    "version": "v0.7.5-0.20261109044437-1649569dd9b8",
+    "sha": "1649569dd9b851b95664fef36f575c88a3547a78",
+    "unchanged": true,
+    "provenance": "spec/evidence/batch-63-sctp-delivery.json"
+  },
+  "core_dependency": {
+    "version": "v0.0.0-diameterkit.batch64",
+    "files": 114,
+    "zip_sha256": "548cad385780d79d7002d110f237ad09e420fde358fa7ab48e5fc8ab56136d54",
+    "identical_to_batch64": true,
+    "public_version": false,
+    "scope": "offline production-source candidate;not a published release"
+  },
+  "module_isolation": {
+    "GOWORK": "off",
+    "replace_used": false,
+    "module_cache": "reuse verified batch64 offline cache,identical core sources and upstream version;GOPROXY=off",
+    "root_go_mod_unchanged": true,
+    "adapter_go_mod_go_sum_unchanged": true
+  },
+  "budget": {
+    "default_addresses_N": 16,
+    "default_zone_bytes_Z": 256,
+    "default_address_text_D": 4096,
+    "max_N": 64,
+    "max_Z": 4096,
+    "max_D": 16384,
+    "formula_A": "64+96*N+Z+2*D+16*(N+2)",
+    "setup_formula": "4096+4*A",
+    "measured_setup_values": 392,
+    "listener_buffer_bytes": 57728,
+    "candidate_buffer_bytes": 61872,
+    "established_conn_buffer_bytes": 16432,
+    "core_event_reserve_per_candidate": 2048,
+    "overlap": "listener + each physical candidate,including waiting/election/retirement;conservative candidate charge retained after handoff",
+    "excluded": "external concurrent construction/resolver internals/runtime/allocator/stacks/kernel socket queues"
+  },
+  "accept_contract": {
+    "mechanism": "pinned upstream SO_RCVTIMEO-aware poller;check context and close before/after AcceptSCTP",
+    "poll_interval_ms": 20,
+    "hard_realtime_bound": false,
+    "max_idle_timeout_wakeups_per_second": 50,
+    "background_accept_workers": 0,
+    "accept_callers_per_listener": 1,
+    "single_cancel_leaves_listener_reusable": true,
+    "connected_socket_timeouts_cleared": true
+  },
+  "checks": [
+    {
+      "name": "core_cgo0",
+      "status": "passed",
+      "test_subtest_seed_passes": 2603,
+      "skipped_tests": 0,
+      "output_sha256": "4b03d70dd4e72254a7680ec5f7a922c49215c732d619e5136ae6edfe3c90d319",
+      "test_names": null
+    },
+    {
+      "name": "adapter_cgo0",
+      "status": "passed",
+      "test_subtest_seed_passes": 55,
+      "skipped_tests": 0,
+      "output_sha256": "9726db1dc114151d39276b1010efc3032ab398a4c827ee3004d5e9ac815a0b6e",
+      "test_names": [
+        "TestContinuationInEveryReceiveStage",
+        "TestFragmentsNeverRefreshDeadlineOrBorrowAfterReturn",
+        "TestListenerCancelDeadlineReuseAndOneOwner",
+        "TestListenerCanceledArrivalAndFreshAccept",
+        "TestListenerCloseUnblocksAndIncomingCloseRace",
+        "TestManagedSCTPAdmissionAndIdleStops",
+        "TestManagedSCTPAdmissionAndIdleStops/cancel",
+        "TestManagedSCTPAdmissionAndIdleStops/dial-budget",
+        "TestManagedSCTPAdmissionAndIdleStops/listener-budget",
+        "TestManagedSCTPAdmissionAndIdleStops/node-close",
+        "TestManagedSCTPAdmissionAndIdleStops/passive-candidate-budget",
+        "TestManagedSCTPAdmissionAndIdleStops/peer-close",
+        "TestManagedSCTPAdmissionAndIdleStops/shutdown",
+        "TestManagedSCTPCrossedElectionAndShutdown",
+        "TestManagedSCTPDialServeS6cAndHandoff",
+        "TestManagedSCTPFailureBackoffAndCancel",
+        "TestManagedSCTPHandshakeDeadlineAndIdleListener",
+        "TestManagedSCTPHandshakeDeadlineAndIdleListener/dial-no-CEA",
+        "TestManagedSCTPHandshakeDeadlineAndIdleListener/idle-then-no-CER",
+        "TestManagedSCTPReconnectDoesNotReplay",
+        "TestManagedSCTPWaitRetainsEstablishBorrower",
+        "TestNotificationBoundsAndFragmentMetadata",
+        "TestNotificationBoundsAndFragmentMetadata/changed_ssn",
+        "TestNotificationBoundsAndFragmentMetadata/changed_stream",
+        "TestNotificationBoundsAndFragmentMetadata/malformed_notification",
+        "TestNotificationBoundsAndFragmentMetadata/missing_info",
+        "TestNotificationBoundsAndFragmentMetadata/oversized_notification",
+        "TestNotificationBoundsAndFragmentMetadata/truncation",
+        "TestNotificationLimitAndTypedTerminal",
+        "TestRealSCTPBlockedWriteCancellationAndClose",
+        "TestRealSCTPBlockedWriteCancellationAndClose/cancel",
+        "TestRealSCTPBlockedWriteCancellationAndClose/close",
+        "TestRealSCTPBlockedWriteCancellationAndClose/deadline",
+        "TestRealSCTPCompletedContextsAndFrameDeadline",
+        "TestRealSCTPFramesDiscardAndMetadata",
+        "TestRealSCTPInvalidMessageBoundary",
+        "TestRealSCTPInvalidMessageBoundary/early_eor",
+        "TestRealSCTPInvalidMessageBoundary/missing_eor",
+        "TestRealSCTPInvalidMessageBoundary/ppid",
+        "TestRealSCTPInvalidMessageBoundary/short",
+        "TestRealSCTPInvalidMessageBoundary/two_frames",
+        "TestRealSCTPReadCancellationCloseAndDeadline",
+        "TestRealSCTPReadCancellationCloseAndDeadline/cancel",
+        "TestRealSCTPReadCancellationCloseAndDeadline/close",
+        "TestRealSCTPReadCancellationCloseAndDeadline/deadline",
+        "TestRealSCTPShutdownNotificationSealsWriter",
+        "TestResourceLedgerAndConstructor",
+        "TestSCTPHandshakeCancellationReleasesCandidate",
+        "TestSCTPNodeAssociationTerminationSettlesPending",
+        "TestSCTPNodeReserveRejectedBeforeHandshake",
+        "TestSCTPNodesBaseS6cSuccessFailureAndShutdown",
+        "TestSCTPNodesCancelLateAnswerAndCloseRace",
+        "TestSCTPResponderOrderedBarrierAndTimeout",
+        "TestSetupInputBoundsAndLedger",
+        "TestWriteEvidenceAndNoTailRetry"
+      ]
+    },
+    {
+      "name": "adapter_race",
+      "status": "passed",
+      "test_subtest_seed_passes": 55,
+      "skipped_tests": 0,
+      "output_sha256": "b4ac2c9293d486707749fe5ef29bc274716b52f18c6f6f923ed289adc9e55268",
+      "test_names": [
+        "TestContinuationInEveryReceiveStage",
+        "TestFragmentsNeverRefreshDeadlineOrBorrowAfterReturn",
+        "TestListenerCancelDeadlineReuseAndOneOwner",
+        "TestListenerCanceledArrivalAndFreshAccept",
+        "TestListenerCloseUnblocksAndIncomingCloseRace",
+        "TestManagedSCTPAdmissionAndIdleStops",
+        "TestManagedSCTPAdmissionAndIdleStops/cancel",
+        "TestManagedSCTPAdmissionAndIdleStops/dial-budget",
+        "TestManagedSCTPAdmissionAndIdleStops/listener-budget",
+        "TestManagedSCTPAdmissionAndIdleStops/node-close",
+        "TestManagedSCTPAdmissionAndIdleStops/passive-candidate-budget",
+        "TestManagedSCTPAdmissionAndIdleStops/peer-close",
+        "TestManagedSCTPAdmissionAndIdleStops/shutdown",
+        "TestManagedSCTPCrossedElectionAndShutdown",
+        "TestManagedSCTPDialServeS6cAndHandoff",
+        "TestManagedSCTPFailureBackoffAndCancel",
+        "TestManagedSCTPHandshakeDeadlineAndIdleListener",
+        "TestManagedSCTPHandshakeDeadlineAndIdleListener/dial-no-CEA",
+        "TestManagedSCTPHandshakeDeadlineAndIdleListener/idle-then-no-CER",
+        "TestManagedSCTPReconnectDoesNotReplay",
+        "TestManagedSCTPWaitRetainsEstablishBorrower",
+        "TestNotificationBoundsAndFragmentMetadata",
+        "TestNotificationBoundsAndFragmentMetadata/changed_ssn",
+        "TestNotificationBoundsAndFragmentMetadata/changed_stream",
+        "TestNotificationBoundsAndFragmentMetadata/malformed_notification",
+        "TestNotificationBoundsAndFragmentMetadata/missing_info",
+        "TestNotificationBoundsAndFragmentMetadata/oversized_notification",
+        "TestNotificationBoundsAndFragmentMetadata/truncation",
+        "TestNotificationLimitAndTypedTerminal",
+        "TestRealSCTPBlockedWriteCancellationAndClose",
+        "TestRealSCTPBlockedWriteCancellationAndClose/cancel",
+        "TestRealSCTPBlockedWriteCancellationAndClose/close",
+        "TestRealSCTPBlockedWriteCancellationAndClose/deadline",
+        "TestRealSCTPCompletedContextsAndFrameDeadline",
+        "TestRealSCTPFramesDiscardAndMetadata",
+        "TestRealSCTPInvalidMessageBoundary",
+        "TestRealSCTPInvalidMessageBoundary/early_eor",
+        "TestRealSCTPInvalidMessageBoundary/missing_eor",
+        "TestRealSCTPInvalidMessageBoundary/ppid",
+        "TestRealSCTPInvalidMessageBoundary/short",
+        "TestRealSCTPInvalidMessageBoundary/two_frames",
+        "TestRealSCTPReadCancellationCloseAndDeadline",
+        "TestRealSCTPReadCancellationCloseAndDeadline/cancel",
+        "TestRealSCTPReadCancellationCloseAndDeadline/close",
+        "TestRealSCTPReadCancellationCloseAndDeadline/deadline",
+        "TestRealSCTPShutdownNotificationSealsWriter",
+        "TestResourceLedgerAndConstructor",
+        "TestSCTPHandshakeCancellationReleasesCandidate",
+        "TestSCTPNodeAssociationTerminationSettlesPending",
+        "TestSCTPNodeReserveRejectedBeforeHandshake",
+        "TestSCTPNodesBaseS6cSuccessFailureAndShutdown",
+        "TestSCTPNodesCancelLateAnswerAndCloseRace",
+        "TestSCTPResponderOrderedBarrierAndTimeout",
+        "TestSetupInputBoundsAndLedger",
+        "TestWriteEvidenceAndNoTailRetry"
+      ]
+    },
+    {
+      "name": "adapter_setup_race20",
+      "status": "passed",
+      "test_subtest_seed_passes": 380,
+      "skipped_tests": 0,
+      "output_sha256": "b55f09346093c6493231dac147f185d5a8df91ec32240cfca9a0812435137996",
+      "test_names": [
+        "TestListenerCancelDeadlineReuseAndOneOwner",
+        "TestListenerCanceledArrivalAndFreshAccept",
+        "TestListenerCloseUnblocksAndIncomingCloseRace",
+        "TestManagedSCTPAdmissionAndIdleStops",
+        "TestManagedSCTPAdmissionAndIdleStops/cancel",
+        "TestManagedSCTPAdmissionAndIdleStops/dial-budget",
+        "TestManagedSCTPAdmissionAndIdleStops/listener-budget",
+        "TestManagedSCTPAdmissionAndIdleStops/node-close",
+        "TestManagedSCTPAdmissionAndIdleStops/passive-candidate-budget",
+        "TestManagedSCTPAdmissionAndIdleStops/peer-close",
+        "TestManagedSCTPAdmissionAndIdleStops/shutdown",
+        "TestManagedSCTPCrossedElectionAndShutdown",
+        "TestManagedSCTPDialServeS6cAndHandoff",
+        "TestManagedSCTPFailureBackoffAndCancel",
+        "TestManagedSCTPHandshakeDeadlineAndIdleListener",
+        "TestManagedSCTPHandshakeDeadlineAndIdleListener/dial-no-CEA",
+        "TestManagedSCTPHandshakeDeadlineAndIdleListener/idle-then-no-CER",
+        "TestManagedSCTPWaitRetainsEstablishBorrower",
+        "TestSetupInputBoundsAndLedger"
+      ]
+    },
+    {
+      "name": "core_race_unchanged_production",
+      "status": "retained",
+      "evidence": "spec/evidence/batch-64-sctp-adapter.json",
+      "test_subtest_seed_passes": 2603,
+      "rerun_this_batch": false
+    },
+    {
+      "name": "vet_build_crossbuild",
+      "status": "passed",
+      "details": [
+        {
+          "module": "core",
+          "command": "go vet ./...",
+          "status": "passed"
+        },
+        {
+          "module": "core",
+          "command": "go build ./...",
+          "status": "passed"
+        },
+        {
+          "module": "core",
+          "command": "go list -deps -json ./...",
+          "status": "passed"
+        },
+        {
+          "module": "adapter",
+          "command": "go -C adapters/sctp vet ./...",
+          "status": "passed"
+        },
+        {
+          "module": "adapter",
+          "command": "go -C adapters/sctp build ./...",
+          "status": "passed"
+        },
+        {
+          "module": "adapter",
+          "command": "go -C adapters/sctp list -deps -json ./...",
+          "status": "passed"
+        },
+        {
+          "module": "adapter",
+          "command": "build ./...",
+          "target": "windows/amd64",
+          "status": "passed",
+          "native_network_proof": false
+        },
+        {
+          "module": "adapter",
+          "command": "build ./...",
+          "target": "linux/386",
+          "status": "passed",
+          "native_network_proof": false
+        },
+        {
+          "module": "adapter",
+          "command": "build ./...",
+          "target": "linux/arm64",
+          "status": "passed",
+          "native_network_proof": false
+        }
+      ]
+    },
+    {
+      "name": "dependency_boundary",
+      "status": "passed",
+      "details": [
+        {
+          "module": "core",
+          "packages": 207,
+          "cgo_files": 0,
+          "dependencies": [
+            "github.com/skill215/diameterkit"
+          ],
+          "output_sha256": "dba6f4faaa70fc7431dbf8cf0b26627b6b8473102f1f0d57f30727100279f3cc"
+        },
+        {
+          "module": "adapter",
+          "packages": 74,
+          "cgo_files": 0,
+          "dependencies": [
+            "github.com/skill215/diameterkit",
+            "github.com/skill215/diameterkit/adapters/sctp",
+            "github.com/skill215/sctp"
+          ],
+          "output_sha256": "034aff1e2349a0e4a93d98bd893eaadc092c5ffa19dc45b5b1f6a271799ab457"
+        }
+      ]
+    },
+    {
+      "name": "core_source_install_identity",
+      "status": "passed",
+      "files": 114,
+      "manifest": "spec/evidence/batch-64-core-candidate-files.json"
+    },
+    {
+      "name": "generated_freshness",
+      "status": "passed",
+      "evidence": "core CGO0 internal/codegen regression;all definitions/929wire/17XML unchanged"
+    }
+  ],
+  "native_evidence": [
+    "same-candidate bounded address/config admission",
+    "Accept cancel/deadline/reuse,Close unblock and one-owner rejection",
+    "Incoming Establish/Close race and old context isolation after handoff",
+    "Node.Dial/Serve Base/S6c and DPR/DPA",
+    "Serve cancellation preserves established Peer",
+    "idle Accept does not spend Handshake;silent CER/CEA deadlines retire candidate",
+    "one-byte insufficient active/passive/listener quota rejected before callback",
+    "Node.Wait retains unfinished Establish borrower after Close",
+    "Maintain failure backoff and cancellation",
+    "real connection loss,old pending WrittenNoAnswer once,REOPEN three-DWA readiness and explicit new SRR",
+    "old Inbound late answer rejected;no business replay/duplicate completion",
+    "crossed Dial/Serve election and crossed Shutdown;budget/slots retire"
+  ],
+  "remaining": [
+    "named OrderedMultiStream and PPID0 compatibility",
+    "immutable public core/adapter dependencies and upstream review/merge",
+    "actual DRA/OCS deployment acceptance",
+    "existing independent Ro/SCAP1 and v1 release gates"
+  ],
+  "release_status": "not_ready"
+}

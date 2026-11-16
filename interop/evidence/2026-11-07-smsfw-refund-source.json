@@ -1,0 +1,528 @@
+{
+  "kind": "source projection only",
+  "inputs": {
+    "SUBSCRIPTIONID_MSISDN": "15551234567",
+    "SUBSCRIPTIONID_IMSI": "001010123456789",
+    "TIMESTAMP": 1700000000,
+    "DCS": 8,
+    "INTERFACE_TYPE_DEST": 2,
+    "MESSAGE_TYPE": 0,
+    "INTERFACE_TYPE_ORIG": 1,
+    "PID": "00ff",
+    "REFUND_INFO": "00ff800001"
+  },
+  "template_mapping": [
+    {
+      "name": "SUBSCRIPTION_ID",
+      "path": "0/443",
+      "type": "GROUPED",
+      "value": [
+        "SUBSCRIPTION_ID_TYPE",
+        "SUBSCRIPTION_ID_DATA"
+      ]
+    },
+    {
+      "name": "SUBSCRIPTION_ID_TYPE",
+      "path": "0/443/0/450",
+      "type": "INT32",
+      "value": [
+        "0"
+      ]
+    },
+    {
+      "name": "SUBSCRIPTION_ID_DATA",
+      "path": "0/443/0/444",
+      "type": "STRING",
+      "value": [
+        "$SUBSCRIPTIONID_MSISDN"
+      ]
+    },
+    {
+      "name": "SUBSCRIPTION_ID",
+      "path": "0/443",
+      "type": "GROUPED",
+      "value": [
+        "SUBSCRIPTION_ID_TYPE",
+        "SUBSCRIPTION_ID_DATA"
+      ]
+    },
+    {
+      "name": "SUBSCRIPTION_ID_TYPE",
+      "path": "0/443/0/450",
+      "type": "INT32",
+      "value": [
+        "1"
+      ]
+    },
+    {
+      "name": "SUBSCRIPTION_ID_DATA",
+      "path": "0/443/0/444",
+      "type": "STRING",
+      "value": [
+        "$SUBSCRIPTIONID_IMSI"
+      ]
+    },
+    {
+      "name": "EVENT_TIMESTAMP",
+      "path": "0/55",
+      "type": "TIME",
+      "value": [
+        "$TIMESTAMP"
+      ]
+    },
+    {
+      "name": "MULTIPLE_SERVICE_CREDITCONTROL",
+      "path": "0/456",
+      "type": "GROUPED",
+      "value": [
+        "REQUESTED_SERVICE_UNIT"
+      ]
+    },
+    {
+      "name": "REQUESTED_SERVICE_UNIT",
+      "path": "0/456/0/437",
+      "type": "GROUPED",
+      "value": [
+        "CC_MONEY",
+        "CC_SERVICE_SPECIFIC_UNIT"
+      ]
+    },
+    {
+      "name": "CC_MONEY",
+      "path": "0/456/0/437/0/420",
+      "type": "GROUPED",
+      "value": [
+        "UNIT_VALUE",
+        "CURRENCY_CODE"
+      ]
+    },
+    {
+      "name": "UNIT_VALUE",
+      "path": "0/456/0/437/0/420/0/445",
+      "type": "GROUPED",
+      "value": [
+        "DIGI",
+        "EXP"
+      ]
+    },
+    {
+      "name": "DIGI",
+      "path": "0/456/0/437/0/420/0/445/0/447",
+      "type": "INTEGER64",
+      "value": [
+        "1"
+      ]
+    },
+    {
+      "name": "EXP",
+      "path": "0/456/0/437/0/420/0/445/0/429",
+      "type": "INTEGER32",
+      "value": [
+        "0"
+      ]
+    },
+    {
+      "name": "CURRENCY_CODE",
+      "path": "0/456/0/437/0/420/0/425",
+      "type": "INT32",
+      "value": [
+        "840"
+      ]
+    },
+    {
+      "name": "CC_SERVICE_SPECIFIC_UNIT",
+      "path": "0/456/0/437/0/417",
+      "type": "UINT64",
+      "value": [
+        "1"
+      ]
+    },
+    {
+      "name": "SERVICE_INFORMATION",
+      "path": "10415/873",
+      "type": "GROUPED",
+      "value": [
+        "SMS_INFORMATION"
+      ]
+    },
+    {
+      "name": "SMS_INFORMATION",
+      "path": "10415/873/10415/2000",
+      "type": "GROUPED",
+      "value": [
+        "SMS_NODE",
+        "SM_DCS",
+        "SM_DEST_IF",
+        "SM_MESSAGE_TYPE",
+        "SM_ORIG_IF",
+        "SM_PID"
+      ]
+    },
+    {
+      "name": "SMS_NODE",
+      "path": "10415/873/10415/2000/10415/2016",
+      "type": "ENUMERATED",
+      "value": [
+        "2"
+      ]
+    },
+    {
+      "name": "SM_DCS",
+      "path": "10415/873/10415/2000/10415/2001",
+      "type": "INTEGER32",
+      "value": [
+        "$DCS"
+      ]
+    },
+    {
+      "name": "SM_DEST_IF",
+      "path": "10415/873/10415/2000/10415/2002",
+      "type": "GROUPED",
+      "value": [
+        "SM_IF"
+      ]
+    },
+    {
+      "name": "SM_IF",
+      "path": "10415/873/10415/2000/10415/2002/10415/2006",
+      "type": "ENUMERATED",
+      "value": [
+        "$INTERFACE_TYPE_DEST"
+      ]
+    },
+    {
+      "name": "SM_MESSAGE_TYPE",
+      "path": "10415/873/10415/2000/10415/2007",
+      "type": "ENUMERATED",
+      "value": [
+        "$MESSAGE_TYPE"
+      ]
+    },
+    {
+      "name": "SM_ORIG_IF",
+      "path": "10415/873/10415/2000/10415/2009",
+      "type": "GROUPED",
+      "value": [
+        "SM_IF"
+      ]
+    },
+    {
+      "name": "SM_IF",
+      "path": "10415/873/10415/2000/10415/2009/10415/2006",
+      "type": "ENUMERATED",
+      "value": [
+        "$INTERFACE_TYPE_ORIG"
+      ]
+    },
+    {
+      "name": "SM_PID",
+      "path": "10415/873/10415/2000/10415/2013",
+      "type": "OCTETSTRING",
+      "value": [
+        "$PID"
+      ]
+    },
+    {
+      "name": "REFUND_INFO",
+      "path": "0/1292",
+      "type": "OCTETSTRING",
+      "value": [
+        "$REFUND_INFO"
+      ]
+    }
+  ],
+  "source_files": [
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/yppdia_refund_avptemplate.cf",
+      "sha256": "6a26a7037badfce37202cfb35917ec27770740ecaf67e957e8e7d8a9314edfed"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dcca-wrapper/AvpsTemplate.cc",
+      "sha256": "063ed87a7a5d807ce7d68a4d3ec4c890f8fe84b18e24f0701f6fb938175b75d0"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dcca-wrapper/AvpImpl.cc",
+      "sha256": "58e363aa1d08da12a6fff155a0d87d4298702fb8867b18a61450d4235b6ff828"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dia-base/dia-message.cc",
+      "sha256": "9400dac621c906379c006bfc0cf80c68b35dcd974719de1a97b1ce9a7b09d268"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dia-cc/dia-cc.cc",
+      "sha256": "3254a1456d2591467a245f29c73174aed95892994174dfaedff0d5452a1e62be"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dcca-wrapper/DccaClientWrapper.cc",
+      "sha256": "8c6c650c87304bbbf7072a1f290ab708f101a8a921a6723d275e39dc989859ff"
+    }
+  ],
+  "fixtures": [
+    {
+      "file": "b42-refund-request.hex",
+      "bytes": 540,
+      "sha256": "bfaf7a2fd674bb6131c197384440a89e2d8d79c728f71625965fa507be2661b9",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-refund-enhanced.hex",
+      "bytes": 572,
+      "sha256": "91c66576adfbdb91867b2fbfa143f4bafa6aadfb805fb6e0d93366fb822ca93c",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-cca-success.hex",
+      "bytes": 144,
+      "sha256": "d62c73c8460c843eb0dac96570e2794376e9f5191876605d7add6428c084cc26",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-cca-denied.hex",
+      "bytes": 144,
+      "sha256": "ca62f902fcefcb1c02a74c9697aa763051d7db752b2d9344964975ec51475515",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-cca-failed.hex",
+      "bytes": 144,
+      "sha256": "f0558adf4ba32cb2fa682b16f0582f1b9c5dcd2808f028e2fd27e9c1d918398f",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-cca-error.hex",
+      "bytes": 108,
+      "sha256": "a97a70befb7fd62a5ddebfca59ab8cd64b83cc9e161d06c8159a702289ee413e",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-money-minimum.hex",
+      "bytes": 540,
+      "sha256": "84ee33c89b2e0c3a72178ed9dfd73c714e50f9c6566db4c17153292c9aac309d",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-money-maximum.hex",
+      "bytes": 540,
+      "sha256": "d6e6d53006f5efeed0db94b257e7494addf722f409df0bde5df80667433870f1",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-money-zero.hex",
+      "bytes": 540,
+      "sha256": "28fcef80061c1c490e3afb7b55e87b3831d34a9a62589234ae6dfa0c774ce8f6",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-money-negative.hex",
+      "bytes": 540,
+      "sha256": "75032c9e8f615cc8ea8eb2ea7d753556e755f96a79c177a702119a7cbc3be6a3",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-empty-token.hex",
+      "bytes": 532,
+      "sha256": "2e051bcbbdbeb38a81d4adb6018dba9e5bdabf0d9d9c3730b92c11f9f10e94f3",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-token-changed.hex",
+      "bytes": 544,
+      "sha256": "4861936ea48613b31d29910b4e3ee2132118a96d20eb704a9ce85fce4efcdf05",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-digits-width4.hex",
+      "bytes": 536,
+      "sha256": "d6a2a4623ac74fe878f88a162a36674877ac4899ff0bfa81195309289461aeac",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-exponent-width8.hex",
+      "bytes": 544,
+      "sha256": "821b091cf9cbc2c0e73571c19c67d3a1c865562a976aee2ef9d97d6a21932acc",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-currency-width8.hex",
+      "bytes": 544,
+      "sha256": "d1aa609b22c41af2af6f8f71b471199f5339a9d029b31b14435a60c9739ecd6c",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-unit-width4.hex",
+      "bytes": 536,
+      "sha256": "be9738e5da51ebab1b3c400647a200f14dfaef1c1e58ce2c6cc0a9e1dd5aa40b",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-420-scalar.hex",
+      "bytes": 496,
+      "sha256": "f754efa5d88dbe7dc1003383c77919fef9a8691d9e58fb20c2b5d98ca77f3595",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-missing-money.hex",
+      "bytes": 484,
+      "sha256": "8b0187c498c8293443612527713437244cde2db7f03c0eb431d4a08f816a3dbe",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-missing-unit-value.hex",
+      "bytes": 504,
+      "sha256": "6b35aed673314c1db79dcc3de49fb320aa2ca4d6d660bc0ee1df3942ffe492ac",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-missing-digits.hex",
+      "bytes": 524,
+      "sha256": "cc0ff3fe26bdcf96c3d4df015df259988199300b0119b8c770eb41fa9ad7f749",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-missing-exponent.hex",
+      "bytes": 528,
+      "sha256": "b1ce0ed25c5251ccfd190cadd9438e4e9ca7c2bee04a4f446a2a92acf3e22134",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-missing-currency.hex",
+      "bytes": 528,
+      "sha256": "08d553d5b6bb53974743592f9943d902ef8735462b5618fbf48b38f1216a8fc1",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-missing-units.hex",
+      "bytes": 524,
+      "sha256": "ef7c952860577b8c72277e2dbd7c9ebd6dbffc69366a68ca6bcc3a9b89578431",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-missing-token.hex",
+      "bytes": 524,
+      "sha256": "37fd18d53b818d819661623aad8b41d2bf8220812cd9b981e6860385e4854c08",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-duplicate-money.hex",
+      "bytes": 596,
+      "sha256": "98716704748af6df28255a26fb5e2d826b3af552806cac8ba1480b3c8ccd5945",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-duplicate-token.hex",
+      "bytes": 556,
+      "sha256": "26c2bbe50ee08547009a533f8ba9a9c970f0d7b7627cbaa17505e08d1ef6bec3",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-413-alias.hex",
+      "bytes": 540,
+      "sha256": "f91303dac0cbc46c3eae679ad881ef7398259675114fad7323053338fc1c65e0",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-money-vendor.hex",
+      "bytes": 544,
+      "sha256": "aa2d37418dd6d995bf61e3704ea2cf7eb0edffe58c82a7e3507959217afc5ceb",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-token-vendor.hex",
+      "bytes": 544,
+      "sha256": "e750f5fc2403fe0e9c2124f64ac3076fd833e87a5793c7f3611d856aafe6bb8d",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-2022-alias.hex",
+      "bytes": 544,
+      "sha256": "7f0d060e1ba8855806f4f8fc667649f088e53f986d280aea21e7db62eb723c8f",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-wrong-parent.hex",
+      "bytes": 540,
+      "sha256": "94f703f6f69aab99460ab22639af35a26304dafe6b63d36a15012f0927c85254",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-wrong-action.hex",
+      "bytes": 540,
+      "sha256": "21cc1987b3fa4012007c4d316a83c0e4f9b4167188205631a408bc2f536b1da4",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-wrong-number.hex",
+      "bytes": 540,
+      "sha256": "f95958164bbbf6a961f95613df25607fca354c7dd75a3b8c6217708786e4843a",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-wrong-node.hex",
+      "bytes": 540,
+      "sha256": "603474f57c9eddc4a37b413f7b245f56c20ee0713bb7038460d71bfe76babb8a",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-cca-money.hex",
+      "bytes": 200,
+      "sha256": "6bf5b925eda07522850ed25232bbd9c2ec189474ac4c9272e53fc61f1e4471be",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-cca-token.hex",
+      "bytes": 156,
+      "sha256": "f8da14d522e7a22f0f3b4da1897b65a14ac7bd50e323eec713196344b2592a58",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-cca-gsu.hex",
+      "bytes": 168,
+      "sha256": "ab00a8b619f9e3c0a67fc87a37b47f68664f322d13e76a2f0d0bcfcedf1591a7",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    },
+    {
+      "file": "b42-cca-number.hex",
+      "bytes": 144,
+      "sha256": "e0570b400b9032a37ffc186c16198a6c1eab3f01472a2d230cea86212324d2bb",
+      "source": "interop/smsfw-refund-fixtures.py",
+      "provenance": "Independent Python projection of actual C++ template and supplied input; synthetic paired CCA/counterexamples; not executed C++ or OCS capture"
+    }
+  ]
+}

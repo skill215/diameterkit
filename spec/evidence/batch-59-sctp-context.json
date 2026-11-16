@@ -1,0 +1,157 @@
+{
+  "batch": 59,
+  "date": "2026-11-09",
+  "upstream": "github.com/skill215/sctp",
+  "base_commit": "62ad388be958f0bd19d29d63dfc05743726779a1",
+  "requires_patch": "spec/evidence/batch-58-sctp-u3.patch",
+  "patch": "spec/evidence/batch-59-sctp-context.patch",
+  "patch_sha256": "4da9f1702dd24ad1ce3918ce6384dbb9376f8d5e37f501bf9bd5d8a1a34653c2",
+  "candidate": "base + batch58 + batch59; applied locally, uncommitted/unpublished, not a dependency lock",
+  "environment": {
+    "go": "go1.26.10",
+    "platform": "linux/amd64",
+    "kernel": "6.6.114.1-microsoft-standard-WSL2",
+    "production_cgo": false,
+    "race_cgo": true,
+    "go_flags": "-buildvcs=false for isolated archive checks; no VCS stamp is validation evidence"
+  },
+  "scope": {
+    "U3": "public Context resolve/dial implemented atop retained waiting foundation; new message-operation integration remains in U2",
+    "U2": "not implemented",
+    "U4": "not implemented",
+    "U5": "not ready"
+  },
+  "upstream_source_hashes": [
+    {
+      "path": "context.go",
+      "sha256": "e32f6166ae30cd43507906aa07917e3819fe8f8228921a885db969cf06a56442"
+    },
+    {
+      "path": "context_linux.go",
+      "sha256": "c76ca24cc3f3b4f597470d73b7e082ec266ef1fc3f5354f58da9d640c3876498"
+    },
+    {
+      "path": "context_unsupported.go",
+      "sha256": "204f2af1bfa09c337bc15cfd8d470ecf4ccab868029a2730dc14cdbf5da29eac"
+    },
+    {
+      "path": "context_test.go",
+      "sha256": "c128242f154af6002b5b9d7c4111ac9a30f6d016eee6ed0f8e8c8c6a04f495f4"
+    },
+    {
+      "path": "context_linux_test.go",
+      "sha256": "d456dd77a49f81e2a9e355eb06d0af05536bda3da1c7dab08f62265dcd078557"
+    },
+    {
+      "path": "context_example_test.go",
+      "sha256": "9ed3064ffed407d9bf5c2d29521ccfaccba0ad302d1728d294d8e07d8e57d389"
+    },
+    {
+      "path": "docs/diameterkit-u3-context.md",
+      "sha256": "1637224d4203eb24e1dce53f2a0ceea2018a1bfb61d17ff9b0c6fe32987a2ae8"
+    }
+  ],
+  "retained_batch58_sources": [
+    {
+      "path": "sctp.go",
+      "sha256": "09fe81756ccb7de0daaa3ae41b39ac9cfb1bdbd43992c15e6b2d5564a70188ae"
+    },
+    {
+      "path": "sctp_linux.go",
+      "sha256": "6e704c21b5a4839b451afc643b0db7dcf416b9afefb9052bcb201b5535dc410d"
+    },
+    {
+      "path": "socket_io_linux.go",
+      "sha256": "397f3be775f1ae875fbd04adff503a0ccd2fee65ca21b0521521c99f19431cdc"
+    },
+    {
+      "path": "socket_deadline.go",
+      "sha256": "312a4851507a8ee1a83bf6d7b64c393c0f6cf2ec250b664fef0f41e249b017d4"
+    },
+    {
+      "path": "socket_deadline_linux.go",
+      "sha256": "e830fd8f4c7b60686acccc726cadb69b32a81568669ff9b97fe2c5ed370b4f95"
+    },
+    {
+      "path": "socket_deadline_stub.go",
+      "sha256": "fadb53471d35b1edaf18826c7028280da834bcf6ed4365d1163d30a9709bdb97"
+    },
+    {
+      "path": "socket_deadline_linux_test.go",
+      "sha256": "c92c2b12bdfcf070ca70f2c109b3c1d486577bed73485dc47a836538d6f9269c"
+    },
+    {
+      "path": "docs/diameterkit-u3-foundation.md",
+      "sha256": "cf5097dc186a37e4ba9b1f22fd35d85574a98d23129722fe018998aa6ea8c601"
+    }
+  ],
+  "preserved_work": "Old resolve/dial/listen and batch58 code unchanged; existing v1 design/ADR/CONTEXT and unrelated README changes retained. No upstream v1 tasks checked off.",
+  "checks": [
+    {
+      "name": "native_tests",
+      "command": "CGO_ENABLED=0 go test -json ./... -count=1 -timeout=180s",
+      "status": "passed",
+      "test_subtest_example_passes": 267,
+      "skips": 0,
+      "new_groups": 9,
+      "executed_example": "ExampleResolveSCTPAddrContext",
+      "compile_only_example": "ExampleSocketConfig_DialContext",
+      "package_results": [
+        {
+          "Time": "2026-11-09T11:34:57.585227102+08:00",
+          "Action": "pass",
+          "Package": "github.com/skill215/sctp",
+          "Elapsed": 4.965
+        },
+        {
+          "Time": "2026-11-09T11:34:58.696809605+08:00",
+          "Action": "pass",
+          "Package": "github.com/skill215/sctp/example",
+          "Elapsed": 6.077
+        }
+      ],
+      "raw_output_sha256": "b52a339ef040e3edc3da106512639edd15dc79be7694c1e9139f732dfda272f3"
+    },
+    {
+      "name": "race",
+      "command": "CGO_ENABLED=1 go test -race ./... -timeout=240s",
+      "status": "passed",
+      "output": "ok  \tgithub.com/skill215/sctp\t9.295s\nok  \tgithub.com/skill215/sctp/example\t(cached)\n",
+      "note": "Isolated exact-source candidate; hash-matched to applied upstream."
+    },
+    {
+      "name": "vet_build",
+      "command": "CGO_ENABLED=0 go vet ./...; CGO_ENABLED=0 go build ./...",
+      "status": "passed",
+      "note": "GOFLAGS=-buildvcs=false in archive and upstream checks."
+    },
+    {
+      "name": "compile_only",
+      "targets": [
+        "linux/arm64",
+        "windows/amd64"
+      ],
+      "status": "passed",
+      "note": "Not native association/ABI evidence."
+    },
+    {
+      "name": "dependencies",
+      "status": "passed",
+      "packages": 111,
+      "no_cgo": true,
+      "no_external_modules": true
+    },
+    {
+      "name": "patch",
+      "status": "passed",
+      "note": "Incremental patch applies afterbatch58 to clean candidate and live workspace; retained code hashes verified."
+    }
+  ],
+  "test_boundary": "Real local SCTP success/refusal/bind/accept race; controlled Go DNS cancellation, unconnected socket pending-wait model and direct publication-gate checks. Not publicDNS, packetloss or exhaustive fault-injection evidence.",
+  "remaining": [
+    "U2 message mode/ReadEvent/WriteMsgContext integration with shared cancellation/deadlines",
+    "U4 notifications and options/readback/accept checks",
+    "U5 complete exact-candidate publication/nativeABI/platform acceptance",
+    "diameterkit SCTP adapter/resource/Peer and real deployment acceptance"
+  ]
+}

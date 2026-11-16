@@ -1,0 +1,327 @@
+{
+  "batch": 73,
+  "date": "2026-11-10",
+  "scope": "P4 ALERT-LEGACY-SGD fixed App16777313/8388648 ALR/ALA delegation; pureGo/no persistence",
+  "toolchain": "go1.26.10 linux/amd64",
+  "kernel": "6.6.114.1-microsoft-standard-WSL2",
+  "binding": {
+    "digest": "76860dba941fc1fab19ab9504d0d47a971150e45f2f51a60ee5847dba85c9f1b",
+    "fingerprint": "29007421d5a1e4a734623d39fc784c56fa5850fb3346f785103e4eb1ff0a6d3a",
+    "name": "legacy-sgd-alert-v1",
+    "source_digest": "47edd3fa75eb0eddde74a1e6041a103c066be3108e3c3a3b219f42d613723471",
+    "source_name": "s6c-29.338-ordinary-mme-slice-v1",
+    "source_version": "0.1.0-slice.20",
+    "version": "legacy-sgd-alert-v1.1"
+  },
+  "definitions": {
+    "generated": 11,
+    "unchanged": true,
+    "delegated_profiles": 1,
+    "total_profiles": 12,
+    "request_answer_pairs_including_overlapping_bindings": 20,
+    "generator": 13,
+    "operations": 8
+  },
+  "corpus": {
+    "wire": 1125,
+    "xml": 17,
+    "new_wire": 26,
+    "prior_wire_unchanged": 1099
+  },
+  "implemented": [
+    "Two distinct fixed legacy body types, source S6c owned operations and role/IMS/T4 rules reused without header rewriting",
+    "Explicit Profile digest incorporates delegated S6c identity/version/digest; standard S6c/SGd coexist, no dynamic alias/registry",
+    "Normal and E answer originalApp/IDs/Session/Proxy; explicit localOrigin, no destination-as-origin shortcut",
+    "Canonical retains actualApp; crossApp sameOrigin/E2E content conflict, finite multiArrival/cache and source policy unchanged",
+    "Same conservative DecodeBound and existing runtime reservation/retirement; no full-message copy or new resource/state machine",
+    "No TransportReplay grant, autoSRR/SMS, persistence, C/CGO or application mapping"
+  ],
+  "checks": [
+    {
+      "name": "legacy_alert_race20",
+      "command": "go test ./... -race -json -run ^TestLegacySGdAlert -count=20 -timeout=5m",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 1000,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "f006afd19efbb714222eafb605604c2158c0268da97d5af6b8278017e183723f",
+      "test_names": [
+        "TestLegacySGdAlertExplicitBinding",
+        "TestLegacySGdAlertFrozenVectors",
+        "TestLegacySGdAlertFrozenVectors/b23-alr-both",
+        "TestLegacySGdAlertFrozenVectors/b23-alr-future-bits",
+        "TestLegacySGdAlertFrozenVectors/b23-alr-move-nonode",
+        "TestLegacySGdAlertFrozenVectors/b23-alr-noevent",
+        "TestLegacySGdAlertFrozenVectors/b23-alr-reachable",
+        "TestLegacySGdAlertFrozenVectors/b23-alr-reachable-node",
+        "TestLegacySGdAlertFrozenVectors/b23-alr-zero",
+        "TestLegacySGdAlertFrozenVectors/d21-t4-alr-a",
+        "TestLegacySGdAlertFrozenVectors/d21-t4-alr-f",
+        "TestLegacySGdAlertFrozenVectors/d21-t4-alr-r",
+        "TestLegacySGdAlertFrozenVectors/n26-alr-hssid-nested",
+        "TestLegacySGdAlertFrozenVectors/n26-alr-originuri",
+        "TestLegacySGdAlertFrozenVectors/n27-alr-uri3327",
+        "TestLegacySGdAlertFrozenVectors/v-ala-01",
+        "TestLegacySGdAlertFrozenVectors/v-ala-02",
+        "TestLegacySGdAlertFrozenVectors/v-ala-move-01",
+        "TestLegacySGdAlertFrozenVectors/v-ala-move-02",
+        "TestLegacySGdAlertFrozenVectors/v-alr-01",
+        "TestLegacySGdAlertFrozenVectors/v-alr-move-01",
+        "TestLegacySGdAlertFrozenVectors/v21-ims-alr-a",
+        "TestLegacySGdAlertFrozenVectors/v21-ims-alr-f",
+        "TestLegacySGdAlertFrozenVectors/v21-ims-alr-r",
+        "TestLegacySGdAlertFrozenVectors/v21-router-alr-r",
+        "TestLegacySGdAlertFrozenVectors/v21-sgsn-alr-a",
+        "TestLegacySGdAlertFrozenVectors/v21-sgsn-alr-f",
+        "TestLegacySGdAlertFrozenVectors/v21-sgsn-alr-r",
+        "TestLegacySGdAlertIMSAndT4Context",
+        "TestLegacySGdAlertIMSAndT4Context/d21-t4-alr",
+        "TestLegacySGdAlertIMSAndT4Context/v21-ims-alr",
+        "TestLegacySGdAlertPairsAndOwnership",
+        "TestLegacySGdAlertPairsAndOwnership/v-ala-01",
+        "TestLegacySGdAlertPairsAndOwnership/v-ala-02",
+        "TestLegacySGdAlertPairsAndOwnership/v-ala-move-01",
+        "TestLegacySGdAlertPairsAndOwnership/v-ala-move-02",
+        "TestLegacySGdAlertPairsAndOwnership/v21-sgsn-alr-a",
+        "TestLegacySGdAlertPairsAndOwnership/v21-sgsn-alr-f",
+        "TestLegacySGdAlertRuntimeCloseRace",
+        "TestLegacySGdAlertRuntimeCloseRace/TCP",
+        "TestLegacySGdAlertRuntimeCloseRace/TLS",
+        "TestLegacySGdAlertRuntimeDuplicateIsolation",
+        "TestLegacySGdAlertRuntimeDuplicateIsolation/TCP",
+        "TestLegacySGdAlertRuntimeDuplicateIsolation/TLS",
+        "TestLegacySGdAlertRuntimeInbound",
+        "TestLegacySGdAlertRuntimeInbound/TCP",
+        "TestLegacySGdAlertRuntimeInbound/TLS",
+        "TestLegacySGdAlertRuntimePairsAndCancel",
+        "TestLegacySGdAlertRuntimePairsAndCancel/TCP",
+        "TestLegacySGdAlertRuntimePairsAndCancel/TLS"
+      ]
+    },
+    {
+      "name": "core_cgo0",
+      "command": "go test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 3039,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "f36a185842b248e021957b49268c5372b2873a75a00774673e8a03f2686542dc"
+    },
+    {
+      "name": "core_race",
+      "command": "go test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 3039,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "d9efbb7794d0c9cd49f92c8dc50efbf991bb45a61d7ffa18667ad385f0821bb6"
+    },
+    {
+      "name": "adapter_cgo0",
+      "command": "go -C adapters/sctp test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 113,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "fdf5709a7e3c7b77d2ea870db4e7238dec9da88c61c2111790c03d22d2e6ad73"
+    },
+    {
+      "name": "adapter_race",
+      "command": "go -C adapters/sctp test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 113,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "9da6f004b850917bb4350164e1b3f5df75ecedd1f088e2f563c31c98a539420e"
+    },
+    {
+      "name": "core_vet",
+      "command": "go vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_build",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_verify",
+      "command": "go mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "core_cross_windows_amd64",
+      "command": "go build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_386",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_arm64",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_deps",
+      "command": "go list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "f84906923e9b882fc29ec1069a77066db38cd4d93915f64820c569b7af546d80",
+      "packages": 210,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit"
+      ]
+    },
+    {
+      "name": "adapter_vet",
+      "command": "go -C adapters/sctp vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_build",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_verify",
+      "command": "go -C adapters/sctp mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "adapter_cross_windows_amd64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_386",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_arm64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_deps",
+      "command": "go -C adapters/sctp list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "ed9c23eb96d7953d5430c3de67d22aa6cb3b07777f04d608202a23f3a9f66bc1",
+      "packages": 78,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit",
+        "github.com/skill215/diameterkit/adapters/sctp",
+        "github.com/skill215/sctp"
+      ]
+    },
+    {
+      "name": "selected_modules",
+      "command": "go -C adapters/sctp list -m -json all",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e263b0bba331363e6ba0c8e9ed664c83bf5bb6d64a5a32f5f2774f99100add25"
+    }
+  ],
+  "core_dependency": {
+    "version": "v0.0.0-diameterkit.batch73",
+    "sum": "h1:QwXRpJgsVz0dk0El8YeJobgkhH7NPN05e9oJgyZ5W1Q=",
+    "files": 122,
+    "zip_sha256": "8496f33e653141fa786dd751e92a99560cbf9cb9e12264628f95ddf506f3100f",
+    "manifest": "spec/evidence/batch-73-core-candidate-files.json",
+    "public_version": false
+  },
+  "module_isolation": {
+    "GOWORK": "off",
+    "replace_used": false,
+    "selected_modules": [
+      {
+        "Path": "github.com/skill215/diameterkit/adapters/sctp",
+        "Main": true,
+        "Dir": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+        "GoMod": "/home/skill/workspace/git/diameterkit/adapters/sctp/go.mod",
+        "GoVersion": "1.26.0"
+      },
+      {
+        "Path": "github.com/skill215/diameterkit",
+        "Version": "v0.0.0-diameterkit.batch73",
+        "Time": "2026-11-10T00:00:00Z",
+        "Dir": "/tmp/b73-final-module-cache/github.com/skill215/diameterkit@v0.0.0-diameterkit.batch73",
+        "GoMod": "/tmp/b73-final-module-cache/cache/download/github.com/skill215/diameterkit/@v/v0.0.0-diameterkit.batch73.mod",
+        "GoVersion": "1.26.0",
+        "Sum": "h1:QwXRpJgsVz0dk0El8YeJobgkhH7NPN05e9oJgyZ5W1Q=",
+        "GoModSum": "h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk="
+      },
+      {
+        "Path": "github.com/skill215/sctp",
+        "Version": "v0.8.0",
+        "Time": "2026-11-09T08:17:30Z",
+        "Dir": "/tmp/b73-final-module-cache/github.com/skill215/sctp@v0.8.0",
+        "GoMod": "/tmp/b73-final-module-cache/cache/download/github.com/skill215/sctp/@v/v0.8.0.mod",
+        "GoVersion": "1.26.0",
+        "Sum": "h1:7N92RMEO7s4+4IHzI8KYKUgyIPpIClIVAdgg93m+RFI=",
+        "GoModSum": "h1:g/XAScdNEAqQa2cjZdtxXVkxIJZEy77f7/fmCkTD2gg="
+      }
+    ],
+    "cache": "/tmp/b73-final-module-cache",
+    "upstream": "v0.8.0",
+    "upstream_archive_identical_to_batch72": true,
+    "go_sum": [
+      "github.com/skill215/diameterkit v0.0.0-diameterkit.batch73 h1:QwXRpJgsVz0dk0El8YeJobgkhH7NPN05e9oJgyZ5W1Q=",
+      "github.com/skill215/diameterkit v0.0.0-diameterkit.batch73/go.mod h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk=",
+      "github.com/skill215/sctp v0.8.0 h1:7N92RMEO7s4+4IHzI8KYKUgyIPpIClIVAdgg93m+RFI=",
+      "github.com/skill215/sctp v0.8.0/go.mod h1:g/XAScdNEAqQa2cjZdtxXVkxIJZEy77f7/fmCkTD2gg="
+    ]
+  },
+  "interop_evidence": "interop/evidence/2026-11-10-sgd-alert.json",
+  "development_findings": [
+    "Initial fixture test wrongly required exact source wire after source E grammar fills Auth-Session-State; corrected to compare delegated encoding with source encoding under fixed App projection",
+    "Initial test used nonexistent Canceled outcome; corrected to existing Err=context.Canceled plus WrittenNoAnswer delivery facts",
+    "First native-test permission review timed out; one allowed retry succeeded, all final native suites ran",
+    "Default go-diameter command missing confirmed by ReadMessage; explicit process-local generic command overlay required and separately disclosed",
+    "Initial offline module listing lacked cached info; fetched only from local verified proxy, final offline listing/modverify passed",
+    "Final candidate fixes shallow-copy comment only after core suites; fresh final-cache adapter suites and both-module build/vet/verify/crossbuild rerun. Explicit module download supplied full archive sum before final readonly verification"
+  ],
+  "remaining": [
+    "Router opaque token/MCCMNC and bounded simulator actual-use cases remain P4; do not start an all-field specification expansion",
+    "Legacy field inheritance is not proof every field was deployed in old sms-fw; target acceptance independent",
+    "SMS failed3409/online3408/fullrefundsender/standard5011, privatePSP/token/six-template/SCAP1 proof gates remain limited",
+    "Public core/adapter release, API/examples/stress/performance and target interoperability still pending",
+    "No new native legacyAlert SCTP scenario; this batch uses TCP/TLS plus full existing SCTP suite"
+  ],
+  "release_status": "not_ready"
+}

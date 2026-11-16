@@ -1,0 +1,339 @@
+{
+  "batch": 85,
+  "date": "2026-11-10",
+  "scope": "Independent Ro ASR/ASA public example;explicit application session decision,opposite direction,identity/result/budget lifecycle;pure Go/no persistence",
+  "toolchain": "go1.26.10 linux/amd64",
+  "kernel": "6.6.114.1-microsoft-standard-WSL2",
+  "definitions": {
+    "generated": 11,
+    "changed": [],
+    "unchanged": 11,
+    "delegated_profiles": 1,
+    "total_profiles": 12,
+    "request_answer_pairs_including_overlapping_bindings": 20,
+    "generator": 13,
+    "operations": 8
+  },
+  "corpus": {
+    "wire": 1250,
+    "xml": 17,
+    "new_wire": 0,
+    "prior_wire_unchanged": 1250
+  },
+  "implemented": [
+    "Public two-Node TCP OCS->CTF App4/274,original synthetic session reference and application-selected ASA2001/5002/5012 or E3004",
+    "Explicit Auth4,header/direction/source policies;no inferred CCR permission or ASR retransmission",
+    "Same-session pending CCR unaffected by ASA;application owns cancellation/reporting/TERM without library session store",
+    "Result/field rejection,immutable response Session/Proxy,local Origin-State boundary,finite budget/wait/cancel/close/late-answer and Respond/Close race",
+    "Independent consumer CGO0/race100 each,33 API docs;example20-round race2000,32 new checks"
+  ],
+  "checks": [
+    {
+      "name": "ro_public_api_race20",
+      "command": "go test ./examples/ro -race -json -run ^TestRoPublic -count=20 -timeout=5m",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 2000,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "13175fb113f493067c137f08451ec2ed9e690ed32c43b339b2e4916cfb918fbb",
+      "test_names": [
+        "TestRoPublicAbortCancelClose",
+        "TestRoPublicAbortCancelClose/cancel_late_answer",
+        "TestRoPublicAbortCancelClose/close_retained_result",
+        "TestRoPublicAbortCancelClose/respond_close_race",
+        "TestRoPublicAbortConfiguration",
+        "TestRoPublicAbortConfiguration/binding",
+        "TestRoPublicAbortConfiguration/missing_Auth4/0",
+        "TestRoPublicAbortConfiguration/missing_Auth4/1",
+        "TestRoPublicAbortConfiguration/transport",
+        "TestRoPublicAbortDoesNotOwnCCR",
+        "TestRoPublicAbortFlow",
+        "TestRoPublicAbortFlow/2001",
+        "TestRoPublicAbortFlow/3004",
+        "TestRoPublicAbortFlow/5002",
+        "TestRoPublicAbortFlow/5012",
+        "TestRoPublicAbortFlow/unknown_session",
+        "TestRoPublicAbortInvalidAndCanceled",
+        "TestRoPublicAbortRequestAndDirection",
+        "TestRoPublicAbortRequestAndDirection/CCR_number_smuggling",
+        "TestRoPublicAbortRequestAndDirection/missing_session",
+        "TestRoPublicAbortRequestAndDirection/wrong_app",
+        "TestRoPublicAbortRequestAndDirection/wrong_host",
+        "TestRoPublicAbortRequestAndDirection/wrong_realm",
+        "TestRoPublicAbortRespondAndBudget",
+        "TestRoPublicAbortRespondAndBudget/charging_field",
+        "TestRoPublicAbortRespondAndBudget/experimental_E",
+        "TestRoPublicAbortRespondAndBudget/missing_result",
+        "TestRoPublicAbortRespondAndBudget/normal_protocol_error",
+        "TestRoPublicAbortRespondAndBudget/unselected_result",
+        "TestRoPublicAbortTerminalSources",
+        "TestRoPublicAbortTerminalSources/false",
+        "TestRoPublicAbortTerminalSources/true",
+        "TestRoPublicBudgetLifetimeCancelAndClose",
+        "TestRoPublicCanceledAndInvalidRun",
+        "TestRoPublicConfiguration",
+        "TestRoPublicConfiguration/insufficient_transport",
+        "TestRoPublicConfiguration/wrong_binding",
+        "TestRoPublicECURBudgetsAndAssociation",
+        "TestRoPublicECURBudgetsAndAssociation/TERM_grant",
+        "TestRoPublicECURBudgetsAndAssociation/TERM_token",
+        "TestRoPublicECURBudgetsAndAssociation/old_INITIAL_answer",
+        "TestRoPublicECURBudgetsAndAssociation/wrong_service",
+        "TestRoPublicECURCancelAndClose",
+        "TestRoPublicECURCancelAndClose/term=false/close=false",
+        "TestRoPublicECURCancelAndClose/term=false/close=true",
+        "TestRoPublicECURCancelAndClose/term=true/close=false",
+        "TestRoPublicECURCancelAndClose/term=true/close=true",
+        "TestRoPublicECURCanceledAndInvalidRun",
+        "TestRoPublicECURContinuation",
+        "TestRoPublicECURContinuation/RSU_in_TERM",
+        "TestRoPublicECURContinuation/context",
+        "TestRoPublicECURContinuation/ctf_host",
+        "TestRoPublicECURContinuation/ctf_realm",
+        "TestRoPublicECURContinuation/missing_FINAL",
+        "TestRoPublicECURContinuation/missing_USU",
+        "TestRoPublicECURContinuation/number",
+        "TestRoPublicECURContinuation/ocs_host",
+        "TestRoPublicECURContinuation/ocs_realm",
+        "TestRoPublicECURContinuation/realm_only",
+        "TestRoPublicECURContinuation/requested_action",
+        "TestRoPublicECURContinuation/service",
+        "TestRoPublicECURContinuation/session",
+        "TestRoPublicECURContinuation/type_UPDATE",
+        "TestRoPublicECURFlow",
+        "TestRoPublicECURFlow/initial=2001/4012",
+        "TestRoPublicECURFlow/initial=3004",
+        "TestRoPublicECURFlow/initial=4012",
+        "TestRoPublicECURFlow/initial=5012",
+        "TestRoPublicECURFlow/term=2001",
+        "TestRoPublicECURFlow/term=3004",
+        "TestRoPublicECURFlow/term=5002",
+        "TestRoPublicECURFlow/term=5012",
+        "TestRoPublicExactUnits",
+        "TestRoPublicExample",
+        "TestRoPublicExample/2001",
+        "TestRoPublicExample/2001/4012",
+        "TestRoPublicExample/3004",
+        "TestRoPublicExample/4012",
+        "TestRoPublicExample/5012",
+        "TestRoPublicMissingNegotiatedApplication",
+        "TestRoPublicMissingNegotiatedApplication/0",
+        "TestRoPublicMissingNegotiatedApplication/1",
+        "TestRoPublicRequestBoundary",
+        "TestRoPublicRequestBoundary/missing_SMS_information",
+        "TestRoPublicRequestBoundary/missing_explicit_zero_action",
+        "TestRoPublicRequestBoundary/unsupported_action",
+        "TestRoPublicRequestBoundary/wrong_context",
+        "TestRoPublicRequestBoundary/wrong_host",
+        "TestRoPublicRequestBoundary/wrong_number",
+        "TestRoPublicRequestBoundary/wrong_realm",
+        "TestRoPublicResponseRules",
+        "TestRoPublicResponseRules/missing_child_result",
+        "TestRoPublicResponseRules/missing_grant",
+        "TestRoPublicResponseRules/unselected_experimental_pair",
+        "TestRoPublicResponseRules/wrong_number",
+        "TestRoPublicResponseRules/wrong_service",
+        "TestRoPublicResponseRules/wrong_type",
+        "TestRoPublicTerminalSources",
+        "TestRoPublicTerminalSources/false",
+        "TestRoPublicTerminalSources/true"
+      ]
+    },
+    {
+      "name": "core_cgo0",
+      "command": "go test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 3534,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "0a41626663e01ac5701bc0a5232b1751adc4d395db01361efa14190042d2747c"
+    },
+    {
+      "name": "core_race",
+      "command": "go test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 3534,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "535ad3dfb2d9ec587045a4c086400c6186580b7473733be9f57fb46e032b0ceb"
+    },
+    {
+      "name": "adapter_cgo0",
+      "command": "go -C adapters/sctp test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 113,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "d7a7d9699ffde17f2677f4ad0e5ccbc52fe9b439749768b247217ab20a9f4724"
+    },
+    {
+      "name": "adapter_race",
+      "command": "go -C adapters/sctp test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 113,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "f7e749839e5771eddf7f0dd80d26f3ba5bdfb2b8249fb25f516e8fea511ef26b"
+    },
+    {
+      "name": "core_vet",
+      "command": "go vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_build",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_verify",
+      "command": "go mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "core_cross_windows_amd64",
+      "command": "go build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_386",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_arm64",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_deps",
+      "command": "go list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "dca652f9dc6a209cf1d6fd4cf9dd84172ab43972401e1cd1fab6b8aaaba1e18b",
+      "packages": 215,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit"
+      ]
+    },
+    {
+      "name": "adapter_vet",
+      "command": "go -C adapters/sctp vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_build",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_verify",
+      "command": "go -C adapters/sctp mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "adapter_cross_windows_amd64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_386",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_arm64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_deps",
+      "command": "go -C adapters/sctp list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "1c1d3c593ad508917bc84f44e8a8b695344ca858d7b657b64c64661a6ea6fddf",
+      "packages": 78,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit",
+        "github.com/skill215/diameterkit/adapters/sctp",
+        "github.com/skill215/sctp"
+      ]
+    },
+    {
+      "name": "selected_modules",
+      "command": "go -C adapters/sctp list -m -json all",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "ec75d9c0c70cf5f65b93023d764030f3f487a4f8645bc101632c737f1da436bd"
+    }
+  ],
+  "public_api_evidence": "spec/evidence/batch-85-ro-abort-public-api.json",
+  "core_dependency": {
+    "version": "v0.0.0-diameterkit.batch85",
+    "sum": "h1:tnxQUlrtI5KUVsCFMURYvpa3HY37Y9MyVYFsszzu6KA=",
+    "files": 138,
+    "zip_sha256": "e776fbbec5e80a9a3bc3ca5396d6c74dc661b4be372ddd57676fe53ce167a760",
+    "manifest": "spec/evidence/batch-85-core-candidate-files.json",
+    "public_version": false
+  },
+  "module_isolation": "Fresh batch85 cache;GOWORKoff/no replace;offline core and identical formal SCTPv0.8.0 archive",
+  "existing_library_behavior_changed": false,
+  "new_example_sources": [
+    "examples/ro/abort.go",
+    "examples/ro/abort_test.go"
+  ],
+  "modified_example_sources": [
+    "examples/ro/main.go"
+  ],
+  "production_unchanged": [
+    "all previous library Go files and example tests/config/ECUR implementation",
+    "existing IEC exchange/checkAnswer/run function bodies",
+    "eleven JSON definitions and generated outputs",
+    "SCTP adapter production/upstreamv0.8.0",
+    "1250wire/17XML"
+  ],
+  "requirement_status_change": {},
+  "batch_markdown": {
+    "path": "spec/local/batches/batch-85.md",
+    "ignored": true,
+    "publish": false
+  },
+  "remaining": [
+    "P7 public support/API coverage matrix including concrete remaining consumption evidence for selected Ro balance/refund/private/recovery workflows",
+    "CI/fuzz/stress/performance and public releases",
+    "Private ACA/SCAP1 recovery and actual six-template/target evidence",
+    "Old application migration and real DRA/OCS acceptance"
+  ],
+  "release_status": "not_ready"
+}

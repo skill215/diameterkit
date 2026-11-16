@@ -1,0 +1,298 @@
+{
+  "format": 1,
+  "baseline": "Draft 0.20",
+  "normative_spec": "doc/diameterkit-specification.md",
+  "batch": "P1-P2 Base/S6c vertical slice",
+  "status": "completed",
+  "status_meaning": "Only this bounded first implementation batch; full P2, full SPEC acceptance and v1 are not complete",
+  "date": "2026-11-06",
+  "toolchain": "go1.26.10 linux/amd64",
+  "release_status": "not_ready",
+  "module": "github.com/skill215/diameterkit",
+  "minimum_go": "1.26.0",
+  "environment_note": "Execution used writable GOCACHE and, for final core checks, GOMODCACHE under /tmp with GOPROXY=off; no core external dependencies. Offline peer check used the existing local module cache.",
+  "implemented": [
+    "core module and neutral value/operation contracts",
+    "explicit frozen Profile/Bundle composition",
+    "strict JSON generator and external generated consumer",
+    "six normal Base controls; ordinary SRR/SRA 2001/10415-5001 slice",
+    "owned offline codec, bounded wire primitives, request envelope completion",
+    "fixed pairs, negative/ownership/resource tests and independent offline comparison"
+  ],
+  "requirements": [
+    {
+      "id": "SPEC-SCOPE-01",
+      "status": "partial",
+      "evidence": [
+        "architecture_test.go",
+        "go.mod"
+      ],
+      "remaining": "核心纯Go、无持久化的离线切片；完整运行时及四应用待实施"
+    },
+    {
+      "id": "SPEC-SCOPE-02",
+      "status": "partial",
+      "evidence": [
+        "spec/README.md"
+      ],
+      "remaining": "已明确切片支持声明；首版及其他模块范围待实施"
+    },
+    {
+      "id": "SPEC-PROFILE-01",
+      "status": "partial",
+      "evidence": [
+        "spec/base.json",
+        "spec/s6c.json",
+        "schema/schema_test.go"
+      ],
+      "remaining": "仅所列字段/父路径/规则和固定Profile；完整来源锁及兼容未完成"
+    },
+    {
+      "id": "SPEC-PROFILE-02",
+      "status": "partial",
+      "evidence": [
+        "spec/README.md",
+        "interop/README.md"
+      ],
+      "remaining": "raw与语义、旧库差异和未支持分支已区分；完整Profile能力报告待实施"
+    },
+    {
+      "id": "SPEC-GEN-01",
+      "status": "partial",
+      "evidence": [
+        "internal/codegen/generate_test.go",
+        "architecture_test.go"
+      ],
+      "remaining": "严格JSON、可复现输出、有限操作表、外部生成消费者；完整定义依赖/差异工具待实施"
+    },
+    {
+      "id": "SPEC-CODEC-01",
+      "status": "partial",
+      "evidence": [
+        "codec/codec_test.go",
+        "wire/wire_test.go"
+      ],
+      "remaining": "Base/S6c切片长度/类型/父路径/Presence/限制；完整应用及诊断尚未完成"
+    },
+    {
+      "id": "SPEC-OWN-01",
+      "status": "partial",
+      "evidence": [
+        "codec/codec_test.go",
+        "internal/codecengine/engine_test.go"
+      ],
+      "remaining": "离线复制/内部owned移交/补全深复制；Node发送快照与提交语义尚未实现"
+    },
+    {
+      "id": "SPEC-VALID-01",
+      "status": "partial",
+      "evidence": [
+        "codec/codec_test.go",
+        "validation/report.go"
+      ],
+      "remaining": "静态Build/Send/Receive及错误分类；完整Report、具名Context及关联校验未实现"
+    },
+    {
+      "id": "SPEC-RESULT-01",
+      "status": "partial",
+      "evidence": [
+        "codec/codec_test.go"
+      ],
+      "remaining": "仅S6c 2001与10415/5001分支；不覆盖其他应用/结果"
+    },
+    {
+      "id": "SPEC-ERROR-01",
+      "status": "partial",
+      "evidence": [
+        "codec/codec_test.go"
+      ],
+      "remaining": "本地分类、父路径且不泄露字段值；E包络及错误答案生成待实施"
+    },
+    {
+      "id": "SPEC-APP-01",
+      "status": "partial",
+      "evidence": [
+        "codec/codec_test.go",
+        "testdata/codec/manifest.json"
+      ],
+      "remaining": "仅普通SRR/SRA静态切片；不包含业务流程/订阅/计费状态"
+    },
+    {
+      "id": "SPEC-BIND-01",
+      "status": "planned",
+      "remaining": "未由本批关闭；沿doc/diameterkit-specification.md对应条款及原实施阶段"
+    },
+    {
+      "id": "SPEC-EXCHANGE-01",
+      "status": "planned",
+      "remaining": "未由本批关闭；沿doc/diameterkit-specification.md对应条款及原实施阶段"
+    },
+    {
+      "id": "SPEC-REPLAY-01",
+      "status": "planned",
+      "remaining": "未由本批关闭；沿doc/diameterkit-specification.md对应条款及原实施阶段"
+    },
+    {
+      "id": "SPEC-EVIDENCE-01",
+      "status": "planned",
+      "remaining": "未由本批关闭；沿doc/diameterkit-specification.md对应条款及原实施阶段"
+    },
+    {
+      "id": "SPEC-INBOUND-01",
+      "status": "planned",
+      "remaining": "未由本批关闭；沿doc/diameterkit-specification.md对应条款及原实施阶段"
+    },
+    {
+      "id": "SPEC-DUP-01",
+      "status": "planned",
+      "remaining": "未由本批关闭；沿doc/diameterkit-specification.md对应条款及原实施阶段"
+    },
+    {
+      "id": "SPEC-PEER-01",
+      "status": "planned",
+      "remaining": "未由本批关闭；沿doc/diameterkit-specification.md对应条款及原实施阶段"
+    },
+    {
+      "id": "SPEC-CLOSE-01",
+      "status": "planned",
+      "remaining": "未由本批关闭；沿doc/diameterkit-specification.md对应条款及原实施阶段"
+    },
+    {
+      "id": "SPEC-ID-01",
+      "status": "planned",
+      "remaining": "未由本批关闭；沿doc/diameterkit-specification.md对应条款及原实施阶段"
+    },
+    {
+      "id": "SPEC-BUDGET-01",
+      "status": "planned",
+      "remaining": "未由本批关闭；沿doc/diameterkit-specification.md对应条款及原实施阶段"
+    },
+    {
+      "id": "SPEC-TRANSPORT-01",
+      "status": "planned",
+      "remaining": "未由本批关闭；沿doc/diameterkit-specification.md对应条款及原实施阶段"
+    },
+    {
+      "id": "SPEC-SECURITY-01",
+      "status": "planned",
+      "remaining": "未由本批关闭；沿doc/diameterkit-specification.md对应条款及原实施阶段"
+    },
+    {
+      "id": "SPEC-RELEASE-01",
+      "status": "planned",
+      "remaining": "未由本批关闭；沿doc/diameterkit-specification.md对应条款及原实施阶段"
+    }
+  ],
+  "checks": [
+    {
+      "name": "pure_go_tests",
+      "command": "CGO_ENABLED=0 GOWORK=off GOTOOLCHAIN=local go test ./...",
+      "status": "passed",
+      "covers": [
+        "unit/negative/pair tests",
+        "import DAG",
+        "external generated consumer",
+        "generated output freshness"
+      ]
+    },
+    {
+      "name": "vet",
+      "command": "CGO_ENABLED=0 GOWORK=off GOTOOLCHAIN=local go vet ./...",
+      "status": "passed"
+    },
+    {
+      "name": "build",
+      "command": "CGO_ENABLED=0 GOWORK=off GOTOOLCHAIN=local go build ./...",
+      "status": "passed"
+    },
+    {
+      "name": "race",
+      "command": "CGO_ENABLED=1 GOWORK=off GOTOOLCHAIN=local go test -race ./...",
+      "status": "passed",
+      "note": "race toolchain only; release remains CGO=0"
+    },
+    {
+      "name": "fuzz",
+      "command": "CGO_ENABLED=0 GOWORK=off GOTOOLCHAIN=local go test ./codec -run '^$' -fuzz '^FuzzDecode$' -fuzztime=10s -parallel=2",
+      "status": "passed",
+      "executions": 336219,
+      "duration": "10-second target, 10.971-second reported run; bounded smoke test, not exhaustive"
+    },
+    {
+      "name": "generator_check",
+      "commands": [
+        "go run ./cmd/diameter-schema -in spec/base.json -out base/zz_generated_messages.go -check",
+        "go run ./cmd/diameter-schema -in spec/s6c.json -out app/s6c/zz_generated_messages.go -check"
+      ],
+      "status": "passed"
+    },
+    {
+      "name": "dependency_audit",
+      "command": "CGO_ENABLED=0 GOWORK=off GOTOOLCHAIN=local go list -deps -json ./...",
+      "status": "passed",
+      "packages": 127,
+      "assertions": [
+        "no CgoFiles",
+        "no external Module paths"
+      ]
+    },
+    {
+      "name": "offline_example",
+      "command": "CGO_ENABLED=0 GOWORK=off GOTOOLCHAIN=local go run ./examples/codec",
+      "status": "passed",
+      "output": "SRR=196 bytes SRA=132 bytes; offline pair verified"
+    },
+    {
+      "name": "independent_offline_codec",
+      "status": "passed",
+      "evidence": "interop/evidence/2026-11-06-base-s6c.json",
+      "scope": "5 frames; one malformed-width acceptance difference recorded; not network interoperability"
+    }
+  ],
+  "source_snapshot": [
+    {
+      "path": "spec/base.json",
+      "sha256": "aa1a8af8f14b40a7adf682b8f5f9b8ce607991ad32dc569d307f7b0d71a75091"
+    },
+    {
+      "path": "spec/s6c.json",
+      "sha256": "ad9eeb6a261c35526ecb82926c1db7bec5fba9eb7755e75f5634b857761bb686"
+    },
+    {
+      "path": "base/rules.go",
+      "sha256": "7db3a67edea191b6de6ec849324a781ff4f0cd221361356ad1a0cf611bacdaf7"
+    },
+    {
+      "path": "app/s6c/rules.go",
+      "sha256": "5f995fbcfc4a720a4df684e4d1fae2f6f5d2793d096f1e3d53ad43a2187f641d"
+    },
+    {
+      "path": "base/zz_generated_messages.go",
+      "sha256": "50849aa6ac65f30893fc670765ffceb7a97e9a7fe6c27e54a26a646d705d0cd1"
+    },
+    {
+      "path": "app/s6c/zz_generated_messages.go",
+      "sha256": "4a3aabb4bf7ca743a56da6e2b48832f1641259cf4bb8ebe418846f9769b3f2e8"
+    },
+    {
+      "path": "internal/codegen/generate.go",
+      "sha256": "3ca89ab643fadce4a3588261a6b294d226bfa9588a5ca4798d9b1d375cd61211"
+    },
+    {
+      "path": "testdata/codec/manifest.json",
+      "sha256": "debfcb43bfe5fe99147b046e7bf41a4a13c9f847d9a2d9b6c2c2ea6345a760a7"
+    }
+  ],
+  "next_batch": [
+    "P2 common normal/E envelopes and selected shared fields",
+    "P2 full operation/report/correlation contracts and four-application definitions",
+    "P3 budget/completion/Peer with fake transport, then TCP/TLS"
+  ],
+  "deferred_from_this_batch": [
+    "Node/Peer/runtime and complete transport semantics",
+    "SCTP and upstream U1-U5 acceptance",
+    "Sh, SGd/Gdd, full S6c, Ro/compat/RO-06 (still v1)",
+    "full canonical/wire fingerprints and dependency locks",
+    "full VECTOR-01, DRA/HSS/OCS network interoperability and v1 release"
+  ]
+}

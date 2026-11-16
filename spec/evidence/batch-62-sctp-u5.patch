@@ -1,0 +1,324 @@
+diff --git a/.github/scripts/consumer.py b/.github/scripts/consumer.py
+--- a/.github/scripts/consumer.py
++++ b/.github/scripts/consumer.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Compile an independent consumer against this checkout on five targets."""
++"""Compile an independent consumer against this checkout on six targets."""
+ import json
+ import os
+ from pathlib import Path
+@@ -9,19 +9,30 @@
+ repo = Path(__file__).resolve().parents[2]
+ source = '''package main
+ import (
++ "context"
+  "errors"
+  "syscall"
+  "github.com/skill215/sctp"
+ )
+ var _ syscall.Conn = (*sctp.SCTPConn)(nil)
+ var _ syscall.Conn = (*sctp.SCTPListener)(nil)
+-func main() { _ = errors.Is(nil, sctp.ErrUnsupported) }
++func main() {
++ _ = errors.Is(nil, sctp.ErrUnsupported)
++ m := sctp.MessageOptions{ReceiveInfo:sctp.ReceiveInfoSNDRCV, AllowFragmentation:true}
++ _, _ = sctp.MessageIORequirements(m)
++ _, _ = sctp.ParseNotification(nil)
++ var _ func(context.Context, []byte, []byte, []byte) (sctp.ReadResult,error) = (*sctp.SCTPConn)(nil).ReadEvent
++ var _ func(context.Context, []byte, sctp.SndInfo) (int,error) = (*sctp.SCTPConn)(nil).WriteMsgContext
++ var _ func() (sctp.MessageOptionState,error) = (*sctp.SCTPConn)(nil).GetMessageOptions
++ var _ func(context.Context,string,*sctp.SCTPAddr,*sctp.SCTPAddr)(*sctp.SCTPConn,error) = (&sctp.SocketConfig{Messages:&m}).DialContext
++ _ = sctp.Notification{Kind:sctp.NotificationPartialDelivery}
++}
+ '''
+ with tempfile.TemporaryDirectory(prefix="sctp-consumer-") as directory:
+     root = Path(directory)
+     (root / "main.go").write_text(source)
+     (root / "go.mod").write_text('module example.com/sctp-consumer\n\ngo 1.26.0\nrequire github.com/skill215/sctp v0.0.0\nreplace github.com/skill215/sctp => ' + json.dumps(str(repo)) + '\n')
+-    for target, arch in [("linux", "amd64"), ("linux", "386"), ("darwin", "amd64"), ("freebsd", "amd64"), ("windows", "amd64")]:
++    for target, arch in [("linux", "amd64"), ("linux", "arm64"), ("linux", "386"), ("darwin", "amd64"), ("freebsd", "amd64"), ("windows", "amd64")]:
+         env = dict(os.environ, GOOS=target, GOARCH=arch, CGO_ENABLED="0")
+         subprocess.run(["go", "build", "-buildvcs=false", "-o", str(root / "consumer"), "."], cwd=root, env=env, check=True, timeout=180)
+         print(json.dumps({"target": target + "/" + arch, "consumer": "pass"}), flush=True)
+diff --git a/.github/scripts/validate.sh b/.github/scripts/validate.sh
+--- a/.github/scripts/validate.sh
++++ b/.github/scripts/validate.sh
+@@ -3,6 +3,8 @@
+ uname -a
+ go version
+ python3 .github/scripts/release_test.py
++# Production mode is independently exercised, not inferred from race builds.
++CGO_ENABLED=0 go test -count=1 -timeout=120s ./...
+ # Independent processes give each round its own 120-second budget.
+ for round in $(seq 1 10); do
+   seed=$((7272000 + round))
+@@ -12,7 +14,7 @@
+ go vet ./...
+ go test -gcflags=all=-d=checkptr=2 -count=1 -timeout=120s ./...
+ GOGC=1 go test -race -count=1 -timeout=120s ./...
+-for target in RawSockaddr Ancillary Codec AddressRoundTrip; do
++for target in RawSockaddr Ancillary Codec AddressRoundTrip ParseNotification; do
+   # Execution counts avoid treating the duration coordinator's deadline as a
+   # target failure. Every target must finish the full budget; no retries or
+   # error filtering. The outer timeout still fails stalled runs.
+diff --git a/.github/workflows/arch.yaml b/.github/workflows/arch.yaml
+--- a/.github/workflows/arch.yaml
++++ b/.github/workflows/arch.yaml
+@@ -46,5 +46,5 @@
+         # cover the shared getsockopt syscall with SOL_SOCKET and codecs.
+         run: >-
+           timeout 60s qemu-${{ matrix.emulator }} "$RUNNER_TEMP/sctp.test"
+-          -test.run '^Test(NativeCodec.*|ParseSndRcvInfo.*|SocketOptionLengthABI|SocketTimeoutABI|SendmsgZeroAncillaryABI|AddressQuery.*|WrappedWriteUnalignedHeader|RawSockaddrMixedFamilies|RawSockaddrInvalidBuffers|NumericIPv6ZoneEncoding|InvalidNetwork)$'
++          -test.run '^Test(U5SelectedABI|U5ResourceLedger|NotificationFiveLayouts|NotificationUnknownAndFailures|NotificationLargeTailNoAllocation|NativeCodec.*|ParseSndRcvInfo.*|SocketOptionLengthABI|SocketTimeoutABI|SendmsgZeroAncillaryABI|AddressQuery.*|WrappedWriteUnalignedHeader|RawSockaddrMixedFamilies|RawSockaddrInvalidBuffers|NumericIPv6ZoneEncoding|InvalidNetwork)$'
+           -test.count=3 -test.v -test.timeout=45s
+diff --git a/README.md b/README.md
+--- a/README.md
++++ b/README.md
+@@ -394,3 +394,12 @@
+ See [typed notifications and native validation](docs/diameterkit-u4-notifications.md).
+ All five families and the large-notification retry path have local kernel tests;
+ U5 budget/platform/publication and diameterkit integration remain separate gates.
++
++### U5 integration candidate (diameterkit batch 62)
++
++The [resource ledger and release gates](docs/diameterkit-u5-resources.md) define
++bounded-reader/writer accounting, simultaneous setup/connection slots, native
++ABI/lifecycle checks and the limits of the8192-byte logical fixed reserve.
++It is not an RSS cap. New APIs are covered by downstream compile checks and the
++notification parser joins the existing release fuzz gate. An offline install
++proof is not an upstream release or completed native CI matrix.
+diff --git a/docs/diameterkit-u5-resources.md b/docs/diameterkit-u5-resources.md
+new file mode 100644
+--- /dev/null
++++ b/docs/diameterkit-u5-resources.md
+@@ -0,0 +1,109 @@
++# U5 resource ledger and candidate gates (batch 62)
++
++This is a versioned integration ledger for the incremental message-mode candidate,
++not a new allocator/API, a process RSS cap or the independent v1 rewrite.
++The public package still allows arbitrary concurrent callers. A bounded adapter
++must provide one reader and one writer per connection, no queued upstream I/O,
++standard-library contexts under its control, bounded configuration and a single
++owned parsed-notification value. Raw-fd or arbitrary custom-context behavior is
++outside this ledger. Connection-level cancellation must not retain an unbounded
++parent context/value graph.
++
++## Established connection: logical accounting
++
++TestU5ResourceLedger emits sizeof values for the compiled candidate. On
++Go1.26.10/Linux/amd64: SCTPConn96, socketIO152, MessageOptions12, os.File handle8,
++socketOperation40 and Notification168 bytes. The owned resident value subtotal
++is268. ReadScratch480 + WriteScratch280 + Peek8 + two operations80 + one
++Notification168 =1016 simultaneous working bytes. Scratch already includes its
++result/metadata copies, and is not counted again. The immutable options shared
++by accepted connections are conservatively charged per connection.
++
++The integration policy adds explicit logical allowances, not measured allocator
++sizes: seven channel slots at256 bytes (two gates, close, two changed-deadline
++channels, two operation completion channels), four standard-context/hook slots
++at512 (two operation contexts, two AfterFunc registrations and their bounded
++state), and one file/poller slot at1024. Subtotal4864; with value/work bytes the
++accounted sum is6148, rounded to an8192-byte fixed logical integration reserve.
++The test fails if source-value/workspace changes exceed that reserve. Slot
++allowances must be reassessed with the pinned Go/source version; they do not
++claim to bound hidden standard-library/runtime allocation exactly.
++
++At most two operation owners and two AfterFunc callbacks are live. The normal
++adapter has zero gate waiters and zero gate-acquisition timers. Context/deadline
++runtime timers and poller timer state belong to the declared context/file slots;
++Go scheduling, stacks, allocator/GC overhead and kernel socket/send/receive
++memory remain outside the byte ledger and require separate capacity planning.
++Stopped/replaced objects awaiting GC do not become a claimed RSS bound.
++There is no permanent per-connection worker in this package. Completion waits
++for a started cancellation callback before releasing the gate/buffers.
++
++With Q external queued callers, there may additionally be Q operation values,
++Q timers, Q held changed-channel generations and their caller contexts/stacks.
++The fixed8192 integration reserve does not authorize Q>0. Arbitrarily frequent
++concurrent deadline setters/custom contexts likewise have no finite universal
++allocation promise. The adapter must serialize its own deadline management.
++
++Adapter per-connection accounting is additive:
++
++    8192 + adapter fixed state + prefix20 + NotificationMax + OOBMin
++         + discard scratch + independent control RX/TX + emergency slots
++
++The upstream read/write/peek workspace and one Notification value are already
++inside8192. Caller frame buffers remain in their business/control reservations;
++no second whole frame is added. Notifications cannot borrow business space or
++grow NotificationMax. Tail is borrowed and must not outlive the next read; any
++owned diagnostic copy requires its own explicit reservation.
++
++## Listener and establishment overlap
++
++Listener values are SCTPListener40 + socketIO152 + options12 + os.File8 =212.
++Use the same8192 logical fixed envelope per live listener or establishing socket
++for conservative accounting; it is not free merely because no business Peer is
++Ready. A listener and every accepted candidate coexist and require separate
++slots. On successful dial, transfer the establishment charge to the connected
++slot; do not release and reacquire around handoff. Failure releases it only after
++owned socket/poller operations settle. A prebuilt external socket is accounted
++from adapter takeover, not retroactively before it existed.
++
++Input/address copies need a separate finite setup reservation. For N total
++explicit local+remote addresses, Z total zone-text bytes and D bytes of bounded
++resolution input, a conservative library-value allowance is
++`64 + 96*N + Z + 2*D + 16*(N+2)` on this audited64-bit candidate: two address
++headers; net.IPAddr/IP/raw-sockaddr data and alignment per address; text and
++split-string indexing. SocketConfig's32-byte value and fixed setup records fit
++the fixed envelope. Original Node configuration is separately charged once.
++The adapter must validate N/Z/D before copying or resolving; the general public
++resolver is not a hostile-input quota service. Go DNS/zone resolver internals
++and caller-owned context graphs remain external infrastructure, not hidden in a
++claim of bounded library payload storage. Setup budgets must account for all
++simultaneously admitted dial/accept slots, not just open connections.
++
++## ABI, lifecycle and release gates
++
++TestU5SelectedABI checks SNDRCV offsets/size, notification header, sockaddr and
++CMSG layout. Native tests already exercise all five selected notifications;
++TestU5MessageCancellationRetiresOwners repeats100 admitted reads with cancel,
++immediate buffer reuse and subsequent real send/read, asserting no owner/gate
++remains after return. This is direct lifecycle evidence, not a heuristic global
++goroutine count. The full existing suite/race and checkptr remain required.
++
++The native CI script now runs a distinct CGO_ENABLED=0 suite and includes the
++new ParseNotification fuzz target in its existing1,000,000-execution policy.
++The cross-architecture workflow now includes the pure message ABI/parser tests;
++QEMU syscall limitations still mean emulator parsing is not native SCTP I/O.
++Independent consumer compilation now references all new APIs. CI execution on
++the exact candidate's Ubuntu22.04/24.04, Go1.26.x/1.27.x and existing architecture
++matrix remains a publication gate, not something inferred from local compilation.
++
++A deterministic file-proxy module package is tested by diameterkit without a
++replace directive. Its v0.0.0-diameterkit.u5.62 label is offline-only, with source
++manifest/zip hash/Go module sums, not a tag, published version or upstream commit.
++The independent consumer uses its own module cache and performs real message
++I/O. Production must lock the subsequently reviewed/published exact candidate;
++a local install proof alone does not satisfy provenance or the remote matrix.
++
++Remaining external gates are explicit: exact-candidate upstream review/commit
++and release pipeline, native matrix results (including required IPv6 namespace
++cases), then diameterkit SCTP adapter budget/admission/Peer integration and DRA
++acceptance. No new notification families or protocol design rounds are required.
+diff --git a/resource_linux_test.go b/resource_linux_test.go
+new file mode 100644
+--- /dev/null
++++ b/resource_linux_test.go
+@@ -0,0 +1,115 @@
++//go:build linux && !386
++
++package sctp
++
++import (
++	"context"
++	"encoding/json"
++	"errors"
++	"os"
++	"runtime"
++	"sync"
++	"syscall"
++	"testing"
++	"time"
++	"unsafe"
++)
++
++// Versioned integration ledger, not a public allocator or a Go heap ceiling.
++// See docs/diameterkit-u5-resources.md for slot allowances and caller limits.
++func TestU5ResourceLedger(t *testing.T) {
++	req, e := MessageIORequirements(MessageOptions{ReceiveInfo: ReceiveInfoSNDRCV, Events: messageEventMask, NoDelay: true, AllowFragmentation: true})
++	if e != nil {
++		t.Fatal(e)
++	}
++	sizes := map[string]uint64{
++		"conn": uint64(unsafe.Sizeof(SCTPConn{})), "listener": uint64(unsafe.Sizeof(SCTPListener{})), "socket_io": uint64(unsafe.Sizeof(socketIO{})), "options": uint64(unsafe.Sizeof(MessageOptions{})), "operation": uint64(unsafe.Sizeof(socketOperation{})), "file_handle": uint64(unsafe.Sizeof(os.File{})), "notification": uint64(unsafe.Sizeof(Notification{})), "config": uint64(unsafe.Sizeof(SocketConfig{})), "address": uint64(unsafe.Sizeof(SCTPAddr{})),
++	}
++	resident := sizes["conn"] + sizes["socket_io"] + sizes["options"] + sizes["file_handle"]
++	work := 2*sizes["operation"] + sizes["notification"] + req.ReadScratchBytes + req.WriteScratchBytes + req.PeekScratchBytes
++	// 3 base+2 changed+2 completion channels; two active AfterFunc contexts and
++	// two adapter-owned standard operation contexts, one file/poller owner.
++	slots := uint64(7*256 + 4*512 + 1024)
++	if resident+work+slots > 8192 {
++		t.Fatalf("integration reserve drift: resident=%d work=%d slots=%d", resident, work, slots)
++	}
++	report := struct {
++		Go, Arch                                       string
++		Sizes                                          map[string]uint64
++		Resident, Work, SlotAllowances, LogicalReserve uint64
++		IO                                             IORequirements
++	}{runtime.Version(), runtime.GOARCH, sizes, resident, work, slots, 8192, req}
++	b, e := json.Marshal(report)
++	if e != nil {
++		t.Fatal(e)
++	}
++	t.Log(string(b))
++}
++
++func TestU5SelectedABI(t *testing.T) {
++	if unsafe.Sizeof(SndRcvInfo{}) != 32 || unsafe.Offsetof(SndRcvInfo{}.PPID) != 8 || unsafe.Offsetof(SndRcvInfo{}.AssocID) != 28 {
++		t.Fatal("SNDRCV layout drift")
++	}
++	if unsafe.Sizeof(NotificationHeader{}) != 8 || unsafe.Sizeof(syscall.RawSockaddrInet4{}) != 16 || unsafe.Sizeof(syscall.RawSockaddrInet6{}) != 28 {
++		t.Fatal("notification/address layout drift")
++	}
++	if syscall.CmsgLen(32) != syscall.CmsgLen(0)+32 || syscall.CmsgSpace(32) < syscall.CmsgLen(32) {
++		t.Fatal("ancillary layout drift")
++	}
++	r, e := MessageIORequirements(MessageOptions{ReceiveInfo: ReceiveInfoSNDRCV, Events: messageEventMask})
++	if e != nil || r.NotificationMin != 148 || r.OOBMin != syscall.CmsgSpace(32) {
++		t.Fatal(r, e)
++	}
++}
++func u5Quiescent(t *testing.T, c *SCTPConn) {
++	t.Helper()
++	c.io.deadlineMu.Lock()
++	defer c.io.deadlineMu.Unlock()
++	if c.io.readDeadline.owner != nil || c.io.writeDeadline.owner != nil || len(c.io.readGate) != 0 || len(c.io.writeGate) != 0 {
++		t.Fatal("operation owner/gate retained after return")
++	}
++}
++func TestU5MessageCancellationRetiresOwners(t *testing.T) {
++	c, s := messagePair(t, 0)
++	d, b, o := messageBuffers(s)
++	// Barrier observes a real read admission before cancellation. Reusing the
++	// exact buffers immediately after return also lets race/checkptr detect a
++	// surviving borrower. No sleeps or global goroutine-count heuristics.
++	for i := 0; i < 100; i++ {
++		ctx, cancel := context.WithCancel(context.Background())
++		entered := make(chan struct{})
++		done := make(chan error, 1)
++		var once sync.Once
++		go func() {
++			_, e := s.readEvent(ctx, d, b, o, func(fd int, p, o []byte, flags int) (int, int, int, error) {
++				once.Do(func() { close(entered) })
++				return recvMessage(fd, p, o, flags)
++			})
++			done <- e
++		}()
++		select {
++		case <-entered:
++		case <-time.After(time.Second):
++			t.Fatal("read never admitted")
++		}
++		cancel()
++		if e := <-done; !errors.Is(e, context.Canceled) {
++			t.Fatal(e)
++		}
++		u5Quiescent(t, s)
++		clear(d)
++		clear(b)
++		clear(o)
++		if _, e := c.WriteMsgContext(context.Background(), []byte{byte(i)}, SndInfo{}); e != nil {
++			t.Fatal(e)
++		}
++		r, e := s.ReadEvent(context.Background(), d, b, o)
++		if e != nil || r.N != 1 || d[0] != byte(i) {
++			t.Fatal(r, e)
++		}
++		u5Quiescent(t, c)
++		u5Quiescent(t, s)
++	}
++	s.Close()
++	u5Quiescent(t, s)
++}

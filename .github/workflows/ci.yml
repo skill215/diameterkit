@@ -1,0 +1,49 @@
+name: Checkout acceptance
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checkout-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: checkout-${{ matrix.suite }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [static, pure, race, cross, fuzz, stress, bench]
+    env:
+      GOTOOLCHAIN: local
+      GOPROXY: https://proxy.golang.org
+      GOSUMDB: sum.golang.org
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.5.0
+        with:
+          go-version-file: .go-version
+          cache-dependency-path: |
+            go.mod
+            adapters/sctp/go.mod
+            adapters/sctp/go.sum
+      - name: Verify both checkout modules
+        run: python3 spec/tools/release_check.py --suite ${{ matrix.suite }}
+      - name: Retain checks and failure logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: checkout-${{ matrix.suite }}-${{ github.run_attempt }}
+          path: .cache/release-check/${{ matrix.suite }}/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14

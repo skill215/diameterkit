@@ -1,0 +1,81 @@
+{
+  "batch": 89,
+  "date": "2026-11-16",
+  "scope": "Combined explicit binding public debit/balance/refund/initial/term and error-answer cross-target continuation",
+  "checks": [
+    {
+      "name": "core-cgo0",
+      "status": "passed",
+      "test_subtest_seed_passes": 3726,
+      "log": ".cache/b89-core-cgo0.jsonl",
+      "sha256": "eacb2e28b699cba8fdfd10864b86901554a21a5bd854af71d64a15a6067bc1aa"
+    },
+    {
+      "name": "core-race",
+      "status": "passed",
+      "test_subtest_seed_passes": 3726,
+      "log": ".cache/b89-core-race.jsonl",
+      "sha256": "c8bd04b04067e2978837cd12f36eaae6e4deeb9233d8989ad09aaac7f4985d52"
+    },
+    {
+      "name": "consumer-cgo0",
+      "status": "passed",
+      "test_subtest_seed_passes": 201,
+      "log": ".cache/b89-consumer-cgo0.jsonl",
+      "sha256": "4af7d11ac0477d95947a7fac5420f8a3b6dc5d8e4b7f708a5c4827900ffc9865"
+    },
+    {
+      "name": "consumer-race",
+      "status": "passed",
+      "test_subtest_seed_passes": 201,
+      "log": ".cache/b89-consumer-race.jsonl",
+      "sha256": "9efda79a5419b564e72c6866e2ea2c608d0102df27e08a876678e4504220fed6"
+    }
+  ],
+  "other_checks": [
+    "go vet ./...",
+    "API snapshot --check unchanged25 packages",
+    "CLI balance and term cross-target runs",
+    "two writer-retirement tests30 repetitions; broader response-wait tests10 repetitions; SGD bidirectional readiness20 repetitions"
+  ],
+  "changes": [
+    "examples/ro/compat_recovery.go",
+    "examples/ro/compat_recovery_test.go",
+    "examples/ro/compat_limits_test.go",
+    "examples/ro/main.go",
+    "examples/ro/abort.go",
+    "ro_error_continuation_test.go",
+    "ro_response_wait_test.go",
+    "examples/sgd/main.go"
+  ],
+  "consumer": {
+    "method": "independent module; copied public-API example sources; local source replace",
+    "limitation": "not installed/published package acceptance"
+  },
+  "initial_findings": [
+    {
+      "issue": "combined inbound reserve exceeds original32MiB",
+      "resolution": "bounded128MiB inbound budget and512MiB Node budget; public DecodeBound regression"
+    },
+    {
+      "issue": "preexisting tests requested retransmission before local writer retirement; SGD bidirectional caller sent before accepting endpoint became ready",
+      "resolution": "wait for observed ReplayEligible; keep original identity/late-answer/barrier assertions; bidirectional example waits with context for both peers Ready",
+      "logs": [
+        ".cache/b89-core-cgo0-initial.jsonl",
+        ".cache/b89-core-cgo0-before-test-fix.jsonl",
+        ".cache/b89-recovery-recheck.log",
+        ".cache/b89-recovery-fixed.log",
+        ".cache/b89-recovery-all-fixed.log",
+        ".cache/b89-sgd-fixed.log",
+        ".cache/b89-core-cgo0-before-readiness-fix.jsonl"
+      ]
+    }
+  ],
+  "limitations": [
+    "synthetic direct peers, no DRA relay or actual OCS shared ledger",
+    "error-answer continuation only; no new cross-target no-answer/import claim",
+    "TERM uses explicit synthetic existing Session and declared continuity, no INITIAL grant proof",
+    "remaining standalone profiles/private mappings/target evidence/release gates stay open",
+    "pure Go, no persistence, no production library API or protocol changes; adapter not rerun"
+  ]
+}

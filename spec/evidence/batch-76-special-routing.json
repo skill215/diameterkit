@@ -1,0 +1,337 @@
+{
+  "batch": 76,
+  "date": "2026-11-10",
+  "scope": "P4 bounded SRA RouterHPLMN correlation identity andMSISDN-only MCCMNC query purpose;pureGo/no persistence",
+  "toolchain": "go1.26.10 linux/amd64",
+  "kernel": "6.6.114.1-microsoft-standard-WSL2",
+  "binding": {
+    "digest": "4e0f4555d1a34eaff5773e4e782bbd193ca1f3b730ffbadf3e945b1e11b35a8f",
+    "fingerprint": "5cd11c35f35feb086ec911083281490adb608712e5b79e7cb7624bd443bb443b",
+    "name": "legacy-sgd-alert-v1",
+    "source_digest": "11fd640ba2d26a61aa51c903b5c469263536755f27ef8276df3ca1b1589c87d3",
+    "source_name": "s6c-29.338-ordinary-mme-slice-v1",
+    "source_version": "0.1.0-slice.22",
+    "version": "legacy-sgd-alert-v1.1"
+  },
+  "definitions": {
+    "generated": 11,
+    "changed": [
+      "s6c slice.22"
+    ],
+    "other_generated_unchanged": 10,
+    "delegated_profiles": 1,
+    "total_profiles": 12,
+    "request_answer_pairs_including_overlapping_bindings": 20,
+    "generator": 13,
+    "operations": 8
+  },
+  "corpus": {
+    "wire": 1205,
+    "xml": 17,
+    "new_wire": 27,
+    "prior_wire_unchanged": 1178
+  },
+  "implemented": [
+    "RouterRouting explicit GMSC/Router andHPLMNEnforcedtrue; bounded exact UTF8 token success; no token creation/mapping or DRA role inference",
+    "MCCMNCRouting explicit purpose3311=1 andoptional exact5/6digitMCCMNC; successful numeric identity must includeMSIN andmatch suppliedprefix; unknownfacts NeedsApplication",
+    "OnlyMCCMNCRequested signedEnum3311;0/other values explicitly unsupported, not equivalent toabsence; typedExtra cannot bypass known field",
+    "Success node requirement moved to originalrequest relation; ordinary/T4/IMS identity restrictions preserved at purpose layer; numeric-shaped meanings never inferred",
+    "Closedkind14/15 reuseidentity storage/Endpoints under2KiB; no new runtime states/queues/workers/budgetclasses; fixedterminal SRRtransportreplay unchanged",
+    "RealTCP/TLS ownedrequest/evidencefreeze/normalE/unknownfacts/cancellate, finite multiArrival/cache/purposeconflict, overload3004/RespondClose cleanup"
+  ],
+  "checks": [
+    {
+      "name": "special_routing_race20",
+      "command": "go test ./... -race -json -run ^TestSpecialRouting -count=20 -timeout=5m",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 1060,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "cf2f8c2db2e5387c45086ae00d27f3ea8e4aee3c85dfd73d400d9210a516d901",
+      "test_names": [
+        "TestSpecialRoutingBudgetClose",
+        "TestSpecialRoutingBudgetClose/mcc=false",
+        "TestSpecialRoutingBudgetClose/mcc=false/TCP",
+        "TestSpecialRoutingBudgetClose/mcc=false/TLS",
+        "TestSpecialRoutingBudgetClose/mcc=true",
+        "TestSpecialRoutingBudgetClose/mcc=true/TCP",
+        "TestSpecialRoutingBudgetClose/mcc=true/TLS",
+        "TestSpecialRoutingConditions",
+        "TestSpecialRoutingInboundCache",
+        "TestSpecialRoutingInboundCache/mcc=false",
+        "TestSpecialRoutingInboundCache/mcc=false/TCP",
+        "TestSpecialRoutingInboundCache/mcc=false/TLS",
+        "TestSpecialRoutingInboundCache/mcc=true",
+        "TestSpecialRoutingInboundCache/mcc=true/TCP",
+        "TestSpecialRoutingInboundCache/mcc=true/TLS",
+        "TestSpecialRoutingNetwork",
+        "TestSpecialRoutingNetwork/mcc=false",
+        "TestSpecialRoutingNetwork/mcc=false/TCP",
+        "TestSpecialRoutingNetwork/mcc=false/TLS",
+        "TestSpecialRoutingNetwork/mcc=true",
+        "TestSpecialRoutingNetwork/mcc=true/TCP",
+        "TestSpecialRoutingNetwork/mcc=true/TLS",
+        "TestSpecialRoutingPairs",
+        "TestSpecialRoutingPairs/mcc-r001001",
+        "TestSpecialRoutingPairs/mcc-r001001/mnc3-a",
+        "TestSpecialRoutingPairs/mcc-r00101",
+        "TestSpecialRoutingPairs/mcc-r00101/absent-a",
+        "TestSpecialRoutingPairs/mcc-r00101/e",
+        "TestSpecialRoutingPairs/mcc-r00101/failure",
+        "TestSpecialRoutingPairs/mcc-r00101/mcc-a",
+        "TestSpecialRoutingPairs/mcc-r00101/mcc-node-a",
+        "TestSpecialRoutingPairs/mcc-r00101/mcc-short-a",
+        "TestSpecialRoutingPairs/mcc-r00101/numeric-a",
+        "TestSpecialRoutingPairs/router-r",
+        "TestSpecialRoutingPairs/router-r/absent-a",
+        "TestSpecialRoutingPairs/router-r/e",
+        "TestSpecialRoutingPairs/router-r/failure",
+        "TestSpecialRoutingPairs/router-r/max-a",
+        "TestSpecialRoutingPairs/router-r/numeric-a",
+        "TestSpecialRoutingPairs/router-r/router-a",
+        "TestSpecialRoutingPairs/router-r/unicode-a",
+        "TestSpecialRoutingWireAndBudget",
+        "TestSpecialRoutingWireAndBudget/duplicate-name-a",
+        "TestSpecialRoutingWireAndBudget/duplicate-purpose-r",
+        "TestSpecialRoutingWireAndBudget/empty-a",
+        "TestSpecialRoutingWireAndBudget/long-a",
+        "TestSpecialRoutingWireAndBudget/missing-name-a",
+        "TestSpecialRoutingWireAndBudget/negative-r",
+        "TestSpecialRoutingWireAndBudget/nul-a",
+        "TestSpecialRoutingWireAndBudget/only-imsi-r",
+        "TestSpecialRoutingWireAndBudget/reserved-r",
+        "TestSpecialRoutingWireAndBudget/short-purpose-r",
+        "TestSpecialRoutingWireAndBudget/utf8-a"
+      ]
+    },
+    {
+      "name": "core_cgo0",
+      "command": "go test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 3201,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "ff07b7a3f2c7781d43f924850072d1ddb5da0307bd35546ff5a1a61d44e5970a"
+    },
+    {
+      "name": "core_race",
+      "command": "go test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 3201,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "bbef0ae7f66ce7ed85d0083af031236db2a88e4b762dbafe0f8db4bf4a6179c2"
+    },
+    {
+      "name": "adapter_cgo0",
+      "command": "go -C adapters/sctp test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 113,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "7f5e1292e86a7e41d70668d10c6b7ab3c5c1f3a73803e4fd5f43709e512e10d3"
+    },
+    {
+      "name": "adapter_race",
+      "command": "go -C adapters/sctp test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 113,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "4d8d7c69fb615384c07c531cf42034a77650ded13818fb1f6901da92fbd60c16"
+    },
+    {
+      "name": "core_vet",
+      "command": "go vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_build",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_verify",
+      "command": "go mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "core_cross_windows_amd64",
+      "command": "go build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_386",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_arm64",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_deps",
+      "command": "go list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "254f75f7eb9ae16f14439a9d6c6c1123ffbd9fe3b65e938d97110965dc8d2458",
+      "packages": 210,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit"
+      ]
+    },
+    {
+      "name": "adapter_vet",
+      "command": "go -C adapters/sctp vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_build",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_verify",
+      "command": "go -C adapters/sctp mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "adapter_cross_windows_amd64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_386",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_arm64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_deps",
+      "command": "go -C adapters/sctp list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "a49257c0154f148cb92f9e6dd29711f2cb0b907869af3f65ca6271d02321dc85",
+      "packages": 78,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit",
+        "github.com/skill215/diameterkit/adapters/sctp",
+        "github.com/skill215/sctp"
+      ]
+    },
+    {
+      "name": "selected_modules",
+      "command": "go -C adapters/sctp list -m -json all",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "ac42c4fbf2a5169d986971cc2a80a02aece79299bc6c2d5960ad310fee3735fe"
+    }
+  ],
+  "core_dependency": {
+    "version": "v0.0.0-diameterkit.batch76",
+    "sum": "h1:+EZCQPt0nrK6J9h6DOKZHY3XnirnSOQYKhhTfK29MKI=",
+    "files": 125,
+    "zip_sha256": "a928731f8daff3b6d4e889dbe19d3e42152836d9a47576c3f2642f500d646c92",
+    "manifest": "spec/evidence/batch-76-core-candidate-files.json",
+    "public_version": false
+  },
+  "module_isolation": {
+    "GOWORK": "off",
+    "replace_used": false,
+    "selected_modules": [
+      {
+        "Path": "github.com/skill215/diameterkit/adapters/sctp",
+        "Main": true,
+        "Dir": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+        "GoMod": "/home/skill/workspace/git/diameterkit/adapters/sctp/go.mod",
+        "GoVersion": "1.26.0"
+      },
+      {
+        "Path": "github.com/skill215/diameterkit",
+        "Version": "v0.0.0-diameterkit.batch76",
+        "Time": "2026-11-10T00:00:00Z",
+        "Dir": "/home/skill/workspace/git/diameterkit/.cache/b76-final-module-cache/github.com/skill215/diameterkit@v0.0.0-diameterkit.batch76",
+        "GoMod": "/home/skill/workspace/git/diameterkit/.cache/b76-final-module-cache/cache/download/github.com/skill215/diameterkit/@v/v0.0.0-diameterkit.batch76.mod",
+        "GoVersion": "1.26.0",
+        "Sum": "h1:+EZCQPt0nrK6J9h6DOKZHY3XnirnSOQYKhhTfK29MKI=",
+        "GoModSum": "h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk="
+      },
+      {
+        "Path": "github.com/skill215/sctp",
+        "Version": "v0.8.0",
+        "Time": "2026-11-09T08:17:30Z",
+        "Dir": "/home/skill/workspace/git/diameterkit/.cache/b76-final-module-cache/github.com/skill215/sctp@v0.8.0",
+        "GoMod": "/home/skill/workspace/git/diameterkit/.cache/b76-final-module-cache/cache/download/github.com/skill215/sctp/@v/v0.8.0.mod",
+        "GoVersion": "1.26.0",
+        "Sum": "h1:7N92RMEO7s4+4IHzI8KYKUgyIPpIClIVAdgg93m+RFI=",
+        "GoModSum": "h1:g/XAScdNEAqQa2cjZdtxXVkxIJZEy77f7/fmCkTD2gg="
+      }
+    ],
+    "cache": "/home/skill/workspace/git/diameterkit/.cache/b76-final-module-cache",
+    "upstream": "v0.8.0",
+    "upstream_archive_identical_to_batch75": true,
+    "adapter_production_unchanged": true,
+    "go_sum": [
+      "github.com/skill215/diameterkit v0.0.0-diameterkit.batch76 h1:+EZCQPt0nrK6J9h6DOKZHY3XnirnSOQYKhhTfK29MKI=",
+      "github.com/skill215/diameterkit v0.0.0-diameterkit.batch76/go.mod h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk=",
+      "github.com/skill215/sctp v0.8.0 h1:7N92RMEO7s4+4IHzI8KYKUgyIPpIClIVAdgg93m+RFI=",
+      "github.com/skill215/sctp v0.8.0/go.mod h1:g/XAScdNEAqQa2cjZdtxXVkxIJZEy77f7/fmCkTD2gg="
+    ]
+  },
+  "build_environment": {
+    "GOCACHE": "/home/skill/workspace/git/diameterkit/.cache/go-build",
+    "GOTMPDIR": "/home/skill/workspace/git/diameterkit/.cache/tmp",
+    "TMPDIR": "/home/skill/workspace/git/diameterkit/.cache/tmp"
+  },
+  "interop_evidence": "interop/evidence/2026-11-10-special-routing.json",
+  "development_findings": [
+    "Static nonnumericSRA negative moved to ordinaryHSS purpose rejection; no-node T4 negative moved to originalrequest association, not removed",
+    "Raw3311 inExtra now rejected as known typed-field duplicate, includingM0",
+    "Reference shortEnum assumption corrected after source inspection: integer decoder returnszero without error for non-four-byte width; exact difference verified"
+  ],
+  "remaining": [
+    "Existing simulator inputs: bounded accept/reject checklist is remaining originalP4 exit",
+    "3311=0, nonMSISDN specialqueries, unselected node/identity combinations remain explicitly unsupported, no global permissive mode",
+    "Ordinary noIMSI success/HSSID echo, RealmCR ambiguity, equal-time restriction unchanged",
+    "Application mapping/identity allocation/numberportability/HPLMNdeployment truth/scheduling outside library",
+    "Ro standard/privatePSP/six-template/SCAP1 evidence gates andpublicrelease/API/examples/stress/performance/deployment acceptance remain",
+    "New network tests TCP/TLS; existingSCTP fullregression, crossbuild build-only"
+  ],
+  "release_status": "not_ready"
+}

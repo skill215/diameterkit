@@ -1,0 +1,361 @@
+{
+  "batch": 69,
+  "date": "2026-11-10",
+  "scope": "RO-05 bounded App4/274 ASR/ASA codec,association,inbound,duplicate and lifecycle;pureGo/no persistence",
+  "toolchain": "go1.26.10 linux/amd64",
+  "kernel": "6.6.114.1-microsoft-standard-WSL2",
+  "sources": [
+    "https://www.rfc-editor.org/rfc/rfc6733.html#section-8.5",
+    "doc/diameterkit-mainflow-audit.md sections29.3/30.4",
+    "doc/diameterkit-usage-coverage.md RO-05",
+    "interop/evidence/2026-11-10-ro-abort.json"
+  ],
+  "changes": [
+    "Independent app/ro/abort Profile composes with one of four CCR profiles;no existing CCR definition changed",
+    "Normal ASA2001/5002/5012 explicit application decision,separate E,Session/Proxy/header/source association,no CCA mandatory fields or remote Origin-State echo",
+    "Reuse runtime without production runtime changes;bounded I/W/C and canonical/multiArrival/commit-once,primary write failure,no cross-command TERM completion or automatic business work",
+    "53 independent frames,eight independent go-diameter exact reencodes;10generated definitions/982wire/17XML",
+    "New117-file offline corebatch69 consumed by independent adapter;SCTPv0.8.0 unchanged"
+  ],
+  "core_dependency": {
+    "version": "v0.0.0-diameterkit.batch69",
+    "sum": "h1:E2On0GxcUPJbSqtxzi5mirXdtMR7qksBp842N1+QltE=",
+    "files": 117,
+    "zip_sha256": "fbcd61e723bfc1987bbac81d570914c5439694fc6045a7f8ade5be8c05e640b3",
+    "public_version": false,
+    "manifest": "spec/evidence/batch-69-core-candidate-files.json"
+  },
+  "module_isolation": {
+    "GOWORK": "off",
+    "replace_used": false,
+    "selected_modules": [
+      {
+        "Path": "github.com/skill215/diameterkit/adapters/sctp",
+        "Main": true,
+        "Dir": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+        "GoMod": "/home/skill/workspace/git/diameterkit/adapters/sctp/go.mod",
+        "GoVersion": "1.26.0"
+      },
+      {
+        "Path": "github.com/skill215/diameterkit",
+        "Version": "v0.0.0-diameterkit.batch69",
+        "Time": "2026-11-10T00:00:00Z",
+        "Dir": "/tmp/b69-module-cache/github.com/skill215/diameterkit@v0.0.0-diameterkit.batch69",
+        "GoMod": "/tmp/b69-module-cache/cache/download/github.com/skill215/diameterkit/@v/v0.0.0-diameterkit.batch69.mod",
+        "GoVersion": "1.26.0",
+        "Sum": "h1:E2On0GxcUPJbSqtxzi5mirXdtMR7qksBp842N1+QltE=",
+        "GoModSum": "h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk="
+      },
+      {
+        "Path": "github.com/skill215/sctp",
+        "Version": "v0.8.0",
+        "Time": "2026-11-09T08:17:30Z",
+        "Dir": "/tmp/b69-module-cache/github.com/skill215/sctp@v0.8.0",
+        "GoMod": "/tmp/b69-module-cache/cache/download/github.com/skill215/sctp/@v/v0.8.0.mod",
+        "GoVersion": "1.26.0",
+        "Sum": "h1:7N92RMEO7s4+4IHzI8KYKUgyIPpIClIVAdgg93m+RFI=",
+        "GoModSum": "h1:g/XAScdNEAqQa2cjZdtxXVkxIJZEy77f7/fmCkTD2gg="
+      }
+    ],
+    "upstream_version": "v0.8.0",
+    "upstream_sum_unchanged": true,
+    "go_sum": [
+      "github.com/skill215/diameterkit v0.0.0-diameterkit.batch69 h1:E2On0GxcUPJbSqtxzi5mirXdtMR7qksBp842N1+QltE=",
+      "github.com/skill215/diameterkit v0.0.0-diameterkit.batch69/go.mod h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk=",
+      "github.com/skill215/sctp v0.8.0 h1:7N92RMEO7s4+4IHzI8KYKUgyIPpIClIVAdgg93m+RFI=",
+      "github.com/skill215/sctp v0.8.0/go.mod h1:g/XAScdNEAqQa2cjZdtxXVkxIJZEy77f7/fmCkTD2gg="
+    ]
+  },
+  "checks": [
+    {
+      "name": "abort_race20",
+      "command": "go test . ./codec -race -json -run ^TestRoAbort -count=20 -timeout=5m",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 2100,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "0127e5a418feae4462a7832cfb25f1af7f07da01a5e9655b215d3dd60c1caa97",
+      "test_names": [
+        "TestRoAbortCancellationExpiryAndClose",
+        "TestRoAbortCancellationExpiryAndClose/TCP",
+        "TestRoAbortCancellationExpiryAndClose/TCP/close-race",
+        "TestRoAbortCancellationExpiryAndClose/TCP/execution-expiry",
+        "TestRoAbortCancellationExpiryAndClose/TCP/response-cancel",
+        "TestRoAbortCancellationExpiryAndClose/TLS",
+        "TestRoAbortCancellationExpiryAndClose/TLS/close-race",
+        "TestRoAbortCancellationExpiryAndClose/TLS/execution-expiry",
+        "TestRoAbortCancellationExpiryAndClose/TLS/response-cancel",
+        "TestRoAbortCanonicalAndNoReplay",
+        "TestRoAbortCommittedResultSurvivesPrimaryLoss",
+        "TestRoAbortCommittedResultSurvivesPrimaryLoss/TCP",
+        "TestRoAbortCommittedResultSurvivesPrimaryLoss/TLS",
+        "TestRoAbortDuplicateContentAndCommittedDecision",
+        "TestRoAbortDuplicateContentAndCommittedDecision/TCP",
+        "TestRoAbortDuplicateContentAndCommittedDecision/TLS",
+        "TestRoAbortInboundSourceDestinationAndBudget",
+        "TestRoAbortInboundSourceDestinationAndBudget/TCP",
+        "TestRoAbortInboundSourceDestinationAndBudget/TLS",
+        "TestRoAbortIndependentCounterexamples",
+        "TestRoAbortIndependentCounterexamples/asa-duplicate-origin-host",
+        "TestRoAbortIndependentCounterexamples/asa-duplicate-origin-realm",
+        "TestRoAbortIndependentCounterexamples/asa-duplicate-result",
+        "TestRoAbortIndependentCounterexamples/asa-duplicate-session",
+        "TestRoAbortIndependentCounterexamples/asa-e-experimental",
+        "TestRoAbortIndependentCounterexamples/asa-e-missing-diagnostic",
+        "TestRoAbortIndependentCounterexamples/asa-e-success",
+        "TestRoAbortIndependentCounterexamples/asa-missing-origin-host",
+        "TestRoAbortIndependentCounterexamples/asa-missing-origin-realm",
+        "TestRoAbortIndependentCounterexamples/asa-missing-result",
+        "TestRoAbortIndependentCounterexamples/asa-missing-session",
+        "TestRoAbortIndependentCounterexamples/asa-normal-3004",
+        "TestRoAbortIndependentCounterexamples/asa-unknown-mandatory",
+        "TestRoAbortIndependentCounterexamples/asa-unselected-result",
+        "TestRoAbortIndependentCounterexamples/asa-zero-result",
+        "TestRoAbortIndependentCounterexamples/asr-bad-user",
+        "TestRoAbortIndependentCounterexamples/asr-duplicate-auth-app",
+        "TestRoAbortIndependentCounterexamples/asr-duplicate-destination-host",
+        "TestRoAbortIndependentCounterexamples/asr-duplicate-destination-realm",
+        "TestRoAbortIndependentCounterexamples/asr-duplicate-origin-host",
+        "TestRoAbortIndependentCounterexamples/asr-duplicate-origin-realm",
+        "TestRoAbortIndependentCounterexamples/asr-duplicate-session",
+        "TestRoAbortIndependentCounterexamples/asr-empty-destination",
+        "TestRoAbortIndependentCounterexamples/asr-missing-auth-app",
+        "TestRoAbortIndependentCounterexamples/asr-missing-destination-host",
+        "TestRoAbortIndependentCounterexamples/asr-missing-destination-realm",
+        "TestRoAbortIndependentCounterexamples/asr-missing-origin-host",
+        "TestRoAbortIndependentCounterexamples/asr-missing-origin-realm",
+        "TestRoAbortIndependentCounterexamples/asr-missing-session",
+        "TestRoAbortIndependentCounterexamples/asr-result",
+        "TestRoAbortIndependentCounterexamples/asr-unknown-mandatory",
+        "TestRoAbortIndependentCounterexamples/asr-width",
+        "TestRoAbortIndependentCounterexamples/asr-wrong-app",
+        "TestRoAbortIndependentCounterexamples/association-proxy",
+        "TestRoAbortIndependentCounterexamples/association-session",
+        "TestRoAbortIndependentCounterexamples/association-source",
+        "TestRoAbortIndependentCounterexamples/header-app",
+        "TestRoAbortIndependentCounterexamples/header-command",
+        "TestRoAbortIndependentCounterexamples/header-end",
+        "TestRoAbortIndependentCounterexamples/header-flags",
+        "TestRoAbortIndependentCounterexamples/header-hop",
+        "TestRoAbortIndependentCounterexamples/unselected-258",
+        "TestRoAbortIndependentCounterexamples/unselected-292",
+        "TestRoAbortIndependentCounterexamples/unselected-297",
+        "TestRoAbortIndependentCounterexamples/unselected-415",
+        "TestRoAbortIndependentCounterexamples/unselected-416",
+        "TestRoAbortIndependentCounterexamples/unselected-436",
+        "TestRoAbortIndependentCounterexamples/unselected-456",
+        "TestRoAbortIndependentInFlightTermination",
+        "TestRoAbortIndependentInFlightTermination/TCP",
+        "TestRoAbortIndependentInFlightTermination/TCP/asa",
+        "TestRoAbortIndependentInFlightTermination/TCP/cancel-term",
+        "TestRoAbortIndependentInFlightTermination/TCP/cca",
+        "TestRoAbortIndependentInFlightTermination/TLS",
+        "TestRoAbortIndependentInFlightTermination/TLS/asa",
+        "TestRoAbortIndependentInFlightTermination/TLS/cancel-term",
+        "TestRoAbortIndependentInFlightTermination/TLS/cca",
+        "TestRoAbortIndependentPairsAndOwnership",
+        "TestRoAbortIndependentPairsAndOwnership/asa-2001",
+        "TestRoAbortIndependentPairsAndOwnership/asa-5002",
+        "TestRoAbortIndependentPairsAndOwnership/asa-5012",
+        "TestRoAbortIndependentPairsAndOwnership/asa-e",
+        "TestRoAbortIndependentPairsAndOwnership/asa-e-diagnostic",
+        "TestRoAbortIndependentPairsAndOwnership/asa-options",
+        "TestRoAbortIndependentPairsAndOwnership/asa-unknown-optional",
+        "TestRoAbortIndependentPairsAndOwnership/asr",
+        "TestRoAbortIndependentPairsAndOwnership/asr-min",
+        "TestRoAbortIndependentPairsAndOwnership/asr-unknown-optional",
+        "TestRoAbortNetworkPairsAndExplicitDecision",
+        "TestRoAbortNetworkPairsAndExplicitDecision/TCP",
+        "TestRoAbortNetworkPairsAndExplicitDecision/TLS",
+        "TestRoAbortOutboundLateAnswerAndAuthority",
+        "TestRoAbortOutboundLateAnswerAndAuthority/TCP",
+        "TestRoAbortOutboundLateAnswerAndAuthority/TCP/cancel",
+        "TestRoAbortOutboundLateAnswerAndAuthority/TCP/wrong-session",
+        "TestRoAbortOutboundLateAnswerAndAuthority/TCP/wrong-terminal",
+        "TestRoAbortOutboundLateAnswerAndAuthority/TLS",
+        "TestRoAbortOutboundLateAnswerAndAuthority/TLS/cancel",
+        "TestRoAbortOutboundLateAnswerAndAuthority/TLS/wrong-session",
+        "TestRoAbortOutboundLateAnswerAndAuthority/TLS/wrong-terminal",
+        "TestRoAbortProfileComposition",
+        "TestRoAbortProfileComposition/combined",
+        "TestRoAbortProfileComposition/legacy420",
+        "TestRoAbortProfileComposition/smsfw",
+        "TestRoAbortProfileComposition/standard"
+      ]
+    },
+    {
+      "name": "core_cgo0",
+      "command": "go test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 2748,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "fc1130418e843b37d0cf1e5f8db1cee8eeeb6d8fb385f68dcad6dd37edc5e315"
+    },
+    {
+      "name": "core_race",
+      "command": "go test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 2748,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "52da64bc79e17a58479da06d2c0438bbf33b722d811ef06751c1f2f0e260f81b"
+    },
+    {
+      "name": "adapter_cgo0",
+      "command": "go -C adapters/sctp test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 74,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "b8819ab1b1179b66d0b35a6301e751d88458e97e3b39b3ebdbe18d7f1a9ef4b7"
+    },
+    {
+      "name": "adapter_race",
+      "command": "go -C adapters/sctp test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 74,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "8b2315252dfdeb40ad77ea7728d138041688bd6a9fad007d9a3a543ba5ed4823"
+    },
+    {
+      "name": "core_vet",
+      "command": "go vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_build",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_verify",
+      "command": "go mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "core_cross_windows_amd64",
+      "command": "go build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_386",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_arm64",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_deps",
+      "command": "go list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e71285bfc2f74eac3c7f833813b8210ed0d074c86a418ce5a3496b7eeb1ffb8a",
+      "packages": 208,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit"
+      ]
+    },
+    {
+      "name": "adapter_vet",
+      "command": "go -C adapters/sctp vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_build",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_verify",
+      "command": "go -C adapters/sctp mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "adapter_cross_windows_amd64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_386",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_arm64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_deps",
+      "command": "go -C adapters/sctp list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "90c494935acee014b6b23dd431ed946267e28b58a6710088734825f31847318c",
+      "packages": 74,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit",
+        "github.com/skill215/diameterkit/adapters/sctp",
+        "github.com/skill215/sctp"
+      ]
+    },
+    {
+      "name": "selected_modules",
+      "command": "go -C adapters/sctp list -m -json all",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "0a9daaf286950dc435d4ada6c6bf0f7f75314238c355cbed79a9d8f5e9626433"
+    }
+  ],
+  "independent_evidence": "interop/evidence/2026-11-10-ro-abort.json",
+  "development_findings": [
+    "Initial generated rule names collided with generated validateASR/ASA;manual rules renamed before compilation",
+    "Initial test profile factory used pointer instead of value;corrected",
+    "Independent Proxy-State fixture flag and E canonical field order corrected;original929 fixtures unchanged",
+    "Test expectations aligned with existing5005 SHOULD-on-receive,expiryE5012 and RouteErrUnsupported contracts;production base semantics unchanged",
+    "A probe using ReadPrefix cancellation terminated the owned test transport;removed mid-exchange probe and retained terminal no-followup check"
+  ],
+  "limitations": [
+    "No targetOCS capture or C++execution;local go-diameter worktree is modified and source snapshot is recorded",
+    "No application session state engine,automatic TERM,financial decision/persistence/crossrestart dedup",
+    "Redirect and known unselected charging/experimental fields not enabled;ASR TransportReplay remains false",
+    "New application network tests use TCP/TLS;SCTP evidence is existing fullBase/S6c/lifecycle regression",
+    "Cross-platform evidence is build-only;core/adapter public versions and other v1 exits remain open"
+  ],
+  "release_status": "not_ready"
+}

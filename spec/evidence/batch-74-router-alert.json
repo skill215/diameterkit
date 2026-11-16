@@ -1,0 +1,317 @@
+{
+  "batch": 74,
+  "date": "2026-11-10",
+  "scope": "P4 ALERT-ROUTER endpoint ALR/ALA with explicit priorTFA token/priorTFR address assertion;pureGo/no persistence",
+  "toolchain": "go1.26.10 linux/amd64",
+  "kernel": "6.6.114.1-microsoft-standard-WSL2",
+  "binding": {
+    "digest": "7a106e12c1a25551872fdc5817313d89e37dc6fa8202dacd9b3546d56c0e5b5a",
+    "fingerprint": "1db129dc9c83e1d4ac2c7417371e33dc985b859d752cc510b50b8cea1d6d169f",
+    "name": "legacy-sgd-alert-v1",
+    "source_digest": "37a9f399428d33ceee87011bf1f07a4cef9b11a9c9f72da237685be9274fcea4",
+    "source_name": "s6c-29.338-ordinary-mme-slice-v1",
+    "source_version": "0.1.0-slice.21",
+    "version": "legacy-sgd-alert-v1.1"
+  },
+  "definitions": {
+    "generated": 11,
+    "changed": [
+      "s6c slice.21"
+    ],
+    "other_generated_unchanged": 10,
+    "delegated_profiles": 1,
+    "total_profiles": 12,
+    "request_answer_pairs_including_overlapping_bindings": 20,
+    "generator": 13,
+    "operations": 8
+  },
+  "corpus": {
+    "wire": 1148,
+    "xml": 17,
+    "new_wire": 23,
+    "prior_wire_unchanged": 1125
+  },
+  "implemented": [
+    "RouterAlertEvidence binds Router/GMSC, exact priorTFA token and priorTFR SMS-GMSC-Address; owned bounded closed kind13, Endpoints enforcement, no history lookup",
+    "ALR UserName wire syntax allows selected token; explicit access role still requires decimalIMSI5..15, T4/IMS/HSS unchanged, missing evidence NeedsApplication",
+    "Local UTF8/noNUL1..256byte subset, case/Unicode normalization forbidden, numeric-shaped token accepted only within chosen purpose semantics",
+    "Reuse fixed SMSIdentity storage andexisting2KiB context bound; no state/worker/budget category; existing decode bounds/normal/E association and immutable input snapshots",
+    "Standard and explicit legacyApp both support RouterAlert; legacy digest follows S6c sourceversion, exactBundle recoveryguard unchanged",
+    "Finite multiArrival/cache/token conflict, overload3004, cancellation/lateanswer/close andresource cleanup; no automaticSRR/SMS or transportreplay"
+  ],
+  "checks": [
+    {
+      "name": "router_alert_race20",
+      "command": "go test ./... -race -json -run ^TestRouterAlert -count=20 -timeout=5m",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 800,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "a0d8e84624ded563f2db0f5df29a8b5464da40d55510017397d0b13d73317598",
+      "test_names": [
+        "TestRouterAlertPairsAndEvidence",
+        "TestRouterAlertPairsAndEvidence/b74-router-",
+        "TestRouterAlertPairsAndEvidence/b74-router-legacy-",
+        "TestRouterAlertRuntimeBudgetAndClose",
+        "TestRouterAlertRuntimeBudgetAndClose/legacy=false",
+        "TestRouterAlertRuntimeBudgetAndClose/legacy=false/TCP",
+        "TestRouterAlertRuntimeBudgetAndClose/legacy=false/TLS",
+        "TestRouterAlertRuntimeBudgetAndClose/legacy=true",
+        "TestRouterAlertRuntimeBudgetAndClose/legacy=true/TCP",
+        "TestRouterAlertRuntimeBudgetAndClose/legacy=true/TLS",
+        "TestRouterAlertRuntimeInboundCache",
+        "TestRouterAlertRuntimeInboundCache/legacy=false",
+        "TestRouterAlertRuntimeInboundCache/legacy=false/TCP",
+        "TestRouterAlertRuntimeInboundCache/legacy=false/TLS",
+        "TestRouterAlertRuntimeInboundCache/legacy=true",
+        "TestRouterAlertRuntimeInboundCache/legacy=true/TCP",
+        "TestRouterAlertRuntimeInboundCache/legacy=true/TLS",
+        "TestRouterAlertRuntimeOutbound",
+        "TestRouterAlertRuntimeOutbound/legacy=false",
+        "TestRouterAlertRuntimeOutbound/legacy=false/TCP",
+        "TestRouterAlertRuntimeOutbound/legacy=false/TLS",
+        "TestRouterAlertRuntimeOutbound/legacy=true",
+        "TestRouterAlertRuntimeOutbound/legacy=true/TCP",
+        "TestRouterAlertRuntimeOutbound/legacy=true/TLS",
+        "TestRouterAlertTokenSyntaxAndContextBudget",
+        "TestRouterAlertTokenSyntaxAndContextBudget/both",
+        "TestRouterAlertTokenSyntaxAndContextBudget/decomposed",
+        "TestRouterAlertTokenSyntaxAndContextBudget/empty",
+        "TestRouterAlertTokenSyntaxAndContextBudget/invalid-utf8",
+        "TestRouterAlertTokenSyntaxAndContextBudget/long",
+        "TestRouterAlertTokenSyntaxAndContextBudget/max",
+        "TestRouterAlertTokenSyntaxAndContextBudget/move-no-node",
+        "TestRouterAlertTokenSyntaxAndContextBudget/nul",
+        "TestRouterAlertTokenSyntaxAndContextBudget/numeric",
+        "TestRouterAlertTokenSyntaxAndContextBudget/r",
+        "TestRouterAlertTokenSyntaxAndContextBudget/reachable",
+        "TestRouterAlertTokenSyntaxAndContextBudget/reachable-node",
+        "TestRouterAlertTokenSyntaxAndContextBudget/short",
+        "TestRouterAlertTokenSyntaxAndContextBudget/unicode",
+        "TestRouterAlertTokenSyntaxAndContextBudget/zero-event"
+      ]
+    },
+    {
+      "name": "core_cgo0",
+      "command": "go test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 3079,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "e7a752a3c5d86c7ab9e4171cd8ddb532e4edf3c8a095ce51d99b2e66d89f27bb"
+    },
+    {
+      "name": "core_race",
+      "command": "go test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 3079,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "5ef8064bd6925d370a387182692ad2cc272d101f45224b0182d4ea3ba0a73949"
+    },
+    {
+      "name": "adapter_cgo0",
+      "command": "go -C adapters/sctp test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 113,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "d1a1878d75b0a75b663eb39113bf8016f89006b62be5c57e6a98762b3432091e"
+    },
+    {
+      "name": "adapter_race",
+      "command": "go -C adapters/sctp test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 113,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "fd8100ec73747cecb03a8ea9fa75ebf11a54e36109fbcbcc1372742781ad7d9a"
+    },
+    {
+      "name": "core_vet",
+      "command": "go vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_build",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_verify",
+      "command": "go mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "core_cross_windows_amd64",
+      "command": "go build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_386",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_arm64",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_deps",
+      "command": "go list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "3a3c3ec6f785509b961434eb74f0df359d72c7c57d7095e352da55d64ee4cadf",
+      "packages": 210,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit"
+      ]
+    },
+    {
+      "name": "adapter_vet",
+      "command": "go -C adapters/sctp vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_build",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_verify",
+      "command": "go -C adapters/sctp mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "adapter_cross_windows_amd64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_386",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_arm64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_deps",
+      "command": "go -C adapters/sctp list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "ad63d69a6fcedde67105f71d593300436c890035de46b5c6a219e83804e0c145",
+      "packages": 78,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit",
+        "github.com/skill215/diameterkit/adapters/sctp",
+        "github.com/skill215/sctp"
+      ]
+    },
+    {
+      "name": "selected_modules",
+      "command": "go -C adapters/sctp list -m -json all",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "491cba471217d78f2f7c599e91ade4347272df7f52916901a5b45ea9f0cf06ba"
+    }
+  ],
+  "core_dependency": {
+    "version": "v0.0.0-diameterkit.batch74",
+    "sum": "h1:jWBogZUMi7GY8Rextq1aVOHbhbOH+KyNGnfwAaz6JAE=",
+    "files": 123,
+    "zip_sha256": "09f645cafcfa0226e5b0df60827844e81780a24afdaedc3dc9c85cb6607c53d5",
+    "manifest": "spec/evidence/batch-74-core-candidate-files.json",
+    "public_version": false
+  },
+  "module_isolation": {
+    "GOWORK": "off",
+    "replace_used": false,
+    "selected_modules": [
+      {
+        "Path": "github.com/skill215/diameterkit/adapters/sctp",
+        "Main": true,
+        "Dir": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+        "GoMod": "/home/skill/workspace/git/diameterkit/adapters/sctp/go.mod",
+        "GoVersion": "1.26.0"
+      },
+      {
+        "Path": "github.com/skill215/diameterkit",
+        "Version": "v0.0.0-diameterkit.batch74",
+        "Time": "2026-11-10T00:00:00Z",
+        "Dir": "/tmp/b74-module-cache/github.com/skill215/diameterkit@v0.0.0-diameterkit.batch74",
+        "GoMod": "/tmp/b74-module-cache/cache/download/github.com/skill215/diameterkit/@v/v0.0.0-diameterkit.batch74.mod",
+        "GoVersion": "1.26.0",
+        "Sum": "h1:jWBogZUMi7GY8Rextq1aVOHbhbOH+KyNGnfwAaz6JAE=",
+        "GoModSum": "h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk="
+      },
+      {
+        "Path": "github.com/skill215/sctp",
+        "Version": "v0.8.0",
+        "Time": "2026-11-09T08:17:30Z",
+        "Dir": "/tmp/b74-module-cache/github.com/skill215/sctp@v0.8.0",
+        "GoMod": "/tmp/b74-module-cache/cache/download/github.com/skill215/sctp/@v/v0.8.0.mod",
+        "GoVersion": "1.26.0",
+        "Sum": "h1:7N92RMEO7s4+4IHzI8KYKUgyIPpIClIVAdgg93m+RFI=",
+        "GoModSum": "h1:g/XAScdNEAqQa2cjZdtxXVkxIJZEy77f7/fmCkTD2gg="
+      }
+    ],
+    "cache": "/tmp/b74-module-cache",
+    "upstream": "v0.8.0",
+    "upstream_archive_identical_to_batch73": true,
+    "adapter_production_unchanged": true,
+    "go_sum": [
+      "github.com/skill215/diameterkit v0.0.0-diameterkit.batch74 h1:jWBogZUMi7GY8Rextq1aVOHbhbOH+KyNGnfwAaz6JAE=",
+      "github.com/skill215/diameterkit v0.0.0-diameterkit.batch74/go.mod h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk=",
+      "github.com/skill215/sctp v0.8.0 h1:7N92RMEO7s4+4IHzI8KYKUgyIPpIClIVAdgg93m+RFI=",
+      "github.com/skill215/sctp v0.8.0/go.mod h1:g/XAScdNEAqQa2cjZdtxXVkxIJZEy77f7/fmCkTD2gg="
+    ]
+  },
+  "interop_evidence": "interop/evidence/2026-11-10-router-alert.json",
+  "development_findings": [
+    "Existing ALR nonnumeric-identity tests expected wire rejection. Updated to assert purpose/role rejection because same UserName grammar now carries Router tokens; RDR rejection retained. Full final suites pass."
+  ],
+  "remaining": [
+    "SGd Router TFR/TFA conditional token output/Alert capability/selected time relation not implemented here",
+    "SRA Router forcedHPLMN MT identity and SRR MCCMNC-only purpose/dummy identity remain separate original P4 exits",
+    "Existing simulator inputs require bounded accept/reject decisions; no global permissive mode",
+    "Application token mapping/history authenticity/pendingSMS scheduling remain outside library",
+    "Ro standard/privatePSP/six-template/SCAP1 evidence, publicrelease/API/examples/stress/performance and deployment acceptance remain",
+    "New Router network tests TCP/TLS; SCTP existing fullregression, crossbuild build-only"
+  ],
+  "release_status": "not_ready"
+}

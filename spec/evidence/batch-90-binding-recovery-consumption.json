@@ -1,0 +1,133 @@
+{
+  "batch": 90,
+  "date": "2026-11-16",
+  "scope": "Standalone smsfwro/legacy420 public consumers and three named bindings explicit no-answer cross-target/import consumption",
+  "checks": [
+    {
+      "name": "core-cgo0",
+      "status": "passed",
+      "test_subtest_seed_passes": 3912,
+      "log": ".cache/b90-core-cgo0.jsonl",
+      "sha256": "874d1502d362aedeb165cd6024dcf58808854fb3efb3febb6c975fcc7e900b7c"
+    },
+    {
+      "name": "core-race",
+      "status": "passed",
+      "test_subtest_seed_passes": 3912,
+      "log": ".cache/b90-core-race.jsonl",
+      "sha256": "881c8b3bef6ed43d03829c92261f333f43ebe4eef93863f4ae91b606420fed0e"
+    },
+    {
+      "name": "consumer-cgo0",
+      "status": "passed",
+      "test_subtest_seed_passes": 387,
+      "log": ".cache/b90-consumer-cgo0.jsonl",
+      "sha256": "a60ef8890251937745b89192723ce465b615f077b75d09cabd9ee50cb4ba3a75"
+    },
+    {
+      "name": "consumer-race",
+      "status": "passed",
+      "test_subtest_seed_passes": 387,
+      "log": ".cache/b90-consumer-race.jsonl",
+      "sha256": "bd1f7cc8241a40dc37e62193488d21b4b9a64a73e3c8ecab630ddc55b7e819da"
+    }
+  ],
+  "matrix": {
+    "bindings": {
+      "smsfwro": [
+        "debit (IEC)",
+        "initial",
+        "term"
+      ],
+      "legacy420": [
+        "debit",
+        "balance",
+        "refund"
+      ],
+      "combined": [
+        "debit",
+        "balance",
+        "refund",
+        "initial",
+        "term"
+      ]
+    },
+    "scenarios": [
+      "error",
+      "restart (error then import)",
+      "no-answer",
+      "no-answer-import"
+    ],
+    "final_results": [
+      2001,
+      4012,
+      5012,
+      "E3004"
+    ],
+    "cases": 176,
+    "new_cases": 156,
+    "prior_cases": "20 combined error cases retained from batch89"
+  },
+  "assertions": [
+    "full original body except authorized Destination, E2E/Session/CC sequence and opaque fields preserved",
+    "T=0 after E3004; T=1 after actual WrittenNoAnswer; cumulative ReservedThrough=2",
+    "same-Node no-answer late primary response cannot publish an extra completion",
+    "all old Nodes Close/Wait and zero resources before import; all final endpoints zero resources",
+    "three bindings x8 import rejections: fencing/progress/clock/checkpoint/domain/evidence/binding/import-disabled; no Outstanding or backup inbound request",
+    "unsupported binding/action/scenario selections rejected"
+  ],
+  "initial_findings": [
+    {
+      "issue": "existing mixed ASR/CCR example submitted on the accepting peer before its CEA write barrier completed",
+      "failure_log": ".cache/b90-consumer-race-before-readiness-fix.jsonl",
+      "resolution": "context-bounded both-peer Ready wait in connectPair; no core handshake relaxation",
+      "verification": "50 targeted race repetitions and final full regression"
+    }
+  ],
+  "other_checks": [
+    {
+      "name": "vet",
+      "log": ".cache/b90-vet.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "api",
+      "log": ".cache/b90-api.log",
+      "sha256": "1debc4cbb0d2bd5220fa0bdc632c40e3439560db79b82355c4d4a3c68d13dfcb"
+    },
+    {
+      "name": "cli-smsfwro",
+      "log": ".cache/b90-cli-smsfwro.log",
+      "sha256": "17eb0bd33c9f38a2a530e1737b9f48a67e779ac645633870f362b5f4f2d77db7"
+    },
+    {
+      "name": "cli-legacy420",
+      "log": ".cache/b90-cli-legacy420.log",
+      "sha256": "ed6baa3f61ba822a110cad5968c9bc20d1e8175013237a104d030b4a4feed61f"
+    },
+    {
+      "name": "readiness-recheck",
+      "log": ".cache/b90-readiness-recheck.log",
+      "sha256": "07a8af6df478c8a67b9611d8b9144b25a01cc6ed91951be76ff6a996445bb009"
+    }
+  ],
+  "source_files": [
+    "examples/ro/compat_bindings.go",
+    "examples/ro/compat_bindings_test.go",
+    "examples/ro/compat_recovery.go",
+    "examples/ro/recovery.go",
+    "examples/ro/main.go"
+  ],
+  "consumer": {
+    "method": "independent module with byte-identical copied example Go sources and local source replace",
+    "published_package": false
+  },
+  "limitations": [
+    "pure Go; in-memory record/checkpoint only, no persistence or crash-recovery service",
+    "synthetic direct OCS targets and declared replay/session authority, no shared ledger or production deduplication evidence",
+    "TERM existing synthetic Session, no prior INITIAL grant proof; refund eligibility/1292 mapping remains application evidence",
+    "standard Ro batch88 same-target slice unchanged; no claim that every application/profile supports cross-target recovery",
+    "private six-template/target acceptance and release gates remain open; adapter not rerun",
+    "no core library API/protocol/generator changes"
+  ]
+}

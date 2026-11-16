@@ -1,0 +1,246 @@
+{
+  "batch": 86,
+  "date": "2026-11-10",
+  "scope": "Bounded public support/API inventory and external binding consumption;not new protocol/runtime capability or stable API freeze",
+  "toolchain": "go1.26.10 linux/amd64",
+  "kernel": "6.6.114.1-microsoft-standard-WSL2",
+  "api_snapshot": {
+    "path": "spec/release/public-api.json",
+    "sha256": "747e410150a4b6cefb8cd2d285a303f2ce7337c66a6b05a97a9a197532820620",
+    "tool": "spec/tools/public_api_snapshot.py",
+    "command": "python3 spec/tools/public_api_snapshot.py --check",
+    "status": "passed",
+    "targets": [
+      "linux/amd64",
+      "windows/amd64"
+    ],
+    "packages_per_target": 24,
+    "core_public_packages": 23,
+    "adapter_public_packages": 1,
+    "excludes": [
+      "internal",
+      "main",
+      "test-only"
+    ],
+    "meaning": "Complete GoDoc for build-selected public packages;documentation drift inventory,not semantic compatibility check;Windows SCTP remains unsupported"
+  },
+  "support_matrix": {
+    "path": "spec/release/support-matrix.json",
+    "sha256": "c6cac20bc5c423a4e2b519772215400260369f892907321fdf2f09a345a306ad",
+    "generated_definitions": 11,
+    "delegated_profiles": 1,
+    "request_answer_pairs_including_overlapping_bindings": 20,
+    "remaining_groups": 6
+  },
+  "consumer": {
+    "module": "example.com/diameterkit-contract-acceptance",
+    "source": "examples/contracts/contracts_test.go",
+    "source_sha256": "7268b1b545b7580f751d375a9a6b3a243d64d7510608b352eb79d117da3f02f2",
+    "tests_per_suite": 43,
+    "modules": [
+      {
+        "Path": "example.com/diameterkit-contract-acceptance",
+        "Main": true,
+        "Dir": "/home/skill/workspace/git/diameterkit/.cache/b86-api-consumer",
+        "GoMod": "/home/skill/workspace/git/diameterkit/.cache/b86-api-consumer/go.mod",
+        "GoVersion": "1.26.0"
+      },
+      {
+        "Path": "github.com/skill215/diameterkit",
+        "Version": "v0.0.0-diameterkit.batch85",
+        "Time": "2026-11-10T00:00:00Z",
+        "Dir": "/home/skill/workspace/git/diameterkit/.cache/b85-final-module-cache/github.com/skill215/diameterkit@v0.0.0-diameterkit.batch85",
+        "GoMod": "/home/skill/workspace/git/diameterkit/.cache/b85-final-module-cache/cache/download/github.com/skill215/diameterkit/@v/v0.0.0-diameterkit.batch85.mod",
+        "GoVersion": "1.26.0",
+        "Sum": "h1:tnxQUlrtI5KUVsCFMURYvpa3HY37Y9MyVYFsszzu6KA=",
+        "GoModSum": "h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk="
+      }
+    ],
+    "imports": [
+      "bytes",
+      "context",
+      "errors",
+      "fmt",
+      "github.com/skill215/diameterkit",
+      "github.com/skill215/diameterkit/app/ro",
+      "github.com/skill215/diameterkit/app/ro/abort",
+      "github.com/skill215/diameterkit/app/ro/dcca",
+      "github.com/skill215/diameterkit/app/s6c",
+      "github.com/skill215/diameterkit/app/sgd",
+      "github.com/skill215/diameterkit/app/sh",
+      "github.com/skill215/diameterkit/avp",
+      "github.com/skill215/diameterkit/base",
+      "github.com/skill215/diameterkit/codec",
+      "github.com/skill215/diameterkit/compat/scap1",
+      "github.com/skill215/diameterkit/compat/sgdalert",
+      "github.com/skill215/diameterkit/compat/smsfwro",
+      "github.com/skill215/diameterkit/compat/smsfwro/combined",
+      "github.com/skill215/diameterkit/compat/smsfwro/legacy420",
+      "github.com/skill215/diameterkit/pdu",
+      "github.com/skill215/diameterkit/schema",
+      "github.com/skill215/diameterkit/validation",
+      "testing"
+    ],
+    "isolation": "GOWORKoff/GOPROXYoff/no replace;installed unchanged batch85 candidate;fixture-free external test package",
+    "covered": [
+      "12 Profile factories,all ten pairwise 4/272 collisions and independent abort composition",
+      "DCCA debit/balance/refund success/failure/E and new-session refund relation;SMS context rejected",
+      "Standard SMS 2022 absent/empty/binary/unknown,owned copy,echo,pure helper does not enable refund send",
+      "legacy420/combined debit/balance/refund builders,explicit token/money;private ECUR construction/continuation",
+      "Recovery method signatures and integrity/Checkpoint values only,not runtime recovery/financial authority"
+    ]
+  },
+  "checks": [
+    {
+      "name": "core_cgo0",
+      "command": "go test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 3577,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "10fca8c050009035997080aaed1134db06ffeba726766c684e6c3629ce83f62a"
+    },
+    {
+      "name": "core_race",
+      "command": "go test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 3577,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "8da73198b4d19c10b66deb85adb6d0e01116b5e9e60c057f514170fa0e1b662a"
+    },
+    {
+      "name": "consumer_cgo0",
+      "command": "go -C .cache/b86-api-consumer test -mod=readonly -json -count=1 ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 43,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "70d74749a94bb75921bbba1fee1767530caf3614c374558c12a80e7a7046da47"
+    },
+    {
+      "name": "consumer_race",
+      "command": "go -C .cache/b86-api-consumer test -mod=readonly -race -json -count=1 ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 43,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "85491a5f9a7af51720693fe2adbfbb3f41959c22ac8f79770e3743149980d2ed"
+    },
+    {
+      "name": "core_vet",
+      "command": "go vet -mod=readonly ./...",
+      "CGO_ENABLED": "0",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_verify",
+      "command": "go mod verify",
+      "CGO_ENABLED": "0",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "consumer_verify",
+      "command": "go -C .cache/b86-api-consumer mod verify",
+      "CGO_ENABLED": "0",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "consumer_modules",
+      "command": "go -C .cache/b86-api-consumer list -m -json all",
+      "CGO_ENABLED": "0",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "ab1ee2fd1930452d064eae2dde11cf6585c8c1afbe2a8d43a2746a93f9fe7d74"
+    },
+    {
+      "name": "consumer_package",
+      "command": "go -C .cache/b86-api-consumer list -json .",
+      "CGO_ENABLED": "0",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "374ec1835cd8749a6f5658a28391dcb68727e9d2c91451b025b2e1c9d3566ba7"
+    },
+    {
+      "name": "contracts_windows_compile",
+      "command": "go test -c -o .cache/b86-contracts.test.exe ./examples/contracts",
+      "CGO_ENABLED": "0",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "production_changed": false,
+  "core_dependency": {
+    "version": "v0.0.0-diameterkit.batch85",
+    "sum": "h1:tnxQUlrtI5KUVsCFMURYvpa3HY37Y9MyVYFsszzu6KA=",
+    "files": 138,
+    "zip_sha256": "e776fbbec5e80a9a3bc3ca5396d6c74dc661b4be372ddd57676fe53ce167a760",
+    "manifest": "spec/evidence/batch-85-core-candidate-files.json",
+    "public_version": false,
+    "reused_unchanged": true
+  },
+  "inherited_checks": [
+    {
+      "scope": "SCTP adapter CGO0/race113 each and real sockets",
+      "evidence": "spec/evidence/batch-85-ro-abort-example.json",
+      "rerun": false,
+      "reason": "adapter/core production source and dependencies unchanged"
+    }
+  ],
+  "corpus": {
+    "wire": 1250,
+    "xml": 17,
+    "new_wire": 0,
+    "changed_definitions": 0
+  },
+  "findings": [
+    {
+      "scope": "S6c UX-02",
+      "status": "missing_implementation",
+      "evidence": [
+        "doc/diameterkit-architecture.md",
+        "app/s6c/routing_result.go",
+        "spec/release/public-api.json"
+      ],
+      "resolution": "Next bounded local implementation;do not reclassify pure protocol interpretation as business/target evidence"
+    },
+    {
+      "scope": "Historical API signatures",
+      "status": "documentation_corrected",
+      "evidence": [
+        "doc/diameterkit-api-workflows.md",
+        "doc/diameterkit-support-matrix.md"
+      ],
+      "resolution": "Live Node.NewCompletionPort/RequestOptions/Completion differ from historical candidates;no API changed"
+    },
+    {
+      "scope": "Ro public workflow acceptance",
+      "status": "partial",
+      "resolution": "Selected offline binding tests now independent;existing root tests remain runtime evidence;five-operation/recovery application consumption and private target materials remain separate"
+    }
+  ],
+  "limits": [
+    "Snapshot not API stability or full protocol certification",
+    "No new independent wire-stack or target DRA/OCS interoperability",
+    "Private ACA/PSP/six-template/RO-06 target evidence still required",
+    "Corebatch85 offline only;no source change warrants new candidate",
+    "Library remains pure Go/no persistence;application controls financial/session/history decisions"
+  ],
+  "batch_markdown": {
+    "path": "spec/local/batches/batch-86.md",
+    "ignored": true,
+    "publish": false
+  },
+  "release_status": "not_ready"
+}

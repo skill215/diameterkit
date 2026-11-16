@@ -1,0 +1,682 @@
+--- /dev/null
++++ b/context.go
+@@ -0,0 +1,139 @@
++package sctp
++
++import (
++	"context"
++	"errors"
++	"net"
++	"strings"
++	"time"
++)
++
++// ErrInvalidConfig denotes invalid input to the new context-aware entrypoints.
++// Legacy entrypoints keep their original validation/error behavior.
++var ErrInvalidConfig = errors.New("invalid SCTP configuration")
++
++func contextError(ctx context.Context) error {
++	if ctx == nil {
++		return ErrInvalidConfig
++	}
++	if e := ctx.Err(); e != nil {
++		return e
++	}
++	if end, ok := ctx.Deadline(); ok && !time.Now().Before(end) {
++		return context.DeadlineExceeded
++	}
++	return nil
++}
++
++// ResolveSCTPAddrContext preserves the legacy slash-separated host/last-port
++// grammar, returning one address per explicit host, not a DNS-derived multihoming
++// group. It uses the Go resolver and returns owned values. Use the same ctx for
++// resolution and DialContext to cover both phases with a single total budget.
++func ResolveSCTPAddrContext(ctx context.Context, network, addrs string) (*SCTPAddr, error) {
++	return resolveSCTPAddrContext(ctx, network, addrs, &net.Resolver{PreferGo: true})
++}
++func resolveSCTPAddrContext(ctx context.Context, network, addrs string, resolver *net.Resolver) (*SCTPAddr, error) {
++	if e := contextError(ctx); e != nil {
++		return nil, e
++	}
++	network, e := normalizeNetwork(network)
++	if e != nil {
++		return nil, e
++	}
++	if addrs == "" {
++		return &SCTPAddr{}, nil
++	}
++	parts := strings.Split(addrs, "/")
++	result := &SCTPAddr{}
++	for j, part := range parts {
++		if e = contextError(ctx); e != nil {
++			return nil, e
++		}
++		address := part
++		if j < len(parts)-1 {
++			address += ":"
++		}
++		host, port, e := net.SplitHostPort(address)
++		if e != nil {
++			return nil, e
++		}
++		if len(parts) > 1 && host == "" {
++			return nil, &net.AddrError{Err: "empty multihoming host", Addr: addrs}
++		}
++		if j == len(parts)-1 {
++			result.Port, e = resolver.LookupPort(ctx, "tcp", port)
++			if e != nil {
++				if ce := contextError(ctx); ce != nil {
++					return nil, ce
++				}
++				return nil, e
++			}
++		}
++		if host != "" {
++			values, e := resolver.LookupIPAddr(ctx, host)
++			if e != nil {
++				if ce := contextError(ctx); ce != nil {
++					return nil, ce
++				}
++				return nil, e
++			}
++			if e = contextError(ctx); e != nil {
++				return nil, e
++			}
++			selected := -1
++			for i, v := range values {
++				ipv4 := v.IP.To4() != nil
++				if network == "sctp4" && !ipv4 || network == "sctp6" && ipv4 {
++					continue
++				}
++				if selected < 0 {
++					selected = i
++				}
++				if network == "sctp" && ipv4 {
++					selected = i
++					break
++				}
++			}
++			if selected < 0 {
++				return nil, &net.AddrError{Err: "no suitable address", Addr: host}
++			}
++			v := values[selected]
++			result.IPAddrs = append(result.IPAddrs, net.IPAddr{IP: append(net.IP(nil), v.IP.To16()...), Zone: v.Zone})
++		}
++	}
++	if e = contextError(ctx); e != nil {
++		return nil, e
++	}
++	return result, nil
++}
++
++// DialContext connects pre-resolved owned address copies within ctx. It rejects
++// Control before creating a socket: synchronous user callbacks cannot provide a
++// cancellable setup contract. The config and addresses must not be concurrently
++// modified during the call. Cancellation after successful handoff does not close
++// the returned connection. The existing NotificationHandler remains synchronous
++// legacy receive behavior; this method does not enable message mode.
++func (cfg *SocketConfig) DialContext(ctx context.Context, network string, laddr, raddr *SCTPAddr) (*SCTPConn, error) {
++	if e := contextError(ctx); e != nil {
++		return nil, e
++	}
++	if cfg == nil || cfg.Control != nil {
++		return nil, ErrInvalidConfig
++	}
++	owned := *cfg
++	network, e := normalizeNetwork(network)
++	if e != nil {
++		return nil, e
++	}
++	if e = validateSCTPAddr(laddr, false); e != nil {
++		return nil, e
++	}
++	if e = validateSCTPAddr(raddr, true); e != nil {
++		return nil, e
++	}
++	local, remote := cloneSCTPAddr(laddr), cloneSCTPAddr(raddr)
++	if e = contextError(ctx); e != nil {
++		return nil, e
++	}
++	return dialSCTPContext(ctx, network, local, remote, owned)
++}
+--- /dev/null
++++ b/context_linux.go
+@@ -0,0 +1,122 @@
++//go:build linux && !386
++
++package sctp
++
++import (
++	"context"
++	"net"
++	"syscall"
++	"time"
++)
++
++func dialSCTPContext(ctx context.Context, network string, laddr, raddr *SCTPAddr, cfg SocketConfig) (_ *SCTPConn, err error) {
++	af, ipv6only := favoriteAddrFamily(network, laddr, raddr, "dial")
++	if err = contextError(ctx); err != nil {
++		return nil, err
++	}
++	fd, err := syscall.Socket(af, syscall.SOCK_STREAM|syscall.SOCK_NONBLOCK|syscall.SOCK_CLOEXEC, syscall.IPPROTO_SCTP)
++	if err != nil {
++		return nil, err
++	}
++	file, err := socketFile(fd)
++	if err != nil {
++		syscall.Close(fd)
++		return nil, err
++	}
++	owner := newSocketIO(file)
++	published := false
++	defer func() {
++		if !published {
++			owner.Close()
++		}
++	}()
++	if err = contextError(ctx); err != nil {
++		return nil, err
++	}
++	if err = setDefaultSockopts(fd, af, ipv6only); err != nil {
++		return nil, err
++	}
++	// Unlike the legacy helper's ignored IPV6_V6ONLY result, the new entrypoint
++	// checks all required setup. No user callback runs on this private descriptor.
++	if af == syscall.AF_INET6 {
++		if err = syscall.SetsockoptInt(fd, syscall.IPPROTO_IPV6, syscall.IPV6_V6ONLY, boolint(ipv6only)); err != nil {
++			return nil, err
++		}
++	}
++	if err = contextError(ctx); err != nil {
++		return nil, err
++	}
++	if err = setInitOpts(fd, cfg.InitMsg); err != nil {
++		return nil, err
++	}
++	if laddr != nil {
++		if len(laddr.IPAddrs) == 0 {
++			ip := net.IPv4zero
++			if af == syscall.AF_INET6 {
++				ip = net.IPv6zero
++			}
++			laddr.IPAddrs = []net.IPAddr{{IP: ip}}
++		}
++		if err = contextError(ctx); err != nil {
++			return nil, err
++		}
++		if err = SCTPBind(fd, laddr, SCTP_BINDX_ADD_ADDR); err != nil {
++			return nil, err
++		}
++	}
++	if err = contextError(ctx); err != nil {
++		return nil, err
++	}
++	_, err = SCTPConnect(fd, raddr)
++	if err != nil && err != syscall.EINPROGRESS && err != syscall.EINTR && err != syscall.EALREADY && err != syscall.EISCONN {
++		return nil, err
++	}
++	// Do not repeat CONNECTX on EINTR; readiness must prove the original association.
++	if err = waitContextConnect(ctx, owner); err != nil {
++		return nil, err
++	}
++	conn := &SCTPConn{file: file, io: owner, notificationHandler: cfg.NotificationHandler, singleAssociation: true}
++	conn._fd.Store(int32(fd))
++	if err = publishContextDial(ctx, conn); err != nil {
++		return nil, err
++	}
++	published = true
++	return conn, nil
++}
++
++func waitContextConnect(ctx context.Context, owner *socketIO) error {
++	var result error
++	err := owner.pollContext(ctx, false, time.Time{}, func(fd uintptr) bool {
++		code, e := syscall.GetsockoptInt(int(fd), syscall.SOL_SOCKET, syscall.SO_ERROR)
++		if e == syscall.EINTR {
++			return false
++		}
++		if e != nil {
++			result = e
++			return true
++		}
++		if code != 0 {
++			result = syscall.Errno(code)
++			return true
++		}
++		_, e = syscall.Getpeername(int(fd))
++		if e == syscall.ENOTCONN || e == syscall.EINTR {
++			return false
++		}
++		result = e
++		return true
++	})
++	if err != nil {
++		return err
++	}
++	return result
++}
++
++// Final publication point, after the poller's temporary deadline/hook retired.
++// Failure cleanup remains owned by the caller until this function succeeds.
++func publishContextDial(ctx context.Context, conn *SCTPConn) error {
++	if e := conn.io.Control(func(uintptr) {}); e != nil {
++		return e
++	}
++	return contextError(ctx)
++}
+--- /dev/null
++++ b/context_unsupported.go
+@@ -0,0 +1,9 @@
++//go:build !linux || (linux && 386)
++
++package sctp
++
++import "context"
++
++func dialSCTPContext(context.Context, string, *SCTPAddr, *SCTPAddr, SocketConfig) (*SCTPConn, error) {
++	return nil, ErrUnsupported
++}
+--- /dev/null
++++ b/context_test.go
+@@ -0,0 +1,99 @@
++package sctp
++
++import (
++	"context"
++	"errors"
++	"net"
++	"reflect"
++	"sync"
++	"testing"
++	"time"
++)
++
++func TestContextResolveLegacyGrammar(t *testing.T) {
++	for _, tc := range resolveSCTPAddrTests {
++		got, e := ResolveSCTPAddrContext(context.Background(), tc.network, tc.litAddrOrName)
++		if e != nil || !reflect.DeepEqual(got, tc.addr) {
++			t.Fatalf("%s: %#v %v", tc.litAddrOrName, got, e)
++		}
++	}
++	for _, s := range []string{"", ":", "localhost:http", "[::1]/[::1]:80"} {
++		old, e1 := ResolveSCTPAddr("sctp", s)
++		got, e2 := ResolveSCTPAddrContext(context.Background(), "sctp", s)
++		if (e1 == nil) != (e2 == nil) || e1 == nil && !reflect.DeepEqual(old, got) {
++			t.Fatalf("%s old%+v/%v new%+v/%v", s, old, e1, got, e2)
++		}
++	}
++	for _, s := range []string{"/127.0.0.1:1", "127.0.0.1/:1", "127.0.0.1:-1", "127.0.0.1:65536", "[::1", "host"} {
++		if a, e := ResolveSCTPAddrContext(context.Background(), "sctp", s); a != nil || e == nil {
++			t.Fatal(s, a, e)
++		}
++	}
++	for _, p := range [][2]string{{"sctp4", "[::1]:0"}, {"sctp6", "127.0.0.1:0"}, {"bad", "127.0.0.1:0"}} {
++		if a, e := ResolveSCTPAddrContext(context.Background(), p[0], p[1]); a != nil || e == nil {
++			t.Fatal(p, a, e)
++		}
++	}
++}
++func TestContextResolveCancellationAndOwnership(t *testing.T) {
++	ctx, cancel := context.WithCancel(context.Background())
++	cancel()
++	if a, e := ResolveSCTPAddrContext(ctx, "sctp", "127.0.0.1:0"); a != nil || !errors.Is(e, context.Canceled) {
++		t.Fatal(a, e)
++	}
++	if a, e := ResolveSCTPAddrContext(nil, "sctp", ":0"); a != nil || !errors.Is(e, ErrInvalidConfig) {
++		t.Fatal(a, e)
++	}
++	first, e := ResolveSCTPAddrContext(context.Background(), "sctp", "127.0.0.1/127.0.0.1:9")
++	if e != nil {
++		t.Fatal(e)
++	}
++	first.IPAddrs[0].IP[15] = 2
++	if !first.IPAddrs[1].IP.Equal(net.IPv4(127, 0, 0, 1)) {
++		t.Fatal("host slices alias")
++	}
++	next, e := ResolveSCTPAddrContext(context.Background(), "sctp", "127.0.0.1:9")
++	if e != nil || !next.IPAddrs[0].IP.Equal(net.IPv4(127, 0, 0, 1)) {
++		t.Fatal(next, e)
++	}
++}
++func TestContextResolveBlockedDNSAndSingleBudget(t *testing.T) {
++	entered := make(chan struct{})
++	var once sync.Once
++	resolver := &net.Resolver{PreferGo: true, Dial: func(ctx context.Context, _, _ string) (net.Conn, error) {
++		once.Do(func() { close(entered) })
++		<-ctx.Done()
++		return nil, ctx.Err()
++	}}
++	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
++	defer cancel()
++	done := make(chan error, 1)
++	go func() {
++		_, e := resolveSCTPAddrContext(ctx, "sctp", "127.0.0.1/blocked.example.invalid:9", resolver)
++		done <- e
++	}()
++	select {
++	case <-entered:
++	case <-ctx.Done():
++		t.Fatal("resolver not entered")
++	}
++	cancel()
++	select {
++	case e := <-done:
++		if !errors.Is(e, context.Canceled) {
++			t.Fatal(e)
++		}
++	case <-time.After(time.Second):
++		t.Fatal("DNS cancellation blocked")
++	}
++	// An exhausted shared budget is not restarted for a later phase/host.
++	expired, cancel2 := context.WithDeadline(context.Background(), time.Now().Add(-time.Second))
++	defer cancel2()
++	if _, e := resolveSCTPAddrContext(expired, "sctp", "localhost:9", resolver); !errors.Is(e, context.DeadlineExceeded) {
++		t.Fatal(e)
++	}
++	cfg := SocketConfig{}
++	if c, e := cfg.DialContext(expired, "sctp", nil, &SCTPAddr{Port: 9}); c != nil || !errors.Is(e, context.DeadlineExceeded) {
++		t.Fatal(c, e)
++	}
++}
+--- /dev/null
++++ b/context_linux_test.go
+@@ -0,0 +1,222 @@
++//go:build linux && !386
++
++package sctp
++
++import (
++	"context"
++	"errors"
++	"net"
++	"os"
++	"reflect"
++	"sync/atomic"
++	"syscall"
++	"testing"
++	"time"
++)
++
++func TestContextDialRealSCTPAndPostPublicationCancel(t *testing.T) {
++	ln := lifecycleListener(t)
++	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
++	defer cancel()
++	remote, e := ResolveSCTPAddrContext(ctx, "sctp", ln.Addr().String())
++	if e != nil {
++		t.Fatal(e)
++	}
++	local := &SCTPAddr{}
++	saved := cloneSCTPAddr(remote)
++	var handled atomic.Int32
++	cfg := SocketConfig{InitMsg: InitMsg{NumOstreams: 3}, NotificationHandler: func([]byte) error { handled.Add(1); return nil }}
++	client, e := cfg.DialContext(ctx, "sctp", local, remote)
++	if e != nil {
++		t.Fatal(e)
++	}
++	defer client.Close()
++	server, e := ln.AcceptSCTP()
++	if e != nil {
++		t.Fatal(e)
++	}
++	defer server.Close()
++	if len(local.IPAddrs) != 0 || !reflect.DeepEqual(saved, remote) {
++		t.Fatal("caller address mutated")
++	}
++	cancel() // no stale dial hook/deadline may affect this connection
++	remote.IPAddrs[0].IP[0] ^= 255
++	cfg.NotificationHandler = nil
++	if e = client.SetDeadline(time.Now().Add(time.Second)); e != nil {
++		t.Fatal(e)
++	}
++	if _, e = client.Write([]byte("published")); e != nil {
++		t.Fatal(e)
++	}
++	b := make([]byte, 64)
++	server.SetReadDeadline(time.Now().Add(time.Second))
++	if n, e := server.Read(b); e != nil || string(b[:n]) != "published" {
++		t.Fatal(n, e)
++	}
++	if _, e = server.Write([]byte("answer")); e != nil {
++		t.Fatal(e)
++	}
++	if n, e := client.Read(b); e != nil || string(b[:n]) != "answer" {
++		t.Fatal(n, e)
++	}
++	if client.notificationHandler == nil {
++		t.Fatal("config not copied")
++	}
++}
++func TestContextDialValidationBeforeFDAndControl(t *testing.T) {
++	called := false
++	cfg := SocketConfig{Control: func(string, string, syscall.RawConn) error { called = true; return nil }}
++	if c, e := cfg.DialContext(context.Background(), "sctp", nil, &SCTPAddr{Port: 9}); c != nil || !errors.Is(e, ErrInvalidConfig) || called {
++		t.Fatal(c, e, called)
++	}
++	var nilCfg *SocketConfig
++	if _, e := nilCfg.DialContext(context.Background(), "sctp", nil, nil); !errors.Is(e, ErrInvalidConfig) {
++		t.Fatal(e)
++	}
++	cfg = SocketConfig{}
++	for _, addr := range []*SCTPAddr{nil, {Port: -1}, {Port: 65536}, {IPAddrs: []net.IPAddr{{IP: net.IP{1, 2}}}}} {
++		if c, e := cfg.DialContext(context.Background(), "sctp", nil, addr); c != nil || e == nil {
++			t.Fatal(c, e)
++		}
++	}
++	ctx, cancel := context.WithCancel(context.Background())
++	cancel()
++	if c, e := cfg.DialContext(ctx, "sctp", nil, &SCTPAddr{Port: 9}); c != nil || !errors.Is(e, context.Canceled) {
++		t.Fatal(c, e)
++	}
++}
++func TestContextDialRefusalAndOwnedFailureCleanup(t *testing.T) {
++	// Hold a bound but non-listening SCTP port; no race with another process taking it.
++	fd, e := syscall.Socket(syscall.AF_INET, syscall.SOCK_STREAM|syscall.SOCK_CLOEXEC, syscall.IPPROTO_SCTP)
++	if e != nil {
++		t.Fatal(e)
++	}
++	defer syscall.Close(fd)
++	if e = syscall.Bind(fd, &syscall.SockaddrInet4{Addr: [4]byte{127, 0, 0, 1}}); e != nil {
++		t.Fatal(e)
++	}
++	bound, e := syscall.Getsockname(fd)
++	if e != nil {
++		t.Fatal(e)
++	}
++	remote := &SCTPAddr{Port: bound.(*syscall.SockaddrInet4).Port, IPAddrs: []net.IPAddr{{IP: net.IPv4(127, 0, 0, 1)}}}
++	// Warm runtime poller resources before counting fd ownership.
++	warm, other := lifecyclePair(t)
++	warm.Close()
++	other.Close()
++	before, e := os.ReadDir("/proc/self/fd")
++	if e != nil {
++		t.Fatal(e)
++	}
++	cfg := SocketConfig{}
++	for j := 0; j < 20; j++ {
++		// A pre-connect bind failure must use the same owner cleanup as refusal.
++		if c, e := cfg.DialContext(context.Background(), "sctp", remote, remote); c != nil || !errors.Is(e, syscall.EADDRINUSE) {
++			if c != nil {
++				c.Close()
++			}
++			t.Fatal("bind failure", e)
++		}
++		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
++		c, e := cfg.DialContext(ctx, "sctp", nil, remote)
++		cancel()
++		if c != nil {
++			c.Close()
++			t.Fatal("refusal returned conn")
++		}
++		if !errors.Is(e, syscall.ECONNREFUSED) {
++			t.Fatal(e)
++		}
++	}
++	after, e := os.ReadDir("/proc/self/fd")
++	if e != nil {
++		t.Fatal(e)
++	}
++	if len(after) != len(before) {
++		t.Fatalf("fd leak: %d -> %d", len(before), len(after))
++	}
++}
++func TestContextDialPendingWaitCancellation(t *testing.T) {
++	// Model pending establishment with an unconnected real nonblocking SCTP socket.
++	// This isolates the waiting/cancellation gate, not remote packet-loss behavior.
++	fd, e := syscall.Socket(syscall.AF_INET, syscall.SOCK_STREAM|syscall.SOCK_NONBLOCK|syscall.SOCK_CLOEXEC, syscall.IPPROTO_SCTP)
++	if e != nil {
++		t.Fatal(e)
++	}
++	conn := NewSCTPConn(fd, nil)
++	defer conn.Close()
++	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Millisecond)
++	defer cancel()
++	if e = waitContextConnect(ctx, conn.io); !errors.Is(e, context.DeadlineExceeded) {
++		t.Fatal(e)
++	}
++	// Poll cancellation retired its hook and did not close this shared owner.
++	if e = conn.io.Control(func(uintptr) {}); e != nil {
++		t.Fatal(e)
++	}
++}
++func TestContextDialPublicationGate(t *testing.T) {
++	client, server := lifecyclePair(t)
++	ctx, cancel := context.WithCancel(context.Background())
++	cancel()
++	if e := publishContextDial(ctx, client); !errors.Is(e, context.Canceled) {
++		t.Fatal(e)
++	}
++	// dialSCTPContext owns failure cleanup until publication; no connection is
++	// exposed by that path. The helper's separate success point is testable here.
++	live, cancelLive := context.WithCancel(context.Background())
++	if e := publishContextDial(live, client); e != nil {
++		t.Fatal(e)
++	}
++	cancelLive()
++	if _, e := client.Write([]byte("after-handoff")); e != nil {
++		t.Fatal(e)
++	}
++	server.SetReadDeadline(time.Now().Add(time.Second))
++	b := make([]byte, 32)
++	if n, e := server.Read(b); e != nil || string(b[:n]) != "after-handoff" {
++		t.Fatal(n, e)
++	}
++}
++func TestContextDialConcurrentAcceptCancellation(t *testing.T) {
++	ln := lifecycleListener(t)
++	cfg := SocketConfig{}
++	for j := 0; j < 20; j++ {
++		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
++		accepted := make(chan *SCTPConn, 1)
++		go func() {
++			s, e := ln.AcceptSCTP()
++			if e != nil {
++				accepted <- nil
++				return
++			}
++			cancel()
++			accepted <- s
++		}()
++		c, e := cfg.DialContext(ctx, "sctp", nil, ln.Addr().(*SCTPAddr))
++		cancel()
++		select {
++		case s := <-accepted:
++			if s == nil {
++				t.Fatal("accept failed")
++			}
++			s.Close()
++		case <-time.After(2 * time.Second):
++			ln.Close()
++			t.Fatal("accept did not retire")
++		}
++		if e != nil && !errors.Is(e, context.Canceled) {
++			t.Fatal(e)
++		}
++		if e == nil && c == nil {
++			t.Fatal("nil success")
++		}
++		if e != nil && c != nil {
++			c.Close()
++			t.Fatal("connection on failed publication")
++		}
++		if c != nil {
++			c.Close()
++		}
++	}
++}
+--- /dev/null
++++ b/context_example_test.go
+@@ -0,0 +1,40 @@
++package sctp_test
++
++import (
++	"context"
++	"fmt"
++	"time"
++
++	"github.com/skill215/sctp"
++)
++
++func ExampleResolveSCTPAddrContext() {
++	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
++	defer cancel()
++	addr, err := sctp.ResolveSCTPAddrContext(ctx, "sctp4", "127.0.0.1/127.0.0.2:3868")
++	if err != nil {
++		panic(err)
++	}
++	fmt.Println(addr.String())
++	// Output: 127.0.0.1/127.0.0.2:3868
++}
++
++func ExampleSocketConfig_DialContext() {
++	// One context covers resolution and connection establishment. This example
++	// requires a local SCTP server and is compile-checked without making a dial.
++	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
++	defer cancel()
++	addr, err := sctp.ResolveSCTPAddrContext(ctx, "sctp4", "127.0.0.1:3868")
++	if err != nil {
++		return
++	}
++	cfg := sctp.SocketConfig{InitMsg: sctp.InitMsg{NumOstreams: 2}}
++	conn, err := cfg.DialContext(ctx, "sctp4", nil, addr)
++	if err != nil {
++		return
++	}
++	defer conn.Close()
++	cancel() // the successfully handed-off connection remains owned by the caller
++	// Set I/O deadlines separately; the dial context no longer controls conn.
++	_ = conn.SetDeadline(time.Now().Add(time.Second))
++}
+--- a/README.md
++++ b/README.md
+@@ -366,3 +366,12 @@
+ 
+ [Apache License 2.0](LICENSE). See [release notes](releases/0.7.1.md) for the
+ Go 1.26 migration and recent reliability fixes.
++
++## Context-aware establishment
++
++`ResolveSCTPAddrContext` uses the Go resolver and returns owned addresses. Pass the
++same context to `SocketConfig.DialContext` to cover resolution and establishment
++with one total budget. The new dial rejects `Control` before socket creation and
++checks cancellation before connection handoff; cancelling afterward does not
++close the returned connection. Existing resolve/dial APIs remain unchanged.
++These calls still use legacy receive mode; see [scope and examples](docs/diameterkit-u3-context.md).
+--- /dev/null
++++ b/docs/diameterkit-u3-context.md
+@@ -0,0 +1,15 @@
++# Context resolution and connection handoff (diameterkit batch 59)
++
++2026-11-09. Incremental change on v0.7.4/62ad388 plus the batch58 waiting foundation. This is not the separate v1 rewrite. It adds `ResolveSCTPAddrContext` and `(*SocketConfig).DialContext`; legacy resolve/dial/listen entrypoints and their Control behavior are unchanged.
++
++Pass the same context to both calls for one total budget. The resolver uses `net.Resolver{PreferGo:true}` and the existing slash-separated-host/last-port grammar, IPv6 zone and service-port conventions. It selects one suitable address per explicit host (IPv4 preferred for `sctp`), deep-copies IP bytes, and never turns all DNS answers into an implicit multihoming group. Empty/single wildcard addresses retain legacy meaning. Cancellation is checked before and after lookup and between explicit hosts; DNS cancellation is exercised through a controlled Go resolver, not a public DNS dependency.
++
++DialContext takes already-resolved addresses, validates and copies them and the configuration, and rejects a nil context/config or any Control callback with ErrInvalidConfig before creating a descriptor. A previously cancelled/expired context retains its cancellation cause. It creates one nonblocking close-on-exec socket, checks required setup, optionally binds, and invokes CONNECTX once. EINPROGRESS/EINTR/EALREADY/EISCONN enter the existing context-aware write poll gate rather than starting another association. SO_ERROR and Getpeername must confirm success; real setup/connect errors such as ECONNREFUSED retain errno identity.
++
++The dial owns all new resources until the final publication check. Every failed path closes its owner. After poll completion, its temporary deadline/cancellation hook is retired, the socket owner is checked, and ctx is checked at the publication point. Cancellation observed there yields nil/error; cancellation after successful publication cannot close or impose a deadline on the returned connection. Context deadlines do not become post-dial read/write deadlines. Callers may set those explicitly.
++
++New DialContext still creates a legacy-mode connection: NotificationHandler remains a copied synchronous receive callback, not a setup callback. No message mode or ReadEvent/WriteMsgContext is introduced here. Configuration/address values must not be concurrently modified during the call. DNS resolver infrastructure belongs to Go's net package; this change does not launch an unbounded per-dial background worker or promise cancellation of arbitrary user Control code.
++
++Nine new tests cover grammar/family/port/zone and ownership, blocked DNS cancellation/shared budget, real SCTP success/post-publication cancellation, pre-fd Control rejection, repeated real ECONNREFUSED and fd accounting, pending-wait cancellation, the final publication gate and simultaneous accept/cancel. Pending wait and publication helpers isolate specific interleavings; they are not network-loss evidence. An external-package resolve Example executes; an external-package dial Example compiles but is not run against an assumed service. Full native/race/pure-Go/cross-compile evidence is recorded in diameterkit batch59.
++
++Still open: U2 immutable message mode/peek-consume/checked receive facts/context writes, U4 notification/options/readback, complete exact-candidate U5 publication and native ABI/platform gates, and diameterkit's SCTP adapter/resource/Peer/deployment acceptance. No commit/tag/release or dependency lock is implied.

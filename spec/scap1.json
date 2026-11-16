@@ -1,0 +1,427 @@
+{
+  "format": 1,
+  "package": "scap1",
+  "profile": "smsfw-scap1-event-v1",
+  "version": "0.1.0-slice.2",
+  "sources": [
+    "Actual sms-fw yppdia_avptemplate_scap1.cf47 nodes/18 roots; AvpsTemplate SCAP1 base fields, DIACCConstructRequest and dia-attr.hpp fix271/App0; AvpImpl/String/Time writers and actual getters. Explicit P1 selected. Independent source proof in batch45; no C++ execution or OCS acceptance.",
+    "Private Vendor193553/555/554 subscription;606/611/612/617 event unit;615 action0;610Time; eleven ordered607/608/609 instances. Custom template INT32 and STRING remain signed32 and raw noNUL octets; no number normalization, map reduction or inferred getter values.",
+    "Normal synthetic ACA subset from RFC6733 9.7.2/9.8: Session/Result/Origin/RecordType/RecordNumber, optional bound VSAI. Header remains legacy0/271, not standard accountingApp3 or19302 orRo4. Selected2001/base failures and independent E with original request association; target private ACA unknown. Batch46 adds explicit root SCAP1Accounting SingleAttempt binding; this profile itself does not advertise/enable runtime or TransportReplay. Wire fields and subset rules unchanged fromslice1."
+  ],
+  "groups": [
+    {
+      "name": "VendorApplication",
+      "fields": [
+        {
+          "name": "VendorID",
+          "code": 266,
+          "vendor": 0,
+          "flags": 64,
+          "type": "i32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "AcctApplicationID",
+          "code": 259,
+          "vendor": 0,
+          "flags": 64,
+          "type": "i32",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateVendorApplicationSubset"
+    },
+    {
+      "name": "SubscriptionID",
+      "fields": [
+        {
+          "name": "SubscriptionIDType",
+          "code": 555,
+          "vendor": 193,
+          "flags": 192,
+          "type": "i32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "SubscriptionIDData",
+          "code": 554,
+          "vendor": 193,
+          "flags": 192,
+          "type": "octets",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateSubscriptionIDSubset"
+    },
+    {
+      "name": "UnitValue",
+      "fields": [
+        {
+          "name": "ValueDigits",
+          "code": 617,
+          "vendor": 193,
+          "flags": 192,
+          "type": "u64",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateUnitValueSubset"
+    },
+    {
+      "name": "RequestedUnit",
+      "fields": [
+        {
+          "name": "UnitType",
+          "code": 611,
+          "vendor": 193,
+          "flags": 192,
+          "type": "i32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "UnitValue",
+          "code": 612,
+          "vendor": 193,
+          "flags": 192,
+          "type": "UnitValue",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateRequestedUnitSubset"
+    },
+    {
+      "name": "ServiceParameter",
+      "fields": [
+        {
+          "name": "ParameterType",
+          "code": 608,
+          "vendor": 193,
+          "flags": 192,
+          "type": "i32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "ParameterValue",
+          "code": 609,
+          "vendor": 193,
+          "flags": 192,
+          "type": "octets",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateServiceParameterSubset"
+    }
+  ],
+  "commands": [
+    {
+      "name": "ACR",
+      "application": 0,
+      "code": 271,
+      "request": true,
+      "proxiable": true,
+      "context_rule": "checkEvent",
+      "context_name": "LegacySCAPEvent",
+      "rule": "validateACRSubset",
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "DestinationRealm",
+          "code": 283,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationRealm"
+        },
+        {
+          "name": "VendorSpecificApplicationID",
+          "code": 260,
+          "vendor": 0,
+          "flags": 64,
+          "type": "VendorApplication",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "SubscriptionID",
+          "code": 553,
+          "vendor": 193,
+          "flags": 192,
+          "type": "SubscriptionID",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "AccountingRecordNumber",
+          "code": 485,
+          "vendor": 0,
+          "flags": 64,
+          "type": "i32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "RequestedServiceUnit",
+          "code": 606,
+          "vendor": 193,
+          "flags": 192,
+          "type": "RequestedUnit",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "AccountingRecordType",
+          "code": 480,
+          "vendor": 0,
+          "flags": 64,
+          "type": "i32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "RequestedAction",
+          "code": 615,
+          "vendor": 193,
+          "flags": 192,
+          "type": "i32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "EventTimestamp",
+          "code": 610,
+          "vendor": 193,
+          "flags": 192,
+          "type": "time",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "ServiceParameterInfo",
+          "code": 607,
+          "vendor": 193,
+          "flags": 192,
+          "type": "ServiceParameter",
+          "min": 11,
+          "max": 11
+        },
+        {
+          "name": "DestinationHost",
+          "code": 293,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": 1,
+          "envelope": "DestinationHost"
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        }
+      ]
+    },
+    {
+      "name": "ACA",
+      "application": 0,
+      "code": 271,
+      "request": false,
+      "proxiable": true,
+      "context_rule": "checkEvent",
+      "context_name": "LegacySCAPEvent",
+      "rule": "validateACASubset",
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "AccountingRecordType",
+          "code": 480,
+          "vendor": 0,
+          "flags": 64,
+          "type": "i32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "AccountingRecordNumber",
+          "code": 485,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "VendorSpecificApplicationID",
+          "code": 260,
+          "vendor": 0,
+          "flags": 64,
+          "type": "VendorApplication",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "ErrorMessage",
+          "code": 281,
+          "vendor": 0,
+          "flags": 0,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorReportingHost",
+          "code": 294,
+          "vendor": 0,
+          "flags": 0,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "FailedAVP",
+          "code": 279,
+          "vendor": 0,
+          "flags": 64,
+          "type": "diagnostic",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "error_answer": true,
+      "answer_rule": "validateACARelation"
+    }
+  ]
+}

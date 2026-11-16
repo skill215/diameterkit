@@ -1,0 +1,63 @@
+{
+  "batch": 87,
+  "date": "2026-11-16",
+  "scope": "S6c UX-02 pure fixed-profile helpers and thin Route client",
+  "checks": [
+    {
+      "name": "core-cgo0",
+      "status": "passed",
+      "test_subtest_seed_passes": 3625,
+      "log": ".cache/b87-core-cgo0.jsonl",
+      "sha256": "7f44f72938ed1cc6b1f36256c3f57c7cb2b116302b6ff816f7c0bc3038851395"
+    },
+    {
+      "name": "core-race",
+      "status": "passed",
+      "test_subtest_seed_passes": 3625,
+      "log": ".cache/b87-core-race.jsonl",
+      "sha256": "c24d8355ae5e3f6be0f6993e46638777ceb8fee88efcb26770d21628841754db"
+    },
+    {
+      "name": "consumer-cgo0",
+      "status": "passed",
+      "test_subtest_seed_passes": 32,
+      "log": ".cache/b87-consumer-cgo0.jsonl",
+      "sha256": "b07dacff82d2a30e06e4c743caa55e7bdfbde25f2101d6417b041a4ea138a779"
+    },
+    {
+      "name": "consumer-race",
+      "status": "passed",
+      "test_subtest_seed_passes": 32,
+      "log": ".cache/b87-consumer-race.jsonl",
+      "sha256": "9f0691c90608bf325601629ca0bc8bf1e7a393bd8c7ee719d6dcef09c0917a32"
+    },
+    {
+      "name": "go-vet",
+      "status": "passed",
+      "command": "CGO_ENABLED=0 go vet ./..."
+    }
+  ],
+  "public_api": "spec/release/public-api.json",
+  "api_sha256": "f9ac5b0dbb2cf19a46caf3fb294855df11feb1e3771fd0b50710c5a5bc2149e4",
+  "packages_per_target": 25,
+  "consumer": {
+    "method": "separate temporary Go module; local replace points to WSL workspace; public imports only",
+    "sources": [
+      "app/s6c/interpret_test.go",
+      "client/s6c/client_test.go"
+    ],
+    "limitation": "Local source consumption, not published/offline version installation"
+  },
+  "protocol_definitions_changed": false,
+  "production_sources": [
+    "app/s6c/query.go",
+    "app/s6c/interpret.go",
+    "client/s6c/client.go"
+  ],
+  "limitations": [
+    "Fixed current S6c profile only; named context requires explicit query endpoints",
+    "InterpretSRA requires prior codec/runtime header correlation and source validation",
+    "No storage, route priority, subscriber lookup, delivery engine or automatic business retry",
+    "Adapter unchanged; adapter tests not rerun; no new release candidate or target acceptance"
+  ]
+}

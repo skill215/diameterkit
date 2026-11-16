@@ -1,0 +1,950 @@
+--- a/sctp.go
++++ b/sctp.go
+@@ -472,11 +472,14 @@
+ // socketIO serializes each polling direction so an operation's temporary
+ // socket timeout cannot change another operation's poll deadline.
+ type socketIO struct {
+-	file      *os.File
+-	readGate  chan struct{}
+-	writeGate chan struct{}
+-	closing   chan struct{}
+-	closeOnce sync.Once
++	file                        *os.File
++	readGate                    chan struct{}
++	writeGate                   chan struct{}
++	closing                     chan struct{}
++	closeOnce                   sync.Once
++	deadlineMu                  sync.Mutex
++	readDeadline, writeDeadline socketDirection
++	deadlineErr                 error
+ }
+ 
+ func (c *SCTPConn) fd() int {
+@@ -912,15 +915,15 @@
+ }
+ 
+ func (c *SCTPConn) SetDeadline(t time.Time) error {
+-	return syscall.EOPNOTSUPP
++	return c.setPublicDeadline(true, true, t)
+ }
+ 
+ func (c *SCTPConn) SetReadDeadline(t time.Time) error {
+-	return syscall.EOPNOTSUPP
++	return c.setPublicDeadline(true, false, t)
+ }
+ 
+ func (c *SCTPConn) SetWriteDeadline(t time.Time) error {
+-	return syscall.EOPNOTSUPP
++	return c.setPublicDeadline(false, true, t)
+ }
+ 
+ type SCTPListener struct {
+--- a/sctp_linux.go
++++ b/sctp_linux.go
+@@ -149,16 +149,12 @@
+ 	var n int
+ 	var writeErr error
+ 	err = raw.Write(func(fd uintptr) bool {
+-		for {
+-			if len(b) == 0 {
+-				n, writeErr = sendmsgZero(int(fd), cbuf)
+-			} else {
+-				n, writeErr = syscall.SendmsgN(int(fd), b, cbuf, nil, 0)
+-			}
+-			if writeErr != syscall.EINTR {
+-				return writeErr != syscall.EAGAIN
+-			}
+-		}
++		if len(b) == 0 {
++			n, writeErr = sendmsgZero(int(fd), cbuf)
++		} else {
++			n, writeErr = syscall.SendmsgN(int(fd), b, cbuf, nil, 0)
++		}
++		return writeErr != syscall.EAGAIN && writeErr != syscall.EINTR
+ 	})
+ 	if err != nil {
+ 		if c.fd() < 0 {
+@@ -214,33 +210,28 @@
+ 		var n, oobn, recvflags int
+ 		var readErr error
+ 		err := raw.pollDeadline(true, deadline, func(fd uintptr) bool {
+-			for {
+-				n, oobn, recvflags, _, readErr = syscall.Recvmsg(int(fd), b, oob, 0)
+-				if readErr != syscall.EINTR {
+-					if readErr == syscall.EAGAIN && c.singleAssociation {
+-						readErr = associationReadError(int(fd))
+-						if readErr == nil {
+-							return false
+-						}
+-						if readErr == syscall.ENOTCONN {
+-							// Shutdown or data can arrive between the first
+-							// EAGAIN and the status query. Drain that result
+-							// before reporting an absent association.
+-							for {
+-								n, oobn, recvflags, _, readErr = syscall.Recvmsg(int(fd), b, oob, 0)
+-								if readErr != syscall.EINTR {
+-									break
+-								}
+-							}
+-							if readErr == syscall.EAGAIN {
+-								readErr = syscall.ENOTCONN
+-							}
+-						}
+-						return true // preserve every status-query error
++			n, oobn, recvflags, _, readErr = syscall.Recvmsg(int(fd), b, oob, 0)
++			if readErr == syscall.EINTR {
++				return false
++			}
++			if readErr == syscall.EAGAIN && c.singleAssociation {
++				readErr = associationReadError(int(fd))
++				if readErr == nil {
++					return false
++				}
++				if readErr == syscall.ENOTCONN {
++					// Drain data/EOF that raced the status query before reporting reset.
++					n, oobn, recvflags, _, readErr = syscall.Recvmsg(int(fd), b, oob, 0)
++					if readErr == syscall.EINTR {
++						return false
+ 					}
+-					return readErr != syscall.EAGAIN
++					if readErr == syscall.EAGAIN {
++						readErr = syscall.ENOTCONN
++					}
+ 				}
+-			}
++				return true
++			}
++			return readErr != syscall.EAGAIN
+ 		})
+ 		if err != nil {
+ 			if c.fd() < 0 {
+--- a/socket_io_linux.go
++++ b/socket_io_linux.go
+@@ -3,8 +3,8 @@
+ package sctp
+ 
+ import (
++	"context"
+ 	"errors"
+-	"net"
+ 	"os"
+ 	"syscall"
+ 	"time"
+@@ -43,10 +43,11 @@
+ }
+ 
+ func (s *socketIO) Control(f func(uintptr)) error {
+-	select {
+-	case <-s.closing:
+-		return net.ErrClosed
+-	default:
++	s.deadlineMu.Lock()
++	closed := s.closedLocked()
++	s.deadlineMu.Unlock()
++	if closed != nil {
++		return closed
+ 	}
+ 	raw, err := s.file.SyscallConn()
+ 	if err != nil {
+@@ -57,33 +58,6 @@
+ 
+ func (s *socketIO) Read(f func(uintptr) bool) error  { return s.poll(true, f) }
+ func (s *socketIO) Write(f func(uintptr) bool) error { return s.poll(false, f) }
+-
+-func (s *socketIO) acquire(gate chan struct{}, deadline time.Time) error {
+-	select {
+-	case <-s.closing:
+-		return net.ErrClosed
+-	default:
+-	}
+-	select {
+-	case gate <- struct{}{}:
+-		return nil
+-	default:
+-	}
+-	var expired <-chan time.Time
+-	if !deadline.IsZero() {
+-		timer := time.NewTimer(time.Until(deadline))
+-		defer timer.Stop()
+-		expired = timer.C
+-	}
+-	select {
+-	case gate <- struct{}{}:
+-		return nil
+-	case <-s.closing:
+-		return net.ErrClosed
+-	case <-expired:
+-		return syscall.EAGAIN
+-	}
+-}
+ 
+ func (s *socketIO) poll(read bool, f func(uintptr) bool) error {
+ 	deadline, err := s.deadline(read)
+@@ -96,6 +70,7 @@
+ // deadline snapshots the socket timeout once for a whole public operation.
+ // A read that consumes notifications reuses it for every readiness wait.
+ func (s *socketIO) deadline(read bool) (time.Time, error) {
++	started := time.Now()
+ 	option := syscall.SO_SNDTIMEO
+ 	if read {
+ 		option = syscall.SO_RCVTIMEO
+@@ -109,48 +84,21 @@
+ 		return time.Time{}, optionErr
+ 	}
+ 	if timeout > 0 {
+-		return time.Now().Add(timeout), nil
++		return started.Add(timeout), nil
+ 	}
+ 	return time.Time{}, nil
+ }
+ 
+ func (s *socketIO) pollDeadline(read bool, deadline time.Time, f func(uintptr) bool) error {
+-	gate := s.writeGate
+-	setDeadline := s.file.SetWriteDeadline
+-	if read {
+-		gate, setDeadline = s.readGate, s.file.SetReadDeadline
+-	}
+-	if err := s.acquire(gate, deadline); err != nil {
+-		return err
+-	}
+-	defer func() { <-gate }()
+-	if !deadline.IsZero() {
+-		if time.Until(deadline) <= 0 {
+-			return syscall.EAGAIN
+-		}
+-		if err := setDeadline(deadline); err != nil {
+-			return err
+-		}
+-		// Clear the per-operation deadline before another reader/writer enters.
+-		defer setDeadline(time.Time{})
+-	}
+-	raw, err := s.file.SyscallConn()
+-	if err != nil {
+-		return err
+-	}
+-	if read {
+-		err = raw.Read(f)
+-	} else {
+-		err = raw.Write(f)
+-	}
+-	if !deadline.IsZero() && errors.Is(err, os.ErrDeadlineExceeded) {
++	err := s.pollContext(context.Background(), read, deadline, f)
++	if errors.Is(err, ErrSocketTimeout) {
+ 		return syscall.EAGAIN
+ 	}
+ 	return err
+ }
+-
+ func (s *socketIO) Close() error {
+-	// Also release operations queued at a direction gate, outside the poller.
++	s.deadlineMu.Lock()
+ 	s.closeOnce.Do(func() { close(s.closing) })
++	s.deadlineMu.Unlock()
+ 	return s.file.Close()
+ }
+--- /dev/null
++++ b/socket_deadline.go
+@@ -0,0 +1,288 @@
++package sctp
++
++import (
++	"context"
++	"errors"
++	"net"
++	"os"
++	"syscall"
++	"time"
++)
++
++// ErrSocketTimeout identifies a fixed per-operation SO_RCVTIMEO/SO_SNDTIMEO
++// expiry. Legacy socket calls still return EAGAIN; context-aware internal calls
++// retain both identities. Standard deadlines return os.ErrDeadlineExceeded.
++var ErrSocketTimeout = errors.New("sctp socket timeout")
++
++type socketTimeoutError struct{}
++
++func (socketTimeoutError) Error() string   { return ErrSocketTimeout.Error() }
++func (socketTimeoutError) Unwrap() error   { return syscall.EAGAIN }
++func (socketTimeoutError) Is(e error) bool { return e == ErrSocketTimeout }
++func (socketTimeoutError) Timeout() bool   { return true }
++func (socketTimeoutError) Temporary() bool { return true }
++
++type socketOperation struct {
++	ctx     context.Context
++	timeout time.Time
++}
++type socketDirection struct {
++	deadline time.Time
++	changed  chan struct{}
++	owner    *socketOperation // unique operation identity prevents stale-hook interference
++}
++
++func (s *socketIO) direction(read bool) *socketDirection {
++	if read {
++		return &s.readDeadline
++	}
++	return &s.writeDeadline
++}
++func sooner(a, b time.Time) time.Time {
++	if a.IsZero() || !b.IsZero() && b.Before(a) {
++		return b
++	}
++	return a
++}
++func (s *socketIO) closedLocked() error {
++	select {
++	case <-s.closing:
++		if s.deadlineErr != nil {
++			return errors.Join(net.ErrClosed, s.deadlineErr)
++		}
++		return net.ErrClosed
++	default:
++		return nil
++	}
++}
++func (s *socketIO) stopLocked(err error) {
++	if s.deadlineErr == nil {
++		s.deadlineErr = err
++	}
++	s.closeOnce.Do(func() { close(s.closing) })
++}
++func (s *socketIO) reasonLocked(d *socketDirection, op *socketOperation, now time.Time) error {
++	if e := s.closedLocked(); e != nil {
++		return e
++	}
++	if e := op.ctx.Err(); e != nil {
++		return e
++	}
++	if c, ok := op.ctx.Deadline(); ok && !now.Before(c) {
++		return context.DeadlineExceeded
++	}
++	end := sooner(d.deadline, op.timeout)
++	if !end.IsZero() && !now.Before(end) {
++		if !d.deadline.IsZero() && end.Equal(d.deadline) {
++			return os.ErrDeadlineExceeded
++		}
++		return socketTimeoutError{}
++	}
++	return nil
++}
++func (s *socketIO) installLocked(read bool) error {
++	d := s.direction(read)
++	end := d.deadline
++	if op := d.owner; op != nil {
++		end = sooner(end, op.timeout)
++		if c, ok := op.ctx.Deadline(); ok {
++			end = sooner(end, c)
++		}
++		if op.ctx.Err() != nil {
++			end = time.Unix(1, 0)
++		}
++	}
++	var e error
++	if read {
++		e = s.file.SetReadDeadline(end)
++	} else {
++		e = s.file.SetWriteDeadline(end)
++	}
++	if e != nil {
++		s.stopLocked(e)
++	}
++	return e
++}
++func (s *socketIO) changeLocked(d *socketDirection) {
++	if d.changed != nil {
++		close(d.changed)
++	}
++	d.changed = make(chan struct{})
++}
++func (s *socketIO) setDeadlines(read, write bool, t time.Time) error {
++	s.deadlineMu.Lock()
++	if e := s.closedLocked(); e != nil {
++		s.deadlineMu.Unlock()
++		return e
++	}
++	if read {
++		s.readDeadline.deadline = t
++		s.changeLocked(&s.readDeadline)
++	}
++	if write {
++		s.writeDeadline.deadline = t
++		s.changeLocked(&s.writeDeadline)
++	}
++	var e error
++	if read {
++		e = s.installLocked(true)
++	}
++	if write && e == nil {
++		e = s.installLocked(false)
++	}
++	s.deadlineMu.Unlock()
++	if e != nil {
++		s.file.Close()
++	} // never close while holding state lock/poller callback
++	return e
++}
++
++// acquireContext charges queue time to the original socket-timeout snapshot and
++// observes mutable public deadlines. Each caller owns only its timer, not a worker.
++func (s *socketIO) acquireContext(read bool, op *socketOperation, gate chan struct{}) error {
++	for {
++		s.deadlineMu.Lock()
++		d := s.direction(read)
++		e := s.reasonLocked(d, op, time.Now())
++		if e != nil {
++			s.deadlineMu.Unlock()
++			return e
++		}
++		select {
++		case gate <- struct{}{}:
++			s.deadlineMu.Unlock()
++			return nil
++		default:
++		}
++		if d.changed == nil {
++			d.changed = make(chan struct{})
++		}
++		changed := d.changed
++		end := sooner(d.deadline, op.timeout)
++		if c, ok := op.ctx.Deadline(); ok {
++			end = sooner(end, c)
++		}
++		s.deadlineMu.Unlock()
++		var timer *time.Timer
++		var expiry <-chan time.Time
++		if !end.IsZero() {
++			timer = time.NewTimer(time.Until(end))
++			expiry = timer.C
++		}
++		acquired := false
++		select {
++		case gate <- struct{}{}:
++			acquired = true
++		case <-changed:
++		case <-op.ctx.Done():
++		case <-s.closing:
++		case <-expiry:
++		}
++		if timer != nil {
++			timer.Stop()
++		}
++		if acquired {
++			return nil
++		} // caller rechecks state before any syscall
++	}
++}
++
++// pollContext is the common waiting primitive for the future message entrypoints.
++// f must perform bounded nonblocking work and return false on EINTR/EAGAIN.
++// A true result is committed kernel progress/error; later cancellation cannot erase it.
++func (s *socketIO) pollContext(ctx context.Context, read bool, timeout time.Time, f func(uintptr) bool) (err error) {
++	if ctx == nil {
++		return syscall.EINVAL
++	}
++	op := &socketOperation{ctx: ctx, timeout: timeout}
++	gate := s.writeGate
++	if read {
++		gate = s.readGate
++	}
++	if e := s.acquireContext(read, op, gate); e != nil {
++		return e
++	}
++	s.deadlineMu.Lock()
++	d := s.direction(read)
++	d.owner = op
++	err = s.reasonLocked(d, op, time.Now())
++	if err == nil {
++		err = s.installLocked(read)
++	}
++	s.deadlineMu.Unlock()
++	finished := make(chan struct{})
++	stop := context.AfterFunc(ctx, func() {
++		defer close(finished)
++		s.deadlineMu.Lock()
++		var e error
++		if d.owner == op && s.closedLocked() == nil {
++			e = s.installLocked(read)
++		}
++		s.deadlineMu.Unlock()
++		if e != nil {
++			s.file.Close()
++		}
++	})
++	defer func() {
++		if !stop() {
++			<-finished
++		}
++		s.deadlineMu.Lock()
++		d.owner = nil
++		var restore error
++		if s.closedLocked() == nil {
++			restore = s.installLocked(read)
++		}
++		failed := s.deadlineErr != nil
++		s.deadlineMu.Unlock()
++		if restore != nil || failed {
++			s.file.Close()
++		}
++		<-gate
++	}()
++	if err != nil {
++		return err
++	}
++	raw, e := s.file.SyscallConn()
++	if e != nil {
++		return e
++	}
++	for {
++		var admittedErr error
++		committed := false
++		call := func(fd uintptr) bool {
++			s.deadlineMu.Lock()
++			admittedErr = s.reasonLocked(d, op, time.Now())
++			s.deadlineMu.Unlock()
++			if admittedErr != nil {
++				return true
++			}
++			committed = f(fd)
++			return committed
++		}
++		if read {
++			e = raw.Read(call)
++		} else {
++			e = raw.Write(call)
++		}
++		if committed {
++			return nil
++		}
++		if admittedErr != nil {
++			return admittedErr
++		}
++		s.deadlineMu.Lock()
++		err = s.reasonLocked(d, op, time.Now())
++		if err == nil && errors.Is(e, os.ErrDeadlineExceeded) {
++			err = s.installLocked(read)
++		}
++		s.deadlineMu.Unlock()
++		if err != nil {
++			return err
++		}
++		if !errors.Is(e, os.ErrDeadlineExceeded) {
++			return e
++		}
++		// A stale poll timeout is not a committed timeout if D was extended/cleared.
++	}
++}
+--- /dev/null
++++ b/socket_deadline_linux.go
+@@ -0,0 +1,13 @@
++//go:build linux && !386
++
++package sctp
++
++import "time"
++
++func (c *SCTPConn) setPublicDeadline(read, write bool, t time.Time) error {
++	raw, err := c.socketRaw()
++	if err != nil {
++		return err
++	}
++	return raw.setDeadlines(read, write, t)
++}
+--- /dev/null
++++ b/socket_deadline_stub.go
+@@ -0,0 +1,10 @@
++//go:build !linux || (linux && 386)
++
++package sctp
++
++import (
++	"syscall"
++	"time"
++)
++
++func (c *SCTPConn) setPublicDeadline(read, write bool, t time.Time) error { return syscall.EOPNOTSUPP }
+--- /dev/null
++++ b/socket_deadline_linux_test.go
+@@ -0,0 +1,329 @@
++//go:build linux && !386
++
++package sctp
++
++import (
++	"context"
++	"errors"
++	"net"
++	"os"
++	"sync"
++	"syscall"
++	"testing"
++	"time"
++)
++
++func deadlineResult(t *testing.T, ch <-chan error) error {
++	t.Helper()
++	select {
++	case e := <-ch:
++		return e
++	case <-time.After(3 * time.Second):
++		t.Fatal("operation did not retire")
++		return nil
++	}
++}
++func deadlineEntered(t *testing.T, ch <-chan struct{}) {
++	t.Helper()
++	select {
++	case <-ch:
++	case <-time.After(3 * time.Second):
++		t.Fatal("operation did not enter")
++	}
++}
++func deadlineRead(c *SCTPConn) <-chan error {
++	done := make(chan error, 1)
++	go func() { _, e := c.Read(make([]byte, 32)); done <- e }()
++	return done
++}
++func TestMutableDeadlineRealSCTP(t *testing.T) {
++	client, server := lifecyclePair(t)
++	// A persistent deadline applies before syscall admission and to future reads.
++	if e := server.SetReadDeadline(time.Now().Add(-time.Second)); e != nil {
++		t.Fatal(e)
++	}
++	for j := 0; j < 2; j++ {
++		if e := deadlineResult(t, deadlineRead(server)); !errors.Is(e, os.ErrDeadlineExceeded) {
++			t.Fatal(e)
++		}
++	}
++	if e := server.SetReadDeadline(time.Time{}); e != nil {
++		t.Fatal(e)
++	}
++	done := deadlineRead(server)
++	if e := server.SetReadDeadline(time.Now().Add(30 * time.Millisecond)); e != nil {
++		t.Fatal(e)
++	}
++	if e := deadlineResult(t, done); !errors.Is(e, os.ErrDeadlineExceeded) {
++		t.Fatal(e)
++	}
++	// Read cleanup must not erase a concurrently installed persistent deadline.
++	if e := deadlineResult(t, deadlineRead(server)); !errors.Is(e, os.ErrDeadlineExceeded) {
++		t.Fatal(e)
++	}
++	if e := server.SetReadDeadline(time.Time{}); e != nil {
++		t.Fatal(e)
++	}
++	if _, e := client.Write([]byte("ready")); e != nil {
++		t.Fatal(e)
++	}
++	if e := deadlineResult(t, deadlineRead(server)); e != nil {
++		t.Fatal(e)
++	}
++	// Read and write directions remain independent.
++	if e := server.SetReadDeadline(time.Now().Add(-time.Second)); e != nil {
++		t.Fatal(e)
++	}
++	if _, e := server.Write([]byte("other-direction")); e != nil {
++		t.Fatal(e)
++	}
++	if e := deadlineResult(t, deadlineRead(client)); e != nil {
++		t.Fatal(e)
++	}
++}
++func TestMutableDeadlineGateCancellationAndWake(t *testing.T) {
++	_, server := lifecyclePair(t)
++	ownerEntered, release := make(chan struct{}), make(chan struct{})
++	var once sync.Once
++	defer once.Do(func() { close(release) })
++	owner := make(chan error, 1)
++	go func() {
++		owner <- server.io.pollContext(context.Background(), true, time.Time{}, func(uintptr) bool { close(ownerEntered); <-release; return true })
++	}()
++	deadlineEntered(t, ownerEntered)
++	ctx, cancel := context.WithCancel(context.Background())
++	waiting := make(chan error, 1)
++	go func() {
++		waiting <- server.io.pollContext(ctx, true, time.Time{}, func(uintptr) bool { t.Error("cancelled queued operation ran"); return true })
++	}()
++	cancel()
++	if e := deadlineResult(t, waiting); !errors.Is(e, context.Canceled) {
++		t.Fatal(e)
++	}
++	go func() {
++		waiting <- server.io.pollContext(context.Background(), true, time.Time{}, func(uintptr) bool { t.Error("expired queued operation ran"); return true })
++	}()
++	if e := server.SetReadDeadline(time.Now().Add(-time.Second)); e != nil {
++		t.Fatal(e)
++	}
++	if e := deadlineResult(t, waiting); !errors.Is(e, os.ErrDeadlineExceeded) {
++		t.Fatal(e)
++	}
++	// Already admitted progress wins even when public deadline expires meanwhile.
++	once.Do(func() { close(release) })
++	if e := deadlineResult(t, owner); e != nil {
++		t.Fatal(e)
++	}
++}
++func TestMutableDeadlineExtendClearAndOldHook(t *testing.T) {
++	for _, clear := range []bool{false, true} {
++		client, server := lifecyclePair(t)
++		entered, release := make(chan struct{}), make(chan struct{})
++		var once sync.Once
++		defer once.Do(func() { close(release) })
++		ctx, cancel := context.WithCancel(context.Background())
++		defer cancel()
++		done := make(chan error, 1)
++		first := true
++		go func() {
++			done <- server.io.pollContext(ctx, true, time.Time{}, func(fd uintptr) bool {
++				if first {
++					first = false
++					close(entered)
++					<-release
++				}
++				_, _, _, _, e := syscall.Recvmsg(int(fd), make([]byte, 32), nil, 0)
++				return e != syscall.EAGAIN && e != syscall.EINTR
++			})
++		}()
++		deadlineEntered(t, entered)
++		server.SetReadDeadline(time.Now().Add(-time.Second))
++		next := time.Now().Add(time.Second)
++		if clear {
++			next = time.Time{}
++		}
++		if e := server.SetReadDeadline(next); e != nil {
++			t.Fatal(e)
++		}
++		once.Do(func() { close(release) })
++		if _, e := client.Write([]byte("ready")); e != nil {
++			t.Fatal(e)
++		}
++		if e := deadlineResult(t, done); e != nil {
++			t.Fatal(e)
++		}
++		cancel() // callback must have been removed/joined before the previous return
++		if _, e := client.Write([]byte("successor")); e != nil {
++			t.Fatal(e)
++		}
++		if e := deadlineResult(t, deadlineRead(server)); e != nil {
++			t.Fatal("old callback poisoned successor", e)
++		}
++	}
++}
++func TestMutableDeadlineContextOwnerAndSocketBudget(t *testing.T) {
++	client, server := lifecyclePair(t)
++	ctx, cancel := context.WithCancel(context.Background())
++	entered := make(chan struct{})
++	var once sync.Once
++	done := make(chan error, 1)
++	go func() {
++		done <- server.io.pollContext(ctx, true, time.Time{}, func(fd uintptr) bool {
++			once.Do(func() { close(entered) })
++			_, _, _, _, e := syscall.Recvmsg(int(fd), make([]byte, 32), nil, 0)
++			return e != syscall.EAGAIN && e != syscall.EINTR
++		})
++	}()
++	deadlineEntered(t, entered)
++	cancel()
++	if e := deadlineResult(t, done); !errors.Is(e, context.Canceled) {
++		t.Fatal(e)
++	}
++	if _, e := client.Write([]byte("alive")); e != nil {
++		t.Fatal(e)
++	}
++	if e := deadlineResult(t, deadlineRead(server)); e != nil {
++		t.Fatal(e)
++	}
++	// Clearing public D cannot clear the original S budget.
++	server.SetReadDeadline(time.Now().Add(time.Hour))
++	done = make(chan error, 1)
++	go func() {
++		done <- server.io.pollContext(context.Background(), true, time.Now().Add(30*time.Millisecond), func(uintptr) bool { return false })
++	}()
++	server.SetReadDeadline(time.Time{})
++	if e := deadlineResult(t, done); !errors.Is(e, ErrSocketTimeout) || !errors.Is(e, syscall.EAGAIN) {
++		t.Fatal(e)
++	}
++	ctx2, cancel2 := context.WithDeadline(context.Background(), time.Now().Add(-time.Second))
++	defer cancel2()
++	if e := server.io.pollContext(ctx2, true, time.Time{}, func(uintptr) bool { t.Error("expired ctx ran"); return true }); !errors.Is(e, context.DeadlineExceeded) {
++		t.Fatal(e)
++	}
++}
++func TestMutableDeadlinePrecedenceAndAtomicPair(t *testing.T) {
++	_, server := lifecyclePair(t)
++	past := time.Now().Add(-time.Second)
++	server.SetDeadline(past)
++	server.io.deadlineMu.Lock()
++	if !server.io.readDeadline.deadline.Equal(server.io.writeDeadline.deadline) {
++		t.Error("split SetDeadline")
++	}
++	server.io.deadlineMu.Unlock()
++	if e := server.io.pollContext(context.Background(), true, past, func(uintptr) bool { return true }); !errors.Is(e, os.ErrDeadlineExceeded) {
++		t.Fatal(e)
++	}
++	ctx, cancel := context.WithCancel(context.Background())
++	cancel()
++	if e := server.io.pollContext(ctx, true, past, func(uintptr) bool { return true }); !errors.Is(e, context.Canceled) {
++		t.Fatal(e)
++	}
++	server.Close()
++	if e := server.io.pollContext(ctx, true, past, func(uintptr) bool { return true }); !errors.Is(e, net.ErrClosed) {
++		t.Fatal(e)
++	}
++	if e := server.SetDeadline(time.Time{}); !errors.Is(e, net.ErrClosed) {
++		t.Fatal(e)
++	}
++}
++func TestMutableDeadlineSuccessfulAdmissionWinsCancelClose(t *testing.T) {
++	for _, closing := range []bool{false, true} {
++		_, server := lifecyclePair(t)
++		ctx, cancel := context.WithCancel(context.Background())
++		defer cancel()
++		entered, release := make(chan struct{}), make(chan struct{})
++		var once sync.Once
++		defer once.Do(func() { close(release) })
++		done := make(chan error, 1)
++		go func() {
++			done <- server.io.pollContext(ctx, false, time.Time{}, func(uintptr) bool { close(entered); <-release; return true })
++		}()
++		deadlineEntered(t, entered)
++		cancel()
++		closed := make(chan error, 1)
++		if closing {
++			go func() { closed <- server.Close() }()
++			<-server.io.closing
++		}
++		once.Do(func() { close(release) })
++		if e := deadlineResult(t, done); e != nil {
++			t.Fatal(e)
++		}
++		if closing {
++			deadlineResult(t, closed)
++		}
++	}
++}
++func TestMutableDeadlineInstallationFailureClosesOwner(t *testing.T) {
++	f, e := os.CreateTemp(t.TempDir(), "not-pollable")
++	if e != nil {
++		t.Fatal(e)
++	}
++	s := newSocketIO(f)
++	if e = s.setDeadlines(true, true, time.Now()); !errors.Is(e, os.ErrNoDeadline) {
++		t.Fatal(e)
++	}
++	if e = s.pollContext(context.Background(), true, time.Time{}, func(uintptr) bool { t.Error("failed owner admitted syscall"); return true }); !errors.Is(e, net.ErrClosed) || !errors.Is(e, os.ErrNoDeadline) {
++		t.Fatal(e)
++	}
++}
++
++func TestMutableDeadlineWriteAndResetBothDirections(t *testing.T) {
++	client, server := lifecyclePair(t)
++	if e := client.SetDeadline(time.Now().Add(-time.Second)); e != nil {
++		t.Fatal(e)
++	}
++	if n, e := client.Write([]byte("not-sent")); n != 0 || !errors.Is(e, os.ErrDeadlineExceeded) {
++		t.Fatal(n, e)
++	}
++	if e := client.SetDeadline(time.Time{}); e != nil {
++		t.Fatal(e)
++	}
++	if n, e := client.Write([]byte("one-message")); n != 11 || e != nil {
++		t.Fatal(n, e)
++	}
++	b := make([]byte, 32)
++	server.SetReadDeadline(time.Now().Add(time.Second))
++	if n, e := server.Read(b); e != nil || string(b[:n]) != "one-message" {
++		t.Fatal(n, e)
++	}
++	if _, e := server.Write([]byte("response")); e != nil {
++		t.Fatal(e)
++	}
++	if e := deadlineResult(t, deadlineRead(client)); e != nil {
++		t.Fatal(e)
++	}
++}
++func TestMutableDeadlineQueuedCloseAndContextDeadline(t *testing.T) {
++	_, server := lifecyclePair(t)
++	entered, release := make(chan struct{}), make(chan struct{})
++	var once sync.Once
++	defer once.Do(func() { close(release) })
++	owner := make(chan error, 1)
++	go func() {
++		owner <- server.io.pollContext(context.Background(), true, time.Time{}, func(uintptr) bool { close(entered); <-release; return true })
++	}()
++	deadlineEntered(t, entered)
++	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Millisecond)
++	defer cancel()
++	queued := make(chan error, 1)
++	go func() {
++		queued <- server.io.pollContext(ctx, true, time.Time{}, func(uintptr) bool { t.Error("expired queued call ran"); return true })
++	}()
++	if e := deadlineResult(t, queued); !errors.Is(e, context.DeadlineExceeded) {
++		t.Fatal(e)
++	}
++	go func() {
++		queued <- server.io.pollContext(context.Background(), true, time.Time{}, func(uintptr) bool { t.Error("closed queued call ran"); return true })
++	}()
++	closed := make(chan error, 1)
++	go func() { closed <- server.Close() }()
++	if e := deadlineResult(t, queued); !errors.Is(e, net.ErrClosed) {
++		t.Fatal(e)
++	}
++	once.Do(func() { close(release) })
++	if e := deadlineResult(t, owner); e != nil {
++		t.Fatal(e)
++	}
++	deadlineResult(t, closed)
++}
+--- a/README.md
++++ b/README.md
+@@ -248,10 +248,15 @@
+ 
+ ## Socket configuration and timeouts
+ 
+-`SetDeadline`, `SetReadDeadline`, and `SetWriteDeadline` currently return
+-`syscall.EOPNOTSUPP`, including on wrapped connections. Use `SO_RCVTIMEO` and
+-`SO_SNDTIMEO` through `SocketConfig.Control` instead. This hook runs after socket
+-creation and before binding or connecting:
++On supported Linux targets, `SetDeadline`, `SetReadDeadline`, and
++`SetWriteDeadline` affect current and future I/O, including wrapped connections.
++Zero clears the public deadline. Expiry matches `os.ErrDeadlineExceeded`;
++unsupported targets retain `syscall.EOPNOTSUPP`. See the
++[waiting-layer scope and validation](docs/diameterkit-u3-foundation.md).
++
++`SO_RCVTIMEO` and `SO_SNDTIMEO` remain optional fixed per-operation budgets,
++independent of the public deadlines. Set them through `SocketConfig.Control`.
++This hook runs after socket creation and before binding or connecting:
+ 
+ ```go
+ import (
+@@ -294,11 +299,12 @@
+ | `SO_SNDTIMEO` | Write | `syscall.EAGAIN` |
+ | `SO_SNDTIMEO` | Connection attempt | `syscall.EINPROGRESS` |
+ 
+-A zero timeout allows unlimited waiting. Each operation snapshots its timeout;
++A zero socket timeout adds no relative limit; a public deadline may still apply.
++Each operation snapshots its timeout;
+ time queued behind another operation counts toward that budget. A read keeps
+ the same budget while processing notifications, but cannot interrupt a running
+-notification handler. A timeout does not leave a deadline on subsequent
+-operations. Closing a connection or listener wakes blocked and queued I/O.
++notification handler. A socket timeout does not leak its temporary deadline into subsequent
++operations; an explicit public deadline remains until changed. Closing a connection or listener wakes blocked and queued I/O.
+ 
+ ## File descriptors and raw I/O
+ 
+--- /dev/null
++++ b/docs/diameterkit-u3-foundation.md
+@@ -0,0 +1,13 @@
++# Mutable deadline foundation (diameterkit batch 58)
++
++2026-11-09. Base: v0.7.4 commit `62ad388be958f0bd19d29d63dfc05743726779a1`, also verified as origin HEAD. This is an incremental v0 waiting-layer change, not implementation or approval of the separate, uncommitted `redesign-sctp-v1` proposal.
++
++On supported Linux targets, SCTPConn and its wrapped connection now implement SetDeadline/SetReadDeadline/SetWriteDeadline. Public deadlines persist until explicitly changed; zero clears them. SetDeadline commits both directions under one state lock, and setters wake queued operations as well as active poll waits. A failed underlying installation terminates I/O and retains the cause; no half-installed live connection is reported as success. Unsupported targets retain EOPNOTSUPP.
++
++Each operation retains its original SO_*TIMEO deadline, including queue time. Clearing/extending public D cannot reset S. Standard deadline errors match os.ErrDeadlineExceeded; legacy S expiration continues to return EAGAIN. The internal context-aware waiting primitive additionally distinguishes ErrSocketTimeout while preserving EAGAIN, context.Canceled/DeadlineExceeded and net.ErrClosed.
++
++The waiting primitive has one read owner and one write owner. It observes deadline broadcasts, uses per-waiter timers rather than a background queue, and registers an owner-checked cancellation callback only for the current owner. Cleanup stops or joins that callback before handing off the direction, restores current public D, and never blindly clears another operation's deadline. It does not close the connection merely because one operation is cancelled. Close wins at uncommitted entry, then context, then the earliest D/S (D wins equality). A committed nonblocking callback result remains authoritative even if cancellation or Close follows. EINTR in legacy send/receive returns to the controlled poll boundary instead of spinning in the callback.
++
++Nine new TestMutableDeadline groups cover real SCTP read/write and both-direction reset, queued cancellation/deadline/Close, shortened deadlines, extend/clear before timeout commitment, successor isolation, fixed S, error precedence, admitted-result races and deadline-install failure. Barrier callbacks model narrowly identified interleavings; they are not packet-delivery evidence. Whole-library SCTP tests, pure-Go build/vet, and full race are recorded in the diameterkit batch58 evidence ledger. Linux arm64 and Windows amd64 are compile checks only, not native SCTP evidence.
++
++Not delivered here: public Context message I/O, ResolveSCTPAddrContext/DialContext and their publication race, immutable message mode, peek/consume notification split, checked new metadata/truncation results, notification parser, options/readback/accept verification, or a Diameter adapter. Existing notification handlers remain synchronous user code and cannot be forcibly interrupted by I/O deadlines. Native architecture/ABI and complete exact-candidate publication gates remain open. No release/tag or dependency update is implied.

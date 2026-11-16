@@ -1,0 +1,650 @@
+{
+  "source_files": [
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dia-cc/dia-cc.cc",
+      "sha256": "3254a1456d2591467a245f29c73174aed95892994174dfaedff0d5452a1e62be"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dia-cc/dia-cc.hpp",
+      "sha256": "3520948b06db97976d8581584f093ce5c44cab1a8a35d0c5d8912e4d80fca413"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dia-base/dia-attr.hpp",
+      "sha256": "33d05e1f954833eb73d70f25334b8d904ef2c6cc5374e5cb09311b0674a5d364"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dcca-wrapper/DccaClientWrapper.cc",
+      "sha256": "8c6c650c87304bbbf7072a1f290ab708f101a8a921a6723d275e39dc989859ff"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/dcca-wrapper/DccaClientWrapperConfig.cc",
+      "sha256": "e6523f9adcd6bf9854b4c73486eda900743c7b915d28d4301dfd61dcf1fa3a67"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/yppdia_dcca.cf",
+      "sha256": "dbe6d5c86c7edd223b2b29f9ecc9e3a83bc09a9f07061cab24bdeb7e7a9427e9"
+    },
+    {
+      "path": "c-cpp/libsrc/kernel/dialib/yppdia_refund_avptemplate.cf",
+      "sha256": "6a26a7037badfce37202cfb35917ec27770740ecaf67e957e8e7d8a9314edfed"
+    }
+  ],
+  "fixtures": [
+    {
+      "file": "b48-iec-4010.hex",
+      "bytes": 140,
+      "sha256": "9e04548b4dbe57dada5d47386436910b712f3aa52daf36af712fe35884dad3d5",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-iec-4011.hex",
+      "bytes": 140,
+      "sha256": "bd21ffe9be4a200a5925f39e4be54074dbb461dc0d528e6f4d6b777bf5c32567",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-iec-5030.hex",
+      "bytes": 140,
+      "sha256": "be535f81c5c6aff88e8c67e1f75d83cf5329c1106006a791656621ef4018e18c",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-iec-child-success.hex",
+      "bytes": 160,
+      "sha256": "51010ba253056081c2819b6bb0c5084d17a6cfa8de7c68db3d7cb75272ea51e3",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-iec-child-denied.hex",
+      "bytes": 160,
+      "sha256": "c702691e2cdbc34199fdc5add04a3471b0368e7eccbcc52db7e83f539fad4b16",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-iec-top-failure.hex",
+      "bytes": 160,
+      "sha256": "66d41294523e7045ebbcf1ea0511babe26c994e6d3753dcd73e7adcd2536298b",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-initial-4010.hex",
+      "bytes": 144,
+      "sha256": "8e8b4ee6287137e1d619c3e084ddf42ebf7df0e46438f39c4a00aff9830b2681",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-initial-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-initial-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-initial-4011.hex",
+      "bytes": 144,
+      "sha256": "89ab83eafede703b77f5c7c5a1ac1292720ef394b97072cf7ec3bb2e3325009d",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-initial-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-initial-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-initial-5030.hex",
+      "bytes": 144,
+      "sha256": "cfcaaf4e86e7fafc263214178c46132c36e9730d16ec22f117d17203fd1217a0",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-initial-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-initial-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-initial-child-success.hex",
+      "bytes": 164,
+      "sha256": "8334ea03175f8ad6626335c791d05a401425eda72b7e66c49dcb8e086bda4f93",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-initial-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-initial-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-initial-child-denied.hex",
+      "bytes": 164,
+      "sha256": "a8b2d380005208879768563dd20fde512a5312d472bd950f6e995970a9e1754e",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-initial-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-initial-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-initial-top-failure.hex",
+      "bytes": 164,
+      "sha256": "c942c93af8d6ad854cc7f57617c6a9bbc8386778c95381d239bb74ee3637cba4",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-initial-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-initial-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-term-4010.hex",
+      "bytes": 144,
+      "sha256": "6d08a33a14dea897bdd955abf3cae4b82e0b21915a443099083e8666badfcd39",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-term-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-term-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-term-4011.hex",
+      "bytes": 144,
+      "sha256": "d93b1c45a42588937508e7f9fab4209c23486c6eae0da5096cecaf3512a73de7",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-term-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-term-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-term-5030.hex",
+      "bytes": 144,
+      "sha256": "94671a7f159c7afb88dcabb70879f27cf0b543ee541f0a4687a333ec6a8eb01a",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-term-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-term-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-term-child-success.hex",
+      "bytes": 164,
+      "sha256": "dcd508cbe48987a2cba04a992056efc022caf6ccf74b24e2c65c721101ffb1b1",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-term-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-term-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-term-child-denied.hex",
+      "bytes": 164,
+      "sha256": "1e493e1a53b41369c894d2d010946cb9e24ade5a70231de969061d4dfa2cd4f9",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-term-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-term-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-term-top-failure.hex",
+      "bytes": 164,
+      "sha256": "f9e52a50cb94e82ccdc68b0c79f6bd3dd03bd141a6d44e0b4c4b556ebec3834e",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-term-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-term-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-general-4010.hex",
+      "bytes": 144,
+      "sha256": "21ea31b6691fd4a816fbbb8a5845d5d73947191e6a1559a25b8611fbb6d5b909",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-general-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-general-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-general-4011.hex",
+      "bytes": 144,
+      "sha256": "285c97ffb9f66236dc0e12531940c266772d980e81fe97e74b48a46ab53cb114",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-general-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-general-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-general-5030.hex",
+      "bytes": 144,
+      "sha256": "83ec3a06049d173d9f743a0614b5538bb7aac9100f963ab350916fac261e314e",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-general-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-general-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-general-child-success.hex",
+      "bytes": 164,
+      "sha256": "6d922813112ca3ef57f3d3cda58776785ebcad8ea5b0557d62a5ea2f981d4cab",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-general-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-general-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-general-child-denied.hex",
+      "bytes": 164,
+      "sha256": "8e93befbdf2c729ccb9152572c60a8df60ecdca4983412e809cca0415bff0c53",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-general-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-general-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-general-top-failure.hex",
+      "bytes": 164,
+      "sha256": "801a811411962df0ae3e557c1d7479ea55379b622352c8ee2ef03ae11a519d2c",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-general-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-general-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-balance-4010.hex",
+      "bytes": 144,
+      "sha256": "21ea31b6691fd4a816fbbb8a5845d5d73947191e6a1559a25b8611fbb6d5b909",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-balance-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-balance-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-balance-4011.hex",
+      "bytes": 144,
+      "sha256": "285c97ffb9f66236dc0e12531940c266772d980e81fe97e74b48a46ab53cb114",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-balance-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-balance-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-balance-5030.hex",
+      "bytes": 144,
+      "sha256": "83ec3a06049d173d9f743a0614b5538bb7aac9100f963ab350916fac261e314e",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-balance-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-balance-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-balance-child-success.hex",
+      "bytes": 176,
+      "sha256": "865d7b961777c1cf4088b047cb3006ead2ba1353e697d5898d2f3c69eb28e532",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-balance-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-balance-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-balance-child-denied.hex",
+      "bytes": 164,
+      "sha256": "8e93befbdf2c729ccb9152572c60a8df60ecdca4983412e809cca0415bff0c53",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-balance-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-balance-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-balance-top-failure.hex",
+      "bytes": 164,
+      "sha256": "801a811411962df0ae3e557c1d7479ea55379b622352c8ee2ef03ae11a519d2c",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-balance-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-balance-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-refund-4010.hex",
+      "bytes": 144,
+      "sha256": "289083e21cbb0f377902fd69f56e945403daaf5a71d601736701c1b630d8c1b5",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-refund-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-refund-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-refund-4011.hex",
+      "bytes": 144,
+      "sha256": "c1b76e9eb1ab6484f2961b4e6b38ed24f72d4c918c537dcb7e7cb13ff66d2859",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-refund-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-refund-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-refund-5030.hex",
+      "bytes": 144,
+      "sha256": "d939c2a2eb2fc4302c9ff711b15fc7f30bc6fce311bec0834ec0a9bf7ad09505",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-refund-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-refund-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-refund-child-success.hex",
+      "bytes": 164,
+      "sha256": "2ead8d8474f3e90e01ace7bcb6b67e4576902fb45e73966239cba028f4eb7636",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-refund-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-refund-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-refund-child-denied.hex",
+      "bytes": 164,
+      "sha256": "80867716e6490523175fece731b5bd4a8e2b6bd729dcd8892bde244ffb833a1c",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-refund-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-refund-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-refund-top-failure.hex",
+      "bytes": 164,
+      "sha256": "f371dd2f09ec59383dd1ecfa903d187a93b2847fbfa24956078b3c69a3dc3caa",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-refund-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-refund-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-iec-cost.hex",
+      "bytes": 184,
+      "sha256": "a2c71ecec9ae66dabe74d36f7986f1fdfb5a3c7ee0798f37afe506a1134dc5c2",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-initial-cost.hex",
+      "bytes": 188,
+      "sha256": "02c8f6afd15f15260c6c376478692b6d922a5e7716eaaef4b51e083cc2ea2410",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-initial-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-initial-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-term-cost.hex",
+      "bytes": 188,
+      "sha256": "d489804da6173a1369c58a8170dd0855652afe5455a5789ff0681816c2e6f70d",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-term-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-term-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-cost-zero.hex",
+      "bytes": 196,
+      "sha256": "a400ba945516a5ba62635485ad586bf4273f414367123ae3a457c568f5441799",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-cost-limits.hex",
+      "bytes": 196,
+      "sha256": "a4d134732be6dad660ced7779a18e703fcf45a9e66d3c2825d8fb9f3a7d59944",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-general-ddfh-0.hex",
+      "bytes": 156,
+      "sha256": "3dbc5f4e28bb1307e4b21dc3c1578ff927b1b0312e4ab282635b1f4e3ce33c08",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-general-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-general-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-general-ddfh-1.hex",
+      "bytes": 156,
+      "sha256": "dd9edc7fd17c72c08ccaa993ea65c59d537920c7041a5429c8060be64a3b664b",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-general-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-general-request.hex",
+      "expect": "pair"
+    },
+    {
+      "file": "b48-child-empty.hex",
+      "bytes": 148,
+      "sha256": "0b93ccbbc535153fbe45f0ba4a5fd63b2147932882d213500c0b6c54e4fa2e09",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-child-width.hex",
+      "bytes": 160,
+      "sha256": "00385f55954956d7c7130efb69a28810aa136f834fac2b5eeef8c89208645155",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-child-duplicate-result.hex",
+      "bytes": 172,
+      "sha256": "fc756a953d2ab63b22955644621ced2565506b1d78e003ac9b2b54d6249fb319",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-duplicate-mscc.hex",
+      "bytes": 180,
+      "sha256": "38c7588a75f56d71887a2f6e7f1ad89d6b348024b44a9dd6fcd12bb44273034d",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-child-vendor.hex",
+      "bytes": 164,
+      "sha256": "257df44b387f1b61afdd9d55fa29a34ea857b1596190a991e9b4ae35880d24b5",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-mscc-vendor.hex",
+      "bytes": 164,
+      "sha256": "d4f74c1fbb60f046eec0fdd4725d3e3e7358a8182c6a72bce49d99262b41cf7c",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-child-unknown.hex",
+      "bytes": 160,
+      "sha256": "279d7dbb9426051bf55250cb0ca4141ccc16739547504bd47f0149ad6d769496",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-child-wrong-sequence.hex",
+      "bytes": 160,
+      "sha256": "b51808c1a9d748d41f725845615e49532ba4326e2fac0e8ce427b679c837f082",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-child-service-key.hex",
+      "bytes": 172,
+      "sha256": "07411903316cdaf1acf8d0a79cbc29da94ca42b059720f9441e61f970d2a795a",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-child-grant.hex",
+      "bytes": 184,
+      "sha256": "14f452d415a66dabb7238ed6c267d7d8b20b244931d199cdfdc612e3d12f7f09",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-child-token.hex",
+      "bytes": 172,
+      "sha256": "3b9274fdc65013eca0775d6504f626de9fcc346fb500aaf9089c0594d789d0ab",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-private-token.hex",
+      "bytes": 152,
+      "sha256": "f40d1c810f32d7f7893cc42b7932e5338c48f86f05ee19bf979ad5d5a544e678",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-private-psp.hex",
+      "bytes": 180,
+      "sha256": "abc4531204d0f0b2ea8a8f779992f60cc1e9d36d914a5b246c3d57d7ebd90b0b",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-cost-wrong-parent.hex",
+      "bytes": 204,
+      "sha256": "336cf43c32139e621f3820893f90c136e05bfa53e1ed24214acc2683c6dac78e",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-cost-child-failure.hex",
+      "bytes": 204,
+      "sha256": "75664dd67f7378bd9b4e99292f8eabd72f8c42d3de743ea72a033aa9ff8eeaa0",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-ddfh-unknown.hex",
+      "bytes": 152,
+      "sha256": "5de011c6caad1a937e5b9e3635f191cc0e754b7090682f43003dd909ec9b6877",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-unselected-2002.hex",
+      "bytes": 140,
+      "sha256": "1005026b5e66a305fe41cf01d99f0c65b646afc311756de6913f7823c7f8b45e",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-unselected-5031.hex",
+      "bytes": 140,
+      "sha256": "4a321896be54e551adac1a284273271f982ec3e4e376b738bd3856afecff7784",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-unselected-5011.hex",
+      "bytes": 140,
+      "sha256": "56b04e28fbfb691b75d9f75f1b72abf4af8608348962047068bd7a98b7ccfd09",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-experimental-5011.hex",
+      "bytes": 172,
+      "sha256": "6605ab4ee1387196e7bb3d6b39b90d006a4f64861b85872ce534292e2b584bba",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-missing-top.hex",
+      "bytes": 148,
+      "sha256": "bfd0728669be988c9aa9493d9c7a01c6007b58336786b154ff15c3c0f1f2b04c",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-cost-top-failure.hex",
+      "bytes": 184,
+      "sha256": "51072860a549ade4927131e0d02ec10f95d95a4cc083c2031f0261761270129b",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-iec-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-iec-request.hex",
+      "expect": "reject"
+    },
+    {
+      "file": "b48-balance-ddfh.hex",
+      "bytes": 168,
+      "sha256": "6cc14fe4c24a9a4a3dba3bd99e5e71f5d26115a2998e65b222e9a95f98542434",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-balance-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-balance-request.hex",
+      "expect": "relation-reject"
+    },
+    {
+      "file": "b48-refund-ddfh.hex",
+      "bytes": 156,
+      "sha256": "4e19593c08dda47fd7f1671b144a98a7cc4f051120cd905440806e80b587e21c",
+      "source": "DIACCParseAnswer source audit; RFC4006/8506; b47-refund-request",
+      "provenance": "independent synthetic answer to frozen source request; no OCS capture or C++ execution",
+      "request": "b47-refund-request.hex",
+      "expect": "relation-reject"
+    }
+  ],
+  "consumption": {
+    "command_result": "top268 required; old2001/2002 could be overwritten by child268; new values stay separate",
+    "service_result": "one fixedVendor0/456/268 result-only group; no implied service key, child grant or token",
+    "cost": "top423/445/{447i64,429i32 optional} and425u32; no numeric scaling",
+    "ddfh": "top428, preserve Absent/0/1; oldwrapper increment not copied; original direct-debit only",
+    "token": "configured code1292 sample, top or MSCC; reader ignoresVendor, so actualVendor and path policy unknown",
+    "psp": "873/20400/20430 candidate; noVendor evidence; constructor defaultsoperation_result1 and parser first iteration useswrongparent; no default copied"
+  },
+  "limits": [
+    "Synthetic answers, no C++ execution or liveOCS",
+    "5031 diagnostic subflow,2002 legacy interpretation,5011 namespaces/features remain unimplemented; neither 5011 base nor experimental is silently inferred",
+    "Multiple service instances and target keys/grants/tokens remain separate named work"
+  ]
+}

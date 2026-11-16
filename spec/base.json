@@ -1,0 +1,527 @@
+{
+  "format": 1,
+  "package": "base",
+  "profile": "base-rfc6733-controls-slice-v1",
+  "version": "0.1.0-slice.8",
+  "sources": [
+    "RFC 6733 sections 5.3, 5.4, 5.5 and 6.11: six normal controls and CER/CEA VSAI",
+    "RFC 6733 sections 6.2, 6.7, 6.11, 7.1-7.5; verified errata 4615/4887; common E grammar revision 2",
+    "generated envelope operations v2: finite snapshot, Session/Proxy correlation, explicit normal/error sources",
+    "manual validateCEAResult/validateDWAResult/validateDPAResult revision 2: normal result classes and Failed-AVP requirements; no Peer state",
+    "generated envelope operations v3: Destination presence/value extraction for fixed runtime binding; no destination override",
+    "generated operations v4: CanonicalV1 on validated raw request; known identity folding, ordered groups, stable independent top-level keys and unknown barriers",
+    "generated operations v5: explicit per-command fixed-terminal transport replay permission; ordinary S6c SRR only, requires configured target and retention domain; Base controls excluded",
+    "generated operations v6: explicit no_context audit for existing static rules plus original-request association; no additional application facts in this slice",
+    "generator v7 adds named Time primitive for S6c; Base wire grammar and ops6 operation contract unchanged",
+    "generator v8 / ops7: optional compiled CheckAnswer relation for normal answers; this profile does not need an additional callback"
+  ],
+  "groups": [],
+  "commands": [
+    {
+      "name": "CER",
+      "application": 0,
+      "code": 257,
+      "request": true,
+      "proxiable": false,
+      "fields": [
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "HostIPAddress",
+          "code": 257,
+          "vendor": 0,
+          "flags": 64,
+          "type": "address",
+          "min": 1,
+          "max": -1
+        },
+        {
+          "name": "VendorID",
+          "code": 266,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "ProductName",
+          "code": 269,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SupportedVendorID",
+          "code": 265,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "AuthApplicationID",
+          "code": 258,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "InbandSecurityID",
+          "code": 299,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "AcctApplicationID",
+          "code": 259,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "FirmwareRevision",
+          "code": 267,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "VendorSpecificApplicationID",
+          "code": 260,
+          "vendor": 0,
+          "flags": 64,
+          "type": "vsai",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "no_context": true
+    },
+    {
+      "name": "CEA",
+      "application": 0,
+      "code": 257,
+      "request": false,
+      "proxiable": false,
+      "fields": [
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "HostIPAddress",
+          "code": 257,
+          "vendor": 0,
+          "flags": 64,
+          "type": "address",
+          "min": 1,
+          "max": -1
+        },
+        {
+          "name": "VendorID",
+          "code": 266,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "ProductName",
+          "code": 269,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SupportedVendorID",
+          "code": 265,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "AuthApplicationID",
+          "code": 258,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "InbandSecurityID",
+          "code": 299,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "AcctApplicationID",
+          "code": 259,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "FirmwareRevision",
+          "code": 267,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "VendorSpecificApplicationID",
+          "code": 260,
+          "vendor": 0,
+          "flags": 64,
+          "type": "vsai",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "ErrorMessage",
+          "code": 281,
+          "vendor": 0,
+          "flags": 0,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorReportingHost",
+          "code": 294,
+          "vendor": 0,
+          "flags": 0,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "FailedAVP",
+          "code": 279,
+          "vendor": 0,
+          "flags": 64,
+          "type": "diagnostic",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateCEAResult",
+      "error_answer": true,
+      "no_context": true
+    },
+    {
+      "name": "DWR",
+      "application": 0,
+      "code": 280,
+      "request": true,
+      "proxiable": false,
+      "fields": [
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "no_context": true
+    },
+    {
+      "name": "DWA",
+      "application": 0,
+      "code": 280,
+      "request": false,
+      "proxiable": false,
+      "fields": [
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorMessage",
+          "code": 281,
+          "vendor": 0,
+          "flags": 0,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorReportingHost",
+          "code": 294,
+          "vendor": 0,
+          "flags": 0,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "FailedAVP",
+          "code": 279,
+          "vendor": 0,
+          "flags": 64,
+          "type": "diagnostic",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateDWAResult",
+      "error_answer": true,
+      "no_context": true
+    },
+    {
+      "name": "DPR",
+      "application": 0,
+      "code": 282,
+      "request": true,
+      "proxiable": false,
+      "fields": [
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "DisconnectCause",
+          "code": 273,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            0,
+            1,
+            2
+          ]
+        }
+      ],
+      "no_context": true
+    },
+    {
+      "name": "DPA",
+      "application": 0,
+      "code": 282,
+      "request": false,
+      "proxiable": false,
+      "fields": [
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "ErrorMessage",
+          "code": 281,
+          "vendor": 0,
+          "flags": 0,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorReportingHost",
+          "code": 294,
+          "vendor": 0,
+          "flags": 0,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "FailedAVP",
+          "code": 279,
+          "vendor": 0,
+          "flags": 64,
+          "type": "diagnostic",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateDPAResult",
+      "error_answer": true,
+      "no_context": true
+    }
+  ]
+}

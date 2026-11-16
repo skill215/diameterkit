@@ -1,0 +1,817 @@
+{
+  "format": 1,
+  "baseline": "Draft 0.20",
+  "normative_spec": "doc/diameterkit-specification.md",
+  "batch": "P3 CanonicalV1, bounded volatile duplicate cache and per-arrival response replay for the existing Base/S6c slice",
+  "status": "completed",
+  "status_meaning": "Only this bounded eighth implementation batch; full application canonical rules, contexts, outbound multi-attempt recovery, SCTP, complete P3 and v1 remain incomplete",
+  "date": "2026-11-06",
+  "toolchain": "go1.26.10 linux/amd64",
+  "release_status": "not_ready",
+  "module": "github.com/skill215/diameterkit",
+  "minimum_go": "1.26.0",
+  "environment_note": "Go checks used writable GOCACHE/GOMODCACHE under /tmp, GOWORK=off, GOTOOLCHAIN=local and GOPROXY=off. Sandbox blocked socket creation; full network tests were executed with loopback permission, without external-service access or skipped socket tests.",
+  "implemented": [
+    "retained owned Base/S6c normal/E codec; ops3 extracts Destination presence and values for fixed runtime binding",
+    "bounded Node-owned completion ports and atomic Node/class/Peer/Port reservation accounting",
+    "single-attempt Submit/Request, immutable snapshots, per-connection pending and first-winner completion",
+    "prefix-first receive classification, bounded unmatched discard and pre-body matched-answer size rejection",
+    "BeginWrite and borrower barriers preserve partial/uncertain/full write evidence through Cancel/Close",
+    "initiator/responder CER/CEA, CEA write barrier, watchdog and explicit-reconnect REOPEN, remote DPR/DPA closing",
+    "BootID identities, non-reusing per-connection HBH and one-cycle application/control E2E half-spaces",
+    "retained fake stream transport and 22 earlier runtime test groups plus budget tests",
+    "Peer/Node Shutdown: permanent Draining, admitted-write drain exception, one shortening total deadline and immediate Close upgrade",
+    "local DPR and independent DPA correlation, normal/E fast DPA closure, crossed/duplicate control handling and partial-frame close barriers",
+    "two fixed physical candidate slots, validated identity election, passive EOF/promotion and shared handshake deadline without open replacement",
+    "prefix-read handover and candidate retirement after I/O exit; Shutdown bounded return remains separate from Wait cleanup and completion-port consumption",
+    "12 new shutdown test groups and 7 election groups; full tests/race and 20 repeated root race runs passed",
+    "transport/tcp.New and transport/tls.Client/Server take exclusive established TCP socket ownership; TLS handshake has explicit finite timeout",
+    "shared internal stream cursor uses 20-byte prefix and 256-byte discard scratch, caller-owned frame destination and separate read/write deadline scopes",
+    "first-byte absolute frame deadline carries through body/discard; cancellation update and callback retirement prevent stale deadline contamination",
+    "TCP exact accepted-byte and TLS conservative uncertain-error evidence; idempotent underlying socket Close unblocks I/O without waiting for close_notify",
+    "TLS 1.2/1.3 mutual certificate verification, explicit configuration, failure closes, negotiated state exposed without raw socket access",
+    "fixed 4096-byte logical adapter reserve excludes standard-library TLS/net, certificate/cache and kernel memory; admission rejects insufficient configured reserve before CER",
+    "Node caller deadline forwarding fixed so timer races cannot relabel handshake DeadlineExceeded as Canceled",
+    "17 new real-loopback test groups include Base/S6c flow, cancel/late answer, election and crossed shutdown; all checks plus 20 repeated root race runs passed",
+    "explicit no-cache InboundPolicy, finite terminal Origin allowlist and local destination binding; no adjacency-implies-authority shortcut",
+    "Peer.Receive and Inbound.Message/Info/Done/Respond; separate mutable application view and private request envelope evidence",
+    "independent InboundClasses hard partition plus Node/Peer constraints; reserve request/response workspace before body receive, no unbudgeted rejection queue",
+    "single response preparer and one-time commit, pre-commit validation/cancel retry, post-commit bounded write settlement with actual delivery evidence",
+    "bounded per-peer receive and per-connection answer queues; shared reader/writer and frame-level answer/request alternation, Base control remains independently reserved",
+    "execution expiry, disconnected logical work, old-arrival isolation, Draining responses and Closing suppression; Node.Wait retains preparation/write borrower barriers",
+    "17 new Inbound groups validate S6c success/normal failure/experimental failure/E, Base control isolation, no-cache duplicates, budgets, close/cancel and reconnect over real TCP/TLS",
+    "opt-in compiled BaseErrorFailures and named Inbound.Reject; shared Respond preparation and one-time commit, default policy preserves close/terminate behavior",
+    "bounded trusted Session/Proxy extraction; 3001/3007 unknown command/application, project binding-denial 3002, explicit-local-host-only 3004 and local processing 5012",
+    "5005 automatic placeholders for five top-level Base required leaves; untrusted/duplicate Session or invalid Proxy and unmapped failures close without truncation or repair",
+    "fixed global emergency RX/TX slots charged once in TransportReserve, reserved after prefix before body, separate activity snapshot and bounded answer queues",
+    "prebuilt execution-timeout answer under admitted I/W; timer performs only state/queue operations, manual/automatic decisions and Close share borrower barriers",
+    "settled writes no longer remain on the timer while a losing application preparer retains the charge; invalid/overloaded requests cannot bypass source/destination checks",
+    "19 new Reject test groups over real TCP/TLS; full CGO=0 tests/vet/build, full race, generation and dependency checks, and 20 repeated root race runs passed",
+    "ops4 / Profile slice.4: generated raw-request CanonicalV1 operations and public codec.Canonical; no new wire commands or fields",
+    "length-prefixed exact comparison: ASCII identities, stable top-level independent keys, unknown barriers, ordered repeats/groups, effective flags/padding and fixed SMS VSAI ignore scope",
+    "explicit DuplicatePolicy and independent DuplicateClasses C reservation before business delivery; Node/Origin/E2E lookup including T=0, no peer/command-based identity splitting",
+    "atomic Processing insertion, content/finite-policy conflicts return arrival-specific E/5012 without replacing or refreshing the original record; bounded conflict counter",
+    "one logical Inbound across bounded arrivals, each with own I/W, header and proxy chain; validated immutable result template excludes first-hop Proxy/header",
+    "completed normal/experimental/E results and deadline failure replay, disconnected primary and multi-peer handling, REOPEN requires new actual arrival before replay",
+    "fixed execution/retention deadlines, no LRU eviction, expiry stops reuse while borrowers hold C; close/suppression does not create new business delivery",
+    "replay assembly and full codec validation outside state lock, pre-I/O Closing/deadline recheck, actual write evidence and C/I/W last-reference barriers",
+    "21 new root test groups; full CGO=0 checks and race, 20 repeated root race runs, 10-second Canonical fuzz with 668219 executions, generator/dependency audits passed"
+  ],
+  "requirements": [
+    {
+      "id": "SPEC-SCOPE-01",
+      "status": "partial",
+      "evidence": [
+        "architecture_test.go",
+        "go.mod",
+        "runtime_test.go",
+        "transport/tcp/tcp.go",
+        "transport/tls/tls.go",
+        "transport_integration_test.go",
+        "inbound.go",
+        "inbound_test.go",
+        "reject.go",
+        "reject_test.go",
+        "spec/batch-07.md",
+        "duplicate.go",
+        "duplicate_test.go",
+        "wire/canonical.go",
+        "spec/batch-08.md"
+      ],
+      "remaining": "纯Go/无持久化TCP/TLS、有限请求规范化/Node缓存/多Arrival已实现；完整四应用、SCTP和发布余量未完成"
+    },
+    {
+      "id": "SPEC-SCOPE-02",
+      "status": "partial",
+      "evidence": [
+        "spec/README.md",
+        "spec/batch-03.md",
+        "spec/batch-04.md",
+        "spec/batch-05.md",
+        "spec/batch-06.md",
+        "reject.go",
+        "reject_test.go",
+        "spec/batch-07.md",
+        "duplicate.go",
+        "duplicate_test.go",
+        "wire/canonical.go",
+        "spec/batch-08.md"
+      ],
+      "remaining": "显式NoCache或DuplicatePolicy、Node内存去重/保留期限与业务幂等/重启边界已声明；不能为混用NoCache的部署声称全接收域去重"
+    },
+    {
+      "id": "SPEC-PROFILE-01",
+      "status": "partial",
+      "evidence": [
+        "spec/base.json",
+        "spec/s6c.json",
+        "schema/schema_test.go",
+        "duplicate.go",
+        "duplicate_test.go",
+        "wire/canonical.go",
+        "spec/batch-08.md"
+      ],
+      "remaining": "ops4/slice.4增加Canonical能力与指纹；完整应用定义、来源依赖锁及部署/角色语义指纹仍未完成"
+    },
+    {
+      "id": "SPEC-PROFILE-02",
+      "status": "partial",
+      "evidence": [
+        "spec/README.md",
+        "interop/README.md"
+      ],
+      "remaining": "raw与语义、旧库差异和未支持分支已区分；完整Profile能力报告待实施"
+    },
+    {
+      "id": "SPEC-GEN-01",
+      "status": "partial",
+      "evidence": [
+        "internal/codegen/generate_test.go",
+        "internal/codegen/envelope.go",
+        "architecture_test.go",
+        "duplicate.go",
+        "duplicate_test.go",
+        "wire/canonical.go",
+        "spec/batch-08.md"
+      ],
+      "remaining": "生成器输出Canonical规则，既有生成一致性/外部消费者/导入DAG通过；完整依赖和差异工具尚未实现"
+    },
+    {
+      "id": "SPEC-CODEC-01",
+      "status": "partial",
+      "evidence": [
+        "codec/codec_test.go",
+        "codec/envelope_test.go",
+        "wire/wire_test.go",
+        "wire/diagnostic.go",
+        "duplicate.go",
+        "duplicate_test.go",
+        "wire/canonical.go",
+        "spec/batch-08.md"
+      ],
+      "remaining": "原始request CanonicalV1及定向/fuzz覆盖已加入；其他应用、3006和未实现的E扩展仍待实施"
+    },
+    {
+      "id": "SPEC-OWN-01",
+      "status": "partial",
+      "evidence": [
+        "runtime_test.go",
+        "codec/envelope_test.go",
+        "internal/codecengine/association_test.go",
+        "handshake.go",
+        "shutdown_test.go",
+        "election_test.go",
+        "internal/streamtransport/stream.go",
+        "transport_integration_test.go",
+        "inbound.go",
+        "inbound_test.go",
+        "reject.go",
+        "reject_test.go",
+        "spec/batch-07.md",
+        "duplicate.go",
+        "duplicate_test.go",
+        "wire/canonical.go",
+        "spec/batch-08.md"
+      ],
+      "remaining": "原始规范内容/不可变结果模板、逐Arrival包络及I/W/C借用已验证；完整报告、多attempt及SCTP仍待验收"
+    },
+    {
+      "id": "SPEC-VALID-01",
+      "status": "partial",
+      "evidence": [
+        "runtime_test.go",
+        "codec/envelope_test.go",
+        "inbound.go",
+        "inbound_test.go",
+        "reject.go",
+        "reject_test.go",
+        "spec/batch-07.md",
+        "duplicate.go",
+        "duplicate_test.go",
+        "wire/canonical.go",
+        "spec/batch-08.md"
+      ],
+      "remaining": "静态/绑定/关联与现有子集Canonical已接通；NeedsApplication/具名Context/完整报告及四应用余量未完成"
+    },
+    {
+      "id": "SPEC-RESULT-01",
+      "status": "partial",
+      "evidence": [
+        "codec/envelope_test.go",
+        "app/s6c/rules.go",
+        "base/error.go",
+        "inbound_test.go"
+      ],
+      "remaining": "SRA 2001、10415/5001、选定普通失败及独立E在真实Inbound/Respond链路验证；其余四应用分支仍未完成"
+    },
+    {
+      "id": "SPEC-ERROR-01",
+      "status": "partial",
+      "evidence": [
+        "runtime_test.go",
+        "codec/envelope_test.go",
+        "base/error.go",
+        "inbound.go",
+        "spec/batch-06.md",
+        "inbound_test.go",
+        "reject.go",
+        "reject_test.go",
+        "spec/batch-07.md",
+        "duplicate.go",
+        "duplicate_test.go",
+        "wire/canonical.go",
+        "spec/batch-08.md"
+      ],
+      "remaining": "有限Reject基础映射、固定超时及DuplicateConflict的E/5012已实现；完整深层/实例诊断和应用专用映射未完成"
+    },
+    {
+      "id": "SPEC-APP-01",
+      "status": "partial",
+      "evidence": [
+        "runtime_test.go",
+        "codec/envelope_test.go",
+        "inbound_test.go"
+      ],
+      "remaining": "普通SRR/SRA出站及入站应答在真实TCP/TLS成对运行；完整S6c及Sh/SGd/Gdd/Ro仍未实现"
+    },
+    {
+      "id": "SPEC-BIND-01",
+      "status": "partial",
+      "remaining": "ExactOrigins及本地目的失败可按显式策略3002；完整DRA Binding/TrustedRelayRealm许可、别名及Context未完成",
+      "evidence": [
+        "runtime_test.go",
+        "config.go",
+        "internal/codegen/envelope.go",
+        "inbound.go",
+        "inbound_test.go",
+        "reject.go",
+        "reject_test.go",
+        "spec/batch-07.md"
+      ]
+    },
+    {
+      "id": "SPEC-EXCHANGE-01",
+      "status": "partial",
+      "remaining": "SingleAttempt真实TCP/TLS取消/晚答/关闭及写入证据已验证；Route/failover/显式重传及完整attempt报告未实现",
+      "evidence": [
+        "exchange.go",
+        "completion.go",
+        "reader.go",
+        "runtime_test.go",
+        "shutdown_test.go",
+        "transport_integration_test.go"
+      ]
+    },
+    {
+      "id": "SPEC-REPLAY-01",
+      "status": "planned",
+      "remaining": "未由本批关闭；沿doc/diameterkit-specification.md对应条款及原实施阶段"
+    },
+    {
+      "id": "SPEC-EVIDENCE-01",
+      "status": "partial",
+      "remaining": "逻辑Committed与首Arrival字节证据分离，其他实际到达各自重答；仍无完整逐Arrival报告/多attempt摘要或业务成功保证",
+      "evidence": [
+        "result.go",
+        "exchange.go",
+        "runtime_test.go",
+        "shutdown_test.go",
+        "internal/streamtransport/stream.go",
+        "transport_integration_test.go",
+        "inbound.go",
+        "inbound_test.go",
+        "reject.go",
+        "reject_test.go",
+        "spec/batch-07.md",
+        "duplicate.go",
+        "duplicate_test.go",
+        "wire/canonical.go",
+        "spec/batch-08.md"
+      ]
+    },
+    {
+      "id": "SPEC-INBOUND-01",
+      "status": "partial",
+      "remaining": "显式NoCache或有限缓存模式，Receive/Respond/Reject、唯一提交及多Arrival重答已实现；完整元信息、NeedsApplication/Check、错误诊断与四应用余量未完成",
+      "evidence": [
+        "inbound.go",
+        "config.go",
+        "reader.go",
+        "writer.go",
+        "inbound_test.go",
+        "spec/batch-06.md",
+        "reject.go",
+        "reject_test.go",
+        "spec/batch-07.md",
+        "duplicate.go",
+        "duplicate_test.go",
+        "wire/canonical.go",
+        "spec/batch-08.md"
+      ]
+    },
+    {
+      "id": "SPEC-DUP-01",
+      "status": "partial",
+      "remaining": "现有子集Canonical、精确内容/有限策略比较、原子C接纳、有限Processing/Completed/Suppressed与固定保留期限、多Arrival重答已验证；完整角色/上下文指纹、四应用规则、压力/堆及独立对端验收仍未完成",
+      "evidence": [
+        "duplicate.go",
+        "duplicate_test.go",
+        "wire/canonical.go",
+        "spec/batch-08.md"
+      ]
+    },
+    {
+      "id": "SPEC-PEER-01",
+      "status": "partial",
+      "remaining": "握手/两候选选举/交叉Shutdown在真实TCP/TLS上运行，修复握手截止分类竞态；Dialer/Wait-Conn-Ack、Maintain及完整事件表未完成",
+      "evidence": [
+        "peer.go",
+        "timers.go",
+        "runtime_test.go",
+        "handshake.go",
+        "shutdown.go",
+        "election_test.go",
+        "shutdown_test.go",
+        "transport_integration_test.go"
+      ]
+    },
+    {
+      "id": "SPEC-CLOSE-01",
+      "status": "partial",
+      "remaining": "缓存与所有Arrival复用关闭/期限门、重连代隔离及C/I/W借用屏障，重答组装后复查Closing；完整报告、SCTP及压力验证未完成",
+      "evidence": [
+        "node.go",
+        "completion.go",
+        "writer.go",
+        "runtime_test.go",
+        "shutdown.go",
+        "shutdown_test.go",
+        "election_test.go",
+        "transport_integration_test.go",
+        "tls_integration_test.go",
+        "inbound_test.go",
+        "inbound.go",
+        "reject.go",
+        "reject_test.go",
+        "spec/batch-07.md",
+        "duplicate.go",
+        "duplicate_test.go",
+        "wire/canonical.go",
+        "spec/batch-08.md"
+      ]
+    },
+    {
+      "id": "SPEC-ID-01",
+      "status": "partial",
+      "remaining": "BootID/单调序列、HBH控制余量、E2E半区及独立DPR关联已测试；自定义源/guard回绕/NewSessionID/恢复号域未实施",
+      "evidence": [
+        "node.go",
+        "peer.go",
+        "runtime_test.go",
+        "shutdown_test.go"
+      ]
+    },
+    {
+      "id": "SPEC-BUDGET-01",
+      "status": "partial",
+      "remaining": "独立C分区和每Arrival I/W、Canonical scratch、无提前淘汰/最后引用归还已验证；最小I/W拆分/完整转移、多attempt、DRR和堆/压力证据未完成",
+      "evidence": [
+        "internal/budget/budget_test.go",
+        "node.go",
+        "exchange.go",
+        "runtime_test.go",
+        "handshake.go",
+        "shutdown_test.go",
+        "election_test.go",
+        "transport/tcp/tcp.go",
+        "transport/tls/tls.go",
+        "spec/batch-05.md",
+        "transport_integration_test.go",
+        "inbound.go",
+        "inbound_test.go",
+        "reject.go",
+        "reject_test.go",
+        "spec/batch-07.md",
+        "duplicate.go",
+        "duplicate_test.go",
+        "wire/canonical.go",
+        "spec/batch-08.md"
+      ]
+    },
+    {
+      "id": "SPEC-TRANSPORT-01",
+      "status": "partial",
+      "remaining": "TCP/TLS双向业务、prefix预算和取消关闭竞态已验证；接入管理、SCTP通知续调/U1-U5、跨平台和压力验证仍未完成",
+      "evidence": [
+        "transport/transport.go",
+        "internal/testkit/transport.go",
+        "runtime_test.go",
+        "shutdown_test.go",
+        "election_test.go",
+        "internal/streamtransport/stream.go",
+        "transport/tcp/tcp.go",
+        "transport/tls/tls.go",
+        "transport_integration_test.go",
+        "tls_integration_test.go",
+        "inbound_test.go"
+      ]
+    },
+    {
+      "id": "SPEC-SECURITY-01",
+      "status": "partial",
+      "remaining": "TLS 1.2/1.3 mTLS/验证失败/有限握手已测；部署证书与Diameter身份映射由应用显式负责，完整安全/资源/敏感数据验收仍未完成",
+      "evidence": [
+        "transport/tls/tls.go",
+        "tls_integration_test.go",
+        "spec/batch-05.md"
+      ]
+    },
+    {
+      "id": "SPEC-RELEASE-01",
+      "status": "planned",
+      "remaining": "未由本批关闭；沿doc/diameterkit-specification.md对应条款及原实施阶段"
+    }
+  ],
+  "checks": [
+    {
+      "name": "pure_go_tests",
+      "command": "CGO_ENABLED=0 GOWORK=off GOTOOLCHAIN=local go test ./... -count=1 -timeout=120s",
+      "status": "passed",
+      "covers": [
+        "21 new canonical/cache/replay groups plus all earlier tests over TCP/TLS; immutable results, original envelopes, independent C/I/W budgets and borrower/closing gates",
+        "budget atomicity/overflow/split/transfer tests",
+        "previous codec/negative/ownership tests",
+        "import DAG, external generated consumer and generated output freshness"
+      ]
+    },
+    {
+      "name": "vet",
+      "command": "CGO_ENABLED=0 GOWORK=off GOTOOLCHAIN=local go vet ./...",
+      "status": "passed"
+    },
+    {
+      "name": "build",
+      "command": "CGO_ENABLED=0 GOWORK=off GOTOOLCHAIN=local go build ./...",
+      "status": "passed"
+    },
+    {
+      "name": "race",
+      "command": "CGO_ENABLED=1 GOWORK=off GOTOOLCHAIN=local go test -race ./... -count=1 -timeout=120s",
+      "status": "passed",
+      "note": "race toolchain only; release remains CGO=0"
+    },
+    {
+      "name": "generator_check",
+      "commands": [
+        "go run ./cmd/diameter-schema -in spec/base.json -out base/zz_generated_messages.go -check",
+        "go run ./cmd/diameter-schema -in spec/s6c.json -out app/s6c/zz_generated_messages.go -check"
+      ],
+      "status": "passed"
+    },
+    {
+      "name": "dependency_audit",
+      "command": "CGO_ENABLED=0 GOWORK=off GOTOOLCHAIN=local go list -deps -json ./...",
+      "status": "passed",
+      "packages": 194,
+      "assertions": [
+        "no CgoFiles",
+        "no external Module paths"
+      ]
+    },
+    {
+      "name": "offline_example",
+      "command": "CGO_ENABLED=0 GOWORK=off GOTOOLCHAIN=local go run ./examples/codec",
+      "status": "passed",
+      "output": "SRR=196 bytes SRA=132 bytes E=104 bytes; offline association verified"
+    },
+    {
+      "name": "duplicate_tcp_tls_runtime_race_repeat",
+      "command": "CGO_ENABLED=1 GOWORK=off GOTOOLCHAIN=local go test -race . -count=20 -timeout=240s",
+      "status": "passed",
+      "note": "All root tests, including 21 new Canonical/duplicate groups and earlier runtime/transport groups, repeated 20 times; 86.175 seconds reported. Real TCP/TLS, concurrent cross-peer arrivals, assembly/write return barriers, retention and reconnect tests."
+    },
+    {
+      "name": "evidence_consistency",
+      "status": "passed",
+      "covers": [
+        "24 stable SPEC IDs",
+        "current source and fixture hashes",
+        "repository-local documentation links (historical sibling-repo citations excluded)",
+        "historical ledgers retained",
+        "gofmt and git diff --check"
+      ]
+    },
+    {
+      "name": "canonical_fuzz",
+      "command": "CGO_ENABLED=0 GOWORK=off GOTOOLCHAIN=local go test ./codec -run '^$' -fuzz '^FuzzCanonical$' -fuzztime=10s -parallel=2",
+      "status": "passed",
+      "executions": 668219,
+      "note": "2 fixed request seeds, bounded validation/canonical determinism, output size and HBH/T invariance; 10.146 seconds reported. Short development fuzz, not exhaustive proof."
+    }
+  ],
+  "source_snapshot": [
+    {
+      "path": "app/s6c/rules.go",
+      "sha256": "bee3e83741916f06b1079f13730a0e2a1d8cd90c8040955c6d7304f5adc2bb8b"
+    },
+    {
+      "path": "app/s6c/zz_generated_messages.go",
+      "sha256": "0f6f92cd614035c6590c9874ca7f096c4b4af4aca57ae022bdc32f8d7098ddbb"
+    },
+    {
+      "path": "architecture_test.go",
+      "sha256": "7076d369db43ef1bf71a9e7a67d59dd69ca9ffa97ecdc7f6a1a3981761991c91"
+    },
+    {
+      "path": "avp/value.go",
+      "sha256": "4e3f2825e9cda6878881641a4f607c83e7b362615f727b3f1a645be4cec7f690"
+    },
+    {
+      "path": "avp/value_test.go",
+      "sha256": "93217c3472003e5bf9800b1d8083dc746d91238922ecc7920de0ae4d10919a83"
+    },
+    {
+      "path": "base/common.go",
+      "sha256": "60c3fff1814d5cfa87f1aebe1e9554caa7504f74a817624a679969757c70fd0a"
+    },
+    {
+      "path": "base/error.go",
+      "sha256": "7fca8cadbeea1f3efbd6c33519298e335e96d96a31bc0058949710392fcb6ea1"
+    },
+    {
+      "path": "base/rules.go",
+      "sha256": "d49193622ad0a4acc323f1b8bf878a6c0e565f72c38a0ec104bb6fff0027ba09"
+    },
+    {
+      "path": "base/zz_generated_messages.go",
+      "sha256": "33277825693e0f88aa37885d484591cd3d89db7576758ddbe107226d1fec40f6"
+    },
+    {
+      "path": "cmd/diameter-schema/main.go",
+      "sha256": "b065ae2644eacf183738a87faf0507ed2225e4dfe9d4e871dab82b0e6b349a4c"
+    },
+    {
+      "path": "codec/canonical_test.go",
+      "sha256": "f66dfff4e2799f6b0ed668e7fe5d7fc81aa781d3f7aa701fc83472ab57f60ad1"
+    },
+    {
+      "path": "codec/codec.go",
+      "sha256": "d16b071c8d7128b92222d6a1160c29fc7f13db9d0bcc292392034aacf3c33c96"
+    },
+    {
+      "path": "codec/codec_test.go",
+      "sha256": "4ad6772a151aee0ec9ab6d639f8927f001b12b69b839e93cff16bed52171c529"
+    },
+    {
+      "path": "codec/envelope_test.go",
+      "sha256": "ca0debd8a12210da6e72ec4ac828449e7cd6c6f7cdaf102cebd14a08e4da5d19"
+    },
+    {
+      "path": "completion.go",
+      "sha256": "b5a37a91a7e767a2df7a2b9e205503993e9bb5e707c5417f4b4c0eafbee0c5ac"
+    },
+    {
+      "path": "config.go",
+      "sha256": "cb31d7b7bcc1a538128fd8314355b7c1301aa67d48acaefc9cd4eb3e874b5499"
+    },
+    {
+      "path": "doc.go",
+      "sha256": "9bca980bf41abdc2bb1b3d75f7aac6656013ce9d8663dcc1ac3f29470f7aa7d0"
+    },
+    {
+      "path": "duplicate.go",
+      "sha256": "bc0109065395675e230188b0ca35024356c4461e6ab366945e1650f048f62d76"
+    },
+    {
+      "path": "duplicate_test.go",
+      "sha256": "5096116b6970436f454eeb76395cb42d499a45ba8c700d75cabd27b945e16055"
+    },
+    {
+      "path": "election_test.go",
+      "sha256": "14729e891c1caef72ea7638055392ac42eb2ccd58ca5db541bbd49d502799da6"
+    },
+    {
+      "path": "examples/codec/main.go",
+      "sha256": "6becb5cbac24086a4814c763a52af8b78172ad212f50a0eab8c7876f9b0b070a"
+    },
+    {
+      "path": "exchange.go",
+      "sha256": "d9ea54776a7b8df289794407f347c12b8f7b6da452e371b4e1cc379181bb29ac"
+    },
+    {
+      "path": "go.mod",
+      "sha256": "466a91ef3a2c4c33c755229e35276203b801990b5d1e03e5630c48886afdb1ab"
+    },
+    {
+      "path": "handshake.go",
+      "sha256": "f51d7bcbdc576529d0e6c274a0135565b04a9da553f73eeaa6e264fee7c03de7"
+    },
+    {
+      "path": "inbound.go",
+      "sha256": "69d69104302888dc2264282f07eab17ea539c822009f56de0be3e53d86220c53"
+    },
+    {
+      "path": "inbound_test.go",
+      "sha256": "d3f4c5428e8a16b204cc60c3bf73432b7a70d50c713219ebbb87465b62c0d509"
+    },
+    {
+      "path": "internal/budget/budget.go",
+      "sha256": "f7ba221ce5d60fc9958caf56cd13f1d37b9fceb4af23bb80bf53f11af1a131f8"
+    },
+    {
+      "path": "internal/budget/budget_test.go",
+      "sha256": "03b2d63d5e2ef61d6f7ff61b491d12bd056e4b5a3d99a63bb664e5bde29bbfb9"
+    },
+    {
+      "path": "internal/codecengine/association.go",
+      "sha256": "f30b6eb3448a00779309429b60da5df049b6b846c006823b14a317a0450b3512"
+    },
+    {
+      "path": "internal/codecengine/association_test.go",
+      "sha256": "7908a5f9e8b9ff7e2b4610c1028f7cbf1d1323d2ed3744f7f3a7e83515f85d87"
+    },
+    {
+      "path": "internal/codecengine/canonical.go",
+      "sha256": "c30c9aa707b72bada3a60353d1a0a1accf6f2e82f6f7dc05030ad70d84644379"
+    },
+    {
+      "path": "internal/codecengine/engine.go",
+      "sha256": "8f507bf7128a49afcdc99f9ccfc53a2070bd65355c8b7e825c34e7b69e43b8b5"
+    },
+    {
+      "path": "internal/codecengine/engine_test.go",
+      "sha256": "24a5aee49c738a583873d7c9db26796e921f3be4058ca67e616b5c3d296b7b61"
+    },
+    {
+      "path": "internal/codegen/canonical.go",
+      "sha256": "2b3569d4bca62464ccd1b887df1ea031648eb440136e10f609e4bd7a80e3c553"
+    },
+    {
+      "path": "internal/codegen/envelope.go",
+      "sha256": "fa967a79b4be6ec9db050c9e97cffbdf1bf27976fe9c8e058c171b4548b33a7a"
+    },
+    {
+      "path": "internal/codegen/generate.go",
+      "sha256": "03c3ca8e00d65cac40bb6727f2f1d03732c7ba6a75aabb7206d547b8aafbbb04"
+    },
+    {
+      "path": "internal/codegen/generate_test.go",
+      "sha256": "cb4ead24ab841d9f4b30f749c194d3e84216e59d6a15b2843324473e9e1fae82"
+    },
+    {
+      "path": "internal/contextvalue/value.go",
+      "sha256": "3f321d59f1f4bee3064aee33ae4918ad3ca53af30664c56a3a808a2bf251a874"
+    },
+    {
+      "path": "internal/streamtransport/stream.go",
+      "sha256": "3185d6601901247d5544b7be171662116c51dc0d5934cf268ae9e291f6f9076c"
+    },
+    {
+      "path": "internal/testkit/transport.go",
+      "sha256": "4fb54182270cfa46f43590ef160c2717b0a784ad93beff0bb8d8cd3dc5cef76d"
+    },
+    {
+      "path": "node.go",
+      "sha256": "966a626195f385c879eb990c5dba81e1cd94ecec49554dda913a904094c0f78b"
+    },
+    {
+      "path": "pdu/envelope.go",
+      "sha256": "90984678347abdbcd2fb4a2fea50f554d42849c8e472d1ab8bc65e8da34c4dd8"
+    },
+    {
+      "path": "pdu/message.go",
+      "sha256": "1e973843009472394d0cc366ba4cbcab1a49b9fd3fc4931723f631b232cac737"
+    },
+    {
+      "path": "peer.go",
+      "sha256": "9237b7204c0675ddb5108ad86fc77ea0ebae84fb68e0eaf447471a57a0fc9c96"
+    },
+    {
+      "path": "reader.go",
+      "sha256": "cd3092cb25edb6445e5f50a22310eafbd9b8b1b3268a4387db83290036a5c1a7"
+    },
+    {
+      "path": "reject.go",
+      "sha256": "3dce8f050d057145d160a392e64bf73f8d55d195ce6c3d705e134b7f62bb5409"
+    },
+    {
+      "path": "reject_test.go",
+      "sha256": "3001693bd9c8fba237b27543a5a505875197ed05279a2b4b3f67aa8dfe06c827"
+    },
+    {
+      "path": "result.go",
+      "sha256": "e7cc7252faf173cda95c931a048e05a57e8d81668adcd5c58e9e12f33a862b66"
+    },
+    {
+      "path": "runtime_test.go",
+      "sha256": "734cd4f13b71dbe04b89d290af9b790409b6578139222171b3e7c3f6ed41e748"
+    },
+    {
+      "path": "schema/schema.go",
+      "sha256": "6050b30352d840186a30ab2bd7abd66acb016add077827908bcc6f450e5f9767"
+    },
+    {
+      "path": "schema/schema_test.go",
+      "sha256": "5a255f232608f4ba199e75dd8750ea76ad8b065bf4cd70b0718c1a43c26a5923"
+    },
+    {
+      "path": "shutdown.go",
+      "sha256": "4d6d14c3963b9e9c9d669927a6626423a8f5db72f0a221ce1b556ecad842952b"
+    },
+    {
+      "path": "shutdown_test.go",
+      "sha256": "55ae50151dd0a907a0ae2699edffde5eed2d2ee0f22f4022f3b5870b378239e3"
+    },
+    {
+      "path": "spec/base.json",
+      "sha256": "53f75bfd043f11f1a7e456e46bd754f7d3ce92dd8fa8371c00f6ec79cba22167"
+    },
+    {
+      "path": "spec/s6c.json",
+      "sha256": "eed65107012451821a7508bc962eb18c82a08a55697edab61873504d3e569bb6"
+    },
+    {
+      "path": "testdata/codec/manifest.json",
+      "sha256": "18ddf146753a73cf752d71b548ddf2cbfef65db3e6bd75c925ebb1717b17ff4a"
+    },
+    {
+      "path": "timers.go",
+      "sha256": "4ad69090c37ecd03dd7d010635f4a3014907188e418e97ea86fef4bd00589303"
+    },
+    {
+      "path": "tls_integration_test.go",
+      "sha256": "b4f6aa6f7e3521bcb02460b94ffd3f178dbf3c9e1140f70c48411e86c839ed94"
+    },
+    {
+      "path": "transport/tcp/tcp.go",
+      "sha256": "0152a33d2a7955669703c6c2606c3c6cef18f9cdd2942237c4584d9e4cc722bf"
+    },
+    {
+      "path": "transport/tls/tls.go",
+      "sha256": "eb19f6582beaaef58b25a1adb726a41150701190eba5d5a517b3fde9679e960a"
+    },
+    {
+      "path": "transport/transport.go",
+      "sha256": "f5bda1d94499b937859736367e2efaec1036d51e8d1d33fabf384dff63051ca9"
+    },
+    {
+      "path": "transport_integration_test.go",
+      "sha256": "660c046866151c2fe91deaf2e4a79fd6bcabda75b955e0065d7a0bfd64fc545e"
+    },
+    {
+      "path": "validation/report.go",
+      "sha256": "95d2b244141c47ae6325ea05f7a9ab7c1ceba009ec9d42c5ec8a9bf7dcf85ac6"
+    },
+    {
+      "path": "wire/canonical.go",
+      "sha256": "d2fe0f0e7a197fb66ae19e60d22f6fe56d87e318cd53a5a4556f7c52d3841dba"
+    },
+    {
+      "path": "wire/diagnostic.go",
+      "sha256": "6c85196563772b2cd029d95ae8f613871f598d14d37478a71ffa91add8e70c6d"
+    },
+    {
+      "path": "wire/wire.go",
+      "sha256": "31cc1a5945bc72fd1a2d13e6252ff716be4ea536c21d46f6623bdf553073a909"
+    },
+    {
+      "path": "wire/wire_test.go",
+      "sha256": "1058771c421019049a8bab0df199868b4dd279fd377178e0d02103ea5900f424"
+    },
+    {
+      "path": "writer.go",
+      "sha256": "59586562b642c50be432ba17ec9f6e170ab137f022a5916e941b7ad47718f7f8"
+    }
+  ],
+  "next_batch": [
+    "Bounded Route/multi-attempt outbound recovery for fixed same-terminal paths in the existing Base/S6c slice: original identity, per-attempt answer budget, late-answer correlation and first completion",
+    "Remaining named contexts/reports, complete diagnostic generation, DRR and Dialer/Maintain in their dependent stages",
+    "SCTP upstream U1-U5 and adapter separately; full four applications including Ro/compat/RO-06 remain v1 obligations"
+  ],
+  "deferred_from_this_batch": [
+    "Dialer/Wait-Conn-Ack, automatic Maintain and remaining full Peer event table",
+    "SCTP notification continuation, upstream U1-U5 acceptance and adapter; full transport/platform pressure evidence",
+    "full automatic diagnostic generation and reports, NeedsApplication/Check, full four-application canonical rules, role/context fingerprints and complete arrival reports",
+    "Route failover, explicit retransmit, custom identifier source/guard rollover/NewSessionID",
+    "full contexts/reports, definition dependency locks and deployment fingerprints; minimum I/W splits and full multi-attempt transfer",
+    "Sh, SGd/Gdd, full S6c, Ro/compat/RO-06 (still v1)",
+    "full VECTOR-01, DRA/HSS/OCS network interoperability, memory/performance and v1 release",
+    "full class/byte DRR fairness; current bounded application answer/request alternation is only a development slice"
+  ],
+  "history": [
+    "spec/history/batch-01.json",
+    "spec/history/batch-02.json",
+    "spec/history/batch-03.json",
+    "spec/history/batch-04.json",
+    "spec/history/batch-05.json",
+    "spec/history/batch-06.json",
+    "spec/history/batch-07.json"
+  ],
+  "batch_contract": "spec/batch-08.md",
+  "prior_interop_evidence": [
+    "interop/evidence/2026-11-06-base-s6c.json",
+    "interop/evidence/2026-11-06-envelope.json"
+  ],
+  "interop_note": "Batch 08 validates real TCP/TLS cross-peer duplicate/replay and reconnection flows with local in-memory certificates and controlled callback/write-return barriers. Both Diameter endpoints use this codec; earlier independent offline evidence remains historical, no new independent network DRA/HSS/OCS claim.",
+  "historical_checks_note": "Earlier decode/association fuzz and independent offline evidence remain historical; this batch adds only the explicitly recorded Canonical fuzz run."
+}

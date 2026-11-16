@@ -1,0 +1,594 @@
+{
+  "checks": [
+    {
+      "name": "cli_standard",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "run",
+        "-mod=readonly",
+        "."
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "c4b61d49dde074ac9151e07b8b90750d676dbb04e5e0918a3f4f7f7bdbbcea8f"
+    },
+    {
+      "name": "cli_legacy",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "run",
+        "-mod=readonly",
+        ".",
+        "-legacy-advertisement"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "c4b61d49dde074ac9151e07b8b90750d676dbb04e5e0918a3f4f7f7bdbbcea8f"
+    },
+    {
+      "name": "cli_failure",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "run",
+        "-mod=readonly",
+        ".",
+        "-result",
+        "5012"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "a46ae6d11f800892a45c30bbd0f1a45f3b881dee031a9d382ae96af7a822ccc1"
+    },
+    {
+      "name": "cli_error",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "run",
+        "-mod=readonly",
+        ".",
+        "-legacy-advertisement",
+        "-result",
+        "3004"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "ed79cb677ed63ddeecdc4784e69e6ae30ac4d2b43cf66b0ba7fcc48b7ec85071"
+    },
+    {
+      "name": "cli_invalid_result",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "run",
+        "-mod=readonly",
+        ".",
+        "-result",
+        "2002"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "status": "passed",
+      "output_sha256": "b753c777a617de682def287ef9eb6a9a1a116e26f1bc4dc4194473d24b2ef8bc"
+    },
+    {
+      "name": "consumer_cgo0",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "test",
+        "-mod=readonly",
+        "-json",
+        "-count=1",
+        "-timeout=2m",
+        "./..."
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "8bca9adf022f56d2648b656668d8fb38a79c7ce3be10ca97f9a066c742bd16bc",
+      "test_subtest_seed_passes": 23,
+      "failed_tests": 0,
+      "skipped_tests": 0
+    },
+    {
+      "name": "consumer_race",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "test",
+        "-mod=readonly",
+        "-race",
+        "-json",
+        "-count=1",
+        "-timeout=2m",
+        "./..."
+      ],
+      "CGO_ENABLED": "1",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "8964d2004b6ced1ed6510651e10f11b723d47f75c8395fc5b4494c5d64fd7809",
+      "test_subtest_seed_passes": 23,
+      "failed_tests": 0,
+      "skipped_tests": 0
+    },
+    {
+      "name": "consumer_verify",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "mod",
+        "verify"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "consumer_modules",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "f8190393bb3a6523e42a6675c9a6ef9dcb09870d2eab6f9a69ec5865f87ae488"
+    },
+    {
+      "name": "consumer_package",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "list",
+        "-json",
+        "."
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "81b2a347fa9d512630a9a38c2a93058550f1ed9b14b94dcd24ab7ae773cf3a32"
+    },
+    {
+      "name": "doc_diameterkit_NodeConfig",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "NodeConfig"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "bb276e838c59ad9e9a09cb6a5fbedf038a79a739b1b74d2351320bc000e679e2"
+    },
+    {
+      "name": "doc_diameterkit_PeerConfig",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "PeerConfig"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "78dd2872390967ed79c5ce1fc9269374cda82fa5663b954e87282e4922b0c8e0"
+    },
+    {
+      "name": "doc_diameterkit_ApplicationBinding",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "ApplicationBinding"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "3e9971fd10aed1446d2bed650d638c2b70cd41f08b0eadf473b12f3038283e20"
+    },
+    {
+      "name": "doc_diameterkit_SCAP1Advertisement",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "SCAP1Advertisement"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "36bd1f7fe4e0fc4e71bdb22f05e19a573958b14f7aaea3611f8bf55dc6bfee3d"
+    },
+    {
+      "name": "doc_diameterkit_ResourcePlan",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "ResourcePlan"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "a18f1e30d26213043e8a9b8b83fb1f4de36a1f188675aeccc078fe17e4448e59"
+    },
+    {
+      "name": "doc_diameterkit_ResourceSnapshot",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "ResourceSnapshot"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "3769ae4d51435f2556bc63e20eac2d701a07b0e399f87a982713c54f9e4f6eea"
+    },
+    {
+      "name": "doc_diameterkit_Node_NewSessionID",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "Node.NewSessionID"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "a90f4fb2c6b9e175b4462c1cb010440343733c2482ef7b904d98773bd7d24c36"
+    },
+    {
+      "name": "doc_diameterkit_Node_Serve",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "Node.Serve"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "4a9a3f7593cff5b51a57fba9a67254db717a0f44e6e4b6d61784868ee0337536"
+    },
+    {
+      "name": "doc_diameterkit_Node_Dial",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "Node.Dial"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "7bfd951986d1a77f9791735455d95271ac10a381daf5ed1d276421e4d3d18b18"
+    },
+    {
+      "name": "doc_diameterkit_Peer_Submit",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "Peer.Submit"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "d1a1b3e8208a1ad8146110a2909f48557341021e902bb030b521343caeb277e0"
+    },
+    {
+      "name": "doc_diameterkit_Peer_Receive",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "Peer.Receive"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "c0ac7c3875019909385cd8ba640fcb5bc786ff893922c403e0eec1b2fbfbad73"
+    },
+    {
+      "name": "doc_diameterkit_Inbound_Respond",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "Inbound.Respond"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "0b8cd0c63e3072d4891cd5bd72057b363285a67105f58caf1bff9441ba8d6f76"
+    },
+    {
+      "name": "doc_diameterkit_CompletionPort_Receive",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "CompletionPort.Receive"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "8c1e6a006cc8af805436355b126601114d5092f1ac4dbf0be838fd76f3e729d1"
+    },
+    {
+      "name": "doc_diameterkit_CompletionPort_Close",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "CompletionPort.Close"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "a11f873ac409a6e64ec246243d0a76b58e6f6a04a2495a7e364c761d7953f3bd"
+    },
+    {
+      "name": "doc_diameterkit_Node_Cancel",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "Node.Cancel"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "ea2bc84b6d27b8cfe0ba607671e529c2b74b02b1d500c3f0bd30e31f6a69db92"
+    },
+    {
+      "name": "doc_diameterkit_Node_Shutdown",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "Node.Shutdown"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "320d2739505c53a4d4158f21d6f61c909b153a3e9581fbf77d37dfe5f7abdb22"
+    },
+    {
+      "name": "doc_diameterkit_Node_Wait",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit",
+        "Node.Wait"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "2bb28a1590c92e9d4d6e1123b084a36b1c91074488a18689d83aabe859d9b090"
+    },
+    {
+      "name": "doc_scap1_EventInput",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit/compat/scap1",
+        "EventInput"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "1c8a883c6477e0aedffc1ba8c609f0649f5e9781e8e05defd03f77f2e3f2d359"
+    },
+    {
+      "name": "doc_scap1_NewEvent",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit/compat/scap1",
+        "NewEvent"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "2e736129ac63e32b59ac887255b3456546af3ef9cefbee7f9ffa7a92e4293ee8"
+    },
+    {
+      "name": "doc_scap1_ACR",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit/compat/scap1",
+        "ACR"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "a43b562de246024acb0aa1740b4b13653ae1ec69566ee0926c615ab4b95f3ec7"
+    },
+    {
+      "name": "doc_scap1_ACA",
+      "command": [
+        "go",
+        "-C",
+        "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+        "doc",
+        "github.com/skill215/diameterkit/compat/scap1",
+        "ACA"
+      ],
+      "CGO_ENABLED": "0",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "status": "passed",
+      "output_sha256": "c4f42271750807fd940d5a55bde3c0adab6842c0128d9d4f778bbbdfd1376eb6"
+    }
+  ],
+  "modules": [
+    {
+      "Path": "example.com/diameterkit-scap1-acceptance",
+      "Main": true,
+      "Dir": "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer",
+      "GoMod": "/home/skill/workspace/git/diameterkit/.cache/b79-api-consumer/go.mod",
+      "GoVersion": "1.26.0"
+    },
+    {
+      "Path": "github.com/skill215/diameterkit",
+      "Version": "v0.0.0-diameterkit.batch79",
+      "Time": "2026-11-10T00:00:00Z",
+      "Dir": "/home/skill/workspace/git/diameterkit/.cache/b79-final-module-cache/github.com/skill215/diameterkit@v0.0.0-diameterkit.batch79",
+      "GoMod": "/home/skill/workspace/git/diameterkit/.cache/b79-final-module-cache/cache/download/github.com/skill215/diameterkit/@v/v0.0.0-diameterkit.batch79.mod",
+      "GoVersion": "1.26.0",
+      "Sum": "h1:ptcLKRMQsNpyoTy/Wy+fZaAuQTVUsR4PWtOZPszXVIY=",
+      "GoModSum": "h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk="
+    }
+  ],
+  "source_files": [
+    {
+      "path": "examples/scap1/config.go",
+      "sha256": "bf51a4341bdd6d62d90cee2e984e4f24e95cf0a27eaa83a779a7db7fbdaa04d0"
+    },
+    {
+      "path": "examples/scap1/main.go",
+      "sha256": "bd026b13b6f6fef0403225f88f72c5a4fb50863eb0e1e573136c7fa0c51a8cf9"
+    },
+    {
+      "path": "examples/scap1/main_test.go",
+      "sha256": "31c75beede7056f70090ed6119af5672045316f7d94f6eca48782b4da2c5f368"
+    }
+  ],
+  "imports": [
+    "context",
+    "errors",
+    "flag",
+    "fmt",
+    "github.com/skill215/diameterkit",
+    "github.com/skill215/diameterkit/avp",
+    "github.com/skill215/diameterkit/base",
+    "github.com/skill215/diameterkit/compat/scap1",
+    "github.com/skill215/diameterkit/pdu",
+    "github.com/skill215/diameterkit/schema",
+    "github.com/skill215/diameterkit/transport/tcp",
+    "github.com/skill215/diameterkit/wire",
+    "io",
+    "net",
+    "os",
+    "time"
+  ],
+  "batch": 79,
+  "date": "2026-11-10",
+  "scope": "SCAP1 example public API consumption only; not whole-library API freeze or independent protocol interoperability",
+  "consumer_module": "example.com/diameterkit-scap1-acceptance",
+  "module_isolation": "GOWORK=off, GOPROXY=off, no replace; only core candidate dependency; resolved module Dir verified in new b79 module cache",
+  "public_api_queries": 21,
+  "example_test_subtest_passes_per_suite": 23,
+  "contract_tests": [
+    "Both endpoints send ACR and respond over real TCP; standard/legacy modes and ACA2001/5012/E3004",
+    "Strict/local capability, each-direction binding, terminal and resource configuration failures",
+    "Submit context admission only; Receive context wait only; explicit Node.Cancel with late-answer once completion",
+    "Completion slot and independent byte budget rejection without remote business delivery",
+    "Invalid/canceled response preparation and mutable view isolation",
+    "Node Close/Wait leave unconsumed completion charge; port.Close finally releases fixed and completion budget"
+  ],
+  "limits": [
+    "Two endpoints in one process, not a long-running charging service or real target OCS",
+    "No TLS/SCTP transport claim in this new example",
+    "No private ACA definitions, SCAP1 recovery or accounting persistence",
+    "Offline candidate only, not public installability proof",
+    "Go doc checks cover the twenty-one selected symbols; not a complete exported API snapshot"
+  ]
+}

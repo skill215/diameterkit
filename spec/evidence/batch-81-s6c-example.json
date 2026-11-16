@@ -1,0 +1,261 @@
+{
+  "batch": 81,
+  "date": "2026-11-10",
+  "scope": "S6c GMSC/HSS SRR/SRA public example; pure Go/no persistence",
+  "toolchain": "go1.26.10 linux/amd64",
+  "kernel": "6.6.114.1-microsoft-standard-WSL2",
+  "definitions": {
+    "generated": 11,
+    "changed": [],
+    "unchanged": 11,
+    "delegated_profiles": 1,
+    "total_profiles": 12,
+    "request_answer_pairs_including_overlapping_bindings": 20,
+    "generator": 13,
+    "operations": 8
+  },
+  "corpus": {
+    "wire": 1250,
+    "xml": 17,
+    "new_wire": 0,
+    "prior_wire_unchanged": 1250
+  },
+  "implemented": [
+    "Public-only real TCP GMSC SRR/HSS SRA with explicit directional command policies,capabilities,fixed terminal,identity and result namespaces",
+    "Explicit synthetic IMSI/MME success data; independent base5012,experimental10415/5001 and E3004 with original-request association",
+    "Invalid request/answer precommit checks including Additional original permission;finite slots/bytes,context,cancel,late answer and cleanup",
+    "Independent no-replace consumer module runs four CLI branches,invalid result,test suites and24 installed API doc queries"
+  ],
+  "checks": [
+    {
+      "name": "s6c_public_api_race20",
+      "command": "go test ./examples/s6c -race -json -run ^TestS6cPublic -count=20 -timeout=5m",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 500,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "7fb4be84d71a05104b91e93a2c69063dc017a8ddc14394bba661bd92de015830",
+      "test_names": [
+        "TestS6cPublicBudgetLifetimeCancelAndClose",
+        "TestS6cPublicCanceledAndInvalidRun",
+        "TestS6cPublicConfiguration",
+        "TestS6cPublicConfiguration/insufficient_transport",
+        "TestS6cPublicConfiguration/wrong_binding",
+        "TestS6cPublicExample",
+        "TestS6cPublicExample/2001",
+        "TestS6cPublicExample/3004",
+        "TestS6cPublicExample/5001",
+        "TestS6cPublicExample/5012",
+        "TestS6cPublicMissingNegotiatedApplication",
+        "TestS6cPublicMissingNegotiatedApplication/0",
+        "TestS6cPublicMissingNegotiatedApplication/1",
+        "TestS6cPublicRequestBoundary",
+        "TestS6cPublicRequestBoundary/GPRS_without_SMEA",
+        "TestS6cPublicRequestBoundary/missing_SC",
+        "TestS6cPublicRequestBoundary/missing_identity",
+        "TestS6cPublicRequestBoundary/wrong_host",
+        "TestS6cPublicRequestBoundary/wrong_realm",
+        "TestS6cPublicResponseRules",
+        "TestS6cPublicResponseRules/Additional_without_original_permission",
+        "TestS6cPublicResponseRules/failure_with_routing_data",
+        "TestS6cPublicResponseRules/incomplete_MME_group",
+        "TestS6cPublicResponseRules/missing_IMSI",
+        "TestS6cPublicResponseRules/mixed_result_namespaces"
+      ]
+    },
+    {
+      "name": "core_cgo0",
+      "command": "go test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 3363,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "fe5a70ac37839981b6fc2e4911b8f74a1e02b9014900ff3fff6a48be7fa42b28"
+    },
+    {
+      "name": "core_race",
+      "command": "go test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 3363,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "c99b5a8c8cb86e15a35c76668cd0fe583e6cb01f4f60a0f4cc2db6ab6691d408"
+    },
+    {
+      "name": "adapter_cgo0",
+      "command": "go -C adapters/sctp test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 113,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "4b9eadf51e0117531bc085d4bcd0637efdfa3890940a84307deb3bee590f1ace"
+    },
+    {
+      "name": "adapter_race",
+      "command": "go -C adapters/sctp test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 113,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "6b72438f08e6b20c3d6e420527ebd1af1bf79ad4c644b417323355aed675bb4e"
+    },
+    {
+      "name": "core_vet",
+      "command": "go vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_build",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_verify",
+      "command": "go mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "core_cross_windows_amd64",
+      "command": "go build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_386",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_arm64",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_deps",
+      "command": "go list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "8a653328c65a6bcab6e0929c6b29ec6c7c7011cde53fed8cb356c4052b8bdc1d",
+      "packages": 213,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit"
+      ]
+    },
+    {
+      "name": "adapter_vet",
+      "command": "go -C adapters/sctp vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_build",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_verify",
+      "command": "go -C adapters/sctp mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "adapter_cross_windows_amd64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_386",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_arm64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_deps",
+      "command": "go -C adapters/sctp list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "59ed984290c0b6c5d2e4cf892d93576b324ac79cee4432b3331bc97ddcfb16e6",
+      "packages": 78,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit",
+        "github.com/skill215/diameterkit/adapters/sctp",
+        "github.com/skill215/sctp"
+      ]
+    },
+    {
+      "name": "selected_modules",
+      "command": "go -C adapters/sctp list -m -json all",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "f363ed1171c414bcb7858bd47598fb470686cd66e929f0766783e1a4326c8e75"
+    }
+  ],
+  "public_api_evidence": "spec/evidence/batch-81-s6c-public-api.json",
+  "core_dependency": {
+    "version": "v0.0.0-diameterkit.batch81",
+    "sum": "h1:8BkxYncpZ8qpiJ9WsXZEDzYxTmwo3jT2LL++A2jMNDE=",
+    "files": 132,
+    "zip_sha256": "84e2918ba0adcbe17f633c5ee1bead8fef50c977501810949c450d88f46e4042",
+    "manifest": "spec/evidence/batch-81-core-candidate-files.json",
+    "public_version": false
+  },
+  "module_isolation": "New batch81 module cache; GOWORKoff/no replace; offline core candidate and identical formal SCTPv0.8.0 archive",
+  "existing_library_behavior_changed": false,
+  "new_example_sources": [
+    "examples/s6c/config.go",
+    "examples/s6c/main.go"
+  ],
+  "production_unchanged": [
+    "all eleven definitions and generated outputs",
+    "all previously snapshotted Go files including existing examples/tests",
+    "SCTP adapter production sources and upstream v0.8.0"
+  ],
+  "requirement_status_change": {},
+  "local_notes": {
+    "status": "source_not_found_pending_clarification",
+    "intended_path": ".local-notes/patch.md",
+    "ignore_verified": true,
+    "git_check_ignore_output": ".gitignore:45:/.local-notes/\t.local-notes/patch.md\n.gitignore:46:/patch.md\tpatch.md\n",
+    "source_moved": false,
+    "batch_markdown_moved": false
+  },
+  "remaining": [
+    "SGd/Gdd and Ro public examples,complete API/support matrix,CI/fuzz/stress/performance/public release",
+    "Private ACA/SCAP1 recovery and actual six-template target evidence",
+    "Old application migration and real DRA/HSS/OCS acceptance",
+    "User patch.md source clarification;ignore rules ready,no migration claimed"
+  ],
+  "release_status": "not_ready"
+}

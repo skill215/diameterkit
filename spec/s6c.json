@@ -1,0 +1,1588 @@
+{
+  "format": 1,
+  "package": "s6c",
+  "profile": "s6c-29.338-ordinary-mme-slice-v1",
+  "version": "0.1.0-slice.22",
+  "sources": [
+    "3GPP TS 29.338 V18.2.0, S6c SRR/SRA ordinary MSISDN/MME subset",
+    "doc/diameterkit-protocol-vectors.md V-SRR-01 V-SRA-01 V-SRA-02",
+    "RFC 6733 sections 6.2, 6.7, 6.11, 7.1-7.5; verified errata 4615/4887; common E grammar revision 2",
+    "generated envelope operations v2: finite snapshot, Session/Proxy correlation, explicit normal/error sources",
+    "3GPP TS 29.338 section 6.3: Supported-Features structure only; no negotiation state; SMS VSAI receive-ignore/send-forbid",
+    "generated envelope operations v3: Destination presence/value extraction for fixed runtime binding; no destination override",
+    "generated operations v4: CanonicalV1 on validated raw request; known identity folding, ordered groups, stable independent top-level keys and unknown barriers",
+    "generated operations v5: explicit per-command fixed-terminal transport replay permission; ordinary S6c SRR only, requires configured target and retention domain; Base controls excluded",
+    "generated operations v6: explicit no_context audit for existing static rules plus original-request association; no additional application facts in this slice",
+    "3GPP TS 29.338 V18.2.0 sections 5.2.2/5.2.3, 5.3.1.2, 5.3.2.5-8, 5.3.3.14-22 and 7: ordinary MSISDN RDR/RDA and HSS ALR/ALA slice; doc vectors V-RDR-01/V-RDA-01..03/V-ALR-01/V-ALA-01..02",
+    "3GPP TS 29.336 User-Identifier 10415/3102: this slice only MSISDN 10415/701, numeric TBCD up to 15 digits; no T4/IMS identities",
+    "manual RDR/ALR rules revision 1: one MME outcome with cause 0/1/2; optional absent diagnostic 13 only, other diagnostics unsupported; unsigned flags receive-preserve/send-known; HSS ALR requires Destination-Host and excludes SMSMI/Alert-Event/Serving-Node",
+    "manual result rules revision 3: ExperimentalResult structure shared, command-specific SRA 5001 and RDA 5001/5558; ALA no experimental application errors; optional Alert MSISDN only on RDA success",
+    "generator v7: named avp.Time primitive, exact four-octet NTP seconds without era inference; operation contract remains ops6; no transport replay permission for RDR or ALR",
+    "manual ordinary-HSS routing revision4: TS29.338 V18.2.0 sections5.2.1.1/3,5.3.3.2-8; IMSI-success only, five SGSN/MME/MSC shapes for distinct2401/2406 types, cross-group SGSN+MSC/MME, original SRR3310 bit0 required for additional node; not Router rewrite or SMSF fallback semantics",
+    "manual request revision2: optional MTI0/1, flags bits0..2 send-known receive-preserve, GPRS bit0 requires3309, finite decimal international SME Length/TOA0x91/TBCD1..15 digits; no SC/MSISDN inference; other TON/NPI unsupported",
+    "manual success adjunct revision1: LMSI4 octets and Alert UserIdentifier/MSISDN plus raw MWD bits0..4; never synthesize missing conditional data, no HSS/VLR history or MWD storage",
+    "generator9/ops8 unchanged; generated CheckAnswer checks paired routing eligibility; existing SRR transport-replay permission remains fixed-terminal transport-only, not SM delivery retry",
+    "manual report revision2: ordinary MSISDN RDR supports MME/MSC/SGSN productive outcomes; cause0..2 required in each selected group, MME and MSC mutually exclusive; diagnostic only with cause1, MSC0/1/2/3/4/9/13, SGSN2/5/6/7/8/10/13, prior MME13; other diagnostics unsupported; RDA2001/10415-5001/5558 retain separate namespaces; no MWD store or report/alert scheduler",
+    "manual alert revision2: TS29.338 sections5.3.3.23 and6.2.3; ALR-specific UserIdentifier ordinary MSISDN HSS or decimal IMSI access-node shape, bitmask1/2/3, optional moved-to MME/SGSN (cross-RAT allowed); explicit bounded S6cAlertRole endpoints/context required for MME/SGSN, never infer origin role from DRA or new node; no T4/Router token/legacy SGd App or scheduling; existing HSS zero context preserved",
+    "manual report/alert revision3: TS29.338 table5.2.3.1-1 and5.2.2.1-1; distinct ReportUserIdentifier Optional IMSI/MSISDN XOR; fixed S6cT4NoMSISDN evidence binds procedure, terminal endpoints, IMSI and SC; no history lookup",
+    "ALR IMSI without event is wire-possible HSS T4 but needs explicit T4 purpose; access roles still require3333 and exclude3329; T4 excludes3333/2401/SMSMI; SRA/RDA Alert-MSISDN type unchanged; generator9/ops8 unchanged",
+    "manual routing revision3: TS29.338 table5.2.1.1-1/2; SRR Optional top-level IMSI/MSISDN XOR; bounded T4Routing via existing S6cT4NoMSISDN purpose/endpoint/IMSI/SC evidence; success SRA IMSI matches original known IMSI; selected nodes and GPRS/SMEA conditions unchanged; no IMS/Router rewriting or history",
+    "manual SRA result revision4: TS29.338 table5.2.1.1-2, sections5.2.1.3/5.3.3.9-11/7; experimental10415 5001/5550/5552/5556/5557;5550 permits bounded IMSI/Alert-MSISDN/MWD/three domain diagnostics, no serving nodes/LMSI; explicit S6cRoutingRole plus external UNRI fact for IP-SM-GW required-IMSI condition, never inferred from SRR flags; reserved diagnostic receive-and-report, send selected values only",
+    "manual routing revision5: TS29.338 V18.2.0 table5.2.1.1-2/5.3.3.6-7/5.3.3.39 and TS29.3366.4.14-15/18; SRA Serving-Node known-IMSI N/NH/NB/NHB with SBI0/1; Realm/Additional IP-SM-GW and reserved SBI owned receive plus Unsupported context, standard send rejects; no compatibility activation or ALR widening; original SRR additional-node permission unchanged",
+    "manual report revision4: TS29.338 V18.2.0 table5.2.3.1-1/2 and5.3.3.14/18-20; ordinary-MSISDN RDR 3316/3320 cause0/1/2, optional cause1 diagnostic11/12 selected from TS23.040 V18.0.0 3.3.2 table1a; all four productive parent combinations except MSC+MME; unknown cause/0..255 diagnostics owned receive plus Unsupported context, malformed fields rejected; no IMS/T4 expansion or MWD/history service",
+    "manual report revision5: TS29.338 V18.2.0 table5.2.3.1-1 and6.3.3.1/13-16; IMS no-MSISDN RDR UserIdentifier/UserName is HSS-ID (TS23.003 V18.5.0 5.3 digits6..15), SMSMI3324 contains only required destination3327 UTF8String V1/M0; explicit bounded IMSDeliveryReport evidence, exact URI/SC/identity binding; selected ASCII SIP user@DNS <=256 bytes; no resolver, generic SIP stack or retry history; generator9/ops8 unchanged",
+    "manual alert revision3: TS29.338 V18.2.0 table5.2.2.1-1/2 and6.3.3.13-16; IMS HSS-to-IWMSC ALR uses exact fifteen-zero dummy MSISDN per TS23.003 V18.5.0 3.3 plus destination-only SMSMI3324/3327 V1/M0; dedicated IMSHSSAlert evidence binds URI/SC/endpoints, no HSS-ID/IMSI,3333 or2401. Optional raw3329 Time unchanged; no MWD/retry scheduling or time inference; generator9/ops8 unchanged",
+    "manual routing revision6: TS29.338 V18.2.0 table5.2.1.1-1/2 and5.3.1.1.2; IMS SRR top-level UserName is HSS-ID, destination-only SMSMI3324/3327 V1/M0; dedicated IMSRouting binds role/HSSID/URI/SC/endpoints and optional IP-SM-GW UNRI, successful SRA retains real IMSI/selected nodes rather than request equality; no HSS-ID echo fallback, no-IMSI success, Router token or discovery. Fixed same-HSS transport replay audited with unchanged request identity/context and per-attempt budgets; generator9/ops8 unchanged",
+    "manual T4 report revision8: TS29.338 V18.2.0 table5.2.3.1-1/2 and5.3.3.14/18-20; noMSISDN/knownIMSI following T4 Submit Trigger enables selected IP-SM-GW outcome3320, cause0/1/2 and optional cause1diagnostic11/12, alone or with existing legal MME/MSC/SGSN parents. Existing T4DeliveryReport evidence binds GMSC/HSS, originalIMSI/SC; no new Context, identity inference or result branches. Reserved cause/diagnostic receive-and-report, send selected only; no MWD/history/scheduling/persistence/replay; generator9/ops8 unchanged",
+    "manual alert revision4: TS29.338 V18.2.0 table6.2.3.1-1/2 and6.2.3.4; Router-to-GMSC ALR UserIdentifier/UserName is exact priorTFA token, not IMSI. Bounded RouterAlert assertion binds original token, priorTFR SMS-GMSC-Address and Router/GMSC endpoints; local UTF8/noNUL1..256byte subset, no normalization or lookup. Wire UserName syntax broadened; access role still requires decimalIMSI5..15 and HSS/T4/IMS unchanged. No SGd TFA token output, MCCMNC/SRA rewriting, business replay or persistence; generator13/ops8 unchanged. LegacySGd fixed delegate inherits source fingerprint.",
+    "manual routing revision9: TS29.338 table5.2.1.1-1/2 and5.3.3.5; explicit RouterHPLMN success token and MSISDN-only MCCMNC query (3311=1), selected UTF8 token1..256; success node condition paired with original request; ordinary/T4/IMS identity remains decimal, no lookup or business mapping"
+  ],
+  "groups": [
+    {
+      "name": "ExperimentalResult",
+      "fields": [
+        {
+          "name": "VendorID",
+          "code": 266,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "ExperimentalResultCode",
+          "code": 298,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        }
+      ]
+    },
+    {
+      "name": "ServingNode",
+      "fields": [
+        {
+          "name": "SGSNName",
+          "code": 2409,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SGSNRealm",
+          "code": 2410,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SGSNNumber",
+          "code": 1489,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MMEName",
+          "code": 2402,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MMERealm",
+          "code": 2408,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MMENumber",
+          "code": 1645,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MSCNumber",
+          "code": 2403,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "IPSMGWNumber",
+          "code": 3100,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "IPSMGWName",
+          "code": 3101,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "IPSMGWRealm",
+          "code": 3112,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "IPSMGWSBISupportIndicator",
+          "code": 3348,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateServingNodeSubset"
+    },
+    {
+      "name": "AdditionalServingNode",
+      "fields": [
+        {
+          "name": "SGSNName",
+          "code": 2409,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SGSNRealm",
+          "code": 2410,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SGSNNumber",
+          "code": 1489,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MMEName",
+          "code": 2402,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MMERealm",
+          "code": 2408,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MMENumber",
+          "code": 1645,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MSCNumber",
+          "code": 2403,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "IPSMGWNumber",
+          "code": 3100,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "IPSMGWName",
+          "code": 3101,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "IPSMGWRealm",
+          "code": 3112,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "IPSMGWSBISupportIndicator",
+          "code": 3348,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateAdditionalNodeSubset"
+    },
+    {
+      "name": "SupportedFeatures",
+      "fields": [
+        {
+          "name": "VendorID",
+          "code": 266,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "FeatureListID",
+          "code": 629,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "FeatureList",
+          "code": 630,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "u32",
+          "min": 1,
+          "max": 1
+        }
+      ]
+    },
+    {
+      "name": "UserIdentifier",
+      "fields": [
+        {
+          "name": "MSISDN",
+          "code": 701,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateUserIdentifierSubset"
+    },
+    {
+      "name": "MMESMDeliveryOutcome",
+      "fields": [
+        {
+          "name": "SMDeliveryCause",
+          "code": 3321,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "AbsentUserDiagnosticSM",
+          "code": 3322,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateMMEOutcomeSubset"
+    },
+    {
+      "name": "MSCSMDeliveryOutcome",
+      "fields": [
+        {
+          "name": "SMDeliveryCause",
+          "code": 3321,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "AbsentUserDiagnosticSM",
+          "code": 3322,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateMSCOutcomeSubset"
+    },
+    {
+      "name": "SGSNSMDeliveryOutcome",
+      "fields": [
+        {
+          "name": "SMDeliveryCause",
+          "code": 3321,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "AbsentUserDiagnosticSM",
+          "code": 3322,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateSGSNOutcomeSubset"
+    },
+    {
+      "name": "IPSMGWSMDeliveryOutcome",
+      "fields": [
+        {
+          "name": "SMDeliveryCause",
+          "code": 3321,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "AbsentUserDiagnosticSM",
+          "code": 3322,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateIPSMGWOutcomeSubset"
+    },
+    {
+      "name": "SMDeliveryOutcome",
+      "fields": [
+        {
+          "name": "MMESMDeliveryOutcome",
+          "code": 3317,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "MMESMDeliveryOutcome",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MSCSMDeliveryOutcome",
+          "code": 3318,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "MSCSMDeliveryOutcome",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SGSNSMDeliveryOutcome",
+          "code": 3319,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "SGSNSMDeliveryOutcome",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "IPSMGWSMDeliveryOutcome",
+          "code": 3320,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "IPSMGWSMDeliveryOutcome",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateOutcomeSubset"
+    },
+    {
+      "name": "AlertUserIdentifier",
+      "fields": [
+        {
+          "name": "UserName",
+          "code": 1,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MSISDN",
+          "code": 701,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateAlertIdentity"
+    },
+    {
+      "name": "ReportUserIdentifier",
+      "fields": [
+        {
+          "name": "UserName",
+          "code": 1,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MSISDN",
+          "code": 701,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 0,
+          "max": 1
+        }
+      ],
+      "rule": "validateReportIdentity"
+    },
+    {
+      "name": "ReportSMSMICorrelationID",
+      "fields": [
+        {
+          "name": "DestinationSIPURI",
+          "code": 3327,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "utf8",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateReportCorrelation"
+    },
+    {
+      "name": "AlertSMSMICorrelationID",
+      "fields": [
+        {
+          "name": "DestinationSIPURI",
+          "code": 3327,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "utf8",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateAlertCorrelation"
+    },
+    {
+      "name": "RoutingSMSMICorrelationID",
+      "fields": [
+        {
+          "name": "DestinationSIPURI",
+          "code": 3327,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "utf8",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "rule": "validateRoutingCorrelation"
+    }
+  ],
+  "commands": [
+    {
+      "name": "SRR",
+      "application": 16777312,
+      "code": 8388647,
+      "request": true,
+      "proxiable": true,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "DestinationHost",
+          "code": 293,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": 1,
+          "envelope": "DestinationHost"
+        },
+        {
+          "name": "DestinationRealm",
+          "code": 283,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationRealm"
+        },
+        {
+          "name": "UserName",
+          "code": 1,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MSISDN",
+          "code": 701,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SMSMICorrelationID",
+          "code": 3324,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "RoutingSMSMICorrelationID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SCAddress",
+          "code": 3300,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "SMRPMTI",
+          "code": 3308,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SRRFlags",
+          "code": 3310,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SMDeliveryNotIntended",
+          "code": 3311,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "i32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SMRPSMEA",
+          "code": 3309,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "octets",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "rule": "validateSRRSubset",
+      "ignore_vsai": true,
+      "transport_replay": true,
+      "context_rule": "checkRoutingContext",
+      "context_name": "S6cRoutingPurpose"
+    },
+    {
+      "name": "SRA",
+      "application": 16777312,
+      "code": 8388647,
+      "request": false,
+      "proxiable": true,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ExperimentalResult",
+          "code": 297,
+          "vendor": 0,
+          "flags": 64,
+          "type": "ExperimentalResult",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "UserName",
+          "code": 1,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ServingNode",
+          "code": 2401,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "ServingNode",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "AdditionalServingNode",
+          "code": 2406,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "AdditionalServingNode",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "LMSI",
+          "code": 2400,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "octets",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "UserIdentifier",
+          "code": 3102,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "UserIdentifier",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MWDStatus",
+          "code": 3312,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MMEAbsentUserDiagnosticSM",
+          "code": 3313,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MSCAbsentUserDiagnosticSM",
+          "code": 3314,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SGSNAbsentUserDiagnosticSM",
+          "code": 3315,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "ErrorMessage",
+          "code": 281,
+          "vendor": 0,
+          "flags": 0,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorReportingHost",
+          "code": 294,
+          "vendor": 0,
+          "flags": 0,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "FailedAVP",
+          "code": 279,
+          "vendor": 0,
+          "flags": 64,
+          "type": "diagnostic",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "rule": "validateSRAResult",
+      "error_answer": true,
+      "ignore_vsai": true,
+      "answer_rule": "checkSRANodeRequest",
+      "context_rule": "checkRoutingContext",
+      "context_name": "S6cRoutingPurpose"
+    },
+    {
+      "name": "RDR",
+      "application": 16777312,
+      "code": 8388649,
+      "request": true,
+      "proxiable": true,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "DestinationHost",
+          "code": 293,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": 1,
+          "envelope": "DestinationHost"
+        },
+        {
+          "name": "DestinationRealm",
+          "code": 283,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationRealm"
+        },
+        {
+          "name": "UserIdentifier",
+          "code": 3102,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "ReportUserIdentifier",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "SMSMICorrelationID",
+          "code": 3324,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "ReportSMSMICorrelationID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SCAddress",
+          "code": 3300,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "SMDeliveryOutcome",
+          "code": 3316,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "SMDeliveryOutcome",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "RDRFlags",
+          "code": 3323,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "rule": "validateRDRSubset",
+      "ignore_vsai": true,
+      "context_rule": "checkReportContext",
+      "context_name": "S6cReportPurpose"
+    },
+    {
+      "name": "RDA",
+      "application": 16777312,
+      "code": 8388649,
+      "request": false,
+      "proxiable": true,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ExperimentalResult",
+          "code": 297,
+          "vendor": 0,
+          "flags": 64,
+          "type": "ExperimentalResult",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "UserIdentifier",
+          "code": 3102,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "UserIdentifier",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "ErrorMessage",
+          "code": 281,
+          "vendor": 0,
+          "flags": 0,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorReportingHost",
+          "code": 294,
+          "vendor": 0,
+          "flags": 0,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "FailedAVP",
+          "code": 279,
+          "vendor": 0,
+          "flags": 64,
+          "type": "diagnostic",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "rule": "validateRDAResult",
+      "error_answer": true,
+      "ignore_vsai": true,
+      "context_rule": "checkReportContext",
+      "context_name": "S6cReportPurpose"
+    },
+    {
+      "name": "ALR",
+      "application": 16777312,
+      "code": 8388648,
+      "request": true,
+      "proxiable": true,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "DestinationHost",
+          "code": 293,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationHost"
+        },
+        {
+          "name": "DestinationRealm",
+          "code": 283,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "DestinationRealm"
+        },
+        {
+          "name": "SCAddress",
+          "code": 3300,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "tbcd",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "UserIdentifier",
+          "code": 3102,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "AlertUserIdentifier",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "name": "SMSGMSCAlertEvent",
+          "code": 3333,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ServingNode",
+          "code": 2401,
+          "vendor": 10415,
+          "flags": 192,
+          "type": "ServingNode",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SMSMICorrelationID",
+          "code": 3324,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "AlertSMSMICorrelationID",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "MaximumUEAvailabilityTime",
+          "code": 3329,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "time",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "rule": "validateALRSubset",
+      "ignore_vsai": true,
+      "no_context": false,
+      "context_rule": "checkAlertRole",
+      "context_name": "S6cAlertRole"
+    },
+    {
+      "name": "ALA",
+      "application": 16777312,
+      "code": 8388648,
+      "request": false,
+      "proxiable": true,
+      "fields": [
+        {
+          "name": "SessionID",
+          "code": 263,
+          "vendor": 0,
+          "flags": 64,
+          "type": "utf8",
+          "min": 1,
+          "max": 1,
+          "first": true,
+          "nonempty": true,
+          "correlation": "session"
+        },
+        {
+          "name": "ResultCode",
+          "code": 268,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ExperimentalResult",
+          "code": 297,
+          "vendor": 0,
+          "flags": 64,
+          "type": "ExperimentalResult",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "AuthSessionState",
+          "code": 277,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "correlation": "auth"
+        },
+        {
+          "name": "OriginHost",
+          "code": 264,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginHost"
+        },
+        {
+          "name": "OriginRealm",
+          "code": 296,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 1,
+          "max": 1,
+          "envelope": "OriginRealm"
+        },
+        {
+          "name": "OriginStateID",
+          "code": 278,
+          "vendor": 0,
+          "flags": 64,
+          "type": "u32",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ProxyInfo",
+          "code": 284,
+          "vendor": 0,
+          "flags": 64,
+          "type": "proxy",
+          "min": 0,
+          "max": -1,
+          "correlation": "proxy"
+        },
+        {
+          "name": "RouteRecord",
+          "code": 282,
+          "vendor": 0,
+          "flags": 64,
+          "type": "identity",
+          "min": 0,
+          "max": -1
+        },
+        {
+          "name": "ErrorMessage",
+          "code": 281,
+          "vendor": 0,
+          "flags": 0,
+          "type": "utf8",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "ErrorReportingHost",
+          "code": 294,
+          "vendor": 0,
+          "flags": 0,
+          "type": "identity",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "FailedAVP",
+          "code": 279,
+          "vendor": 0,
+          "flags": 64,
+          "type": "diagnostic",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "name": "SupportedFeatures",
+          "code": 628,
+          "vendor": 10415,
+          "flags": 128,
+          "type": "SupportedFeatures",
+          "min": 0,
+          "max": -1
+        }
+      ],
+      "rule": "validateALAResult",
+      "error_answer": true,
+      "ignore_vsai": true,
+      "no_context": false,
+      "context_rule": "checkAlertRole",
+      "context_name": "S6cAlertRole"
+    }
+  ]
+}

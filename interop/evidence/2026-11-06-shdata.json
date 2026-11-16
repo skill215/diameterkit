@@ -1,0 +1,272 @@
+{
+  "format": 1,
+  "date": "2026-11-06",
+  "kind": "independent offline XML Schema oracle; not Diameter network interoperability",
+  "scope": "Sh-Data Ref24/25 finite helpers; schema-valid data may remain uninterpreted or inapplicable",
+  "schema": {
+    "url": "https://www.etsi.org/deliver/etsi_ts/129300_129399/129328/18.01.00_60/ts_129328v180100p0.zip",
+    "member": "ShDataType_Rel18.xsd",
+    "bytes": 55518,
+    "sha256": "8e01bf2537df9460ede73dbcb39a275243681f7c1cda8d19061c924824371e79",
+    "modified": false
+  },
+  "oracle": {
+    "runtime": "OpenJDK 25.0.4.1+1-1-26.04.4-Ubuntu, built-in Xerces",
+    "source_sha256": "73b0b13ad14ce978ec0c2dc99a42bd19a17e1ef1f865233cc667a4331a39ff5f",
+    "source": "import java.io.*;\nimport java.nio.file.*;\nimport javax.xml.XMLConstants;\nimport javax.xml.transform.stream.StreamSource;\nimport javax.xml.validation.*;\npublic class DiameterkitShXSDCheck {\n public static void main(String[] args) throws Exception {\n  SchemaFactory f=SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);\n  f.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING,true);\n  f.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD,\"\");\n  f.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA,\"\");\n  Schema s=f.newSchema(Path.of(args[0]).toFile());\n  for(String line:Files.readAllLines(Path.of(args[1]))) {\n   String[] a=line.split(\"\\\\t\"); boolean valid=true;\n   try { Validator v=s.newValidator();v.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD,\"\");v.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA,\"\");v.validate(new StreamSource(Path.of(a[1]).toFile())); }\n   catch(org.xml.sax.SAXException e){valid=false;}\n   if(valid!=a[0].equals(\"valid\"))throw new Exception(\"unexpected XSD result: \"+a[1]+\" valid=\"+valid);\n   System.out.println(\"PASS \"+Path.of(a[1]).getFileName()+\": XSD \"+(valid?\"valid\":\"invalid\"));\n  }\n }\n}\n",
+    "command": "java <temporary>/DiameterkitShXSDCheck.java <unmodified ShDataType_Rel18.xsd> <temporary TSV: expected TAB absolute XML path>",
+    "external_dtd_access": "disabled",
+    "external_schema_access": "disabled",
+    "production_dependency": false
+  },
+  "cases": [
+    {
+      "name": "x-sh-amf-01.xml",
+      "xsd_expected": "valid",
+      "bytes": 314,
+      "sha256": "8ff535db08707b6d1b695b0da5bbfdd62d88a4d3ee3bd21754bfae99d4ae6ecf",
+      "path": "testdata/shdata/x-sh-amf-01.xml"
+    },
+    {
+      "name": "x-sh-dereg-01.xml",
+      "xsd_expected": "valid",
+      "bytes": 193,
+      "sha256": "5baaa9995ec7860364bfe167c69fb742e74f64814472cd424fdfcb159427c99b",
+      "path": "testdata/shdata/x-sh-dereg-01.xml"
+    },
+    {
+      "name": "x-sh-ext-01.xml",
+      "xsd_expected": "valid",
+      "bytes": 275,
+      "sha256": "d7810a98b2648a729b7caf4afa25e6208ecfaa68c7da1d2af7a9a3943e452938",
+      "path": "testdata/shdata/x-sh-ext-01.xml"
+    },
+    {
+      "name": "x-sh-mme-01.xml",
+      "xsd_expected": "valid",
+      "bytes": 202,
+      "sha256": "466010c9b092c8adc284010e6d601574b67f5e8712f4d7f388dfc9803ca603e0",
+      "path": "testdata/shdata/x-sh-mme-01.xml"
+    },
+    {
+      "name": "x-sh-pull-01.xml",
+      "xsd_expected": "valid",
+      "bytes": 261,
+      "sha256": "ffcc1df9ce5eb31636e92f25e849f188b3c39a12765194e295230868f23e566e",
+      "path": "testdata/shdata/x-sh-pull-01.xml"
+    },
+    {
+      "name": "x-sh-reg-01.xml",
+      "xsd_expected": "valid",
+      "bytes": 204,
+      "sha256": "9ffdf854a241a1f6100a35a2ef914817c8e7ef3f9abb3b573a955ef20340f284",
+      "path": "testdata/shdata/x-sh-reg-01.xml"
+    },
+    {
+      "name": "x-sh-sbi-01.xml",
+      "xsd_expected": "valid",
+      "bytes": 314,
+      "sha256": "34dfd76c5e34d736768fdce1e7e26cfa292ad62ffe47a891044eff2521f9b156",
+      "path": "testdata/shdata/x-sh-sbi-01.xml"
+    },
+    {
+      "name": "x-sh-sgsn-01.xml",
+      "xsd_expected": "valid",
+      "bytes": 227,
+      "sha256": "c765f5f1ce702cdd8379c256fa4a2a7081ca5afe36f1279f1cf5a43833eff404",
+      "path": "testdata/shdata/x-sh-sgsn-01.xml"
+    },
+    {
+      "name": "x23-dsai.xml",
+      "xsd_expected": "valid",
+      "bytes": 161,
+      "sha256": "b8ebe4ba029b8f558e66b03f72575859a7d9b72fab5f88622c06a421e0198029",
+      "path": "testdata/shdata/x23-dsai.xml"
+    },
+    {
+      "name": "x23-ident.xml",
+      "xsd_expected": "valid",
+      "bytes": 312,
+      "sha256": "8bd59790617c0825452efc9458cf718f7b55c037915b92e4ad1fbbbcebf511e4",
+      "path": "testdata/shdata/x23-ident.xml"
+    },
+    {
+      "name": "x23-ifc.xml",
+      "xsd_expected": "valid",
+      "bytes": 210,
+      "sha256": "798acbb1cc468fd27b2ab82d5bd426455ebe4195a8f6942bafd36b28bb9e7271",
+      "path": "testdata/shdata/x23-ifc.xml"
+    },
+    {
+      "name": "x23-repo-data.xml",
+      "xsd_expected": "valid",
+      "bytes": 210,
+      "sha256": "ef2f5851608f1f2f1aeafe7f4861afbf2880b3799c0719b5ae378e99350c489c",
+      "path": "testdata/shdata/x23-repo-data.xml"
+    },
+    {
+      "name": "x23-repo-delete.xml",
+      "xsd_expected": "valid",
+      "bytes": 138,
+      "sha256": "50a0eec9ae110109e8f21b582acbf6aa3d0a1bdf3e37f79b4b40809490f9a831",
+      "path": "testdata/shdata/x23-repo-delete.xml"
+    },
+    {
+      "name": "missing-number.xml",
+      "xsd_expected": "invalid",
+      "bytes": 158,
+      "sha256": "1fa88443cfccc2e1b983f4bf4c3b0a0e12a0b427ab2e59ddbd27d04b55b22737",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><Extension><Extension><SMSRegistrationInfo></SMSRegistrationInfo></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "short-path.xml",
+      "xsd_expected": "invalid",
+      "bytes": 181,
+      "sha256": "9772d976aa2bb7eb14728d32ca706b8fa287e14a0ef5bbb48f114e795194a204",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><Extension><SMSRegistrationInfo><IP-SM-GW-Number>12025550999</IP-SM-GW-Number></SMSRegistrationInfo></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "duplicate-number.xml",
+      "xsd_expected": "invalid",
+      "bytes": 222,
+      "sha256": "a89701d3ff2bac4f03be41ca4372abba2bda48a02c1a5c75fcf14810864510f5",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><Extension><Extension><SMSRegistrationInfo><IP-SM-GW-Number>12025550999</IP-SM-GW-Number><IP-SM-GW-Number/></SMSRegistrationInfo></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "mme-one.xml",
+      "xsd_expected": "invalid",
+      "bytes": 202,
+      "sha256": "ce7ce903b893ba0104451fc13324cd8b0999337848bda1f2aa8cf12ccb4fed39",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><Extension><Extension><UEReachabilityForIP><UEIPReachabilityMME>1</UEIPReachabilityMME></UEReachabilityForIP></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "root-namespace.xml",
+      "xsd_expected": "invalid",
+      "bytes": 222,
+      "sha256": "c77259c019a4198b809928805ff71db6a0c7741e7dbcf1248a5809c5d7859dd6",
+      "xml": "<Sh-Data xmlns=\"urn:wrong\"><Sh-IMS-Data><Extension><Extension><Extension><SMSRegistrationInfo><IP-SM-GW-Number>12025550999</IP-SM-GW-Number></SMSRegistrationInfo></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "sbi-spelling.xml",
+      "xsd_expected": "invalid",
+      "bytes": 316,
+      "sha256": "f04ed47f1cc35d406041122c0119a99c4fd95238a75d8b5676c6b6533810ced4",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><Extension><Extension><SMSRegistrationInfo><IP-SM-GW-Number>12025550999</IP-SM-GW-Number><Extension><Extension><IP-SM-GW-SBI-SupportIndication>1</IP-SM-GW-SBI-SupportIndication></Extension></Extension></SMSRegistrationInfo></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "sc-21.xml",
+      "xsd_expected": "invalid",
+      "bytes": 271,
+      "sha256": "44fc7b468e9c345fcda1a66b538a0d2d887bca16d7f0caf3f36e341908caf0b0",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><Extension><Extension><SMSRegistrationInfo><IP-SM-GW-Number>12025550999</IP-SM-GW-Number><Extension><SCAddress>xxxxxxxxxxxxxxxxxxxxx</SCAddress></Extension></SMSRegistrationInfo></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "wrong-order.xml",
+      "xsd_expected": "invalid",
+      "bytes": 198,
+      "sha256": "02d35b9e35aa788a5eda4d2265283827c592de319960443f5b8bd265ee31187e",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><Extension><Extension><SMSRegistrationInfo><IP-SM-GW-Number/></SMSRegistrationInfo><UEReachabilityForIP/></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "empty-root.xml",
+      "xsd_expected": "valid",
+      "bytes": 10,
+      "sha256": "64bff64eb18e036b6efbf8d5e9608a8a1aed526a6ee80da0c37e771c1404a7b0",
+      "xml": "<Sh-Data/>"
+    },
+    {
+      "name": "empty-reach.xml",
+      "xsd_expected": "valid",
+      "bytes": 137,
+      "sha256": "831e3c2c102ae749814271f8f674b26e31810d1b88977a11468d8abbd1151965",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><Extension><Extension><UEReachabilityForIP/></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "sc-20-unicode.xml",
+      "xsd_expected": "valid",
+      "bytes": 310,
+      "sha256": "22e0f5c45275d10c35eeb211092723827c244d30446d71de58a53a6f0344be5a",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><Extension><Extension><SMSRegistrationInfo><IP-SM-GW-Number>12025550999</IP-SM-GW-Number><Extension><SCAddress>界界界界界界界界界界界界界界界界界界界界</SCAddress></Extension></SMSRegistrationInfo></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "enum-minus-zero.xml",
+      "xsd_expected": "valid",
+      "bytes": 203,
+      "sha256": "88fea50ea307b6033c0d1fc221d0406025c5a6b476a08c160b4c80d9210de23b",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><Extension><Extension><UEReachabilityForIP><UEIPReachabilityMME>-0</UEIPReachabilityMME></UEReachabilityForIP></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "enum-plus-zero.xml",
+      "xsd_expected": "valid",
+      "bytes": 207,
+      "sha256": "797ae48f0c646f68a2f203b784004287b217d08bc95720997a0021f937e52d62",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><Extension><Extension><UEReachabilityForIP><UEIPReachabilityMME> +000 </UEIPReachabilityMME></UEReachabilityForIP></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "empty-sc.xml",
+      "xsd_expected": "valid",
+      "bytes": 250,
+      "sha256": "db0ccd491d7d663ce86b77b4d40814dc846d84ec24e817343b7afe912c544e52",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><Extension><Extension><SMSRegistrationInfo><IP-SM-GW-Number>12025550999</IP-SM-GW-Number><Extension><SCAddress></SCAddress></Extension></SMSRegistrationInfo></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "sbi-zero.xml",
+      "xsd_expected": "valid",
+      "bytes": 314,
+      "sha256": "a692174313742c4daa437a6f37c64b86c97d82586d2db40814d49f140a3dd54a",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><Extension><Extension><SMSRegistrationInfo><IP-SM-GW-Number>12025550999</IP-SM-GW-Number><Extension><Extension><IP-SM-GW-SBISupportIndication>0</IP-SM-GW-SBISupportIndication></Extension></Extension></SMSRegistrationInfo></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "wildcard-forbidden.xml",
+      "xsd_expected": "invalid",
+      "bytes": 336,
+      "sha256": "574624fe0c9766f7319dac0fc0277411cb9ee0dc571210bae018e2d26751d5ce",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><Extension><Extension><SMSRegistrationInfo><IP-SM-GW-Number>12025550999</IP-SM-GW-Number><Extension><Extension><IP-SM-GW-SBISupportIndication>1</IP-SM-GW-SBISupportIndication><x:e xmlns:x=\"urn:x\"/></Extension></Extension></SMSRegistrationInfo></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    },
+    {
+      "name": "wildcard-first.xml",
+      "xsd_expected": "invalid",
+      "bytes": 226,
+      "sha256": "77138c89adf49cfa5829e44e8e690353f591c973d739b6d6574b88e6846707af",
+      "xml": "<Sh-Data><Sh-IMS-Data><Extension><Extension><Extension><SMSRegistrationInfo><x:e xmlns:x=\"urn:x\"/><IP-SM-GW-Number>12025550999</IP-SM-GW-Number></SMSRegistrationInfo></Extension></Extension></Extension></Sh-IMS-Data></Sh-Data>"
+    }
+  ],
+  "output": [
+    "PASS x-sh-amf-01.xml: XSD valid",
+    "PASS x-sh-dereg-01.xml: XSD valid",
+    "PASS x-sh-ext-01.xml: XSD valid",
+    "PASS x-sh-mme-01.xml: XSD valid",
+    "PASS x-sh-pull-01.xml: XSD valid",
+    "PASS x-sh-reg-01.xml: XSD valid",
+    "PASS x-sh-sbi-01.xml: XSD valid",
+    "PASS x-sh-sgsn-01.xml: XSD valid",
+    "PASS x23-dsai.xml: XSD valid",
+    "PASS x23-ident.xml: XSD valid",
+    "PASS x23-ifc.xml: XSD valid",
+    "PASS x23-repo-data.xml: XSD valid",
+    "PASS x23-repo-delete.xml: XSD valid",
+    "PASS missing-number.xml: XSD invalid",
+    "PASS short-path.xml: XSD invalid",
+    "PASS duplicate-number.xml: XSD invalid",
+    "PASS mme-one.xml: XSD invalid",
+    "PASS root-namespace.xml: XSD invalid",
+    "PASS sbi-spelling.xml: XSD invalid",
+    "PASS sc-21.xml: XSD invalid",
+    "PASS wrong-order.xml: XSD invalid",
+    "PASS empty-root.xml: XSD valid",
+    "PASS empty-reach.xml: XSD valid",
+    "PASS sc-20-unicode.xml: XSD valid",
+    "PASS enum-minus-zero.xml: XSD valid",
+    "PASS enum-plus-zero.xml: XSD valid",
+    "PASS empty-sc.xml: XSD valid",
+    "PASS sbi-zero.xml: XSD valid",
+    "PASS wildcard-forbidden.xml: XSD invalid",
+    "PASS wildcard-first.xml: XSD invalid"
+  ],
+  "limitations": [
+    "Oracle ran only during this audit, outside the module; the implementation and its ordinary tests need only Go and checked-in fixtures",
+    "No whole-XSD implementation, permission/subscription validation, MAP conversion or independent HSS/DRA network evidence",
+    "13 document candidates are pre-implementation examples, not captures; 17 derived/control cases explicitly retain their XML and expected outcomes",
+    "The peer go-diameter evidence from batch17 validates opaque AVP bytes only; it is not an XML oracle"
+  ]
+}

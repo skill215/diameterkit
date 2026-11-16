@@ -1,0 +1,1393 @@
+{
+  "batch": 63,
+  "date": "2026-11-09",
+  "upstream": "github.com/skill215/sctp",
+  "base_commit": "62ad388be958f0bd19d29d63dfc05743726779a1",
+  "candidate_tree": "45ba644d590c68b1434c24dcf5d6d073f79dccdb",
+  "remote_commit": "1649569dd9b851b95664fef36f575c88a3547a78",
+  "local_review_commit": "d4d36c75f92cab3a7ac6ae8ec39ad9c6506b8c57",
+  "pr": {
+    "url": "https://github.com/skill215/sctp/pull/30",
+    "number": 30,
+    "state": "open",
+    "merged": false,
+    "mergeable": true,
+    "draft": true,
+    "body": "Diameter consumers need fragment flags, unconsumed oversized notifications, explicit per-message metadata, and cancellation that cannot outlive buffer ownership. This adds opt-in immutable message mode with ReadEvent/WriteMsgContext, context-aware resolution/dial, mutable deadlines and typed parsing of five existing Linux SCTP notifications. Nil Messages preserves legacy stream/callback behavior; message mode rejects mixed legacy I/O and setup callbacks.\n\nThe candidate remains pure Go on Go 1.26+, with no protocol state or persistence. Tests cover native long SEND_FAILED retry, address/partial/shutdown events, deadline/cancel/close boundaries and accept-option failures. The resource ledger declares a bounded single-reader/single-writer integration policy; its 8 KiB logical reserve is not an RSS guarantee. Keyed SocketConfig literals are required for source compatibility with the new field.\n\nValidation on the exact source tree: 315 native tests/subtests/fuzz seeds/examples, zero skips; the full local release script including 10 shuffled race rounds, checkptr, low-GC race and five 1,000,000-execution fuzz targets; README examples; six downstream compile targets; six architecture test builds; and a deterministic 430-file offline module installed by an independent real-SCTP consumer without replace. The existing remote native/Go/architecture/required-namespace matrix is required on this PR. No release notes, tag, merge or publication are requested by this draft.\n\nThis is the incremental diameterkit U2–U5 candidate based on 62ad388. The independent upstream v1 redesign and unrelated working-tree changes are excluded.",
+    "title": "Add context-aware SCTP message I/O and typed notifications",
+    "base": "master",
+    "base_sha": "62ad388be958f0bd19d29d63dfc05743726779a1",
+    "head": "codex/diameter-message-u5",
+    "head_sha": "1649569dd9b851b95664fef36f575c88a3547a78",
+    "head_repo_id": 768040141,
+    "head_repo_full_name": "skill215/sctp",
+    "merge_commit_sha": "9f4b74af89cb2e8ed9bd4bdf65a4830e56b56f5e",
+    "user": {
+      "login": "skill215",
+      "name": "skill215",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/94544438?v=4",
+      "id": 94544438
+    },
+    "requested_reviewers": null,
+    "requested_team_reviewers": null,
+    "diff": null,
+    "comments": null,
+    "created_at": "2026-11-09T04:45:39Z",
+    "updated_at": "2026-11-09T04:45:39Z",
+    "closed_at": null,
+    "merged_at": null,
+    "commits": 1,
+    "changed_files": 37,
+    "additions": 3395,
+    "deletions": 120,
+    "display_url": "https://github.com/skill215/sctp/pull/30",
+    "display_title": "Add context-aware SCTP message I/O and typed notifications"
+  },
+  "ci_run": {
+    "id": 42563564412,
+    "head_sha": "1649569dd9b851b95664fef36f575c88a3547a78",
+    "head_branch": "codex/diameter-message-u5",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "pull_request",
+    "run_attempt": 1,
+    "created_at": "2026-11-09T04:45:43Z",
+    "updated_at": "2026-11-09T04:53:49Z",
+    "html_url": "https://github.com/skill215/sctp/actions/runs/42563564412",
+    "referenced_workflows": [
+      {
+        "path": "skill215/sctp/.github/workflows/validate.yaml@9f4b74af89cb2e8ed9bd4bdf65a4830e56b56f5e",
+        "sha": "9f4b74af89cb2e8ed9bd4bdf65a4830e56b56f5e",
+        "ref": "refs/pull/30/merge"
+      },
+      {
+        "path": "skill215/sctp/.github/workflows/arch.yaml@9f4b74af89cb2e8ed9bd4bdf65a4830e56b56f5e",
+        "sha": "9f4b74af89cb2e8ed9bd4bdf65a4830e56b56f5e",
+        "ref": "refs/pull/30/merge"
+      }
+    ],
+    "head_commit": {
+      "id": "1649569dd9b851b95664fef36f575c88a3547a78",
+      "tree_id": "45ba644d590c68b1434c24dcf5d6d073f79dccdb",
+      "message": "Add context-aware SCTP message I/O and typed notifications\n\nImplement the bounded U2-U5 candidate with immutable message mode, mutable deadlines and cancellation retirement, context resolve/dial, typed Linux notifications, native lifecycle/ABI coverage and release gates. Preserve legacy zero-value mode and the pure-Go public-library boundary.",
+      "timestamp": "2026-11-09T04:44:37Z",
+      "author": {
+        "name": "skill215",
+        "email": "94544438+skill215@users.noreply.github.com"
+      },
+      "committer": {
+        "name": "skill215",
+        "email": "94544438+skill215@users.noreply.github.com"
+      }
+    }
+  },
+  "ci_merge_commit": {
+    "sha": "9f4b74af89cb2e8ed9bd4bdf65a4830e56b56f5e",
+    "tree": "45ba644d590c68b1434c24dcf5d6d073f79dccdb",
+    "parents": [
+      "62ad388be958f0bd19d29d63dfc05743726779a1",
+      "1649569dd9b851b95664fef36f575c88a3547a78"
+    ]
+  },
+  "ci_jobs": [
+    {
+      "id": 128985049575,
+      "name": "validate / unsupported (ubuntu-24.04, 1.27.x)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42563564412,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run sudo modprobe sctp",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Execute real Linux/386 SCTP ownership tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Execute native Winsock ownership tests",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 128985049805,
+      "name": "validate / unsupported (ubuntu-24.04, 1.26.x)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42563564412,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run sudo modprobe sctp",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Execute real Linux/386 SCTP ownership tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Execute native Winsock ownership tests",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 128985049858,
+      "name": "validate / native (ubuntu-24.04, 1.26.x)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42563564412,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run sudo modprobe sctp",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run bash .github/scripts/validate.sh",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Require three actual numeric-zone namespace tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Compile independent downstream consumers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Compile and run README examples",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        }
+      ]
+    },
+    {
+      "id": 128985049873,
+      "name": "validate / unsupported (windows-latest, 1.27.x)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42563564412,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run sudo modprobe sctp",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 4
+        },
+        {
+          "name": "Execute real Linux/386 SCTP ownership tests",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5
+        },
+        {
+          "name": "Execute native Winsock ownership tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 128985049886,
+      "name": "validate / unsupported (windows-latest, 1.26.x)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42563564412,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run sudo modprobe sctp",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 4
+        },
+        {
+          "name": "Execute real Linux/386 SCTP ownership tests",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5
+        },
+        {
+          "name": "Execute native Winsock ownership tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 128985049902,
+      "name": "validate / arch / abi (s390x, s390x)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42563564412,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install user-mode emulators",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Compile regression tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Test ABI, alignment, and address encoding",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 128985049916,
+      "name": "validate / native (ubuntu-22.04, 1.27.x)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42563564412,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run sudo modprobe sctp",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run bash .github/scripts/validate.sh",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Require three actual numeric-zone namespace tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Compile independent downstream consumers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Compile and run README examples",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        }
+      ]
+    },
+    {
+      "id": 128985049918,
+      "name": "validate / native (ubuntu-24.04, 1.27.x)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42563564412,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run sudo modprobe sctp",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run bash .github/scripts/validate.sh",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Require three actual numeric-zone namespace tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Compile independent downstream consumers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Compile and run README examples",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        }
+      ]
+    },
+    {
+      "id": 128985049920,
+      "name": "validate / native (ubuntu-22.04, 1.26.x)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42563564412,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run sudo modprobe sctp",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run bash .github/scripts/validate.sh",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Require three actual numeric-zone namespace tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Compile independent downstream consumers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Compile and run README examples",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        }
+      ]
+    },
+    {
+      "id": 128985049967,
+      "name": "validate / arch / abi (arm, arm)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42563564412,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install user-mode emulators",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Compile regression tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Test ABI, alignment, and address encoding",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 128985049983,
+      "name": "validate / arch / abi (ppc64, ppc64)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42563564412,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install user-mode emulators",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Compile regression tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Test ABI, alignment, and address encoding",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 128985050048,
+      "name": "validate / arch / abi (mips, mips)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42563564412,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install user-mode emulators",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Compile regression tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Test ABI, alignment, and address encoding",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 128985050117,
+      "name": "validate / arch / abi (arm64, aarch64)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42563564412,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install user-mode emulators",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Compile regression tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Test ABI, alignment, and address encoding",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 128985050251,
+      "name": "validate / arch / abi (mips64, mips64)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42563564412,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install user-mode emulators",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Compile regression tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Test ABI, alignment, and address encoding",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    }
+  ],
+  "ci_log_evidence": [
+    {
+      "job_id": 128985049575,
+      "name": "validate / unsupported (ubuntu-24.04, 1.27.x)",
+      "url": "https://github.com/skill215/sctp/actions/runs/42563564412/job/128985049575",
+      "sha256": "79b8607f17f7d0026278dd862157b830037281b03ea8840ace88578b8c9328b1",
+      "bytes": 18479,
+      "scope": "Native Windows or Linux386 descriptor ownership/unsupported boundary; not message I/O support"
+    },
+    {
+      "job_id": 128985049805,
+      "name": "validate / unsupported (ubuntu-24.04, 1.26.x)",
+      "url": "https://github.com/skill215/sctp/actions/runs/42563564412/job/128985049805",
+      "sha256": "2301061ae4b668f16d4321a2a4a624e9944d3a3bc10431c1d07066a36ffa8532",
+      "bytes": 17701,
+      "scope": "Native Windows or Linux386 descriptor ownership/unsupported boundary; not message I/O support"
+    },
+    {
+      "job_id": 128985049858,
+      "name": "validate / native (ubuntu-24.04, 1.26.x)",
+      "url": "https://github.com/skill215/sctp/actions/runs/42563564412/job/128985049858",
+      "sha256": "31ae1937daf98ba2bad6a99a6a7d81b4a161df3300722c68be88e25c70d810af",
+      "bytes": 28696,
+      "native_race_rounds": 10,
+      "fuzz_targets": 5,
+      "fuzz_executions": 5000000,
+      "required_namespace_parent_passes": 3,
+      "downstream_compile_targets": 6,
+      "readme_passed": true,
+      "kernel": "Linux runnervm7aw5e 7.0.0-1017-azure #17~24.04.1-Ubuntu SMP PREEMPT Thu Sep 24 18:46:57 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux",
+      "go": "go version go1.26.10 linux/amd64"
+    },
+    {
+      "job_id": 128985049873,
+      "name": "validate / unsupported (windows-latest, 1.27.x)",
+      "url": "https://github.com/skill215/sctp/actions/runs/42563564412/job/128985049873",
+      "sha256": "0d4a6511a773322390645685cb63117e5293a4d20d20e66ddccc1c29fb3a0913",
+      "bytes": 18185,
+      "scope": "Native Windows or Linux386 descriptor ownership/unsupported boundary; not message I/O support"
+    },
+    {
+      "job_id": 128985049886,
+      "name": "validate / unsupported (windows-latest, 1.26.x)",
+      "url": "https://github.com/skill215/sctp/actions/runs/42563564412/job/128985049886",
+      "sha256": "dfca7114fad1c0c194c6707294f708069a5e6369ba2f6c8e19514c5a804f09df",
+      "bytes": 16585,
+      "scope": "Native Windows or Linux386 descriptor ownership/unsupported boundary; not message I/O support"
+    },
+    {
+      "job_id": 128985049902,
+      "name": "validate / arch / abi (s390x, s390x)",
+      "url": "https://github.com/skill215/sctp/actions/runs/42563564412/job/128985049902",
+      "sha256": "65cfcc5c2c76cd9b6ef98ed24674b949e944458bf3de335dbe5d3cf1dff33668",
+      "bytes": 47195,
+      "qemu_new_abi_resource_parser_rounds": 3,
+      "native_sctp_network": false
+    },
+    {
+      "job_id": 128985049916,
+      "name": "validate / native (ubuntu-22.04, 1.27.x)",
+      "url": "https://github.com/skill215/sctp/actions/runs/42563564412/job/128985049916",
+      "sha256": "46b48fbb9a1afd3578b09095fb2d0fb510f4347ae96c7b060bccf694628be031",
+      "bytes": 32676,
+      "native_race_rounds": 10,
+      "fuzz_targets": 5,
+      "fuzz_executions": 5000000,
+      "required_namespace_parent_passes": 3,
+      "downstream_compile_targets": 6,
+      "readme_passed": true,
+      "kernel": "Linux runnervmlby3q 6.8.0-1070-azure #78~22.04.1-Ubuntu SMP Thu Sep 24 18:46:45 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux",
+      "go": "go version go1.27.3 linux/amd64"
+    },
+    {
+      "job_id": 128985049918,
+      "name": "validate / native (ubuntu-24.04, 1.27.x)",
+      "url": "https://github.com/skill215/sctp/actions/runs/42563564412/job/128985049918",
+      "sha256": "2ebb8f9476d7c7bd7f86c47f87b754f26f6fcd625e80e5bd16340db3de8d7d16",
+      "bytes": 32683,
+      "native_race_rounds": 10,
+      "fuzz_targets": 5,
+      "fuzz_executions": 5000000,
+      "required_namespace_parent_passes": 3,
+      "downstream_compile_targets": 6,
+      "readme_passed": true,
+      "kernel": "Linux runnervm7aw5e 7.0.0-1017-azure #17~24.04.1-Ubuntu SMP PREEMPT Thu Sep 24 18:46:57 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux",
+      "go": "go version go1.27.3 linux/amd64"
+    },
+    {
+      "job_id": 128985049920,
+      "name": "validate / native (ubuntu-22.04, 1.26.x)",
+      "url": "https://github.com/skill215/sctp/actions/runs/42563564412/job/128985049920",
+      "sha256": "7077e1a82d84eb129e1abaed3a3065db5cdf4edf20f46563a4e7716ec1a32292",
+      "bytes": 30184,
+      "native_race_rounds": 10,
+      "fuzz_targets": 5,
+      "fuzz_executions": 5000000,
+      "required_namespace_parent_passes": 3,
+      "downstream_compile_targets": 6,
+      "readme_passed": true,
+      "kernel": "Linux runnervmlby3q 6.8.0-1070-azure #78~22.04.1-Ubuntu SMP Thu Sep 24 18:46:45 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux",
+      "go": "go version go1.26.10 linux/amd64"
+    },
+    {
+      "job_id": 128985049967,
+      "name": "validate / arch / abi (arm, arm)",
+      "url": "https://github.com/skill215/sctp/actions/runs/42563564412/job/128985049967",
+      "sha256": "2cb79f399b17a9876c966f4a059a18afe062bdef3ea1a472617d2c5775d9564e",
+      "bytes": 47520,
+      "qemu_new_abi_resource_parser_rounds": 3,
+      "native_sctp_network": false
+    },
+    {
+      "job_id": 128985049983,
+      "name": "validate / arch / abi (ppc64, ppc64)",
+      "url": "https://github.com/skill215/sctp/actions/runs/42563564412/job/128985049983",
+      "sha256": "7f17b9002b3e27a2336b6510cab5d012b341cacabc0e46174e1ca4cdfd9a0f0e",
+      "bytes": 47202,
+      "qemu_new_abi_resource_parser_rounds": 3,
+      "native_sctp_network": false
+    },
+    {
+      "job_id": 128985050048,
+      "name": "validate / arch / abi (mips, mips)",
+      "url": "https://github.com/skill215/sctp/actions/runs/42563564412/job/128985050048",
+      "sha256": "faf2a1a15e369b69266c7eaffd319ac1fe079ac4aad701845b3b767cb8834fe9",
+      "bytes": 47526,
+      "qemu_new_abi_resource_parser_rounds": 3,
+      "native_sctp_network": false
+    },
+    {
+      "job_id": 128985050117,
+      "name": "validate / arch / abi (arm64, aarch64)",
+      "url": "https://github.com/skill215/sctp/actions/runs/42563564412/job/128985050117",
+      "sha256": "3ed15a9e0488e25f9395a96b51c9de42887b5d7edf385a646336842ef7bcdcc8",
+      "bytes": 47208,
+      "qemu_new_abi_resource_parser_rounds": 3,
+      "native_sctp_network": false
+    },
+    {
+      "job_id": 128985050251,
+      "name": "validate / arch / abi (mips64, mips64)",
+      "url": "https://github.com/skill215/sctp/actions/runs/42563564412/job/128985050251",
+      "sha256": "83045ee5b83993a7f65bff66b504b05f84846641f6080e2a0e1e28f0a123f209",
+      "bytes": 47205,
+      "qemu_new_abi_resource_parser_rounds": 3,
+      "native_sctp_network": false
+    }
+  ],
+  "source_identity": {
+    "manifest": "spec/evidence/batch-62-sctp-candidate-files.json",
+    "files": 430,
+    "all_installed_files_matched": true,
+    "local_remote_ci_tree_equal": true,
+    "upstream_source_hashes": [
+      {
+        "path": ".github/scripts/consumer.py",
+        "sha256": "1b445260b640aeef061e53dad66afa859aef31589891233670b567ed40e01750"
+      },
+      {
+        "path": ".github/scripts/validate.sh",
+        "sha256": "6de7215734e86e70a9dab0b7d9fc08606412191d71a35975fe1388579ad851db"
+      },
+      {
+        "path": ".github/workflows/arch.yaml",
+        "sha256": "3dca1da2d1aba668ab80a4ae07d2bed2443e0673c62081e9cf36a8857b453adf"
+      },
+      {
+        "path": "context.go",
+        "sha256": "9465579e0f79173754da20762565a67c2d8884a6a1f992096bef288c2bbc4700"
+      },
+      {
+        "path": "context_example_test.go",
+        "sha256": "9ed3064ffed407d9bf5c2d29521ccfaccba0ad302d1728d294d8e07d8e57d389"
+      },
+      {
+        "path": "context_linux.go",
+        "sha256": "7488ba84f4749010d86c44edb342820e986a2805935a4aa8f372b2ea9cc38228"
+      },
+      {
+        "path": "context_linux_test.go",
+        "sha256": "d456dd77a49f81e2a9e355eb06d0af05536bda3da1c7dab08f62265dcd078557"
+      },
+      {
+        "path": "context_test.go",
+        "sha256": "c128242f154af6002b5b9d7c4111ac9a30f6d016eee6ed0f8e8c8c6a04f495f4"
+      },
+      {
+        "path": "context_unsupported.go",
+        "sha256": "204f2af1bfa09c337bc15cfd8d470ecf4ccab868029a2730dc14cdbf5da29eac"
+      },
+      {
+        "path": "docs/diameterkit-u2-message.md",
+        "sha256": "856c9f1fd38c6b8965cb6bfe7f099ab0675f30357d7103ca7d47a309387c3a11"
+      },
+      {
+        "path": "docs/diameterkit-u3-context.md",
+        "sha256": "1637224d4203eb24e1dce53f2a0ceea2018a1bfb61d17ff9b0c6fe32987a2ae8"
+      },
+      {
+        "path": "docs/diameterkit-u3-foundation.md",
+        "sha256": "cf5097dc186a37e4ba9b1f22fd35d85574a98d23129722fe018998aa6ea8c601"
+      },
+      {
+        "path": "docs/diameterkit-u4-notifications.md",
+        "sha256": "894944e33ef232b80c4708753688697addadff61037612034cb35c6f294085d6"
+      },
+      {
+        "path": "docs/diameterkit-u5-resources.md",
+        "sha256": "c1cde4a6c11b0ef40726f7294d75ece29b0c58028172e1ec64277812c835263d"
+      },
+      {
+        "path": "message.go",
+        "sha256": "5e9b64c08104a0bc45ac2f8c1dfd71e401665f62ee08a2313cef4cfb719b67fb"
+      },
+      {
+        "path": "message_example_test.go",
+        "sha256": "123fe94c8a93b47595b96a02dafaaba56a10b5549e3ec8e73dfb5a682c867967"
+      },
+      {
+        "path": "message_io_linux.go",
+        "sha256": "0f014a0048d908b19bbdd08ba3946cfc8f800f564b6ee68cf36867d7407c8326"
+      },
+      {
+        "path": "message_linux_test.go",
+        "sha256": "5a3d826eb0d76d9be79470fa81b74be8fa0028a29ff1d8e5d34f4c88c54b1fd5"
+      },
+      {
+        "path": "message_options_linux.go",
+        "sha256": "a150dd79b5f43c5f5a420a7c299b73c641bcc16f3e870798f7888f21d332fd44"
+      },
+      {
+        "path": "message_unsupported.go",
+        "sha256": "0d548aa1412bd3eb5b0a5cc44a2100d9233cad4310ad75ab4329e9c81c003f4c"
+      },
+      {
+        "path": "notification.go",
+        "sha256": "fdafd137fa7657699768c85b979e4eab3672e492c2fc150c0543ebde29fc9e87"
+      },
+      {
+        "path": "notification_example_test.go",
+        "sha256": "715e815b27058af2278048bba752471f398572a5c5dd18d9f034966f70a6a652"
+      },
+      {
+        "path": "notification_linux.go",
+        "sha256": "77fcd8cbf6753787d691a3b9ca9244066684a13de7956e8902ac52e24f59f8a1"
+      },
+      {
+        "path": "notification_linux_test.go",
+        "sha256": "c0daae848768f1dc4efc8fcc875eb1735e991510b271f44d4d9f3ea1f304d383"
+      },
+      {
+        "path": "notification_native_linux_test.go",
+        "sha256": "9cf466db10733bd441221ab5f3f5ad22b215acf633824430a97af787871463aa"
+      },
+      {
+        "path": "notification_options_linux_test.go",
+        "sha256": "a05ead2b81818afe89d55ed16edc7df6b32184755c056d527c42f052861a6dcf"
+      },
+      {
+        "path": "notification_unsupported.go",
+        "sha256": "e1d00b1eb65e7977391fe0044ae52791f37a316a8d57789294ad1080a2980c07"
+      },
+      {
+        "path": "resource_linux_test.go",
+        "sha256": "4e1e4dcb0bae23e2e4c13359c967780d3639c68c483cec1cd54555b6c3aa75dc"
+      },
+      {
+        "path": "sctp.go",
+        "sha256": "21cceffeb3dcec2b21ec1845f7511d8c1e1c7478a96aac0c7e82dd74e7be5a98"
+      },
+      {
+        "path": "sctp_linux.go",
+        "sha256": "4d612beb5a9a3f25b5a97f60aaa8da905cda1f2d3922d91c4eb11bb44a92df35"
+      },
+      {
+        "path": "sctp_unsupported.go",
+        "sha256": "54b0b4777632ae3b5570dfa47772885ccc6f468d26a660a6889d04563c660e15"
+      },
+      {
+        "path": "socket_deadline.go",
+        "sha256": "312a4851507a8ee1a83bf6d7b64c393c0f6cf2ec250b664fef0f41e249b017d4"
+      },
+      {
+        "path": "socket_deadline_linux.go",
+        "sha256": "e830fd8f4c7b60686acccc726cadb69b32a81568669ff9b97fe2c5ed370b4f95"
+      },
+      {
+        "path": "socket_deadline_linux_test.go",
+        "sha256": "c92c2b12bdfcf070ca70f2c109b3c1d486577bed73485dc47a836538d6f9269c"
+      },
+      {
+        "path": "socket_deadline_stub.go",
+        "sha256": "fadb53471d35b1edaf18826c7028280da834bcf6ed4365d1163d30a9709bdb97"
+      },
+      {
+        "path": "socket_io_linux.go",
+        "sha256": "397f3be775f1ae875fbd04adff503a0ccd2fee65ca21b0521521c99f19431cdc"
+      }
+    ]
+  },
+  "module": {
+    "Path": "github.com/skill215/sctp",
+    "Version": "v0.7.5-0.20261109044437-1649569dd9b8",
+    "Sum": "h1:NEMl6dUspDuuvuKtAhugXu5NFNSRb5+VHsFWwcuuZOQ=",
+    "GoModSum": "h1:g/XAScdNEAqQa2cjZdtxXVkxIJZEy77f7/fmCkTD2gg=",
+    "Origin": {
+      "VCS": "git",
+      "URL": "https://github.com/skill215/sctp",
+      "Hash": "1649569dd9b851b95664fef36f575c88a3547a78"
+    }
+  },
+  "checks": [
+    {
+      "name": "remote_matrix",
+      "status": "passed",
+      "jobs": 14,
+      "native_jobs": 4,
+      "unsupported_jobs": 4,
+      "qemu_jobs": 6,
+      "note": "All jobs passed on this candidate; platform-inapplicable conditional steps are not claimed as executed capabilities."
+    },
+    {
+      "name": "remote_native_details",
+      "status": "passed",
+      "native_race_rounds_total": 40,
+      "native_fuzz_executions_total": 20000000,
+      "required_namespace_parent_passes_total": 12,
+      "checkptr_low_gc_consumer_readme": true
+    },
+    {
+      "name": "real_module_consumer",
+      "status": "passed",
+      "command": "CGO_ENABLED=0 GOPROXY=off go test -mod=readonly -json -count=1 .",
+      "replace_used": false,
+      "output_sha256": "7d49baa81fe0cee246ffe27a47499ebbb3e19bd8664a4b9bbcb198eba2b75f8e",
+      "note": "Fresh public-download module cache; real SCTP resolution/dial/accept/read/write/options/parser/cancel. Root module unchanged."
+    },
+    {
+      "name": "source_and_workspace",
+      "status": "passed",
+      "note": "430 downloaded files match prior manifest;remote/head and CI merge trees equal;original sibling workspace and root production sources untouched."
+    }
+  ],
+  "scope": {
+    "candidate_delivery": "validated immutable remote commit and real installable pseudoversion;ready for pinned adapter development",
+    "formal_release": "draft PR,not merged,no tag/release created",
+    "diameter_adapter": "not implemented;actual fixed state/buffer budgets and Peer integration remain"
+  },
+  "remaining": [
+    "Upstream review/merge and formal release workflow before first-version release",
+    "Diameter SCTP adapter/Peer/actual budgets using exact candidate",
+    "Dialer/Listener production integration and DRA/OCS deployment",
+    "Existing independent Ro/SCAP1 and other v1 requirements"
+  ]
+}

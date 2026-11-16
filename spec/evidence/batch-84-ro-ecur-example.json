@@ -1,0 +1,306 @@
+{
+  "batch": 84,
+  "date": "2026-11-10",
+  "scope": "Standard Ro SMS no-UPDATE ECUR public example;application-owned continuation,identity/result/budget lifecycle;pure Go/no persistence",
+  "toolchain": "go1.26.10 linux/amd64",
+  "kernel": "6.6.114.1-microsoft-standard-WSL2",
+  "definitions": {
+    "generated": 11,
+    "changed": [],
+    "unchanged": 11,
+    "delegated_profiles": 1,
+    "total_profiles": 12,
+    "request_answer_pairs_including_overlapping_bindings": 20,
+    "generator": 13,
+    "operations": 8
+  },
+  "corpus": {
+    "wire": 1250,
+    "xml": 17,
+    "new_wire": 0,
+    "prior_wire_unchanged": 1250
+  },
+  "implemented": [
+    "Public two-Node TCP INITIAL1/number0 and TERM3/number1;original Session/endpoints/service,new exchange identities",
+    "Application-owned continuation after validated answer/grant;pair helper is not financial authorization",
+    "Eight ECUR CLI outcomes and retained IEC;no automatic followup on refusal or uncertain exchange",
+    "Continuation/answer negatives,independent reservations,mutable request ownership,two-phase cancel/close/late-answer",
+    "Independent consumer CGO0/race68 each,26 API docs;example20-round race1360"
+  ],
+  "checks": [
+    {
+      "name": "ro_public_api_race20",
+      "command": "go test ./examples/ro -race -json -run ^TestRoPublic -count=20 -timeout=5m",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 1360,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "f4236d8172cd7d238e5b0e8102afa773dad3fda13f64dda741e157b22422d062",
+      "test_names": [
+        "TestRoPublicBudgetLifetimeCancelAndClose",
+        "TestRoPublicCanceledAndInvalidRun",
+        "TestRoPublicConfiguration",
+        "TestRoPublicConfiguration/insufficient_transport",
+        "TestRoPublicConfiguration/wrong_binding",
+        "TestRoPublicECURBudgetsAndAssociation",
+        "TestRoPublicECURBudgetsAndAssociation/TERM_grant",
+        "TestRoPublicECURBudgetsAndAssociation/TERM_token",
+        "TestRoPublicECURBudgetsAndAssociation/old_INITIAL_answer",
+        "TestRoPublicECURBudgetsAndAssociation/wrong_service",
+        "TestRoPublicECURCancelAndClose",
+        "TestRoPublicECURCancelAndClose/term=false/close=false",
+        "TestRoPublicECURCancelAndClose/term=false/close=true",
+        "TestRoPublicECURCancelAndClose/term=true/close=false",
+        "TestRoPublicECURCancelAndClose/term=true/close=true",
+        "TestRoPublicECURCanceledAndInvalidRun",
+        "TestRoPublicECURContinuation",
+        "TestRoPublicECURContinuation/RSU_in_TERM",
+        "TestRoPublicECURContinuation/context",
+        "TestRoPublicECURContinuation/ctf_host",
+        "TestRoPublicECURContinuation/ctf_realm",
+        "TestRoPublicECURContinuation/missing_FINAL",
+        "TestRoPublicECURContinuation/missing_USU",
+        "TestRoPublicECURContinuation/number",
+        "TestRoPublicECURContinuation/ocs_host",
+        "TestRoPublicECURContinuation/ocs_realm",
+        "TestRoPublicECURContinuation/realm_only",
+        "TestRoPublicECURContinuation/requested_action",
+        "TestRoPublicECURContinuation/service",
+        "TestRoPublicECURContinuation/session",
+        "TestRoPublicECURContinuation/type_UPDATE",
+        "TestRoPublicECURFlow",
+        "TestRoPublicECURFlow/initial=2001/4012",
+        "TestRoPublicECURFlow/initial=3004",
+        "TestRoPublicECURFlow/initial=4012",
+        "TestRoPublicECURFlow/initial=5012",
+        "TestRoPublicECURFlow/term=2001",
+        "TestRoPublicECURFlow/term=3004",
+        "TestRoPublicECURFlow/term=5002",
+        "TestRoPublicECURFlow/term=5012",
+        "TestRoPublicExactUnits",
+        "TestRoPublicExample",
+        "TestRoPublicExample/2001",
+        "TestRoPublicExample/2001/4012",
+        "TestRoPublicExample/3004",
+        "TestRoPublicExample/4012",
+        "TestRoPublicExample/5012",
+        "TestRoPublicMissingNegotiatedApplication",
+        "TestRoPublicMissingNegotiatedApplication/0",
+        "TestRoPublicMissingNegotiatedApplication/1",
+        "TestRoPublicRequestBoundary",
+        "TestRoPublicRequestBoundary/missing_SMS_information",
+        "TestRoPublicRequestBoundary/missing_explicit_zero_action",
+        "TestRoPublicRequestBoundary/unsupported_action",
+        "TestRoPublicRequestBoundary/wrong_context",
+        "TestRoPublicRequestBoundary/wrong_host",
+        "TestRoPublicRequestBoundary/wrong_number",
+        "TestRoPublicRequestBoundary/wrong_realm",
+        "TestRoPublicResponseRules",
+        "TestRoPublicResponseRules/missing_child_result",
+        "TestRoPublicResponseRules/missing_grant",
+        "TestRoPublicResponseRules/unselected_experimental_pair",
+        "TestRoPublicResponseRules/wrong_number",
+        "TestRoPublicResponseRules/wrong_service",
+        "TestRoPublicResponseRules/wrong_type",
+        "TestRoPublicTerminalSources",
+        "TestRoPublicTerminalSources/false",
+        "TestRoPublicTerminalSources/true"
+      ]
+    },
+    {
+      "name": "core_cgo0",
+      "command": "go test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 3502,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "5459297ef5ee8c130a3b6bb1b195b2ebf747df5ce08023e2c88b45721ac45afd"
+    },
+    {
+      "name": "core_race",
+      "command": "go test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 3502,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "cdc3e77d189d13d49697960c2dbb7b26751331d2c5cbed73eea7c858d8906746"
+    },
+    {
+      "name": "adapter_cgo0",
+      "command": "go -C adapters/sctp test -mod=readonly -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": "0",
+      "status": "passed",
+      "test_subtest_seed_passes": 113,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "eee699c856c1de80c9f4eab259a2ffccf228b82c7ed3b9f41082878258998760"
+    },
+    {
+      "name": "adapter_race",
+      "command": "go -C adapters/sctp test -mod=readonly -race -json -count=1 -timeout=15m ./...",
+      "CGO_ENABLED": null,
+      "status": "passed",
+      "test_subtest_seed_passes": 113,
+      "failed_tests": 0,
+      "skipped_tests": 0,
+      "output_sha256": "091a9f59341a9b8c938fc6cdfb81ed9cd64968f01f431e5f5771aaf858a4786d"
+    },
+    {
+      "name": "core_vet",
+      "command": "go vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_build",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_verify",
+      "command": "go mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "core_cross_windows_amd64",
+      "command": "go build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_386",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_cross_linux_arm64",
+      "command": "go build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core_deps",
+      "command": "go list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "d73fcb5f9424b5b6f0428d93d3755fafbc1451533be1c36552a49a05579a070d",
+      "packages": 215,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit"
+      ]
+    },
+    {
+      "name": "adapter_vet",
+      "command": "go -C adapters/sctp vet -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_build",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_verify",
+      "command": "go -C adapters/sctp mod verify",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+    },
+    {
+      "name": "adapter_cross_windows_amd64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "windows/amd64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_386",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/386",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_cross_linux_arm64",
+      "command": "go -C adapters/sctp build -mod=readonly ./...",
+      "target": "linux/arm64",
+      "status": "passed",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter_deps",
+      "command": "go -C adapters/sctp list -deps -json ./...",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "9c09abd3ef1be1c78b52aa76e8dd4f67f88756b831a9f136edcee44201d93d66",
+      "packages": 78,
+      "cgo_files": 0,
+      "modules": [
+        "github.com/skill215/diameterkit",
+        "github.com/skill215/diameterkit/adapters/sctp",
+        "github.com/skill215/sctp"
+      ]
+    },
+    {
+      "name": "selected_modules",
+      "command": "go -C adapters/sctp list -m -json all",
+      "target": "linux/amd64",
+      "status": "passed",
+      "output_sha256": "a66a270cb4dc2fdf6f68bdfb3a7235032d6883e699ae2ef90e03a5d5060eb88e"
+    }
+  ],
+  "public_api_evidence": "spec/evidence/batch-84-ro-ecur-public-api.json",
+  "core_dependency": {
+    "version": "v0.0.0-diameterkit.batch84",
+    "sum": "h1:iA/xIY2pDYPiDDvzydN70XykswboTwfc3jxd5NzGIN8=",
+    "files": 137,
+    "zip_sha256": "c9d7ef03c7240fe1184ea94bddb1b1f06d99a5bca36a3690c43fba0305fa794b",
+    "manifest": "spec/evidence/batch-84-core-candidate-files.json",
+    "public_version": false
+  },
+  "module_isolation": "Fresh batch84 cache;GOWORKoff/no replace;offline core and identical formal SCTPv0.8.0 archive",
+  "existing_library_behavior_changed": false,
+  "new_example_sources": [
+    "examples/ro/ecur.go",
+    "examples/ro/ecur_test.go"
+  ],
+  "modified_example_sources": [
+    "examples/ro/main.go"
+  ],
+  "production_unchanged": [
+    "all previous library Go files and example tests/config",
+    "existing IEC exchange/checkAnswer/run bodies",
+    "eleven JSON definitions and generated outputs",
+    "SCTP adapter production/upstreamv0.8.0",
+    "1250wire/17XML"
+  ],
+  "requirement_status_change": {},
+  "batch_markdown": {
+    "path": "spec/local/batches/batch-84.md",
+    "ignored": true,
+    "publish": false
+  },
+  "remaining": [
+    "Independent ASR/ASA and other selected Ro public workflows;API/support matrix,CI/fuzz/stress/performance/public release",
+    "Private ACA/SCAP1 recovery and actual six-template/target evidence",
+    "Old application migration and real DRA/OCS acceptance"
+  ],
+  "release_status": "not_ready"
+}

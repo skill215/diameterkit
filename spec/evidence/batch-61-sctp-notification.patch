@@ -1,0 +1,821 @@
+diff --git a/README.md b/README.md
+--- a/README.md
++++ b/README.md
+@@ -385,3 +385,12 @@
+ Use keyed `SocketConfig` literals when migrating. This local incremental candidate
+ is not a released API or the independent v1 rewrite; typed U4 notifications,
+ platform/release gates and diameterkit integration remain pending.
++
++### Typed notification candidate (diameterkit batch 61)
++
++`ParseNotification` decodes the five selected Linux notification families into
++owned fixed fields and an explicitly borrowed tail. Unknown notification types
++remain raw, and the newer SEND_FAILED_EVENT is not mistaken for old SEND_FAILED.
++See [typed notifications and native validation](docs/diameterkit-u4-notifications.md).
++All five families and the large-notification retry path have local kernel tests;
++U5 budget/platform/publication and diameterkit integration remain separate gates.
+diff --git a/docs/diameterkit-u4-notifications.md b/docs/diameterkit-u4-notifications.md
+new file mode 100644
+--- /dev/null
++++ b/docs/diameterkit-u4-notifications.md
+@@ -0,0 +1,21 @@
++# Typed Linux notifications (diameterkit batch 61)
++
++Incremental candidate on v0.7.4/62ad388 plus batches58–60, separate from the v1 rewrite. ParseNotification is a pure decoder for the selected Linux SNDRCV/EVENTS/old-SEND_FAILED layout. It takes the complete bytes returned by ReadEvent and returns Notification, with a Kind discriminant, owned fixed values and an explicitly borrowed Tail. No persistence, peer state, retry or Diameter policy is involved.
++
++Header.Length must equal the supplied length; reserved non-notification type values are rejected. Association changes require at least20 bytes and borrow their trailing info. Old send failures require at least48 bytes and borrow the returned payload, which may be only a fragment of the original message. Address changes require exactly148 bytes, shutdown12 and partial-delivery24. The selected partial layout includes stream and sequence fields, so their separate Presence values are true even when both numeric values are zero. Short16/20-byte prefixes are rejected, not guessed into a different ABI. Adding another layout requires a separate declared contract.
++
++Unknown well-formed notification types, including the newer SEND_FAILED_EVENT, keep their original header and borrowed body. Unknown state/error/flags values in known notifications remain numeric; the parser does not invent a successful state or delivery conclusion. Address fields are decoded by checked AF_INET/AF_INET6 offsets into a netip.Addr value, with family, port, IPv6 flowinfo and numeric scope retained. There is no unsafe sockaddr projection, DNS or scope-name lookup. All SNDRCV fields are retained; PPID is converted from network order exactly once using the same decoder as ReadEvent.
++
++Tail has capacity equal to length; zero-length tails are nil. It is not an owned copy and must be copied within the caller's budget before the input buffer is reused if retention is needed. Fixed fields stay valid after buffer reuse. Parsing does not allocate proportional to input size. A 1MiB borrowed-tail test verifies zero heap allocations for that selected path; this is not a total connection-memory claim. Notification result/parse workspace remains part of the future adapter's full memory accounting, separate from MessageIORequirements' receive/send workspace.
++
++Malformed input returns a zero Notification and ErrMessageBoundary, with no partially trusted facts. ParseNotification is independent of SCTPConn and cannot change its read latch: after a consumed notification fails parsing, the Diameter adapter must close the connection. No parser error authorizes another read or reinterpretation as a different notification format.
++
++Native Linux tests generate all five families using private loopback sockets: establishment and orderly shutdown; a queued reliable message followed by peer abort (old SEND_FAILED, larger than20 bytes); explicit selection of the existing primary path (ADDR_MADE_PRIM,148 bytes); and an abort after partial delivery begins (24 bytes). A real large notification is first refused without consumption using48 bytes and then read with the exactly reported size. Test-only raw controls configure buffers/partial-delivery threshold or abort a socket; no unstable send flags or mode mutation were added to the public API. These are local kernel tests, not DRA interoperability, real route loss or exhaustive state transitions.
++
++Required option readback mismatches cover events/receive-info, NODELAY, interleave and fragmentation. A real UDP descriptor and invalid descriptor verify ENOPROTOOPT/EOPNOTSUPP and EBADF causes rather than fake success. Twenty accepted descriptors inheriting a deliberately corrupted NODELAY value are rejected and closed without fd growth, after which the same listener accepts and transfers data normally. Native tests run20 times under race detection. This is not kernel fault injection at every setsockopt/getsockopt call or every platform/ABI.
++
++Five layout tests include unknown states, signed fields, IPv4/IPv6 scopes, full SNDRCV/byte order, owned fields and borrowed tails. All shortened fixed structures, oversized declared lengths, unsupported families, trailing bytes in fixed layouts and unknown/new event handling have deterministic tests. Fuzzing checks arbitrary bytes for panic-free, non-mutating, bounded results. Full test/race/CGO0 build and exact-source evidence are recorded by diameterkit batch61; no release or dependency pin is implied.
++
++Sources: [Linux v6.12 UAPI](https://github.com/torvalds/linux/blob/v6.12/include/uapi/linux/sctp.h), [Linux notification construction](https://github.com/torvalds/linux/blob/v6.12/net/sctp/ulpevent.c), [Linux socket implementation](https://github.com/torvalds/linux/blob/v6.12/net/sctp/socket.c), [RFC6458 notification semantics](https://www.rfc-editor.org/rfc/rfc6458.html#section-6.1). The ABI layouts are normative for this candidate; observations are tied to the tested kernel/architecture.
++
++Next is the bounded U5 integration/release assessment: full connection/poller/context/parse-result budget, supported native platform/ABI evidence and an installable exact candidate, then diameterkit adapter/Peer and deployment checks. This batch closes the previously missing five-family parser and native long/failure/address/partial event evidence on the current host. It does not make the Diameter SCTP transport production-ready or mark the independent upstream v1 design implemented.
+diff --git a/message_io_linux.go b/message_io_linux.go
+--- a/message_io_linux.go
++++ b/message_io_linux.go
+@@ -67,7 +67,7 @@
+ 				return info, false, ErrMessageBoundary
+ 			}
+ 			p := oob[hs:int(length)]
+-			info = SndRcvInfo{Stream: nativeEndian.Uint16(p), SSN: nativeEndian.Uint16(p[2:]), Flags: nativeEndian.Uint16(p[4:]), PPID: binary.BigEndian.Uint32(p[8:]), Context: nativeEndian.Uint32(p[12:]), TTL: nativeEndian.Uint32(p[16:]), TSN: nativeEndian.Uint32(p[20:]), CumTSN: nativeEndian.Uint32(p[24:]), AssocID: int32(nativeEndian.Uint32(p[28:]))}
++			info = decodeMessageInfo(p)
+ 			present = true
+ 		}
+ 		step := syscall.CmsgSpace(int(length) - hs)
+@@ -285,3 +285,8 @@
+ 	}
+ 	return max(n, 0), actual
+ }
++
++// decodeMessageInfo requires a validated 32-byte SNDRCV payload.
++func decodeMessageInfo(p []byte) SndRcvInfo {
++	return SndRcvInfo{Stream: nativeEndian.Uint16(p), SSN: nativeEndian.Uint16(p[2:]), Flags: nativeEndian.Uint16(p[4:]), PPID: binary.BigEndian.Uint32(p[8:]), Context: nativeEndian.Uint32(p[12:]), TTL: nativeEndian.Uint32(p[16:]), TSN: nativeEndian.Uint32(p[20:]), CumTSN: nativeEndian.Uint32(p[24:]), AssocID: int32(nativeEndian.Uint32(p[28:]))}
++}
+diff --git a/notification.go b/notification.go
+new file mode 100644
+--- /dev/null
++++ b/notification.go
+@@ -0,0 +1,73 @@
++package sctp
++
++import "net/netip"
++
++// NotificationKind identifies the populated value in Notification. Unknown
++// notifications retain their original Header and borrowed Tail.
++type NotificationKind uint8
++
++const (
++	NotificationUnknown NotificationKind = iota
++	NotificationAssociationChange
++	NotificationPeerAddressChange
++	NotificationSendFailure
++	NotificationShutdown
++	NotificationPartialDelivery
++)
++
++// Notification contains owned fixed fields and one explicitly borrowed Tail.
++// Tail is association info, failed payload, or an unknown notification body.
++// It is valid only while the input to ParseNotification remains unchanged.
++// The parser neither retains the input elsewhere nor interprets Diameter data.
++type Notification struct {
++	Header          NotificationHeader
++	Kind            NotificationKind
++	Association     AssociationChange
++	PeerAddress     PeerAddressChange
++	SendFailure     SendFailure
++	Shutdown        ShutdownNotification
++	PartialDelivery PartialDeliveryNotification
++	Tail            []byte
++}
++
++type AssociationChange struct {
++	State                           SCTPState // unknown numeric states are preserved
++	Error                           uint16
++	OutboundStreams, InboundStreams uint16
++	AssocID                         SCTPAssocID
++}
++
++// NotificationAddress preserves the Linux sockaddr family, network port and
++// IPv6 scope/flow fields. IP is an owned value; no zone/DNS lookup is performed.
++type NotificationAddress struct {
++	Family            uint16
++	Port              uint16
++	IP                netip.Addr
++	ScopeID, FlowInfo uint32
++}
++type PeerAddressChange struct {
++	Address      NotificationAddress
++	State, Error int32 // unknown numeric states/errors are preserved
++	AssocID      SCTPAssocID
++}
++
++type SendFailure struct {
++	Error   uint32
++	Info    SndRcvInfo // PPID in host byte order, including valid zero values
++	AssocID SCTPAssocID
++	// DATA_UNSENT/DATA_SENT is preserved in Notification.Header.Flags.
++}
++
++type ShutdownNotification struct{ AssocID SCTPAssocID }
++type PartialDeliveryNotification struct {
++	Indication                     uint32
++	AssocID                        SCTPAssocID
++	Stream, Sequence               uint32
++	StreamPresent, SequencePresent bool
++}
++
++const (
++	SendFailureDataUnsent  uint16 = 0
++	SendFailureDataSent    uint16 = 1
++	PartialDeliveryAborted uint32 = 0
++)
+diff --git a/notification_example_test.go b/notification_example_test.go
+new file mode 100644
+--- /dev/null
++++ b/notification_example_test.go
+@@ -0,0 +1,23 @@
++//go:build linux && !386
++
++package sctp_test
++
++import (
++	"encoding/binary"
++	"fmt"
++	sctp "github.com/skill215/sctp"
++)
++
++func ExampleParseNotification() {
++	// In a real reader pass notificationBuffer[:result.N] after ReadEvent.
++	p := make([]byte, 12)
++	binary.NativeEndian.PutUint16(p, uint16(sctp.SCTP_SHUTDOWN_EVENT))
++	binary.NativeEndian.PutUint32(p[4:], 12)
++	binary.NativeEndian.PutUint32(p[8:], 7)
++	n, err := sctp.ParseNotification(p)
++	if err != nil {
++		return
++	}
++	fmt.Println(n.Kind == sctp.NotificationShutdown, n.Shutdown.AssocID)
++	// Output: true 7
++}
+diff --git a/notification_linux.go b/notification_linux.go
+new file mode 100644
+--- /dev/null
++++ b/notification_linux.go
+@@ -0,0 +1,91 @@
++//go:build linux && !386
++
++package sctp
++
++import (
++	"encoding/binary"
++	"net/netip"
++	"syscall"
++)
++
++// ParseNotification decodes one complete notification in the selected Linux
++// SNDRCV/EVENTS/old-SEND_FAILED ABI. Length must exactly match len(p).
++// Fixed structures are copied; only Tail borrows p, with capacity limited to
++// its length. Unknown states/flags remain numeric, unknown types remain raw.
++// Malformed input returns a zero Notification and ErrMessageBoundary.
++func ParseNotification(p []byte) (Notification, error) {
++	var n Notification
++	if len(p) < 8 {
++		return n, ErrMessageBoundary
++	}
++	h := NotificationHeader{Type: nativeEndian.Uint16(p), Flags: nativeEndian.Uint16(p[2:]), Length: nativeEndian.Uint32(p[4:])}
++	if uint64(h.Length) != uint64(len(p)) || h.Type <= uint16(SCTP_SN_TYPE_BASE) {
++		return n, ErrMessageBoundary
++	}
++	n.Header = h
++	switch SCTPNotificationType(h.Type) {
++	case SCTP_ASSOC_CHANGE:
++		if len(p) < 20 {
++			return Notification{}, ErrMessageBoundary
++		}
++		n.Kind = NotificationAssociationChange
++		n.Association = AssociationChange{State: SCTPState(nativeEndian.Uint16(p[8:])), Error: nativeEndian.Uint16(p[10:]), OutboundStreams: nativeEndian.Uint16(p[12:]), InboundStreams: nativeEndian.Uint16(p[14:]), AssocID: SCTPAssocID(nativeEndian.Uint32(p[16:]))}
++		if len(p) > 20 {
++			n.Tail = p[20:len(p):len(p)]
++		}
++	case SCTP_PEER_ADDR_CHANGE:
++		if len(p) != 148 {
++			return Notification{}, ErrMessageBoundary
++		}
++		a, e := notificationAddress(p[8:136])
++		if e != nil {
++			return Notification{}, e
++		}
++		n.Kind = NotificationPeerAddressChange
++		n.PeerAddress = PeerAddressChange{Address: a, State: int32(nativeEndian.Uint32(p[136:])), Error: int32(nativeEndian.Uint32(p[140:])), AssocID: SCTPAssocID(nativeEndian.Uint32(p[144:]))}
++	case SCTP_SEND_FAILED:
++		if len(p) < 48 {
++			return Notification{}, ErrMessageBoundary
++		}
++		n.Kind = NotificationSendFailure
++		n.SendFailure = SendFailure{Error: nativeEndian.Uint32(p[8:]), Info: decodeMessageInfo(p[12:44]), AssocID: SCTPAssocID(nativeEndian.Uint32(p[44:]))}
++		if len(p) > 48 {
++			n.Tail = p[48:len(p):len(p)]
++		}
++	case SCTP_SHUTDOWN_EVENT:
++		if len(p) != 12 {
++			return Notification{}, ErrMessageBoundary
++		}
++		n.Kind = NotificationShutdown
++		n.Shutdown.AssocID = SCTPAssocID(nativeEndian.Uint32(p[8:]))
++	case SCTP_PARTIAL_DELIVERY_EVENT:
++		// The selected current Linux ABI is exactly24 bytes. A truncated/older
++		// prefix must not manufacture stream0/sequence0 presence.
++		if len(p) != 24 {
++			return Notification{}, ErrMessageBoundary
++		}
++		n.Kind = NotificationPartialDelivery
++		n.PartialDelivery = PartialDeliveryNotification{Indication: nativeEndian.Uint32(p[8:]), AssocID: SCTPAssocID(nativeEndian.Uint32(p[12:])), Stream: nativeEndian.Uint32(p[16:]), Sequence: nativeEndian.Uint32(p[20:]), StreamPresent: true, SequencePresent: true}
++	default:
++		n.Kind = NotificationUnknown
++		if len(p) > 8 {
++			n.Tail = p[8:len(p):len(p)]
++		}
++	}
++	return n, nil
++}
++
++func notificationAddress(p []byte) (NotificationAddress, error) {
++	a := NotificationAddress{Family: nativeEndian.Uint16(p), Port: binary.BigEndian.Uint16(p[2:])}
++	switch a.Family {
++	case syscall.AF_INET:
++		a.IP = netip.AddrFrom4([4]byte(p[4:8]))
++	case syscall.AF_INET6:
++		a.FlowInfo = binary.BigEndian.Uint32(p[4:])
++		a.IP = netip.AddrFrom16([16]byte(p[8:24]))
++		a.ScopeID = nativeEndian.Uint32(p[24:])
++	default:
++		return NotificationAddress{}, ErrMessageBoundary
++	}
++	return a, nil
++}
+diff --git a/notification_linux_test.go b/notification_linux_test.go
+new file mode 100644
+--- /dev/null
++++ b/notification_linux_test.go
+@@ -0,0 +1,199 @@
++//go:build linux && !386
++
++package sctp
++
++import (
++	"bytes"
++	"encoding/binary"
++	"errors"
++	"net/netip"
++	"reflect"
++	"syscall"
++	"testing"
++)
++
++func notificationFixture(kind SCTPNotificationType, size int) []byte {
++	p := make([]byte, size)
++	nativeEndian.PutUint16(p, uint16(kind))
++	nativeEndian.PutUint32(p[4:], uint32(size))
++	return p
++}
++func TestNotificationFiveLayouts(t *testing.T) {
++	t.Run("association", func(t *testing.T) {
++		p := notificationFixture(SCTP_ASSOC_CHANGE, 23)
++		nativeEndian.PutUint16(p[2:], 0xff)
++		nativeEndian.PutUint16(p[8:], 0xfffe)
++		nativeEndian.PutUint16(p[10:], 19)
++		nativeEndian.PutUint16(p[12:], 3)
++		nativeEndian.PutUint16(p[14:], 5)
++		nativeEndian.PutUint32(p[16:], 0xfffffffe)
++		copy(p[20:], "abc")
++		n, e := ParseNotification(p)
++		if e != nil || n.Kind != NotificationAssociationChange || n.Header.Flags != 255 || n.Association != (AssociationChange{State: 65534, Error: 19, OutboundStreams: 3, InboundStreams: 5, AssocID: -2}) || string(n.Tail) != "abc" {
++			t.Fatal(n, e)
++		}
++		p[8] = 0
++		p[20] = 'X'
++		if n.Association.State != 65534 || string(n.Tail) != "Xbc" || cap(n.Tail) != len(n.Tail) {
++			t.Fatal("fixed fields must be owned; tail borrowed", n)
++		}
++	})
++	for _, v6 := range []bool{false, true} {
++		t.Run(map[bool]string{false: "ipv4", true: "ipv6"}[v6], func(t *testing.T) {
++			p := notificationFixture(SCTP_PEER_ADDR_CHANGE, 148)
++			a := p[8:136]
++			ip := netip.MustParseAddr("192.0.2.1")
++			family := uint16(syscall.AF_INET)
++			if v6 {
++				ip = netip.MustParseAddr("fe80::1234")
++				family = syscall.AF_INET6
++				binary.BigEndian.PutUint32(a[4:], 0x12345)
++				copy(a[8:24], ip.AsSlice())
++				nativeEndian.PutUint32(a[24:], 7)
++			} else {
++				copy(a[4:8], ip.AsSlice())
++			}
++			nativeEndian.PutUint16(a, family)
++			binary.BigEndian.PutUint16(a[2:], 3868)
++			nativeEndian.PutUint32(p[136:], 0xffffffff)
++			nativeEndian.PutUint32(p[140:], 0xfffffffe)
++			nativeEndian.PutUint32(p[144:], 19)
++			n, e := ParseNotification(p)
++			if e != nil || n.Kind != NotificationPeerAddressChange || n.PeerAddress.Address.IP != ip || n.PeerAddress.Address.Port != 3868 || n.PeerAddress.Address.Family != family || n.PeerAddress.State != -1 || n.PeerAddress.Error != -2 || n.PeerAddress.AssocID != 19 {
++				t.Fatal(n, e)
++			}
++			if v6 && (n.PeerAddress.Address.ScopeID != 7 || n.PeerAddress.Address.FlowInfo != 0x12345) {
++				t.Fatal(n)
++			}
++			clear(p)
++			if n.PeerAddress.Address.IP != ip {
++				t.Fatal("address borrowed")
++			}
++		})
++	}
++	t.Run("send-failed", func(t *testing.T) {
++		p := notificationFixture(SCTP_SEND_FAILED, 53)
++		nativeEndian.PutUint16(p[2:], SendFailureDataSent)
++		nativeEndian.PutUint32(p[8:], 41)
++		b := p[12:44]
++		nativeEndian.PutUint16(b, 2)
++		nativeEndian.PutUint16(b[2:], 3)
++		nativeEndian.PutUint16(b[4:], 4)
++		binary.BigEndian.PutUint32(b[8:], 46)
++		for i, v := range []uint32{12, 13, 14, 15, 16} {
++			nativeEndian.PutUint32(b[12+i*4:], v)
++		}
++		nativeEndian.PutUint32(p[44:], 17)
++		copy(p[48:], "hello")
++		n, e := ParseNotification(p)
++		want := SndRcvInfo{Stream: 2, SSN: 3, Flags: 4, PPID: 46, Context: 12, TTL: 13, TSN: 14, CumTSN: 15, AssocID: 16}
++		if e != nil || n.Kind != NotificationSendFailure || n.SendFailure.Info != want || n.SendFailure.Error != 41 || n.SendFailure.AssocID != 17 || n.Header.Flags != SendFailureDataSent || string(n.Tail) != "hello" {
++			t.Fatal(n, e)
++		}
++		p[48] = 'H'
++		clear(p[12:44])
++		if n.SendFailure.Info != want || string(n.Tail) != "Hello" {
++			t.Fatal(n)
++		}
++	})
++	t.Run("shutdown", func(t *testing.T) {
++		p := notificationFixture(SCTP_SHUTDOWN_EVENT, 12)
++		nativeEndian.PutUint32(p[8:], 8)
++		n, e := ParseNotification(p)
++		if e != nil || n.Kind != NotificationShutdown || n.Shutdown.AssocID != 8 || len(n.Tail) != 0 {
++			t.Fatal(n, e)
++		}
++	})
++	t.Run("partial", func(t *testing.T) {
++		p := notificationFixture(SCTP_PARTIAL_DELIVERY_EVENT, 24)
++		nativeEndian.PutUint32(p[8:], 123)
++		nativeEndian.PutUint32(p[12:], 9)
++		n, e := ParseNotification(p)
++		if e != nil || n.Kind != NotificationPartialDelivery || n.PartialDelivery.Indication != 123 || n.PartialDelivery.AssocID != 9 || !n.PartialDelivery.StreamPresent || !n.PartialDelivery.SequencePresent || n.PartialDelivery.Stream != 0 || n.PartialDelivery.Sequence != 0 {
++			t.Fatal(n, e)
++		}
++	})
++}
++func TestNotificationUnknownAndFailures(t *testing.T) {
++	// New SEND_FAILED_EVENT must remain unknown, not decoded as old SNDRCV.
++	for _, kind := range []SCTPNotificationType{SCTP_REMOTE_ERROR, SCTP_SN_TYPE_BASE + 13, 65535} {
++		p := notificationFixture(kind, 13)
++		nativeEndian.PutUint16(p[2:], 65534)
++		copy(p[8:], "extra")
++		n, e := ParseNotification(p)
++		if e != nil || n.Kind != NotificationUnknown || n.Header.Type != uint16(kind) || n.Header.Flags != 65534 || string(n.Tail) != "extra" || cap(n.Tail) != len(n.Tail) {
++			t.Fatal(n, e)
++		}
++	}
++	for _, kind := range []SCTPNotificationType{0, SCTP_SN_TYPE_BASE} {
++		if n, e := ParseNotification(notificationFixture(kind, 8)); !errors.Is(e, ErrMessageBoundary) || !reflect.DeepEqual(n, Notification{}) {
++			t.Fatal(n, e)
++		}
++	}
++	for _, tc := range []struct {
++		kind SCTPNotificationType
++		size int
++	}{{SCTP_ASSOC_CHANGE, 20}, {SCTP_PEER_ADDR_CHANGE, 148}, {SCTP_SEND_FAILED, 48}, {SCTP_SHUTDOWN_EVENT, 12}, {SCTP_PARTIAL_DELIVERY_EVENT, 24}} {
++		for size := 0; size < tc.size; size++ {
++			p := make([]byte, size)
++			if size >= 8 {
++				p = notificationFixture(tc.kind, size)
++			}
++			n, e := ParseNotification(p)
++			if !errors.Is(e, ErrMessageBoundary) || !reflect.DeepEqual(n, Notification{}) {
++				t.Fatalf("kind=%d size=%d result=%+v err=%v", tc.kind, size, n, e)
++			}
++		}
++		p := notificationFixture(tc.kind, tc.size)
++		nativeEndian.PutUint32(p[4:], 0xffffffff)
++		if _, e := ParseNotification(p); !errors.Is(e, ErrMessageBoundary) {
++			t.Fatal(e)
++		}
++	}
++	for _, kind := range []SCTPNotificationType{SCTP_PEER_ADDR_CHANGE, SCTP_SHUTDOWN_EVENT, SCTP_PARTIAL_DELIVERY_EVENT} {
++		size := map[SCTPNotificationType]int{SCTP_PEER_ADDR_CHANGE: 148, SCTP_SHUTDOWN_EVENT: 12, SCTP_PARTIAL_DELIVERY_EVENT: 24}[kind]
++		if _, e := ParseNotification(notificationFixture(kind, size+1)); !errors.Is(e, ErrMessageBoundary) {
++			t.Fatal(e)
++		}
++	}
++	if _, e := ParseNotification(notificationFixture(SCTP_PEER_ADDR_CHANGE, 148)); !errors.Is(e, ErrMessageBoundary) {
++		t.Fatal("unknown family", e)
++	}
++}
++func TestNotificationLargeTailNoAllocation(t *testing.T) {
++	p := notificationFixture(SCTP_SEND_FAILED, 48+1<<20)
++	copy(p[48:], bytes.Repeat([]byte{0x42}, len(p)-48))
++	var n Notification
++	var e error
++	alloc := testing.AllocsPerRun(100, func() { n, e = ParseNotification(p) })
++	if e != nil || alloc != 0 || len(n.Tail) != 1<<20 || cap(n.Tail) != len(n.Tail) {
++		t.Fatal(alloc, len(n.Tail), e)
++	}
++}
++func FuzzParseNotification(f *testing.F) {
++	for _, tc := range []struct {
++		k SCTPNotificationType
++		n int
++	}{{SCTP_ASSOC_CHANGE, 20}, {SCTP_SEND_FAILED, 48}, {SCTP_SHUTDOWN_EVENT, 12}, {SCTP_PARTIAL_DELIVERY_EVENT, 24}, {65535, 8}} {
++		f.Add(notificationFixture(tc.k, tc.n))
++	}
++	p := notificationFixture(SCTP_PEER_ADDR_CHANGE, 148)
++	nativeEndian.PutUint16(p[8:], syscall.AF_INET6)
++	f.Add(p)
++	f.Fuzz(func(t *testing.T, p []byte) {
++		before := bytes.Clone(p)
++		n, e := ParseNotification(p)
++		if !bytes.Equal(before, p) {
++			t.Fatal("input mutated")
++		}
++		if e != nil {
++			if !errors.Is(e, ErrMessageBoundary) || !reflect.DeepEqual(n, Notification{}) {
++				t.Fatal(n, e)
++			}
++			return
++		}
++		if uint64(n.Header.Length) != uint64(len(p)) || cap(n.Tail) != len(n.Tail) || len(n.Tail) > len(p) {
++			t.Fatal(n)
++		}
++	})
++}
+diff --git a/notification_native_linux_test.go b/notification_native_linux_test.go
+new file mode 100644
+--- /dev/null
++++ b/notification_native_linux_test.go
+@@ -0,0 +1,187 @@
++//go:build linux && !386
++
++package sctp
++
++import (
++	"bytes"
++	"context"
++	"errors"
++	"net"
++	"syscall"
++	"testing"
++	"time"
++	"unsafe"
++)
++
++// Test-only raw control deliberately creates kernel events/faults. It does not
++// add public mode mutation or unreliable-send flags to WriteMsgContext.
++func notificationSetInt(t *testing.T, c *SCTPConn, level, opt, value int) {
++	t.Helper()
++	if e := c.withFD(func(fd int) error { return syscall.SetsockoptInt(fd, level, opt, value) }); e != nil {
++		t.Fatal(e)
++	}
++}
++func notificationAbort(t *testing.T, c *SCTPConn) {
++	t.Helper()
++	if e := c.withFD(func(fd int) error {
++		return syscall.SetsockoptLinger(fd, syscall.SOL_SOCKET, syscall.SO_LINGER, &syscall.Linger{Onoff: 1})
++	}); e != nil {
++		t.Fatal(e)
++	}
++	if e := c.Close(); e != nil {
++		t.Fatal(e)
++	}
++}
++func notificationRead(t *testing.T, c *SCTPConn) (ReadResult, Notification) {
++	t.Helper()
++	d := make([]byte, 20)
++	b := make([]byte, 1<<20)
++	o := make([]byte, 128)
++	r, e := c.ReadEvent(context.Background(), d, b, o)
++	if e != nil {
++		t.Fatal(r, e)
++	}
++	if r.Kind != ReadNotification {
++		t.Fatal("expected notification", r)
++	}
++	n, e := ParseNotification(b[:r.N])
++	if e != nil {
++		t.Fatal(r, e)
++	}
++	return r, n
++}
++
++func TestNotificationNativeAssociationShutdown(t *testing.T) {
++	c, s := messagePair(t, SCTP_EVENT_ASSOCIATION|SCTP_EVENT_SHUTDOWN)
++	for _, conn := range []*SCTPConn{c, s} {
++		_, n := notificationRead(t, conn)
++		status, e := conn.GetStatus()
++		if e != nil || n.Kind != NotificationAssociationChange || n.Association.State != SCTP_COMM_UP || n.Association.AssocID != status.AssocID || n.Association.OutboundStreams != status.Ostreams || n.Association.InboundStreams != status.Instreams {
++			t.Fatal(n, status, e)
++		}
++	}
++	if e := c.Close(); e != nil {
++		t.Fatal(e)
++	}
++	_, n := notificationRead(t, s)
++	if n.Kind != NotificationShutdown || int32(n.Shutdown.AssocID) != s.messageAssoc {
++		t.Fatal(n)
++	}
++}
++func TestNotificationNativeLargeSendFailure(t *testing.T) {
++	c, s := messagePair(t, SCTP_EVENT_SEND_FAILURE)
++	notificationSetInt(t, c, syscall.SOL_SOCKET, syscall.SO_SNDBUF, 1<<20)
++	notificationSetInt(t, s, syscall.SOL_SOCKET, syscall.SO_RCVBUF, 4096)
++	payload := bytes.Repeat([]byte{0x5a}, 256<<10)
++	n, e := c.WriteMsgContext(context.Background(), payload, SndInfo{SID: 1, PPID: 46, Context: 0x12345678})
++	if e != nil || n != len(payload) {
++		t.Fatal(n, e)
++	}
++	notificationAbort(t, s)
++	d := make([]byte, 1)
++	b := make([]byte, 48)
++	o := make([]byte, 128)
++	r, e := c.ReadEvent(context.Background(), d, b, o)
++	if !errors.Is(e, ErrNotificationTooLarge) || r.RequiredNotificationBytes <= 48 || r.RequiredNotificationBytes > 1<<20 || r.Consumed || r.N != 0 || r.RecvFlags != 0 {
++		t.Fatal(r, e)
++	}
++	b = make([]byte, int(r.RequiredNotificationBytes))
++	want := r.RequiredNotificationBytes
++	r, e = c.ReadEvent(context.Background(), d, b, o)
++	if e != nil || r.Kind != ReadNotification || uint32(r.N) != want || !r.Consumed {
++		t.Fatal(r, e)
++	}
++	event, e := ParseNotification(b[:r.N])
++	if e != nil || event.Kind != NotificationSendFailure || event.SendFailure.Info.PPID != 46 || event.SendFailure.Info.Stream != 1 || event.SendFailure.Info.Context != 0x12345678 || int32(event.SendFailure.AssocID) != c.messageAssoc || len(event.Tail) == 0 || !bytes.Equal(event.Tail, bytes.Repeat([]byte{0x5a}, len(event.Tail))) {
++		t.Fatal(event, e)
++	}
++	if event.Header.Flags != SendFailureDataSent && event.Header.Flags != SendFailureDataUnsent {
++		t.Fatal(event.Header)
++	}
++	t.Logf("native old SEND_FAILED bytes=%d tail=%d flags=%d error=%d", r.N, len(event.Tail), event.Header.Flags, event.SendFailure.Error)
++}
++func TestNotificationNativePeerAddress(t *testing.T) {
++	c, s := messagePair(t, SCTP_EVENT_ADDRESS)
++	// SCTP_PRIMARY_ADDR explicitly selects this known peer path and causes the
++	// native ADDR_MADE_PRIM notification. No network namespace or route mutation.
++	peer := s.LocalAddr().(*SCTPAddr)
++	var prim [132]byte
++	nativeEndian.PutUint32(prim[:], uint32(c.messageAssoc))
++	nativeEndian.PutUint16(prim[4:], syscall.AF_INET)
++	prim[6] = byte(peer.Port >> 8)
++	prim[7] = byte(peer.Port)
++	copy(prim[8:12], peer.IPAddrs[0].IP.To4())
++	if e := c.withFD(func(fd int) error {
++		_, _, e := setsockopt(fd, SCTP_PRIMARY_ADDR, uintptr(unsafe.Pointer(&prim[0])), uintptr(len(prim)))
++		return e
++	}); e != nil {
++		t.Fatal(e)
++	}
++	r, n := notificationRead(t, c)
++	if r.N != 148 || n.Kind != NotificationPeerAddressChange || int32(n.PeerAddress.AssocID) != c.messageAssoc || n.PeerAddress.Address.Port != uint16(peer.Port) {
++		t.Fatal(r, n)
++	}
++	t.Logf("native peer address state=%d bytes=%d", n.PeerAddress.State, r.N)
++}
++func TestNotificationNativePartialAbort(t *testing.T) {
++	opts := MessageOptions{ReceiveInfo: ReceiveInfoSNDRCV, Events: SCTP_EVENT_PARTIAL_DELIVERY, NoDelay: true, AllowFragmentation: true}
++	cfg := SocketConfig{Messages: &opts}
++	ln, e := cfg.Listen("sctp4", &SCTPAddr{IPAddrs: []net.IPAddr{{IP: net.IPv4(127, 0, 0, 1)}}})
++	if e != nil {
++		t.Fatal(e)
++	}
++	defer ln.Close()
++	if e := ln.io.Control(func(fd uintptr) { e = syscall.SetsockoptInt(int(fd), syscall.SOL_SOCKET, syscall.SO_RCVBUF, 4096) }); e != nil {
++		t.Fatal(e)
++	}
++	if e != nil {
++		t.Fatal(e)
++	}
++	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
++	defer cancel()
++	c, e := cfg.DialContext(ctx, "sctp4", nil, ln.Addr().(*SCTPAddr))
++	if e != nil {
++		t.Fatal(e)
++	}
++	defer c.Close()
++	s, e := ln.AcceptSCTP()
++	if e != nil {
++		t.Fatal(e)
++	}
++	defer s.Close()
++	c.SetDeadline(time.Now().Add(3 * time.Second))
++	s.SetDeadline(time.Now().Add(3 * time.Second))
++	notificationSetInt(t, s, SOL_SCTP, 19, 1024) // PARTIAL_DELIVERY_POINT, test only
++	notificationSetInt(t, c, SOL_SCTP, SCTP_MAXSEG, 512)
++	notificationSetInt(t, c, syscall.SOL_SOCKET, syscall.SO_SNDBUF, 1<<20)
++	if n, e := c.WriteMsgContext(ctx, bytes.Repeat([]byte{0x7a}, 256<<10), SndInfo{}); e != nil || n != 256<<10 {
++		t.Fatal(n, e)
++	}
++	d := make([]byte, 4096)
++	b := make([]byte, 128)
++	o := make([]byte, 128)
++	r, e := s.ReadEvent(ctx, d, b, o)
++	if e != nil || r.Kind != ReadData || r.N == 0 || r.RecvFlags&syscall.MSG_EOR != 0 {
++		t.Fatal(r, e)
++	}
++	notificationAbort(t, c)
++	for i := 0; i < 256; i++ {
++		r, e = s.ReadEvent(ctx, d, b, o)
++		if e != nil {
++			t.Fatal(r, e)
++		}
++		if r.Kind == ReadData {
++			if r.RecvFlags&syscall.MSG_EOR != 0 {
++				t.Fatal("entire message completed before abort")
++			}
++			continue
++		}
++		n, e := ParseNotification(b[:r.N])
++		if e != nil || n.Kind != NotificationPartialDelivery || n.PartialDelivery.Indication != PartialDeliveryAborted || int32(n.PartialDelivery.AssocID) != s.messageAssoc || !n.PartialDelivery.StreamPresent || !n.PartialDelivery.SequencePresent {
++			t.Fatal(n, e)
++		}
++		t.Logf("native partial abort bytes=%d stream=%d sequence=%d", r.N, n.PartialDelivery.Stream, n.PartialDelivery.Sequence)
++		return
++	}
++	t.Fatal("partial notification exceeded finite receive bound")
++}
+diff --git a/notification_options_linux_test.go b/notification_options_linux_test.go
+new file mode 100644
+--- /dev/null
++++ b/notification_options_linux_test.go
+@@ -0,0 +1,145 @@
++//go:build linux && !386
++
++package sctp
++
++import (
++	"context"
++	"errors"
++	"net"
++	"os"
++	"syscall"
++	"testing"
++	"time"
++	"unsafe"
++)
++
++func TestNotificationOptionReadbackMismatch(t *testing.T) {
++	for _, tc := range []struct {
++		name       string
++		opt, value int
++	}{
++		{"nodelay", SCTP_NODELAY, 0}, {"interleave", messageFragmentInterleave, 1}, {"fragmentation", SCTP_DISABLE_FRAGMENTS, 1},
++	} {
++		t.Run(tc.name, func(t *testing.T) {
++			c, _ := messagePair(t, 0)
++			notificationSetInt(t, c, SOL_SCTP, tc.opt, tc.value)
++			actual, e := c.GetMessageOptions()
++			if e != nil || actual.Options == *c.messages {
++				t.Fatal(actual, e)
++			}
++			if e = c.withFD(func(fd int) error { return verifyMessageFD(fd, *c.messages) }); !errors.Is(e, ErrInvalidConfig) {
++				t.Fatal(e)
++			}
++		})
++	}
++	t.Run("events", func(t *testing.T) {
++		c, _ := messagePair(t, SCTP_EVENT_ASSOCIATION)
++		var zero [10]byte
++		if e := c.withFD(func(fd int) error {
++			_, _, e := setsockopt(fd, SCTP_EVENTS, uintptr(unsafe.Pointer(&zero[0])), 10)
++			return e
++		}); e != nil {
++			t.Fatal(e)
++		}
++		actual, e := c.GetMessageOptions()
++		if e != nil || actual.Options.ReceiveInfo != ReceiveInfoUnspecified || actual.Options.Events != 0 {
++			t.Fatal(actual, e)
++		}
++		if e = c.withFD(func(fd int) error { return verifyMessageFD(fd, *c.messages) }); !errors.Is(e, ErrInvalidConfig) {
++			t.Fatal(e)
++		}
++	})
++}
++func TestNotificationOptionUnsupportedPreservesErrno(t *testing.T) {
++	// A real non-SCTP descriptor must not report configured capabilities.
++	fd, e := syscall.Socket(syscall.AF_INET, syscall.SOCK_DGRAM|syscall.SOCK_CLOEXEC, syscall.IPPROTO_UDP)
++	if e != nil {
++		t.Fatal(e)
++	}
++	defer syscall.Close(fd)
++	m := MessageOptions{ReceiveInfo: ReceiveInfoSNDRCV}
++	e = configureMessageFD(fd, m)
++	if !errors.Is(e, syscall.ENOPROTOOPT) && !errors.Is(e, syscall.EOPNOTSUPP) {
++		t.Fatal(e)
++	}
++	if _, e = readMessageOptionsFD(fd); !errors.Is(e, syscall.ENOPROTOOPT) && !errors.Is(e, syscall.EOPNOTSUPP) {
++		t.Fatal(e)
++	}
++	if e = configureMessageFD(-1, m); !errors.Is(e, syscall.EBADF) {
++		t.Fatal(e)
++	}
++	if _, e = readMessageOptionsFD(-1); !errors.Is(e, syscall.EBADF) {
++		t.Fatal(e)
++	}
++}
++func TestNotificationAcceptMismatchClosesOnlyCandidate(t *testing.T) {
++	m := MessageOptions{ReceiveInfo: ReceiveInfoSNDRCV, NoDelay: true, AllowFragmentation: true}
++	cfg := SocketConfig{Messages: &m}
++	ln, e := cfg.Listen("sctp4", &SCTPAddr{IPAddrs: []net.IPAddr{{IP: net.IPv4(127, 0, 0, 1)}}})
++	if e != nil {
++		t.Fatal(e)
++	}
++	defer ln.Close()
++	alter := func(value int) {
++		t.Helper()
++		var setErr error
++		if e := ln.io.Control(func(fd uintptr) { setErr = syscall.SetsockoptInt(int(fd), SOL_SCTP, SCTP_NODELAY, value) }); e != nil {
++			t.Fatal(e)
++		}
++		if setErr != nil {
++			t.Fatal(setErr)
++		}
++	}
++	// Deliberately corrupt raw inheritance; the public API cannot do this.
++	alter(0)
++	before, e := os.ReadDir("/proc/self/fd")
++	if e != nil {
++		t.Fatal(e)
++	}
++	for i := 0; i < 20; i++ {
++		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
++		c, e := cfg.DialContext(ctx, "sctp4", nil, ln.Addr().(*SCTPAddr))
++		cancel()
++		if e != nil {
++			t.Fatal(e)
++		}
++		accepted, e := ln.AcceptSCTP()
++		if accepted != nil || !errors.Is(e, ErrInvalidConfig) {
++			c.Close()
++			t.Fatal(accepted, e)
++		}
++		c.Close()
++	}
++	after, e := os.ReadDir("/proc/self/fd")
++	if e != nil {
++		t.Fatal(e)
++	}
++	if len(after) > len(before) {
++		t.Fatal("rejected accept leaked descriptors", len(before), len(after))
++	}
++	alter(1) // Listener must still work after all20 rejected candidates.
++	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
++	defer cancel()
++	c, e := cfg.DialContext(ctx, "sctp4", nil, ln.Addr().(*SCTPAddr))
++	if e != nil {
++		t.Fatal(e)
++	}
++	defer c.Close()
++	s, e := ln.AcceptSCTP()
++	if e != nil {
++		t.Fatal(e)
++	}
++	defer s.Close()
++	if state, e := s.GetMessageOptions(); e != nil || state.Options != m {
++		t.Fatal(state, e)
++	}
++	if _, e = c.WriteMsgContext(ctx, []byte("still-open"), SndInfo{}); e != nil {
++		t.Fatal(e)
++	}
++	_, b, o := messageBuffers(s)
++	d := make([]byte, 20)
++	r, e := s.ReadEvent(ctx, d, b, o)
++	if e != nil || r.Kind != ReadData || string(d[:r.N]) != "still-open" {
++		t.Fatal(r, e, string(d[:r.N]))
++	}
++}
+diff --git a/notification_unsupported.go b/notification_unsupported.go
+new file mode 100644
+--- /dev/null
++++ b/notification_unsupported.go
+@@ -0,0 +1,5 @@
++//go:build !linux || (linux && 386)
++
++package sctp
++
++func ParseNotification([]byte) (Notification, error) { return Notification{}, ErrUnsupported }
