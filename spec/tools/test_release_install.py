@@ -91,4 +91,14 @@ class InstallGateTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):gate.validate_origin({'Origin':{**origin,**change}},tag,commit)
         with self.assertRaises(RuntimeError):gate.validate_origin({},tag,commit)
 
+    def test_git_tag_resolution_requires_exact_ref_and_peels_annotated_tag(self):
+        ref = 'refs/tags/v0.1.0-rc.2'
+        for raw, expected in [('a'*40+'\t'+ref+'\n','a'*40),
+                              ('b'*40+'\t'+ref+'\n'+'a'*40+'\t'+ref+'^{}\n','a'*40)]:
+            with patch.object(gate.subprocess,'check_output',return_value=raw):
+                self.assertEqual(gate.tag_commit('v0.1.0-rc.2'),expected)
+        for raw in ['', 'bad '+ref, 'a'*40+' refs/heads/main', 'a'*40+' '+ref+'^{}']:
+            with patch.object(gate.subprocess,'check_output',return_value=raw), self.assertRaises(RuntimeError):
+                gate.tag_commit('v0.1.0-rc.2')
+
 if __name__=='__main__':unittest.main()

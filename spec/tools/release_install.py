@@ -12,8 +12,6 @@ import re
 import shutil
 import subprocess
 import tempfile
-import urllib.parse
-import urllib.request
 
 from release_check import Checks, CORE, ADAPTER, UPSTREAM, ROOT, digest, objects
 
@@ -79,19 +77,23 @@ def validate_download(row, module, selected, cache):
 
 
 def tag_commit(tag):
-    base = "https://api.github.com/repos/skill215/diameterkit/git/"
-    def get(url):
-        request = urllib.request.Request(url, headers={"User-Agent": "diameterkit-release-install"})
-        with urllib.request.urlopen(request, timeout=30) as response:
-            return json.load(response)
-    obj = get(base + "ref/tags/" + urllib.parse.quote(tag, safe=""))["object"]
-    for _ in range(4):
-        if obj["type"] == "commit" and re.fullmatch("[0-9a-f]{40}", obj["sha"]):
-            return obj["sha"]
-        if obj["type"] != "tag" or not re.fullmatch("[0-9a-f]{40}", obj["sha"]):
-            break
-        obj = get(base + "tags/" + obj["sha"])["object"]
-    raise RuntimeError("tag does not resolve to a commit: " + tag)
+    # Resolve immutable publication evidence through Git itself. Anonymous REST
+    # quotas are shared by egress IP and must not be an installation prerequisite.
+    env = os.environ.copy()
+    env.update(GIT_CONFIG_GLOBAL=os.devnull, GIT_CONFIG_NOSYSTEM="1", GIT_TERMINAL_PROMPT="0")
+    ref = "refs/tags/" + tag
+    raw = subprocess.check_output(
+        ["git", "ls-remote", "--tags", "https://github.com/skill215/diameterkit.git", ref, ref + "^{}"],
+        env=env, text=True, timeout=60)
+    refs = {}
+    for line in raw.splitlines():
+        parts = line.split()
+        if len(parts) != 2 or not re.fullmatch("[0-9a-f]{40}", parts[0]) or parts[1] not in (ref, ref + "^{}") or parts[1] in refs:
+            raise RuntimeError("invalid remote tag response: " + tag)
+        refs[parts[1]] = parts[0]
+    if ref not in refs:
+        raise RuntimeError("remote tag missing: " + tag)
+    return refs.get(ref + "^{}", refs[ref])
 
 
 def validate_origin(row, tag, commit):
