@@ -35,8 +35,17 @@ the same declarations and behavior. Snapshot source hashes are reviewed accordin
 
 ## Reproducible installation
 
+The unreleased batch 96 [diagnostic extension](missing-avp-diagnostics.md) changes
+generated DefinitionDigest constants and Bundle fingerprints. Public signatures
+remain unchanged, but earlier recovery records cannot be imported under the new
+Bundle. The planned next core candidate is `v0.2.0-rc.1`, with no publication in
+this batch. Published core/adapter versions and their dependency pins stay intact.
+
 Use the pinned Go version, Python 3, Linux/amd64 with SCTP, and a C compiler for
-the race tool. Choose a nonexistent output directory:
+the race tool. For the recorded rc.2/rc.1 pair, run from publication checkout
+`416d66fce4ef4109462582ef6f1e66a80d86a647`, whose reviewed API baseline matches
+those versions. The current development baseline intentionally rejects that older
+pair. Choose a nonexistent output directory:
 
 ```sh
 python3 spec/tools/release_install.py \

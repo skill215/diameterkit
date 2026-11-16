@@ -16,6 +16,7 @@ import (
 	"github.com/skill215/diameterkit/base"
 	"github.com/skill215/diameterkit/internal/budget"
 	"github.com/skill215/diameterkit/internal/codecengine"
+	"github.com/skill215/diameterkit/internal/missingavp"
 	"github.com/skill215/diameterkit/pdu"
 	"github.com/skill215/diameterkit/schema"
 	"github.com/skill215/diameterkit/validation"
@@ -225,7 +226,10 @@ func (n *Node) rejectFrame(raw []byte, maxBytes int, reason rejectReason, cause 
 		code = 3007
 	case rejectMissing:
 		var ok bool
-		diagnostic, ok = missingDiagnostic(cause)
+		diagnostic, ok = missingavp.Quote(cause, n.cfg.Limits, maxBytes)
+		if !ok {
+			diagnostic, ok = missingDiagnostic(cause)
+		}
 		if !ok {
 			return nil, ErrUnsupported
 		}

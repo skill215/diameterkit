@@ -14,6 +14,7 @@ FUZZ_TARGETS = [
     ("decode", ".", "./codec", "FuzzDecode"),
     ("answer", ".", "./codec", "FuzzDecodeAnswer"),
     ("canonical", ".", "./codec", "FuzzCanonical"),
+    ("missing-diagnostic", ".", "./internal/missingavp", "FuzzMissingQuote"),
     ("shdata", ".", "./app/sh/shdata", "FuzzParse"),
     ("sctp-mode", "adapters/sctp", ".", "FuzzSCTPModeSelection"),
 ]

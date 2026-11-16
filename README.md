@@ -170,6 +170,7 @@ endpoint. Local duplicate handling is not a durable charging ledger.
 - [S6c helper semantics](doc/s6c-routing-helpers.md)
 - [Application-owned Ro handoff](doc/ro-recovery-handoff.md)
 - [Combined binding: volatile duplicate acceptance](doc/combined-duplicate-acceptance.md)
+- [Bounded missing-AVP diagnostics](doc/missing-avp-diagnostics.md)
 - [Machine-readable progress and historical evidence](spec/README.md)
 - [AI authorship and review limits](AI_DISCLOSURE.md)
 
@@ -183,8 +184,8 @@ references retain their original language and are not new release claims.
 
 Existing measurements from **2026-11-16**, Go **1.26.10**, Linux/amd64 under
 WSL2, **AMD Ryzen 7 6800H**. Median of five samples, **200 iterations per sample**,
-`-cpu=1`, CGO=0. These are the recorded batch 92 baseline, not a new timing run
-caused by this documentation change.
+`-cpu=1`, CGO=0. These are the recorded batch 92 baseline; subsequent checkout
+measurements do not replace this historical baseline.
 
 | Workload | Median ns/op | B/op | allocs/op |
 | --- | ---: | ---: | ---: |
