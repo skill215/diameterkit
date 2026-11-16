@@ -49,8 +49,10 @@ application-provided evidence prove acceptance by a real HSS/MME/SGSN/DRA/OCS.
   420/2018 acceptance, deduplication domains and session continuity need named evidence.
 - **Deployment:** peer/terminal identities, target recovery permission and real
   business migration belong to each deployment's acceptance.
-- **Capacity:** local finite fuzz/stress and sample baselines do not establish
-  long-soak, multi-tenant or production saturation behavior.
+- **Capacity:** [bounded mixed-load checks](load-checks.md#mixed-application-isolation)
+  verify Sh/S6c/SGd/Ro class isolation while a handler or completion consumer stalls.
+  Long-soak, deployment-specific multi-tenant and production saturation acceptance
+  still require declared workloads and budgets.
 
 All 24 broader requirements retain partial scope in [progress](../spec/progress.json).
 A published development candidate does not close these independent gaps. The

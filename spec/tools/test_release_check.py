@@ -8,6 +8,33 @@ import release_check as gate
 
 
 class ReleaseGateTests(unittest.TestCase):
+    def test_mixed_pressure_requires_every_stalled_class_and_resource_bound(self):
+        records = []
+        for window in (1, 4):
+            for stalled in ("ro", "s6c", "sh", "sgd"):
+                for _ in range(20):
+                    records.append(dict(ClassWindow=window, Stalled=stalled,
+                        Window=4*window, Waves=8, Requests=80*window,
+                        HealthyCompleted=72*window, Canceled=4*((window+1)//2),
+                        Refusals=32, ClassRefusals=16, PortRefusals=16,
+                        ClientOutstandingPeak=4*window, ServerInboundPeak=4*window,
+                        ClientLogicalPeak=1024, ServerLogicalPeak=1024,
+                        SampledHeapAlloc=1024, ProcessRSSHighWater=1024))
+        def encode(rows):
+            return "\n".join(json.dumps({"Output": "MIXED_PRESSURE " + json.dumps(r)}) for r in rows)
+        self.assertEqual(len(gate.load_checks.mixed_pressure_samples(encode(records))), 160)
+        for field, value in (("Stalled", "unknown"), ("ClassWindow", 8),
+                             ("HealthyCompleted", 0), ("ClassRefusals", 0),
+                             ("Canceled", 0), ("ServerInboundPeak", 0),
+                             ("ProcessRSSHighWater", 0), ("SampledHeapAlloc", 1 << 31),
+                             ("ClientLogicalPeak", None)):
+            with self.subTest(field=field), self.assertRaises(RuntimeError):
+                changed = [dict(r) for r in records]
+                changed[0][field] = value
+                gate.load_checks.mixed_pressure_samples(encode(changed))
+        with self.assertRaises(RuntimeError):
+            gate.load_checks.mixed_pressure_samples(encode(records[:-1]))
+
     def test_benchmark_requires_fixed_work_and_finite_complete_samples(self):
         line = "BenchmarkExample 200 12.5 ns/op 32 B/op 1 allocs/op\n"
         result = gate.load_checks.bench_samples(line * 5, {"BenchmarkExample"})

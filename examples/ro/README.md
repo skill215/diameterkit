@@ -87,3 +87,14 @@ See [support](../../doc/diameterkit-support-matrix.md),
 [version/installation policy](../../doc/version-install-policy.md) and
 [AI disclosure](../../AI_DISCLOSURE.md). Test evidence covers the declared local
 workload; real target acceptance and durable application state are separate.
+
+## Mixed application pressure
+
+The [mixed pressure test](mixed_pressure_test.go) reuses this example's public
+Node/Peer lifecycle with Sh, S6c, SGd and Ro on one TCP connection. Each application
+has its own resource class and completion port; one class stalls while the other
+three keep completing requests. It checks both unanswered work and retained
+completions, cancellation/late answers, refused admissions and complete cleanup.
+See [workload limits and commands](../../doc/load-checks.md#mixed-application-isolation).
+This is finite application-class isolation evidence, not a production capacity
+claim or real subscriber, delivery, charging or tenant-isolation service.

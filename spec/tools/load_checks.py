@@ -72,6 +72,34 @@ def pressure_samples(raw):
     return records
 
 
+def mixed_pressure_samples(raw):
+    records = []
+    for line in raw.splitlines():
+        if line.startswith("{"):
+            output = json.loads(line).get("Output", "")
+            if "MIXED_PRESSURE {" in output:
+                records.append(json.loads(output.split("MIXED_PRESSURE ", 1)[1]))
+    if len(records) != 160:
+        raise RuntimeError("expected 20 repetitions x 2 windows x 4 stalled applications")
+    for window in (1, 4):
+        for stalled in ("ro", "s6c", "sh", "sgd"):
+            rows = [r for r in records if r.get("ClassWindow") == window and r.get("Stalled") == stalled]
+            if len(rows) != 20:
+                raise RuntimeError("missing mixed pressure scenario")
+            expected = dict(Window=4*window, Waves=8, Requests=80*window,
+                            HealthyCompleted=72*window, Canceled=4*((window+1)//2),
+                            Refusals=32, ClassRefusals=16, PortRefusals=16,
+                            ClientOutstandingPeak=4*window, ServerInboundPeak=4*window)
+            for row in rows:
+                if any(row.get(key) != value for key, value in expected.items()):
+                    raise RuntimeError("mixed pressure workload changed")
+                for field in ("ClientLogicalPeak", "ServerLogicalPeak", "SampledHeapAlloc", "ProcessRSSHighWater"):
+                    value = row.get(field)
+                    if type(value) is not int or not 0 < value <= 1 << 30:
+                        raise RuntimeError("missing/excessive mixed resource measurement: " + field)
+    return records
+
+
 def run(checks, suite):
     if suite in ("all", "fuzz"):
         fuzz = []
@@ -95,12 +123,14 @@ def run(checks, suite):
             fuzz.append({"target": target, "seconds": 30, "workers": 2, "executions": int(executions[-1])})
         (checks.output / "fuzz.json").write_text(json.dumps(fuzz, indent=2) + "\n")
     if suite in ("all", "stress"):
-        metrics = {"scope": "fixed loopback workload; logical reservations are not RSS; VmHWM includes the entire test process", "runs": {}}
+        metrics = {"scope": "fixed loopback workload; logical reservations are not RSS; VmHWM includes the entire test process", "runs": {}, "mixed_runs": {}}
         for mode in ("pure", "race"):
             flags = ["-race"] if mode == "race" else []
             env = dict(ENV, CGO_ENABLED="1" if mode == "race" else "0")
             raw = checks.run("pressure-ro-" + mode, ["go", "test", "./examples/ro", "-run=^TestBoundedRoPressure$", "-count=20", "-json", "-timeout=3m"] + flags, extra=env, tests=True)
             metrics["runs"][mode] = pressure_samples(raw)
+            raw = checks.run("pressure-mixed-" + mode, ["go", "test", "./examples/ro", "-run=^TestBoundedMixedApplicationPressure$", "-count=20", "-json", "-timeout=3m"] + flags, extra=env, tests=True)
+            metrics["mixed_runs"][mode] = mixed_pressure_samples(raw)
             raw = checks.run("pressure-sctp-" + mode, ["go", "test", ".", "-run=^TestBoundedSCTPPressure$", "-count=20", "-json", "-timeout=3m"] + flags, ROOT / "adapters/sctp", env, tests=True)
             if raw.count("SCTP_PRESSURE connections=8 frames=512 fixed_buffer_bytes=") != 20:
                 raise RuntimeError("incomplete native SCTP pressure workload")
