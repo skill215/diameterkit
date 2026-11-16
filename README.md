@@ -13,7 +13,7 @@ codecs; TCP/TLS are included and Linux SCTP is a separate module.
 > direction. Complete historical model identities are unrecorded. See
 > [AI_DISCLOSURE.md](AI_DISCLOSURE.md) and the Go files' `SPDX-AI-*` headers.
 
-[Quick start](#quick-start) · [Go API](#go-api) · [Support](#protocol-support) ·
+[Core or adapter?](#core-and-sctp-adapter) · [Quick start](#quick-start) · [Go API](#go-api) · [Support](#protocol-support) ·
 [Examples](#examples) · [Documentation](#documentation) · [Benchmarks](#benchmarks)
 
 **Published development candidates:** core `v0.1.0-rc.2` and SCTP adapter
@@ -37,15 +37,45 @@ acceptance evidence. v0 is not a stable-v1 or complete-standards promise.
 The library has no database, subscriber lookup, charging ledger, delivery engine
 or durable recovery service. Applications own business decisions and persistence.
 
+## Core and SCTP adapter
+
+**Using TCP/TLS or only encoding and decoding messages? Install the core only.**
+**Connecting over SCTP? Add the SCTP adapter on a supported Linux system.**
+These are two Go modules in the same project, not separate services.
+
+| Module | Responsibility | Dependencies | When to install |
+| --- | --- | --- | --- |
+| **Core** — `github.com/skill215/diameterkit` | Diameter codecs, handshake, requests and answers, timeouts, resource limits, application helpers and built-in TCP/TLS | Go standard library; no third-party runtime dependencies | All Diameter use, including standalone protocol tools and TCP/TLS connections |
+| **SCTP adapter** — `github.com/skill215/diameterkit/adapters/sctp` | Connects SCTP sockets to the core transport interface; handles message boundaries, streams, PPID and transport notifications | Core plus `github.com/skill215/sctp` | Only when your application communicates with a Diameter peer over SCTP |
+
+The dependency points **from the adapter to the core**. The core does not import
+the adapter or the upstream SCTP library. The adapter uses the core for Diameter
+protocol handling; it does not replace the core or add charging or SMS delivery
+logic. Installing the adapter also resolves its required core and upstream SCTP
+versions through Go modules.
+
+This split keeps SCTP dependencies and platform requirements optional and lets
+the modules version independently. Both are pure Go and provide no persistence.
+SCTP additionally requires Linux kernel support; installing the Go module does
+not enable SCTP in the kernel. See the [adapter guide](adapters/sctp/README.md)
+for supported platforms and connection setup.
+
 ## Quick start
 
 ### Install
 
 Use Go 1.26 or newer. The core package name is `diameter`.
 
+For TCP/TLS or standalone protocol tools:
+
 ```sh
 go get github.com/skill215/diameterkit@v0.1.0-rc.2
-# Optional, independent module; requires a supported Linux SCTP kernel:
+```
+
+For SCTP, add the adapter. This version requires core `v0.1.0-rc.2` and upstream
+SCTP `v0.8.0`; Go resolves these dependencies automatically:
+
+```sh
 go get github.com/skill215/diameterkit/adapters/sctp@v0.1.0-rc.1
 ```
 
