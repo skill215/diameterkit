@@ -1,0 +1,3053 @@
+{
+  "batch": 93,
+  "date": "2026-11-16",
+  "status": "completed_selected_release_gate",
+  "authorization": "User continued the concrete core/adapter publication proposal and requested English publication docs, AI headers and final benchmarks.",
+  "publication_receipt": "spec/release/published-modules.json",
+  "published_modules": {
+    "github.com/skill215/diameterkit": {
+      "Path": "github.com/skill215/diameterkit",
+      "Version": "v0.1.0-rc.2",
+      "Sum": "h1:RUJRDf4njgQ6eCxNMGQNmu9XgAbfUz/Dnb96tlcIIqw=",
+      "GoModSum": "h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk=",
+      "Origin": {
+        "VCS": "git",
+        "URL": "https://github.com/skill215/diameterkit",
+        "Hash": "010f72133a6d2e467db7f7188c7c1d0667fff055",
+        "Ref": "refs/tags/v0.1.0-rc.2"
+      }
+    },
+    "github.com/skill215/diameterkit/adapters/sctp": {
+      "Path": "github.com/skill215/diameterkit/adapters/sctp",
+      "Version": "v0.1.0-rc.1",
+      "Sum": "h1:Lc5qDB9ad3ykDfWG+od2Qrbc3+Vc+5IcbOwCHfagLxA=",
+      "GoModSum": "h1:f+hApmkodgS3QUWSnwzDQt37qXqKDd31SancRyRwe9g=",
+      "Origin": {
+        "VCS": "git",
+        "URL": "https://github.com/skill215/diameterkit",
+        "Subdir": "adapters/sctp",
+        "Hash": "416d66fce4ef4109462582ef6f1e66a80d86a647",
+        "Ref": "refs/tags/adapters/sctp/v0.1.0-rc.1"
+      }
+    },
+    "github.com/skill215/sctp": {
+      "Path": "github.com/skill215/sctp",
+      "Version": "v0.8.0",
+      "Sum": "h1:7N92RMEO7s4+4IHzI8KYKUgyIPpIClIVAdgg93m+RFI=",
+      "GoModSum": "h1:g/XAScdNEAqQa2cjZdtxXVkxIJZEy77f7/fmCkTD2gg=",
+      "Origin": {
+        "VCS": "git",
+        "URL": "https://github.com/skill215/sctp",
+        "Hash": "bce1b3cf3ea32a32a86262c7f655d565bb40055c",
+        "Ref": "refs/tags/v0.8.0"
+      }
+    }
+  },
+  "checkout_checks": [
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-static/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "30c70d86c144efa82b7b57606079b233e7d6cff23fc4dda71aee6b7ede449529"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-q_4j4t_c",
+      "log": ".cache/b93-rc2-static/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.1=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-q_4j4t_c",
+      "log": ".cache/b93-rc2-static/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-static/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-static/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "ai-disclosure",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/check_ai_headers.py"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/ai-disclosure.log",
+      "status": "passed",
+      "sha256": "8234f943cbfe8d18479b0913d4d8c18a84bc4134d945f7a6d0e44869a51c0ffe"
+    },
+    {
+      "name": "tooling-tests",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "spec/tools",
+        "-p",
+        "test_release*.py",
+        "-v"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/tooling-tests.log",
+      "status": "passed",
+      "sha256": "6358631956c05c1160e7f55f898bc4ad027648750fc05c8710e1b219c944ae14"
+    },
+    {
+      "name": "generator-build",
+      "command": [
+        "go",
+        "build",
+        "-o",
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
+        "./cmd/diameter-schema"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/generator-build.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "generated-base",
+      "command": [
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
+        "-in",
+        "spec/base.json",
+        "-out",
+        "base/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/generated-base.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "generated-sh",
+      "command": [
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
+        "-in",
+        "spec/sh.json",
+        "-out",
+        "app/sh/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/generated-sh.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "generated-s6c",
+      "command": [
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
+        "-in",
+        "spec/s6c.json",
+        "-out",
+        "app/s6c/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/generated-s6c.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "generated-sgd",
+      "command": [
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
+        "-in",
+        "spec/sgd.json",
+        "-out",
+        "app/sgd/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/generated-sgd.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "generated-ro",
+      "command": [
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
+        "-in",
+        "spec/ro.json",
+        "-out",
+        "app/ro/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/generated-ro.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "generated-roabort",
+      "command": [
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
+        "-in",
+        "spec/roabort.json",
+        "-out",
+        "app/ro/abort/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/generated-roabort.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "generated-dcca",
+      "command": [
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
+        "-in",
+        "spec/dcca.json",
+        "-out",
+        "app/ro/dcca/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/generated-dcca.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "generated-smsfwro",
+      "command": [
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
+        "-in",
+        "spec/smsfwro.json",
+        "-out",
+        "compat/smsfwro/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/generated-smsfwro.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "generated-legacy420",
+      "command": [
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
+        "-in",
+        "spec/legacy420.json",
+        "-out",
+        "compat/smsfwro/legacy420/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/generated-legacy420.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "generated-combined",
+      "command": [
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
+        "-in",
+        "spec/combined.json",
+        "-out",
+        "compat/smsfwro/combined/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/generated-combined.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "generated-scap1",
+      "command": [
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
+        "-in",
+        "spec/scap1.json",
+        "-out",
+        "compat/scap1/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/generated-scap1.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "generated-negative-control",
+      "command": [
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
+        "-in",
+        "/home/skill/workspace/git/diameterkit/spec/base.json",
+        "-out",
+        "/tmp/diameterkit-ci-q_4j4t_c/stale.go",
+        "-check"
+      ],
+      "status": "passed",
+      "expected_failure": true,
+      "log": ".cache/b93-rc2-static/generated-negative-control.log",
+      "sha256": "99b7ef7828d69b08451be03a89163b354730330a21316f70b204e7c2949133ee"
+    },
+    {
+      "name": "generator-determinism",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-json",
+        "./internal/codegen",
+        "-run",
+        "^TestGeneratedFilesCurrentAndDeterministic$"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/generator-determinism.log",
+      "status": "passed",
+      "sha256": "01d69ec28588ef1f67873e6c10b57c241b03a2533a9ae6da2cbbfe0782ec4da9",
+      "test_subtest_seed_passes": 1,
+      "test_skips": 0
+    },
+    {
+      "name": "api-snapshot",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/public_api_snapshot.py",
+        "--check",
+        "--workspace",
+        "/tmp/diameterkit-ci-q_4j4t_c/go.work"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/api-snapshot.log",
+      "status": "passed",
+      "sha256": "1debc4cbb0d2bd5220fa0bdc632c40e3439560db79b82355c4d4a3c68d13dfcb"
+    },
+    {
+      "name": "api-negative-control",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/public_api_snapshot.py",
+        "--check",
+        "--output",
+        "/tmp/diameterkit-ci-q_4j4t_c/stale-api.json",
+        "--workspace",
+        "/tmp/diameterkit-ci-q_4j4t_c/go.work"
+      ],
+      "status": "passed",
+      "expected_failure": true,
+      "log": ".cache/b93-rc2-static/api-negative-control.log",
+      "sha256": "64fa65d5163692d7809a4935279b295a5c3033511bfb5244d3fa97ce72c44f4c"
+    },
+    {
+      "name": "core-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/core-vet.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-static/adapter-vet.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-pure/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-pure/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "30c70d86c144efa82b7b57606079b233e7d6cff23fc4dda71aee6b7ede449529"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-4i4k2ex4",
+      "log": ".cache/b93-rc2-pure/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.1=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-4i4k2ex4",
+      "log": ".cache/b93-rc2-pure/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-pure/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-pure/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core-pure",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-pure/core-pure.log",
+      "status": "passed",
+      "sha256": "51b163a036e09a42150229124a5018652fcefa0dc4d08349bc821e606a878680",
+      "test_subtest_seed_passes": 3916,
+      "test_skips": 0
+    },
+    {
+      "name": "adapter-pure",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-pure/adapter-pure.log",
+      "status": "passed",
+      "sha256": "76171e70e45a3224f7f70dbd1caca06eab5c84666d40871e6531dabfc8fe6db5",
+      "test_subtest_seed_passes": 114,
+      "test_skips": 0
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-race/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-race/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "30c70d86c144efa82b7b57606079b233e7d6cff23fc4dda71aee6b7ede449529"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-8qul22ba",
+      "log": ".cache/b93-rc2-race/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.1=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-8qul22ba",
+      "log": ".cache/b93-rc2-race/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-race/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-race/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core-race",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "-race",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-race/core-race.log",
+      "status": "passed",
+      "sha256": "c5939e8bc2e8dd9c6ef5079c9c90ba854fab0bede6ba48e7b01fdaeda38dd808",
+      "test_subtest_seed_passes": 3916,
+      "test_skips": 0
+    },
+    {
+      "name": "adapter-race",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "-race",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-race/adapter-race.log",
+      "status": "passed",
+      "sha256": "198b4423dabeaa384e85672d0837d3042d84379b5dcbe57e1b7a930ddec19a40",
+      "test_subtest_seed_passes": 114,
+      "test_skips": 0
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-cross/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-cross/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "30c70d86c144efa82b7b57606079b233e7d6cff23fc4dda71aee6b7ede449529"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-4pehg0n6",
+      "log": ".cache/b93-rc2-cross/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.1=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-4pehg0n6",
+      "log": ".cache/b93-rc2-cross/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-cross/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-cross/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core-build-linux-arm64",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-cross/core-build-linux-arm64.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter-build-linux-arm64",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-cross/adapter-build-linux-arm64.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core-build-linux-386",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-cross/core-build-linux-386.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter-build-linux-386",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-cross/adapter-build-linux-386.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "core-build-windows-amd64",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-cross/core-build-windows-amd64.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "adapter-build-windows-amd64",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b93-rc2-cross/adapter-build-windows-amd64.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "adapter_with_published_core": {
+    "status": "passed",
+    "scope": "adapter checkout with genuine installed core; GOWORK=off/no replace",
+    "core_download": {
+      "Path": "github.com/skill215/diameterkit",
+      "Version": "v0.1.0-rc.2",
+      "Info": "/home/skill/workspace/git/diameterkit/.cache/b93-rc2-modulecache/cache/download/github.com/skill215/diameterkit/@v/v0.1.0-rc.2.info",
+      "GoMod": "/home/skill/workspace/git/diameterkit/.cache/b93-rc2-modulecache/cache/download/github.com/skill215/diameterkit/@v/v0.1.0-rc.2.mod",
+      "Zip": "/home/skill/workspace/git/diameterkit/.cache/b93-rc2-modulecache/cache/download/github.com/skill215/diameterkit/@v/v0.1.0-rc.2.zip",
+      "Dir": "/home/skill/workspace/git/diameterkit/.cache/b93-rc2-modulecache/github.com/skill215/diameterkit@v0.1.0-rc.2",
+      "Sum": "h1:RUJRDf4njgQ6eCxNMGQNmu9XgAbfUz/Dnb96tlcIIqw=",
+      "GoModSum": "h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk=",
+      "Origin": {
+        "VCS": "git",
+        "URL": "https://github.com/skill215/diameterkit",
+        "Hash": "010f72133a6d2e467db7f7188c7c1d0667fff055",
+        "Ref": "refs/tags/v0.1.0-rc.2"
+      }
+    },
+    "steps": [
+      {
+        "name": "core-download",
+        "command": [
+          "go",
+          "mod",
+          "download",
+          "-json",
+          "github.com/skill215/diameterkit@v0.1.0-rc.2"
+        ],
+        "cwd": "/home/skill/workspace/git/diameterkit",
+        "log": ".cache/b93-adapter-release/core-download.log",
+        "status": "passed",
+        "sha256": "dba7d5490fba73ea03a27719090adec4a318fc77562ce887ea838cff2ea790db"
+      },
+      {
+        "name": "tidy",
+        "command": [
+          "go",
+          "mod",
+          "tidy"
+        ],
+        "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+        "log": ".cache/b93-adapter-release/tidy.log",
+        "status": "passed",
+        "sha256": "b68a967a0761a1199f40159091f1fdbee0fcd3acf926da9794838d49ccface4c"
+      },
+      {
+        "name": "download-all",
+        "command": [
+          "go",
+          "mod",
+          "download",
+          "all"
+        ],
+        "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+        "log": ".cache/b93-adapter-release/download-all.log",
+        "status": "passed",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "manifest",
+        "command": [
+          "go",
+          "mod",
+          "edit",
+          "-json"
+        ],
+        "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+        "log": ".cache/b93-adapter-release/manifest.log",
+        "status": "passed",
+        "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04"
+      },
+      {
+        "name": "adapter-pure",
+        "command": [
+          "go",
+          "test",
+          "-count=1",
+          "-timeout=5m",
+          "-json",
+          "./..."
+        ],
+        "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+        "log": ".cache/b93-adapter-release/adapter-pure.log",
+        "status": "passed",
+        "sha256": "c3cefdfc6c2fb75506bae370ee93f3dbcb6617d16017e1a31671fba84338b53e",
+        "test_subtest_seed_passes": 114,
+        "test_skips": 0
+      },
+      {
+        "name": "adapter-race",
+        "command": [
+          "go",
+          "test",
+          "-race",
+          "-count=1",
+          "-timeout=5m",
+          "-json",
+          "./..."
+        ],
+        "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+        "log": ".cache/b93-adapter-release/adapter-race.log",
+        "status": "passed",
+        "sha256": "1463412e8e014bf2f9d0dceaaf50dd3ed443cf1006ad15497e464934f6fea84c",
+        "test_subtest_seed_passes": 114,
+        "test_skips": 0
+      },
+      {
+        "name": "adapter-vet",
+        "command": [
+          "go",
+          "vet",
+          "./..."
+        ],
+        "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+        "log": ".cache/b93-adapter-release/adapter-vet.log",
+        "status": "passed",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "verify",
+        "command": [
+          "go",
+          "mod",
+          "verify"
+        ],
+        "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+        "log": ".cache/b93-adapter-release/verify.log",
+        "status": "passed",
+        "sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+      },
+      {
+        "name": "api",
+        "command": [
+          "python3",
+          "spec/tools/public_api_snapshot.py",
+          "--check"
+        ],
+        "cwd": "/home/skill/workspace/git/diameterkit",
+        "log": ".cache/b93-adapter-release/api.log",
+        "status": "passed",
+        "sha256": "1debc4cbb0d2bd5220fa0bdc632c40e3439560db79b82355c4d4a3c68d13dfcb"
+      }
+    ]
+  },
+  "cold_installation": {
+    "format": 1,
+    "status": "passed",
+    "scope": "published public modules; two independent cold consumers",
+    "versions": {
+      "github.com/skill215/diameterkit": "v0.1.0-rc.2",
+      "github.com/skill215/diameterkit/adapters/sctp": "v0.1.0-rc.1",
+      "github.com/skill215/sctp": "v0.8.0"
+    },
+    "policy_sha256": "71f6c3d000684007265ae4b85e075075660dd47ffbd020278859a5ed1ccea229",
+    "api_sha256": "75ef1127fec9c565c0158b2f808e7e6cc4a99a5efe9e4640db66baf72f7b5c9f",
+    "consumers": {
+      "core": {
+        "status": "passed",
+        "steps": [
+          {
+            "name": "toolchain",
+            "command": [
+              "go",
+              "env",
+              "GOVERSION",
+              "GOHOSTOS",
+              "GOHOSTARCH",
+              "GOWORK"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/toolchain.log",
+            "status": "passed",
+            "sha256": "85d0b3d71c9f791c59a40221f40e799660f49240b97d8f0f6858c199aa911276"
+          },
+          {
+            "name": "download-0",
+            "command": [
+              "go",
+              "mod",
+              "download",
+              "-json",
+              "github.com/skill215/diameterkit@v0.1.0-rc.2"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/download-0.log",
+            "status": "passed",
+            "sha256": "5cd3789b6dd389c36806f94350c89fad0ffd4472042cb87ef43d31081a6854da"
+          },
+          {
+            "name": "manifest-0",
+            "command": [
+              "go",
+              "mod",
+              "edit",
+              "-json",
+              "/tmp/diameterkit-install-jq663icx/core/mod/cache/download/github.com/skill215/diameterkit/@v/v0.1.0-rc.2.mod"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/manifest-0.log",
+            "status": "passed",
+            "sha256": "1b5fc2992e2559f79367b2ba8b9bcf18212122dc63db0ddb205ccb2f736248f1"
+          },
+          {
+            "name": "download-all",
+            "command": [
+              "go",
+              "mod",
+              "download",
+              "all"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/download-all.log",
+            "status": "passed",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "name": "consumer-manifest",
+            "command": [
+              "go",
+              "mod",
+              "edit",
+              "-json"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/consumer-manifest.log",
+            "status": "passed",
+            "sha256": "6660b5d26c3badde303c41f627c02e0394422ebba7f6b560b6a761ba2fd501ce"
+          },
+          {
+            "name": "module-graph",
+            "command": [
+              "go",
+              "list",
+              "-m",
+              "-json",
+              "all"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/module-graph.log",
+            "status": "passed",
+            "sha256": "e0883588c82fd9123b565bcb14443340f6295aea3c92e915b792761a00b5e3a0"
+          },
+          {
+            "name": "api-list-linux",
+            "command": [
+              "go",
+              "list",
+              "-json",
+              "github.com/skill215/diameterkit/..."
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-list-linux.log",
+            "status": "passed",
+            "sha256": "924f51ceaf9de18b8c63acceed498fe67c20e040489f165dd76c623b8900849c"
+          },
+          {
+            "name": "api-doc-linux-0",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-0.log",
+            "status": "passed",
+            "sha256": "4089eafbcfdcfaef957dcc7dca79aaf4c3450b608352ff5867f5d743d9142499"
+          },
+          {
+            "name": "api-doc-linux-1",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/ro"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-1.log",
+            "status": "passed",
+            "sha256": "e77e815dff21b7db7d78ddd5c82f4fb93e717a98b7e92d3d4ff80f2e90ce5859"
+          },
+          {
+            "name": "api-doc-linux-2",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/ro/abort"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-2.log",
+            "status": "passed",
+            "sha256": "145471dccf8af1070d4bb0829c947d5e9d46b885bc708792e9922297388f77b0"
+          },
+          {
+            "name": "api-doc-linux-3",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/ro/dcca"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-3.log",
+            "status": "passed",
+            "sha256": "99aeafe9faeadae50f8f56470f5820c9ae9af52e47ca854d54726f12dee277fe"
+          },
+          {
+            "name": "api-doc-linux-4",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/s6c"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-4.log",
+            "status": "passed",
+            "sha256": "0dc861a22ec180690d1b66e1f5cd2e1b892959f22218887ca141426261c49d51"
+          },
+          {
+            "name": "api-doc-linux-5",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/sgd"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-5.log",
+            "status": "passed",
+            "sha256": "eadbc7f806bceb140f341852f9779073b4eb3a17d85e434fd967c669ef83ef90"
+          },
+          {
+            "name": "api-doc-linux-6",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/sh"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-6.log",
+            "status": "passed",
+            "sha256": "0731a0815ecf8223498d35b4701aca9d20858d4120bdb0525728c66d4a1c6d1b"
+          },
+          {
+            "name": "api-doc-linux-7",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/sh/shdata"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-7.log",
+            "status": "passed",
+            "sha256": "fb1af498c51c4e1531eeafc7de04bfcb2dc5aa74b6f5f9ab8283b4862c82b318"
+          },
+          {
+            "name": "api-doc-linux-8",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/avp"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-8.log",
+            "status": "passed",
+            "sha256": "6e62ea9a227da1ed507d39a7129c1ee61741118667ee5fbab5609e6431f5cd27"
+          },
+          {
+            "name": "api-doc-linux-9",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/base"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-9.log",
+            "status": "passed",
+            "sha256": "aa4559c123f08a50d9af127bd3d3bc784da6d98482501d62e7c345710cb9a973"
+          },
+          {
+            "name": "api-doc-linux-10",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/client/s6c"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-10.log",
+            "status": "passed",
+            "sha256": "41ef31e0f0f27bae6c21b494320099b97037ed212eeb2d879fd353f368f76102"
+          },
+          {
+            "name": "api-doc-linux-11",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/codec"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-11.log",
+            "status": "passed",
+            "sha256": "4bb1d8f72030f7e1d0efe0a6920b4a3604b58c85787cfb4101da5dcc4c2f24a1"
+          },
+          {
+            "name": "api-doc-linux-12",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/scap1"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-12.log",
+            "status": "passed",
+            "sha256": "db2b036512297de3c1b1d80d2f130a5697d93bd393316e80720de3bd93bbc105"
+          },
+          {
+            "name": "api-doc-linux-13",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/sgdalert"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-13.log",
+            "status": "passed",
+            "sha256": "5f97f250a30c5d8dfed234c6dd6733d216572fafca5925dd82ae5b0ca9cbed98"
+          },
+          {
+            "name": "api-doc-linux-14",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/smsfwro"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-14.log",
+            "status": "passed",
+            "sha256": "7bdc60faaeb914d32cbcf23663eddca9f99d26c3402e03c6cafbe854f8918266"
+          },
+          {
+            "name": "api-doc-linux-15",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/smsfwro/combined"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-15.log",
+            "status": "passed",
+            "sha256": "b79773f453550ddd52107899d934294a3ca4def19638c4e54b19fb9a4640cc4f"
+          },
+          {
+            "name": "api-doc-linux-16",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/smsfwro/legacy420"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-16.log",
+            "status": "passed",
+            "sha256": "45bd6e1ebdc3c5b0852b6361146151268ad3dbf44a4aa77bb435f2f2f3f6d263"
+          },
+          {
+            "name": "api-doc-linux-17",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/pdu"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-17.log",
+            "status": "passed",
+            "sha256": "a0d4cb33958786850020b62ce80ad0aca4e220d1f3efd47071a9d507f66535da"
+          },
+          {
+            "name": "api-doc-linux-18",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/schema"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-18.log",
+            "status": "passed",
+            "sha256": "875dfefaba3d3707e5a949012dc799ddbfdb1e7752f5e00f27f9d272582dc9f3"
+          },
+          {
+            "name": "api-doc-linux-19",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/transport"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-19.log",
+            "status": "passed",
+            "sha256": "c036bb4f47a63e85f60fa4b656d416d1bc78cc58d2712073b7d6f2636d0f7500"
+          },
+          {
+            "name": "api-doc-linux-20",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/transport/tcp"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-20.log",
+            "status": "passed",
+            "sha256": "e358de4524e04b4d7d5ba453b62cc8f425c2a1a34ebedc1c6d6e7f5b13ff8354"
+          },
+          {
+            "name": "api-doc-linux-21",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/transport/tls"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-21.log",
+            "status": "passed",
+            "sha256": "cebb4e2021453224b72b7593c9855598d156736eaec5b1785cbcaa7598a2e5c6"
+          },
+          {
+            "name": "api-doc-linux-22",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/validation"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-22.log",
+            "status": "passed",
+            "sha256": "bec3903b75ee4dfa87caef90df2705113a24f3580fae99dde8172b78b3a06bc0"
+          },
+          {
+            "name": "api-doc-linux-23",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/wire"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-linux-23.log",
+            "status": "passed",
+            "sha256": "0dd96b26a9a225fbe04c9c2239bb0503085b96688f244e684bb75dcd4c839fa1"
+          },
+          {
+            "name": "api-list-windows",
+            "command": [
+              "go",
+              "list",
+              "-json",
+              "github.com/skill215/diameterkit/..."
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-list-windows.log",
+            "status": "passed",
+            "sha256": "d1177fed3963d00751a4bdace2f3fffa71bd57ce2185e457022c87b90ae2e172"
+          },
+          {
+            "name": "api-doc-windows-0",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-0.log",
+            "status": "passed",
+            "sha256": "4089eafbcfdcfaef957dcc7dca79aaf4c3450b608352ff5867f5d743d9142499"
+          },
+          {
+            "name": "api-doc-windows-1",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/ro"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-1.log",
+            "status": "passed",
+            "sha256": "e77e815dff21b7db7d78ddd5c82f4fb93e717a98b7e92d3d4ff80f2e90ce5859"
+          },
+          {
+            "name": "api-doc-windows-2",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/ro/abort"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-2.log",
+            "status": "passed",
+            "sha256": "145471dccf8af1070d4bb0829c947d5e9d46b885bc708792e9922297388f77b0"
+          },
+          {
+            "name": "api-doc-windows-3",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/ro/dcca"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-3.log",
+            "status": "passed",
+            "sha256": "99aeafe9faeadae50f8f56470f5820c9ae9af52e47ca854d54726f12dee277fe"
+          },
+          {
+            "name": "api-doc-windows-4",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/s6c"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-4.log",
+            "status": "passed",
+            "sha256": "0dc861a22ec180690d1b66e1f5cd2e1b892959f22218887ca141426261c49d51"
+          },
+          {
+            "name": "api-doc-windows-5",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/sgd"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-5.log",
+            "status": "passed",
+            "sha256": "eadbc7f806bceb140f341852f9779073b4eb3a17d85e434fd967c669ef83ef90"
+          },
+          {
+            "name": "api-doc-windows-6",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/sh"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-6.log",
+            "status": "passed",
+            "sha256": "0731a0815ecf8223498d35b4701aca9d20858d4120bdb0525728c66d4a1c6d1b"
+          },
+          {
+            "name": "api-doc-windows-7",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/sh/shdata"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-7.log",
+            "status": "passed",
+            "sha256": "fb1af498c51c4e1531eeafc7de04bfcb2dc5aa74b6f5f9ab8283b4862c82b318"
+          },
+          {
+            "name": "api-doc-windows-8",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/avp"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-8.log",
+            "status": "passed",
+            "sha256": "6e62ea9a227da1ed507d39a7129c1ee61741118667ee5fbab5609e6431f5cd27"
+          },
+          {
+            "name": "api-doc-windows-9",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/base"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-9.log",
+            "status": "passed",
+            "sha256": "aa4559c123f08a50d9af127bd3d3bc784da6d98482501d62e7c345710cb9a973"
+          },
+          {
+            "name": "api-doc-windows-10",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/client/s6c"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-10.log",
+            "status": "passed",
+            "sha256": "41ef31e0f0f27bae6c21b494320099b97037ed212eeb2d879fd353f368f76102"
+          },
+          {
+            "name": "api-doc-windows-11",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/codec"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-11.log",
+            "status": "passed",
+            "sha256": "4bb1d8f72030f7e1d0efe0a6920b4a3604b58c85787cfb4101da5dcc4c2f24a1"
+          },
+          {
+            "name": "api-doc-windows-12",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/scap1"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-12.log",
+            "status": "passed",
+            "sha256": "db2b036512297de3c1b1d80d2f130a5697d93bd393316e80720de3bd93bbc105"
+          },
+          {
+            "name": "api-doc-windows-13",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/sgdalert"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-13.log",
+            "status": "passed",
+            "sha256": "5f97f250a30c5d8dfed234c6dd6733d216572fafca5925dd82ae5b0ca9cbed98"
+          },
+          {
+            "name": "api-doc-windows-14",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/smsfwro"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-14.log",
+            "status": "passed",
+            "sha256": "7bdc60faaeb914d32cbcf23663eddca9f99d26c3402e03c6cafbe854f8918266"
+          },
+          {
+            "name": "api-doc-windows-15",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/smsfwro/combined"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-15.log",
+            "status": "passed",
+            "sha256": "b79773f453550ddd52107899d934294a3ca4def19638c4e54b19fb9a4640cc4f"
+          },
+          {
+            "name": "api-doc-windows-16",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/smsfwro/legacy420"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-16.log",
+            "status": "passed",
+            "sha256": "45bd6e1ebdc3c5b0852b6361146151268ad3dbf44a4aa77bb435f2f2f3f6d263"
+          },
+          {
+            "name": "api-doc-windows-17",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/pdu"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-17.log",
+            "status": "passed",
+            "sha256": "a0d4cb33958786850020b62ce80ad0aca4e220d1f3efd47071a9d507f66535da"
+          },
+          {
+            "name": "api-doc-windows-18",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/schema"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-18.log",
+            "status": "passed",
+            "sha256": "875dfefaba3d3707e5a949012dc799ddbfdb1e7752f5e00f27f9d272582dc9f3"
+          },
+          {
+            "name": "api-doc-windows-19",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/transport"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-19.log",
+            "status": "passed",
+            "sha256": "c036bb4f47a63e85f60fa4b656d416d1bc78cc58d2712073b7d6f2636d0f7500"
+          },
+          {
+            "name": "api-doc-windows-20",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/transport/tcp"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-20.log",
+            "status": "passed",
+            "sha256": "e358de4524e04b4d7d5ba453b62cc8f425c2a1a34ebedc1c6d6e7f5b13ff8354"
+          },
+          {
+            "name": "api-doc-windows-21",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/transport/tls"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-21.log",
+            "status": "passed",
+            "sha256": "cebb4e2021453224b72b7593c9855598d156736eaec5b1785cbcaa7598a2e5c6"
+          },
+          {
+            "name": "api-doc-windows-22",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/validation"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-22.log",
+            "status": "passed",
+            "sha256": "bec3903b75ee4dfa87caef90df2705113a24f3580fae99dde8172b78b3a06bc0"
+          },
+          {
+            "name": "api-doc-windows-23",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/wire"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/api-doc-windows-23.log",
+            "status": "passed",
+            "sha256": "0dd96b26a9a225fbe04c9c2239bb0503085b96688f244e684bb75dcd4c839fa1"
+          },
+          {
+            "name": "dependencies",
+            "command": [
+              "go",
+              "list",
+              "-deps",
+              "-test",
+              "-json",
+              "./..."
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/dependencies.log",
+            "status": "passed",
+            "sha256": "99e8d49d285dad867658b0b99eb7ecb257a0cc158ac7372f5fceb6be34906047"
+          },
+          {
+            "name": "consumer-pure",
+            "command": [
+              "go",
+              "test",
+              "-count=1",
+              "-timeout=5m",
+              "-json",
+              "./..."
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/consumer-pure.log",
+            "status": "passed",
+            "sha256": "4bcbe523c128d4e620150fd45527f29b2d7aefe24fc25bfe94c4948032db808d",
+            "test_subtest_seed_passes": 434,
+            "test_skips": 0
+          },
+          {
+            "name": "consumer-race",
+            "command": [
+              "go",
+              "test",
+              "-race",
+              "-count=1",
+              "-timeout=5m",
+              "-json",
+              "./..."
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/consumer-race.log",
+            "status": "passed",
+            "sha256": "4e243359dae6ae4c692bba9a10e29a26d11319676a3d608b537e71590907ffb3",
+            "test_subtest_seed_passes": 434,
+            "test_skips": 0
+          },
+          {
+            "name": "module-verify",
+            "command": [
+              "go",
+              "mod",
+              "verify"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "log": ".cache/b93-published-install/core/module-verify.log",
+            "status": "passed",
+            "sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+          }
+        ],
+        "cold_at_start": {
+          "GOMODCACHE": true,
+          "GOCACHE": true,
+          "GOPATH": true
+        },
+        "environment": {
+          "GOENV": "off",
+          "GOTOOLCHAIN": "local",
+          "GOWORK": "off",
+          "GOFLAGS": "-mod=readonly",
+          "GOPROXY": "https://proxy.golang.org",
+          "GOSUMDB": "sum.golang.org",
+          "GOPRIVATE": "",
+          "GONOPROXY": "",
+          "GONOSUMDB": "",
+          "GOINSECURE": "",
+          "GOTELEMETRY": "off",
+          "CGO_ENABLED": "0",
+          "GOMAXPROCS": "2",
+          "GOMODCACHE": "/tmp/diameterkit-install-jq663icx/core/mod",
+          "GOCACHE": "/tmp/diameterkit-install-jq663icx/core/build",
+          "GOPATH": "/tmp/diameterkit-install-jq663icx/core/path",
+          "GOTMPDIR": "/tmp/diameterkit-install-jq663icx/core/tmp"
+        },
+        "consumer_sources": {
+          "examples/contracts/contracts_test.go": "04cb5f8ef72da689648c8d7fc50e06de16fa7b1023bbd2a98968a097473e367f",
+          "examples/ro/abort.go": "f365cf48ebf96ea99db6cfef9624f920e0ad9125fdeeabdeb8c099eccc6245c6",
+          "examples/ro/abort_test.go": "b1db7c743ee8ec2b13565627566d99758e3d49f4c8f3b90858b38c12e3ae383e",
+          "examples/ro/compat_bindings.go": "feec94911bb99317bd193a649f5dff8fb663b67d274de6a900e5695099ec5ec6",
+          "examples/ro/compat_bindings_test.go": "9f316cf0f22f6230ba20ee2e9941993048a439c0fed389cd241d499ec6cb631c",
+          "examples/ro/compat_limits_test.go": "9c7343ba95925fdfed16a2cb8f3be32376891755ed3f5b4b2e479b3c85e84093",
+          "examples/ro/compat_recovery.go": "592fcd395d7a3dbd9d1caadd85aa320e122f58f56653c32fe28899d21f0ce136",
+          "examples/ro/compat_recovery_test.go": "15c32a9b7b825b45f6a01a90b0e6baa350147dd410b6b62a952d7aa37b814130",
+          "examples/ro/config.go": "725e45ac6302eb6936bb632d27565574a770914c4ce3e42fa1438f2900b9b323",
+          "examples/ro/consumption.go": "c9ea2fa02cdfc75bdee483ad904680fec9490e5aae6040054c7a352587025db5",
+          "examples/ro/consumption_test.go": "d6448128128206d58a7d03768009840353326726c575250864d89ee978b6e112",
+          "examples/ro/ecur.go": "849be8179d7aa8fc716591dfa54d088e2ddc8639cae3efbc01ec95443cdcc09a",
+          "examples/ro/ecur_test.go": "12ec37df8d77bef28ec4f3cd5c802040d8ae693faee815140dac97adbf3e1468",
+          "examples/ro/main.go": "18e47144a7e1797fa7cc7445836c6611fa375adf730772d64a1a9e7dc369b091",
+          "examples/ro/main_test.go": "24859c1213cf22af05f5cc59b85a4d00080c6237ba9702fb1d685e5d1c4ba16e",
+          "examples/ro/pressure_test.go": "6e18d175c553be7f748dc88c04f08a05fc4c1a73f5f79a6ba51ba9accf946f12",
+          "examples/ro/recovery.go": "c38e7f5cec563c88cc45324ded08a00f065891c66c5d39a20e96471cc730f55f",
+          "examples/ro/recovery_test.go": "d15dabb0c9ff5a6d1b7a0316593917b5648e33b94445852f4c4fda22ce606d5b"
+        },
+        "downloads": {
+          "github.com/skill215/diameterkit": {
+            "Path": "github.com/skill215/diameterkit",
+            "Version": "v0.1.0-rc.2",
+            "Info": "/tmp/diameterkit-install-jq663icx/core/mod/cache/download/github.com/skill215/diameterkit/@v/v0.1.0-rc.2.info",
+            "GoMod": "/tmp/diameterkit-install-jq663icx/core/mod/cache/download/github.com/skill215/diameterkit/@v/v0.1.0-rc.2.mod",
+            "Zip": "/tmp/diameterkit-install-jq663icx/core/mod/cache/download/github.com/skill215/diameterkit/@v/v0.1.0-rc.2.zip",
+            "Dir": "/tmp/diameterkit-install-jq663icx/core/mod/github.com/skill215/diameterkit@v0.1.0-rc.2",
+            "Sum": "h1:RUJRDf4njgQ6eCxNMGQNmu9XgAbfUz/Dnb96tlcIIqw=",
+            "GoModSum": "h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk=",
+            "Origin": {
+              "VCS": "git",
+              "URL": "https://github.com/skill215/diameterkit",
+              "Hash": "010f72133a6d2e467db7f7188c7c1d0667fff055",
+              "Ref": "refs/tags/v0.1.0-rc.2"
+            }
+          }
+        },
+        "tags": {
+          "v0.1.0-rc.2": "010f72133a6d2e467db7f7188c7c1d0667fff055"
+        },
+        "manifests": {
+          "github.com/skill215/diameterkit": {
+            "Module": {
+              "Path": "github.com/skill215/diameterkit"
+            },
+            "Go": "1.26.0",
+            "Require": null,
+            "Exclude": null,
+            "Replace": null,
+            "Retract": null,
+            "Tool": null,
+            "Ignore": null
+          }
+        },
+        "graph": [
+          {
+            "Path": "example.com/diameterkit-release-consumer",
+            "Main": true,
+            "Dir": "/tmp/diameterkit-install-jq663icx/core/consumer",
+            "GoMod": "/tmp/diameterkit-install-jq663icx/core/consumer/go.mod",
+            "GoVersion": "1.26.0"
+          },
+          {
+            "Path": "github.com/skill215/diameterkit",
+            "Version": "v0.1.0-rc.2",
+            "Time": "2026-11-16T05:36:54Z",
+            "Dir": "/tmp/diameterkit-install-jq663icx/core/mod/github.com/skill215/diameterkit@v0.1.0-rc.2",
+            "GoMod": "/tmp/diameterkit-install-jq663icx/core/mod/cache/download/github.com/skill215/diameterkit/@v/v0.1.0-rc.2.mod",
+            "GoVersion": "1.26.0",
+            "Sum": "h1:RUJRDf4njgQ6eCxNMGQNmu9XgAbfUz/Dnb96tlcIIqw=",
+            "GoModSum": "h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk="
+          }
+        ],
+        "manifest_sha256": {
+          "go.mod": "60e6ffd201888737059e8296d63b12ab4a5f43ccde7507bc83fb9a8e4aaf67ea",
+          "go.sum": "db9dd8994e05f12c0ad2209a48f63c191ca1d361e1fcbf7d51d0b75ad27689be"
+        }
+      },
+      "adapter": {
+        "status": "passed",
+        "steps": [
+          {
+            "name": "toolchain",
+            "command": [
+              "go",
+              "env",
+              "GOVERSION",
+              "GOHOSTOS",
+              "GOHOSTARCH",
+              "GOWORK"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/toolchain.log",
+            "status": "passed",
+            "sha256": "85d0b3d71c9f791c59a40221f40e799660f49240b97d8f0f6858c199aa911276"
+          },
+          {
+            "name": "download-0",
+            "command": [
+              "go",
+              "mod",
+              "download",
+              "-json",
+              "github.com/skill215/diameterkit@v0.1.0-rc.2"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/download-0.log",
+            "status": "passed",
+            "sha256": "131eefff4b2c43ce42ca184d726084d81601ac6534b97221c8143c9a3279d586"
+          },
+          {
+            "name": "download-1",
+            "command": [
+              "go",
+              "mod",
+              "download",
+              "-json",
+              "github.com/skill215/diameterkit/adapters/sctp@v0.1.0-rc.1"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/download-1.log",
+            "status": "passed",
+            "sha256": "0bd0227b7c8dcd57a4d919c81999661f1c643c2cca706f6b8d82530164d22451"
+          },
+          {
+            "name": "download-2",
+            "command": [
+              "go",
+              "mod",
+              "download",
+              "-json",
+              "github.com/skill215/sctp@v0.8.0"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/download-2.log",
+            "status": "passed",
+            "sha256": "8cac7aba06c29aeb2b2e3c6b28af601a6d0a430a65bf7f323ddf7b41a365b732"
+          },
+          {
+            "name": "manifest-0",
+            "command": [
+              "go",
+              "mod",
+              "edit",
+              "-json",
+              "/tmp/diameterkit-install-jq663icx/adapter/mod/cache/download/github.com/skill215/diameterkit/@v/v0.1.0-rc.2.mod"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/manifest-0.log",
+            "status": "passed",
+            "sha256": "1b5fc2992e2559f79367b2ba8b9bcf18212122dc63db0ddb205ccb2f736248f1"
+          },
+          {
+            "name": "manifest-1",
+            "command": [
+              "go",
+              "mod",
+              "edit",
+              "-json",
+              "/tmp/diameterkit-install-jq663icx/adapter/mod/cache/download/github.com/skill215/diameterkit/adapters/sctp/@v/v0.1.0-rc.1.mod"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/manifest-1.log",
+            "status": "passed",
+            "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04"
+          },
+          {
+            "name": "manifest-2",
+            "command": [
+              "go",
+              "mod",
+              "edit",
+              "-json",
+              "/tmp/diameterkit-install-jq663icx/adapter/mod/cache/download/github.com/skill215/sctp/@v/v0.8.0.mod"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/manifest-2.log",
+            "status": "passed",
+            "sha256": "7028be49c4e385833c69f64c57d026d97b5277d3b9e3ebf0b52bac4ae0d745bc"
+          },
+          {
+            "name": "download-all",
+            "command": [
+              "go",
+              "mod",
+              "download",
+              "all"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/download-all.log",
+            "status": "passed",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "name": "consumer-manifest",
+            "command": [
+              "go",
+              "mod",
+              "edit",
+              "-json"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/consumer-manifest.log",
+            "status": "passed",
+            "sha256": "33a8b221aa8e6caeda3df486c49e6b8d98b3af5f8962077c707ae0a615134e19"
+          },
+          {
+            "name": "module-graph",
+            "command": [
+              "go",
+              "list",
+              "-m",
+              "-json",
+              "all"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/module-graph.log",
+            "status": "passed",
+            "sha256": "6188ae3d73a41795193fe3fc0374afaab4de393d29be813aba9c1ff22eddc48b"
+          },
+          {
+            "name": "api-list-linux",
+            "command": [
+              "go",
+              "list",
+              "-json",
+              "github.com/skill215/diameterkit/...",
+              "github.com/skill215/diameterkit/adapters/sctp/..."
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-list-linux.log",
+            "status": "passed",
+            "sha256": "633e6ce942da5db626950bf63b67d2cf47c1b428d5fae224cbe815ce5d8934a5"
+          },
+          {
+            "name": "api-doc-linux-0",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-0.log",
+            "status": "passed",
+            "sha256": "4089eafbcfdcfaef957dcc7dca79aaf4c3450b608352ff5867f5d743d9142499"
+          },
+          {
+            "name": "api-doc-linux-1",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/adapters/sctp"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-1.log",
+            "status": "passed",
+            "sha256": "e121b5d2dc818b5b2d9f06187ce6d6e23ce7753072d34ad590d7fe871ab26830"
+          },
+          {
+            "name": "api-doc-linux-2",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/ro"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-2.log",
+            "status": "passed",
+            "sha256": "e77e815dff21b7db7d78ddd5c82f4fb93e717a98b7e92d3d4ff80f2e90ce5859"
+          },
+          {
+            "name": "api-doc-linux-3",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/ro/abort"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-3.log",
+            "status": "passed",
+            "sha256": "145471dccf8af1070d4bb0829c947d5e9d46b885bc708792e9922297388f77b0"
+          },
+          {
+            "name": "api-doc-linux-4",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/ro/dcca"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-4.log",
+            "status": "passed",
+            "sha256": "99aeafe9faeadae50f8f56470f5820c9ae9af52e47ca854d54726f12dee277fe"
+          },
+          {
+            "name": "api-doc-linux-5",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/s6c"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-5.log",
+            "status": "passed",
+            "sha256": "0dc861a22ec180690d1b66e1f5cd2e1b892959f22218887ca141426261c49d51"
+          },
+          {
+            "name": "api-doc-linux-6",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/sgd"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-6.log",
+            "status": "passed",
+            "sha256": "eadbc7f806bceb140f341852f9779073b4eb3a17d85e434fd967c669ef83ef90"
+          },
+          {
+            "name": "api-doc-linux-7",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/sh"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-7.log",
+            "status": "passed",
+            "sha256": "0731a0815ecf8223498d35b4701aca9d20858d4120bdb0525728c66d4a1c6d1b"
+          },
+          {
+            "name": "api-doc-linux-8",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/sh/shdata"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-8.log",
+            "status": "passed",
+            "sha256": "fb1af498c51c4e1531eeafc7de04bfcb2dc5aa74b6f5f9ab8283b4862c82b318"
+          },
+          {
+            "name": "api-doc-linux-9",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/avp"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-9.log",
+            "status": "passed",
+            "sha256": "6e62ea9a227da1ed507d39a7129c1ee61741118667ee5fbab5609e6431f5cd27"
+          },
+          {
+            "name": "api-doc-linux-10",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/base"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-10.log",
+            "status": "passed",
+            "sha256": "aa4559c123f08a50d9af127bd3d3bc784da6d98482501d62e7c345710cb9a973"
+          },
+          {
+            "name": "api-doc-linux-11",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/client/s6c"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-11.log",
+            "status": "passed",
+            "sha256": "41ef31e0f0f27bae6c21b494320099b97037ed212eeb2d879fd353f368f76102"
+          },
+          {
+            "name": "api-doc-linux-12",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/codec"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-12.log",
+            "status": "passed",
+            "sha256": "4bb1d8f72030f7e1d0efe0a6920b4a3604b58c85787cfb4101da5dcc4c2f24a1"
+          },
+          {
+            "name": "api-doc-linux-13",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/scap1"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-13.log",
+            "status": "passed",
+            "sha256": "db2b036512297de3c1b1d80d2f130a5697d93bd393316e80720de3bd93bbc105"
+          },
+          {
+            "name": "api-doc-linux-14",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/sgdalert"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-14.log",
+            "status": "passed",
+            "sha256": "5f97f250a30c5d8dfed234c6dd6733d216572fafca5925dd82ae5b0ca9cbed98"
+          },
+          {
+            "name": "api-doc-linux-15",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/smsfwro"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-15.log",
+            "status": "passed",
+            "sha256": "7bdc60faaeb914d32cbcf23663eddca9f99d26c3402e03c6cafbe854f8918266"
+          },
+          {
+            "name": "api-doc-linux-16",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/smsfwro/combined"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-16.log",
+            "status": "passed",
+            "sha256": "b79773f453550ddd52107899d934294a3ca4def19638c4e54b19fb9a4640cc4f"
+          },
+          {
+            "name": "api-doc-linux-17",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/smsfwro/legacy420"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-17.log",
+            "status": "passed",
+            "sha256": "45bd6e1ebdc3c5b0852b6361146151268ad3dbf44a4aa77bb435f2f2f3f6d263"
+          },
+          {
+            "name": "api-doc-linux-18",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/pdu"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-18.log",
+            "status": "passed",
+            "sha256": "a0d4cb33958786850020b62ce80ad0aca4e220d1f3efd47071a9d507f66535da"
+          },
+          {
+            "name": "api-doc-linux-19",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/schema"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-19.log",
+            "status": "passed",
+            "sha256": "875dfefaba3d3707e5a949012dc799ddbfdb1e7752f5e00f27f9d272582dc9f3"
+          },
+          {
+            "name": "api-doc-linux-20",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/transport"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-20.log",
+            "status": "passed",
+            "sha256": "c036bb4f47a63e85f60fa4b656d416d1bc78cc58d2712073b7d6f2636d0f7500"
+          },
+          {
+            "name": "api-doc-linux-21",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/transport/tcp"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-21.log",
+            "status": "passed",
+            "sha256": "e358de4524e04b4d7d5ba453b62cc8f425c2a1a34ebedc1c6d6e7f5b13ff8354"
+          },
+          {
+            "name": "api-doc-linux-22",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/transport/tls"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-22.log",
+            "status": "passed",
+            "sha256": "cebb4e2021453224b72b7593c9855598d156736eaec5b1785cbcaa7598a2e5c6"
+          },
+          {
+            "name": "api-doc-linux-23",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/validation"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-23.log",
+            "status": "passed",
+            "sha256": "bec3903b75ee4dfa87caef90df2705113a24f3580fae99dde8172b78b3a06bc0"
+          },
+          {
+            "name": "api-doc-linux-24",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/wire"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-linux-24.log",
+            "status": "passed",
+            "sha256": "0dd96b26a9a225fbe04c9c2239bb0503085b96688f244e684bb75dcd4c839fa1"
+          },
+          {
+            "name": "api-list-windows",
+            "command": [
+              "go",
+              "list",
+              "-json",
+              "github.com/skill215/diameterkit/...",
+              "github.com/skill215/diameterkit/adapters/sctp/..."
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-list-windows.log",
+            "status": "passed",
+            "sha256": "bf62290a95e013fb1d16b72a1114adcdc192eb7fee5698e89872a878b19cf1a5"
+          },
+          {
+            "name": "api-doc-windows-0",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-0.log",
+            "status": "passed",
+            "sha256": "4089eafbcfdcfaef957dcc7dca79aaf4c3450b608352ff5867f5d743d9142499"
+          },
+          {
+            "name": "api-doc-windows-1",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/adapters/sctp"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-1.log",
+            "status": "passed",
+            "sha256": "bfdabac332816922b4b510f917eca4e1ce9e258f4264259a81816f245af7f0d9"
+          },
+          {
+            "name": "api-doc-windows-2",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/ro"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-2.log",
+            "status": "passed",
+            "sha256": "e77e815dff21b7db7d78ddd5c82f4fb93e717a98b7e92d3d4ff80f2e90ce5859"
+          },
+          {
+            "name": "api-doc-windows-3",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/ro/abort"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-3.log",
+            "status": "passed",
+            "sha256": "145471dccf8af1070d4bb0829c947d5e9d46b885bc708792e9922297388f77b0"
+          },
+          {
+            "name": "api-doc-windows-4",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/ro/dcca"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-4.log",
+            "status": "passed",
+            "sha256": "99aeafe9faeadae50f8f56470f5820c9ae9af52e47ca854d54726f12dee277fe"
+          },
+          {
+            "name": "api-doc-windows-5",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/s6c"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-5.log",
+            "status": "passed",
+            "sha256": "0dc861a22ec180690d1b66e1f5cd2e1b892959f22218887ca141426261c49d51"
+          },
+          {
+            "name": "api-doc-windows-6",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/sgd"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-6.log",
+            "status": "passed",
+            "sha256": "eadbc7f806bceb140f341852f9779073b4eb3a17d85e434fd967c669ef83ef90"
+          },
+          {
+            "name": "api-doc-windows-7",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/sh"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-7.log",
+            "status": "passed",
+            "sha256": "0731a0815ecf8223498d35b4701aca9d20858d4120bdb0525728c66d4a1c6d1b"
+          },
+          {
+            "name": "api-doc-windows-8",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/app/sh/shdata"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-8.log",
+            "status": "passed",
+            "sha256": "fb1af498c51c4e1531eeafc7de04bfcb2dc5aa74b6f5f9ab8283b4862c82b318"
+          },
+          {
+            "name": "api-doc-windows-9",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/avp"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-9.log",
+            "status": "passed",
+            "sha256": "6e62ea9a227da1ed507d39a7129c1ee61741118667ee5fbab5609e6431f5cd27"
+          },
+          {
+            "name": "api-doc-windows-10",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/base"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-10.log",
+            "status": "passed",
+            "sha256": "aa4559c123f08a50d9af127bd3d3bc784da6d98482501d62e7c345710cb9a973"
+          },
+          {
+            "name": "api-doc-windows-11",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/client/s6c"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-11.log",
+            "status": "passed",
+            "sha256": "41ef31e0f0f27bae6c21b494320099b97037ed212eeb2d879fd353f368f76102"
+          },
+          {
+            "name": "api-doc-windows-12",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/codec"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-12.log",
+            "status": "passed",
+            "sha256": "4bb1d8f72030f7e1d0efe0a6920b4a3604b58c85787cfb4101da5dcc4c2f24a1"
+          },
+          {
+            "name": "api-doc-windows-13",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/scap1"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-13.log",
+            "status": "passed",
+            "sha256": "db2b036512297de3c1b1d80d2f130a5697d93bd393316e80720de3bd93bbc105"
+          },
+          {
+            "name": "api-doc-windows-14",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/sgdalert"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-14.log",
+            "status": "passed",
+            "sha256": "5f97f250a30c5d8dfed234c6dd6733d216572fafca5925dd82ae5b0ca9cbed98"
+          },
+          {
+            "name": "api-doc-windows-15",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/smsfwro"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-15.log",
+            "status": "passed",
+            "sha256": "7bdc60faaeb914d32cbcf23663eddca9f99d26c3402e03c6cafbe854f8918266"
+          },
+          {
+            "name": "api-doc-windows-16",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/smsfwro/combined"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-16.log",
+            "status": "passed",
+            "sha256": "b79773f453550ddd52107899d934294a3ca4def19638c4e54b19fb9a4640cc4f"
+          },
+          {
+            "name": "api-doc-windows-17",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/compat/smsfwro/legacy420"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-17.log",
+            "status": "passed",
+            "sha256": "45bd6e1ebdc3c5b0852b6361146151268ad3dbf44a4aa77bb435f2f2f3f6d263"
+          },
+          {
+            "name": "api-doc-windows-18",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/pdu"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-18.log",
+            "status": "passed",
+            "sha256": "a0d4cb33958786850020b62ce80ad0aca4e220d1f3efd47071a9d507f66535da"
+          },
+          {
+            "name": "api-doc-windows-19",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/schema"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-19.log",
+            "status": "passed",
+            "sha256": "875dfefaba3d3707e5a949012dc799ddbfdb1e7752f5e00f27f9d272582dc9f3"
+          },
+          {
+            "name": "api-doc-windows-20",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/transport"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-20.log",
+            "status": "passed",
+            "sha256": "c036bb4f47a63e85f60fa4b656d416d1bc78cc58d2712073b7d6f2636d0f7500"
+          },
+          {
+            "name": "api-doc-windows-21",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/transport/tcp"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-21.log",
+            "status": "passed",
+            "sha256": "e358de4524e04b4d7d5ba453b62cc8f425c2a1a34ebedc1c6d6e7f5b13ff8354"
+          },
+          {
+            "name": "api-doc-windows-22",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/transport/tls"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-22.log",
+            "status": "passed",
+            "sha256": "cebb4e2021453224b72b7593c9855598d156736eaec5b1785cbcaa7598a2e5c6"
+          },
+          {
+            "name": "api-doc-windows-23",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/validation"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-23.log",
+            "status": "passed",
+            "sha256": "bec3903b75ee4dfa87caef90df2705113a24f3580fae99dde8172b78b3a06bc0"
+          },
+          {
+            "name": "api-doc-windows-24",
+            "command": [
+              "go",
+              "doc",
+              "-all",
+              "github.com/skill215/diameterkit/wire"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/api-doc-windows-24.log",
+            "status": "passed",
+            "sha256": "0dd96b26a9a225fbe04c9c2239bb0503085b96688f244e684bb75dcd4c839fa1"
+          },
+          {
+            "name": "dependencies",
+            "command": [
+              "go",
+              "list",
+              "-deps",
+              "-test",
+              "-json",
+              "./..."
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/dependencies.log",
+            "status": "passed",
+            "sha256": "d0c54688c9c29fca63fb99199e4744e6d0062dd079866367daf3b8dbb852915e"
+          },
+          {
+            "name": "consumer-pure",
+            "command": [
+              "go",
+              "test",
+              "-count=1",
+              "-timeout=5m",
+              "-json",
+              "./..."
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/consumer-pure.log",
+            "status": "passed",
+            "sha256": "a87632081ecb479148b03d31acb209847864710128b9e7ed3dcd73c311420f46",
+            "test_subtest_seed_passes": 435,
+            "test_skips": 0
+          },
+          {
+            "name": "consumer-race",
+            "command": [
+              "go",
+              "test",
+              "-race",
+              "-count=1",
+              "-timeout=5m",
+              "-json",
+              "./..."
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/consumer-race.log",
+            "status": "passed",
+            "sha256": "fea34577a99b6bdaf825ddf4e5da7cb6dd8f1ccf18db7eb4ca4371adbf373db2",
+            "test_subtest_seed_passes": 435,
+            "test_skips": 0
+          },
+          {
+            "name": "module-verify",
+            "command": [
+              "go",
+              "mod",
+              "verify"
+            ],
+            "cwd": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "log": ".cache/b93-published-install/adapter/module-verify.log",
+            "status": "passed",
+            "sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+          }
+        ],
+        "cold_at_start": {
+          "GOMODCACHE": true,
+          "GOCACHE": true,
+          "GOPATH": true
+        },
+        "environment": {
+          "GOENV": "off",
+          "GOTOOLCHAIN": "local",
+          "GOWORK": "off",
+          "GOFLAGS": "-mod=readonly",
+          "GOPROXY": "https://proxy.golang.org",
+          "GOSUMDB": "sum.golang.org",
+          "GOPRIVATE": "",
+          "GONOPROXY": "",
+          "GONOSUMDB": "",
+          "GOINSECURE": "",
+          "GOTELEMETRY": "off",
+          "CGO_ENABLED": "0",
+          "GOMAXPROCS": "2",
+          "GOMODCACHE": "/tmp/diameterkit-install-jq663icx/adapter/mod",
+          "GOCACHE": "/tmp/diameterkit-install-jq663icx/adapter/build",
+          "GOPATH": "/tmp/diameterkit-install-jq663icx/adapter/path",
+          "GOTMPDIR": "/tmp/diameterkit-install-jq663icx/adapter/tmp"
+        },
+        "consumer_sources": {
+          "examples/contracts/contracts_test.go": "04cb5f8ef72da689648c8d7fc50e06de16fa7b1023bbd2a98968a097473e367f",
+          "examples/ro/abort.go": "f365cf48ebf96ea99db6cfef9624f920e0ad9125fdeeabdeb8c099eccc6245c6",
+          "examples/ro/abort_test.go": "b1db7c743ee8ec2b13565627566d99758e3d49f4c8f3b90858b38c12e3ae383e",
+          "examples/ro/compat_bindings.go": "feec94911bb99317bd193a649f5dff8fb663b67d274de6a900e5695099ec5ec6",
+          "examples/ro/compat_bindings_test.go": "9f316cf0f22f6230ba20ee2e9941993048a439c0fed389cd241d499ec6cb631c",
+          "examples/ro/compat_limits_test.go": "9c7343ba95925fdfed16a2cb8f3be32376891755ed3f5b4b2e479b3c85e84093",
+          "examples/ro/compat_recovery.go": "592fcd395d7a3dbd9d1caadd85aa320e122f58f56653c32fe28899d21f0ce136",
+          "examples/ro/compat_recovery_test.go": "15c32a9b7b825b45f6a01a90b0e6baa350147dd410b6b62a952d7aa37b814130",
+          "examples/ro/config.go": "725e45ac6302eb6936bb632d27565574a770914c4ce3e42fa1438f2900b9b323",
+          "examples/ro/consumption.go": "c9ea2fa02cdfc75bdee483ad904680fec9490e5aae6040054c7a352587025db5",
+          "examples/ro/consumption_test.go": "d6448128128206d58a7d03768009840353326726c575250864d89ee978b6e112",
+          "examples/ro/ecur.go": "849be8179d7aa8fc716591dfa54d088e2ddc8639cae3efbc01ec95443cdcc09a",
+          "examples/ro/ecur_test.go": "12ec37df8d77bef28ec4f3cd5c802040d8ae693faee815140dac97adbf3e1468",
+          "examples/ro/main.go": "18e47144a7e1797fa7cc7445836c6611fa375adf730772d64a1a9e7dc369b091",
+          "examples/ro/main_test.go": "24859c1213cf22af05f5cc59b85a4d00080c6237ba9702fb1d685e5d1c4ba16e",
+          "examples/ro/pressure_test.go": "6e18d175c553be7f748dc88c04f08a05fc4c1a73f5f79a6ba51ba9accf946f12",
+          "examples/ro/recovery.go": "c38e7f5cec563c88cc45324ded08a00f065891c66c5d39a20e96471cc730f55f",
+          "examples/ro/recovery_test.go": "d15dabb0c9ff5a6d1b7a0316593917b5648e33b94445852f4c4fda22ce606d5b",
+          "spec/tools/testdata/installconsumer/sctp_test.go": "7da5670a53ccfc406147dd76e7ea899829ca7d1ab70ecc6f13f1abfd6e71585e"
+        },
+        "downloads": {
+          "github.com/skill215/diameterkit": {
+            "Path": "github.com/skill215/diameterkit",
+            "Version": "v0.1.0-rc.2",
+            "Info": "/tmp/diameterkit-install-jq663icx/adapter/mod/cache/download/github.com/skill215/diameterkit/@v/v0.1.0-rc.2.info",
+            "GoMod": "/tmp/diameterkit-install-jq663icx/adapter/mod/cache/download/github.com/skill215/diameterkit/@v/v0.1.0-rc.2.mod",
+            "Zip": "/tmp/diameterkit-install-jq663icx/adapter/mod/cache/download/github.com/skill215/diameterkit/@v/v0.1.0-rc.2.zip",
+            "Dir": "/tmp/diameterkit-install-jq663icx/adapter/mod/github.com/skill215/diameterkit@v0.1.0-rc.2",
+            "Sum": "h1:RUJRDf4njgQ6eCxNMGQNmu9XgAbfUz/Dnb96tlcIIqw=",
+            "GoModSum": "h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk=",
+            "Origin": {
+              "VCS": "git",
+              "URL": "https://github.com/skill215/diameterkit",
+              "Hash": "010f72133a6d2e467db7f7188c7c1d0667fff055",
+              "Ref": "refs/tags/v0.1.0-rc.2"
+            }
+          },
+          "github.com/skill215/diameterkit/adapters/sctp": {
+            "Path": "github.com/skill215/diameterkit/adapters/sctp",
+            "Version": "v0.1.0-rc.1",
+            "Info": "/tmp/diameterkit-install-jq663icx/adapter/mod/cache/download/github.com/skill215/diameterkit/adapters/sctp/@v/v0.1.0-rc.1.info",
+            "GoMod": "/tmp/diameterkit-install-jq663icx/adapter/mod/cache/download/github.com/skill215/diameterkit/adapters/sctp/@v/v0.1.0-rc.1.mod",
+            "Zip": "/tmp/diameterkit-install-jq663icx/adapter/mod/cache/download/github.com/skill215/diameterkit/adapters/sctp/@v/v0.1.0-rc.1.zip",
+            "Dir": "/tmp/diameterkit-install-jq663icx/adapter/mod/github.com/skill215/diameterkit/adapters/sctp@v0.1.0-rc.1",
+            "Sum": "h1:Lc5qDB9ad3ykDfWG+od2Qrbc3+Vc+5IcbOwCHfagLxA=",
+            "GoModSum": "h1:f+hApmkodgS3QUWSnwzDQt37qXqKDd31SancRyRwe9g=",
+            "Origin": {
+              "VCS": "git",
+              "URL": "https://github.com/skill215/diameterkit",
+              "Subdir": "adapters/sctp",
+              "Hash": "416d66fce4ef4109462582ef6f1e66a80d86a647",
+              "Ref": "refs/tags/adapters/sctp/v0.1.0-rc.1"
+            }
+          },
+          "github.com/skill215/sctp": {
+            "Path": "github.com/skill215/sctp",
+            "Version": "v0.8.0",
+            "Info": "/tmp/diameterkit-install-jq663icx/adapter/mod/cache/download/github.com/skill215/sctp/@v/v0.8.0.info",
+            "GoMod": "/tmp/diameterkit-install-jq663icx/adapter/mod/cache/download/github.com/skill215/sctp/@v/v0.8.0.mod",
+            "Zip": "/tmp/diameterkit-install-jq663icx/adapter/mod/cache/download/github.com/skill215/sctp/@v/v0.8.0.zip",
+            "Dir": "/tmp/diameterkit-install-jq663icx/adapter/mod/github.com/skill215/sctp@v0.8.0",
+            "Sum": "h1:7N92RMEO7s4+4IHzI8KYKUgyIPpIClIVAdgg93m+RFI=",
+            "GoModSum": "h1:g/XAScdNEAqQa2cjZdtxXVkxIJZEy77f7/fmCkTD2gg=",
+            "Origin": {
+              "VCS": "git",
+              "URL": "https://github.com/skill215/sctp",
+              "Hash": "bce1b3cf3ea32a32a86262c7f655d565bb40055c",
+              "Ref": "refs/tags/v0.8.0"
+            }
+          }
+        },
+        "tags": {
+          "v0.1.0-rc.2": "010f72133a6d2e467db7f7188c7c1d0667fff055",
+          "adapters/sctp/v0.1.0-rc.1": "416d66fce4ef4109462582ef6f1e66a80d86a647"
+        },
+        "manifests": {
+          "github.com/skill215/diameterkit": {
+            "Module": {
+              "Path": "github.com/skill215/diameterkit"
+            },
+            "Go": "1.26.0",
+            "Require": null,
+            "Exclude": null,
+            "Replace": null,
+            "Retract": null,
+            "Tool": null,
+            "Ignore": null
+          },
+          "github.com/skill215/diameterkit/adapters/sctp": {
+            "Module": {
+              "Path": "github.com/skill215/diameterkit/adapters/sctp"
+            },
+            "Go": "1.26.0",
+            "Require": [
+              {
+                "Path": "github.com/skill215/diameterkit",
+                "Version": "v0.1.0-rc.2"
+              },
+              {
+                "Path": "github.com/skill215/sctp",
+                "Version": "v0.8.0"
+              }
+            ],
+            "Exclude": null,
+            "Replace": null,
+            "Retract": null,
+            "Tool": null,
+            "Ignore": null
+          },
+          "github.com/skill215/sctp": {
+            "Module": {
+              "Path": "github.com/skill215/sctp"
+            },
+            "Go": "1.26.0",
+            "Require": null,
+            "Exclude": null,
+            "Replace": null,
+            "Retract": null,
+            "Tool": null,
+            "Ignore": null
+          }
+        },
+        "graph": [
+          {
+            "Path": "example.com/diameterkit-release-consumer",
+            "Main": true,
+            "Dir": "/tmp/diameterkit-install-jq663icx/adapter/consumer",
+            "GoMod": "/tmp/diameterkit-install-jq663icx/adapter/consumer/go.mod",
+            "GoVersion": "1.26.0"
+          },
+          {
+            "Path": "github.com/skill215/diameterkit",
+            "Version": "v0.1.0-rc.2",
+            "Time": "2026-11-16T05:36:54Z",
+            "Dir": "/tmp/diameterkit-install-jq663icx/adapter/mod/github.com/skill215/diameterkit@v0.1.0-rc.2",
+            "GoMod": "/tmp/diameterkit-install-jq663icx/adapter/mod/cache/download/github.com/skill215/diameterkit/@v/v0.1.0-rc.2.mod",
+            "GoVersion": "1.26.0",
+            "Sum": "h1:RUJRDf4njgQ6eCxNMGQNmu9XgAbfUz/Dnb96tlcIIqw=",
+            "GoModSum": "h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk="
+          },
+          {
+            "Path": "github.com/skill215/diameterkit/adapters/sctp",
+            "Version": "v0.1.0-rc.1",
+            "Time": "2026-11-16T05:44:30Z",
+            "Dir": "/tmp/diameterkit-install-jq663icx/adapter/mod/github.com/skill215/diameterkit/adapters/sctp@v0.1.0-rc.1",
+            "GoMod": "/tmp/diameterkit-install-jq663icx/adapter/mod/cache/download/github.com/skill215/diameterkit/adapters/sctp/@v/v0.1.0-rc.1.mod",
+            "GoVersion": "1.26.0",
+            "Sum": "h1:Lc5qDB9ad3ykDfWG+od2Qrbc3+Vc+5IcbOwCHfagLxA=",
+            "GoModSum": "h1:f+hApmkodgS3QUWSnwzDQt37qXqKDd31SancRyRwe9g="
+          },
+          {
+            "Path": "github.com/skill215/sctp",
+            "Version": "v0.8.0",
+            "Time": "2026-11-09T08:17:30Z",
+            "Dir": "/tmp/diameterkit-install-jq663icx/adapter/mod/github.com/skill215/sctp@v0.8.0",
+            "GoMod": "/tmp/diameterkit-install-jq663icx/adapter/mod/cache/download/github.com/skill215/sctp/@v/v0.8.0.mod",
+            "GoVersion": "1.26.0",
+            "Sum": "h1:7N92RMEO7s4+4IHzI8KYKUgyIPpIClIVAdgg93m+RFI=",
+            "GoModSum": "h1:g/XAScdNEAqQa2cjZdtxXVkxIJZEy77f7/fmCkTD2gg="
+          }
+        ],
+        "manifest_sha256": {
+          "go.mod": "01d40457d87027ecb94f88e5e25d4f9eedb51f11b4cf0ec43fe05cd352cc85d3",
+          "go.sum": "ab4572a49b9e6539529e261e04591c2f5a59c0c88de6dcdeeb310a6cabe52b54"
+        }
+      }
+    }
+  },
+  "hosted_ci": [
+    {
+      "id": 43809506586,
+      "url": "https://github.com/skill215/diameterkit/actions/runs/43809506586",
+      "sha": "1bdc839e91fa3835fb7e2a908788e57e0df63410",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-16T05:19:44Z",
+      "updated_at": "2026-11-16T05:22:58Z",
+      "name": "Checkout acceptance"
+    },
+    {
+      "id": 43811421029,
+      "name": "Checkout acceptance",
+      "sha": "010f72133a6d2e467db7f7188c7c1d0667fff055",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/skill215/diameterkit/actions/runs/43811421029"
+    },
+    {
+      "id": 43811421027,
+      "name": "Checkout acceptance",
+      "sha": "010f72133a6d2e467db7f7188c7c1d0667fff055",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/skill215/diameterkit/actions/runs/43811421027"
+    },
+    {
+      "id": 43812210999,
+      "name": "Checkout acceptance",
+      "sha": "416d66fce4ef4109462582ef6f1e66a80d86a647",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/skill215/diameterkit/actions/runs/43812210999"
+    },
+    {
+      "id": 43812211221,
+      "name": "Checkout acceptance",
+      "sha": "416d66fce4ef4109462582ef6f1e66a80d86a647",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/skill215/diameterkit/actions/runs/43812211221"
+    },
+    {
+      "id": 43812211041,
+      "name": "Published module installation",
+      "sha": "416d66fce4ef4109462582ef6f1e66a80d86a647",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/skill215/diameterkit/actions/runs/43812211041"
+    }
+  ],
+  "english_and_ai_audit": {
+    "status": "passed",
+    "english_publication_documents": [
+      "README.md",
+      "AI_DISCLOSURE.md",
+      "adapters/sctp/README.md",
+      "spec/README.md",
+      "interop/README.md",
+      "doc/release-checks.md",
+      "doc/load-checks.md",
+      "doc/version-install-policy.md",
+      "doc/diameterkit-support-matrix.md",
+      "doc/diameterkit-application-definitions.md",
+      "doc/ro-recovery-handoff.md",
+      "doc/s6c-routing-helpers.md",
+      "doc/releases/v0.1.0-rc.md",
+      "examples/sgd/README.md",
+      "examples/s6c/README.md",
+      "examples/contracts/README.md",
+      "examples/ro/README.md",
+      "examples/sh/README.md",
+      "examples/scap1/README.md",
+      "adapters/sctp/AI_DISCLOSURE.md"
+    ],
+    "go_headers": 358,
+    "runtime_change": "none; stripping headers restores every Go source except generator header emission",
+    "api_documentation_change": "none; checked during snapshot review",
+    "benchmark_source": "spec/release/performance-baseline.json",
+    "benchmark_position": "final README section"
+  },
+  "tooling_tests": {
+    "count": 14,
+    "log": ".cache/b93-publication-tooling.log",
+    "sha256": "4dc31e4263992624980a35ca36a8db576f616539b0db03fd8328119ed1e40bf7"
+  },
+  "prior_failures": [
+    "spec/evidence/batch-93-version-install.json",
+    ".cache/b93-core-installed/summary.json",
+    ".cache/b93-core-rc2-installed/summary.json"
+  ],
+  "corrections": [
+    "Published core rc.1 retained; user-requested headers/docs became rc.2.",
+    "Go Origin.Ref is optional; exact version and remote tag commit/hash remain required.",
+    "Git ls-remote exact/peeled refs avoids anonymous REST rate-limit dependency; negative controls added."
+  ],
+  "unchanged": [
+    "Protocol definitions and wire semantics",
+    "Runtime source after removing AI metadata",
+    "Public package/declaration documentation",
+    "Pure Go and no persistence boundary"
+  ],
+  "limits": [
+    "A development candidate and selected release gate, not stable v1 or all24 requirements complete.",
+    "Historical protocol/reference and frozen JSON evidence retain original language and measurements.",
+    "README benchmark table uses measured batch92 samples; provenance-only updates do not claim new timings."
+  ]
+}

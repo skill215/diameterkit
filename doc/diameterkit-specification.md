@@ -1182,3 +1182,5 @@ P0退出的三项交付已经具备：§3.1固定范围；§7完成遗留项分�
 第92批完成[有界fuzz、压力与性能基线](load-checks.md)：5个目标各30秒/2worker，固定TCP窗口和SCTP工作量的纯Go/race各20轮，分列逻辑峰值/采样HeapAlloc/进程VmHWM，8项benchmark按200次×5样本记录。见[证据](../spec/evidence/batch-92-bounded-load.json)和[初始基线](../spec/release/performance-baseline.json)。这关闭所选本地有界验收切片，不证明穷尽安全、生产容量或性能提升；托管CI、真实发行安装、现场/私有门及24项partial/not_ready保持。
 
 第93批实现[版本/API政策与真实安装门禁](version-install-policy.md)：v0双module独立标签、API变更评审、两个空缓存消费者、GOWORK=off、无replace、精确依赖图及commit/checksum/API/公开消费检查。工具和checkout消费测试通过；实际官方代理下载核心/adapter候选均404，远端无标签，见[证据](../spec/evidence/batch-93-version-install.json)。本批保持partial_pending_publication，不把门禁实现计为安装验收完成；先发布核心，再更新adapter真实依赖并发布，最后重跑冷安装。纯Go、无持久化，24项partial/not_ready保持。
+
+Batch93 publication completion: immutable core v0.1.0-rc.2 and adapter v0.1.0-rc.1, real GOWORK=off/no-replace independent cold consumers and hosted CI passed. See [publication record](releases/v0.1.0-rc.md) and [evidence](../spec/evidence/batch-93-published-install.json). English publication guides and AI headers add no protocol behavior or persistence. Broader24 requirements remain partial.

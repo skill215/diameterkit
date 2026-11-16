@@ -3,14 +3,14 @@
   "baseline": "Draft 0.94",
   "normative_spec": "doc/diameterkit-specification.md",
   "batch": "Version/API policy, immutable installation and English publication/provenance",
-  "status": "partial",
-  "status_meaning": "Authorized publication in progress: core rc.1 published; rc.2 adds requested English docs/AI headers, then adapter and genuine cold consumers. No immutable tag overwritten.",
+  "status": "completed",
+  "status_meaning": "Batch93 selected policy/publication/cold-install gate complete, including requested English publication documents and AI headers. Both immutable modules are genuinely installed in cold external consumers and hosted CI passes. This does not close all24 requirements or stable-v1/target/capacity gates.",
   "date": "2026-11-16",
   "toolchain": "go1.26.10 linux/amd64",
   "release_status": "not_ready",
   "module": "github.com/skill215/diameterkit",
   "minimum_go": "1.26.0",
-  "environment_note": "WSL original repo; pinned Go1.26.10; checkout static/pure/race/cross and separate consumer probe passed. Two independent empty-cache GOWORK=off public downloads failed for missing core/adapter tags. No publishing or persistence change.",
+  "environment_note": "WSL original repo, actual GitHub tags/public proxy/sumdb, GOWORK=off/no-replace independent cold consumers; hosted seven-suite checkout and installed-module CI verified. Runtime remains pureGo with no persistence boundary.",
   "implemented": [
     "retained owned Base/S6c normal/E codec; ops3 extracts Destination presence and values for fixed runtime binding",
     "bounded Node-owned completion ports and atomic Node/class/Peer/Port reservation accounting",
@@ -498,7 +498,8 @@
     "Batch91 pinned-toolchain dual-module CI with static/pure/race/cross jobs; temporary versioned checkout workspace and graph verification;11 generated outputs/determinism, two-platform25-package API snapshot, real drift rejection, both-module vet and zero-skip CGO0/race; six cross builds. No module lock, generated or public API baseline changes.",
     "Batch92 five fuzz targets30s each/two workers with finite minimization/timeout and failure-corpus artifacts; fixed TCP windows1/8/16 and nativeSCTP pressure20 repetitions each CGO0/race; logical/HeapAlloc/VmHWM metrics; eight benchmarks200 iterations x5 samples plus CPU/kernel/workload hashes;7-suite CI and repeatable commands. No production APIs changed.",
     "Batch93 v0 core/adapter independent SemVer/tag and API review policy, strict two-cold-consumer public install tooling, exact no-replace graph/commit/checksum/API verification, external SCTP probe and explicit-version read-only workflow. Tooling and local probe passed; real installation failed404 pending publication.",
-    "English publication guides, AI_DISCLOSURE and358 Go provenance headers with deterministic generator/header gate; no runtime code change after stripping metadata. README ends with eight measured batch92 benchmark rows. Core rc.1 published and hosted seven-suite CI passed; rc.2/adapter acceptance in progress."
+    "English publication guides, AI_DISCLOSURE and358 Go provenance headers with deterministic generator/header gate; no runtime code change after stripping metadata. README ends with eight measured batch92 benchmark rows. Core rc.1 published and hosted seven-suite CI passed; rc.2/adapter acceptance in progress.",
+    "Batch93 completion: immutable core rc.2 and adapter rc.1 published, adapter real core/sum lock, independent cold public consumers pure/race and hosted installation passed. Twenty English publication documents,358 Go AI headers, deterministic generator/header gate and final README eight-case measured benchmark table."
   ],
   "requirements": [
     {
@@ -6283,7 +6284,7 @@
     {
       "id": "SPEC-RELEASE-01",
       "status": "partial",
-      "remaining": "第93批v0双module/API政策及真实安装门禁实现、本地测试通过；真实冷缓存下载核心/adapter均404，远端无标签。必须先发布不可变核心、更新adapter真实依赖/校验和并发布，再以GOWORK=off/无replace/独立空缓存通过实际消费，不能将工具完成计作安装完成。托管CI仍待。",
+      "remaining": "Selected v0 policy, publication, actual cold installation and hosted CI are complete. Stable-v1 compatibility/support commitments, full requirement scope and deployment/private-target acceptance remain separate.",
       "evidence": [
         "spec/reviews/2026-11-09-global-progress.json",
         "spec/local/batches/batch-79.md",
@@ -6342,7 +6343,11 @@
         "spec/evidence/batch-93-version-install.json",
         "doc/version-install-policy.md",
         "spec/release/version-policy.json",
-        "spec/tools/release_install.py"
+        "spec/tools/release_install.py",
+        "spec/evidence/batch-93-published-install.json",
+        "spec/release/published-modules.json",
+        "AI_DISCLOSURE.md",
+        "doc/releases/v0.1.0-rc.md"
       ],
       "batch87_evidence": "spec/evidence/batch-87-s6c-helpers.json",
       "batch88_evidence": "spec/evidence/batch-88-ro-recovery-consumption.json",
@@ -6363,7 +6368,7 @@
         "GOHOSTARCH"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/toolchain.log",
+      "log": ".cache/b93-rc2-static/toolchain.log",
       "status": "passed",
       "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e"
     },
@@ -6376,9 +6381,9 @@
         "-json"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-static-final/adapter-manifest.log",
+      "log": ".cache/b93-rc2-static/adapter-manifest.log",
       "status": "passed",
-      "sha256": "1aba418645cadada0623a6acdec879f3079f735e21de72d80290c19b2cbd8f44"
+      "sha256": "30c70d86c144efa82b7b57606079b233e7d6cff23fc4dda71aee6b7ede449529"
     },
     {
       "name": "workspace",
@@ -6389,8 +6394,8 @@
         "/home/skill/workspace/git/diameterkit",
         "/home/skill/workspace/git/diameterkit/adapters/sctp"
       ],
-      "cwd": "/tmp/diameterkit-ci-j4b503xs",
-      "log": ".cache/b93-static-final/workspace.log",
+      "cwd": "/tmp/diameterkit-ci-q_4j4t_c",
+      "log": ".cache/b93-rc2-static/workspace.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -6400,10 +6405,10 @@
         "go",
         "work",
         "edit",
-        "-replace=github.com/skill215/diameterkit@v0.0.0-diameterkit.batch85=/home/skill/workspace/git/diameterkit"
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.1=/home/skill/workspace/git/diameterkit"
       ],
-      "cwd": "/tmp/diameterkit-ci-j4b503xs",
-      "log": ".cache/b93-static-final/checkout-binding.log",
+      "cwd": "/tmp/diameterkit-ci-q_4j4t_c",
+      "log": ".cache/b93-rc2-static/checkout-binding.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -6417,7 +6422,7 @@
         "all"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-static-final/module-graph.log",
+      "log": ".cache/b93-rc2-static/module-graph.log",
       "status": "passed",
       "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942"
     },
@@ -6430,9 +6435,20 @@
         "github.com/skill215/sctp@v0.8.0"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-static-final/dependency-download.log",
+      "log": ".cache/b93-rc2-static/dependency-download.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "ai-disclosure",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/check_ai_headers.py"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b93-rc2-static/ai-disclosure.log",
+      "status": "passed",
+      "sha256": "8234f943cbfe8d18479b0913d4d8c18a84bc4134d945f7a6d0e44869a51c0ffe"
     },
     {
       "name": "tooling-tests",
@@ -6448,9 +6464,9 @@
         "-v"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/tooling-tests.log",
+      "log": ".cache/b93-rc2-static/tooling-tests.log",
       "status": "passed",
-      "sha256": "312d58111c7be9d24aad849a1bf1d220c87c2ebb40a30acbba2d3f6548d9eb5d"
+      "sha256": "6358631956c05c1160e7f55f898bc4ad027648750fc05c8710e1b219c944ae14"
     },
     {
       "name": "generator-build",
@@ -6458,18 +6474,18 @@
         "go",
         "build",
         "-o",
-        "/tmp/diameterkit-ci-j4b503xs/diameter-schema",
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
         "./cmd/diameter-schema"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/generator-build.log",
+      "log": ".cache/b93-rc2-static/generator-build.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "generated-base",
       "command": [
-        "/tmp/diameterkit-ci-j4b503xs/diameter-schema",
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
         "-in",
         "spec/base.json",
         "-out",
@@ -6477,14 +6493,14 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/generated-base.log",
+      "log": ".cache/b93-rc2-static/generated-base.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "generated-sh",
       "command": [
-        "/tmp/diameterkit-ci-j4b503xs/diameter-schema",
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
         "-in",
         "spec/sh.json",
         "-out",
@@ -6492,14 +6508,14 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/generated-sh.log",
+      "log": ".cache/b93-rc2-static/generated-sh.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "generated-s6c",
       "command": [
-        "/tmp/diameterkit-ci-j4b503xs/diameter-schema",
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
         "-in",
         "spec/s6c.json",
         "-out",
@@ -6507,14 +6523,14 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/generated-s6c.log",
+      "log": ".cache/b93-rc2-static/generated-s6c.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "generated-sgd",
       "command": [
-        "/tmp/diameterkit-ci-j4b503xs/diameter-schema",
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
         "-in",
         "spec/sgd.json",
         "-out",
@@ -6522,14 +6538,14 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/generated-sgd.log",
+      "log": ".cache/b93-rc2-static/generated-sgd.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "generated-ro",
       "command": [
-        "/tmp/diameterkit-ci-j4b503xs/diameter-schema",
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
         "-in",
         "spec/ro.json",
         "-out",
@@ -6537,14 +6553,14 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/generated-ro.log",
+      "log": ".cache/b93-rc2-static/generated-ro.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "generated-roabort",
       "command": [
-        "/tmp/diameterkit-ci-j4b503xs/diameter-schema",
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
         "-in",
         "spec/roabort.json",
         "-out",
@@ -6552,14 +6568,14 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/generated-roabort.log",
+      "log": ".cache/b93-rc2-static/generated-roabort.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "generated-dcca",
       "command": [
-        "/tmp/diameterkit-ci-j4b503xs/diameter-schema",
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
         "-in",
         "spec/dcca.json",
         "-out",
@@ -6567,14 +6583,14 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/generated-dcca.log",
+      "log": ".cache/b93-rc2-static/generated-dcca.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "generated-smsfwro",
       "command": [
-        "/tmp/diameterkit-ci-j4b503xs/diameter-schema",
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
         "-in",
         "spec/smsfwro.json",
         "-out",
@@ -6582,14 +6598,14 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/generated-smsfwro.log",
+      "log": ".cache/b93-rc2-static/generated-smsfwro.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "generated-legacy420",
       "command": [
-        "/tmp/diameterkit-ci-j4b503xs/diameter-schema",
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
         "-in",
         "spec/legacy420.json",
         "-out",
@@ -6597,14 +6613,14 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/generated-legacy420.log",
+      "log": ".cache/b93-rc2-static/generated-legacy420.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "generated-combined",
       "command": [
-        "/tmp/diameterkit-ci-j4b503xs/diameter-schema",
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
         "-in",
         "spec/combined.json",
         "-out",
@@ -6612,14 +6628,14 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/generated-combined.log",
+      "log": ".cache/b93-rc2-static/generated-combined.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "generated-scap1",
       "command": [
-        "/tmp/diameterkit-ci-j4b503xs/diameter-schema",
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
         "-in",
         "spec/scap1.json",
         "-out",
@@ -6627,24 +6643,24 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/generated-scap1.log",
+      "log": ".cache/b93-rc2-static/generated-scap1.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "generated-negative-control",
       "command": [
-        "/tmp/diameterkit-ci-j4b503xs/diameter-schema",
+        "/tmp/diameterkit-ci-q_4j4t_c/diameter-schema",
         "-in",
         "/home/skill/workspace/git/diameterkit/spec/base.json",
         "-out",
-        "/tmp/diameterkit-ci-j4b503xs/stale.go",
+        "/tmp/diameterkit-ci-q_4j4t_c/stale.go",
         "-check"
       ],
       "status": "passed",
       "expected_failure": true,
-      "log": ".cache/b93-static-final/generated-negative-control.log",
-      "sha256": "0267e61b8d2b30892b189f24822deb60b7330d7efe3c2cad64212636eee5eb0d"
+      "log": ".cache/b93-rc2-static/generated-negative-control.log",
+      "sha256": "99b7ef7828d69b08451be03a89163b354730330a21316f70b204e7c2949133ee"
     },
     {
       "name": "generator-determinism",
@@ -6658,9 +6674,9 @@
         "^TestGeneratedFilesCurrentAndDeterministic$"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/generator-determinism.log",
+      "log": ".cache/b93-rc2-static/generator-determinism.log",
       "status": "passed",
-      "sha256": "c5014fbbd90ccac77794f1c04cd1280c35c75a1023cedd53d6b5f1b57facc722",
+      "sha256": "01d69ec28588ef1f67873e6c10b57c241b03a2533a9ae6da2cbbfe0782ec4da9",
       "test_subtest_seed_passes": 1,
       "test_skips": 0
     },
@@ -6671,10 +6687,10 @@
         "spec/tools/public_api_snapshot.py",
         "--check",
         "--workspace",
-        "/tmp/diameterkit-ci-j4b503xs/go.work"
+        "/tmp/diameterkit-ci-q_4j4t_c/go.work"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/api-snapshot.log",
+      "log": ".cache/b93-rc2-static/api-snapshot.log",
       "status": "passed",
       "sha256": "1debc4cbb0d2bd5220fa0bdc632c40e3439560db79b82355c4d4a3c68d13dfcb"
     },
@@ -6685,13 +6701,13 @@
         "spec/tools/public_api_snapshot.py",
         "--check",
         "--output",
-        "/tmp/diameterkit-ci-j4b503xs/stale-api.json",
+        "/tmp/diameterkit-ci-q_4j4t_c/stale-api.json",
         "--workspace",
-        "/tmp/diameterkit-ci-j4b503xs/go.work"
+        "/tmp/diameterkit-ci-q_4j4t_c/go.work"
       ],
       "status": "passed",
       "expected_failure": true,
-      "log": ".cache/b93-static-final/api-negative-control.log",
+      "log": ".cache/b93-rc2-static/api-negative-control.log",
       "sha256": "64fa65d5163692d7809a4935279b295a5c3033511bfb5244d3fa97ce72c44f4c"
     },
     {
@@ -6702,7 +6718,7 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-static-final/core-vet.log",
+      "log": ".cache/b93-rc2-static/core-vet.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -6714,7 +6730,7 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-static-final/adapter-vet.log",
+      "log": ".cache/b93-rc2-static/adapter-vet.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -6728,7 +6744,7 @@
         "GOHOSTARCH"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-pure/toolchain.log",
+      "log": ".cache/b93-rc2-pure/toolchain.log",
       "status": "passed",
       "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e"
     },
@@ -6741,9 +6757,9 @@
         "-json"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-pure/adapter-manifest.log",
+      "log": ".cache/b93-rc2-pure/adapter-manifest.log",
       "status": "passed",
-      "sha256": "1aba418645cadada0623a6acdec879f3079f735e21de72d80290c19b2cbd8f44"
+      "sha256": "30c70d86c144efa82b7b57606079b233e7d6cff23fc4dda71aee6b7ede449529"
     },
     {
       "name": "workspace",
@@ -6754,8 +6770,8 @@
         "/home/skill/workspace/git/diameterkit",
         "/home/skill/workspace/git/diameterkit/adapters/sctp"
       ],
-      "cwd": "/tmp/diameterkit-ci-kp1lip0u",
-      "log": ".cache/b93-pure/workspace.log",
+      "cwd": "/tmp/diameterkit-ci-4i4k2ex4",
+      "log": ".cache/b93-rc2-pure/workspace.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -6765,10 +6781,10 @@
         "go",
         "work",
         "edit",
-        "-replace=github.com/skill215/diameterkit@v0.0.0-diameterkit.batch85=/home/skill/workspace/git/diameterkit"
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.1=/home/skill/workspace/git/diameterkit"
       ],
-      "cwd": "/tmp/diameterkit-ci-kp1lip0u",
-      "log": ".cache/b93-pure/checkout-binding.log",
+      "cwd": "/tmp/diameterkit-ci-4i4k2ex4",
+      "log": ".cache/b93-rc2-pure/checkout-binding.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -6782,7 +6798,7 @@
         "all"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-pure/module-graph.log",
+      "log": ".cache/b93-rc2-pure/module-graph.log",
       "status": "passed",
       "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942"
     },
@@ -6795,7 +6811,7 @@
         "github.com/skill215/sctp@v0.8.0"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-pure/dependency-download.log",
+      "log": ".cache/b93-rc2-pure/dependency-download.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -6810,9 +6826,9 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-pure/core-pure.log",
+      "log": ".cache/b93-rc2-pure/core-pure.log",
       "status": "passed",
-      "sha256": "9defe85403132e7c06476473b524423848ec25f66a0aeaf5c3203aee3065ebae",
+      "sha256": "51b163a036e09a42150229124a5018652fcefa0dc4d08349bc821e606a878680",
       "test_subtest_seed_passes": 3916,
       "test_skips": 0
     },
@@ -6827,9 +6843,9 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-pure/adapter-pure.log",
+      "log": ".cache/b93-rc2-pure/adapter-pure.log",
       "status": "passed",
-      "sha256": "1975052ef85e0a6d1bd36e0fb7303f2b6b6ab3292e4df14411cdc45147c3ba2d",
+      "sha256": "76171e70e45a3224f7f70dbd1caca06eab5c84666d40871e6531dabfc8fe6db5",
       "test_subtest_seed_passes": 114,
       "test_skips": 0
     },
@@ -6843,7 +6859,7 @@
         "GOHOSTARCH"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-race/toolchain.log",
+      "log": ".cache/b93-rc2-race/toolchain.log",
       "status": "passed",
       "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e"
     },
@@ -6856,9 +6872,9 @@
         "-json"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-race/adapter-manifest.log",
+      "log": ".cache/b93-rc2-race/adapter-manifest.log",
       "status": "passed",
-      "sha256": "1aba418645cadada0623a6acdec879f3079f735e21de72d80290c19b2cbd8f44"
+      "sha256": "30c70d86c144efa82b7b57606079b233e7d6cff23fc4dda71aee6b7ede449529"
     },
     {
       "name": "workspace",
@@ -6869,8 +6885,8 @@
         "/home/skill/workspace/git/diameterkit",
         "/home/skill/workspace/git/diameterkit/adapters/sctp"
       ],
-      "cwd": "/tmp/diameterkit-ci-tzl04egv",
-      "log": ".cache/b93-race/workspace.log",
+      "cwd": "/tmp/diameterkit-ci-8qul22ba",
+      "log": ".cache/b93-rc2-race/workspace.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -6880,10 +6896,10 @@
         "go",
         "work",
         "edit",
-        "-replace=github.com/skill215/diameterkit@v0.0.0-diameterkit.batch85=/home/skill/workspace/git/diameterkit"
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.1=/home/skill/workspace/git/diameterkit"
       ],
-      "cwd": "/tmp/diameterkit-ci-tzl04egv",
-      "log": ".cache/b93-race/checkout-binding.log",
+      "cwd": "/tmp/diameterkit-ci-8qul22ba",
+      "log": ".cache/b93-rc2-race/checkout-binding.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -6897,7 +6913,7 @@
         "all"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-race/module-graph.log",
+      "log": ".cache/b93-rc2-race/module-graph.log",
       "status": "passed",
       "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942"
     },
@@ -6910,7 +6926,7 @@
         "github.com/skill215/sctp@v0.8.0"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-race/dependency-download.log",
+      "log": ".cache/b93-rc2-race/dependency-download.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -6926,9 +6942,9 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-race/core-race.log",
+      "log": ".cache/b93-rc2-race/core-race.log",
       "status": "passed",
-      "sha256": "ee9941d2d187ed52e0dbe3df69628e1bc14af9998f604e1b982aa5f3f3a283cd",
+      "sha256": "c5939e8bc2e8dd9c6ef5079c9c90ba854fab0bede6ba48e7b01fdaeda38dd808",
       "test_subtest_seed_passes": 3916,
       "test_skips": 0
     },
@@ -6944,9 +6960,9 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-race/adapter-race.log",
+      "log": ".cache/b93-rc2-race/adapter-race.log",
       "status": "passed",
-      "sha256": "7bb081607a30c5db9fbf3fcc6d67a19100d0a24f74d752a693945bf1664529cc",
+      "sha256": "198b4423dabeaa384e85672d0837d3042d84379b5dcbe57e1b7a930ddec19a40",
       "test_subtest_seed_passes": 114,
       "test_skips": 0
     },
@@ -6960,7 +6976,7 @@
         "GOHOSTARCH"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-cross/toolchain.log",
+      "log": ".cache/b93-rc2-cross/toolchain.log",
       "status": "passed",
       "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e"
     },
@@ -6973,9 +6989,9 @@
         "-json"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-cross/adapter-manifest.log",
+      "log": ".cache/b93-rc2-cross/adapter-manifest.log",
       "status": "passed",
-      "sha256": "1aba418645cadada0623a6acdec879f3079f735e21de72d80290c19b2cbd8f44"
+      "sha256": "30c70d86c144efa82b7b57606079b233e7d6cff23fc4dda71aee6b7ede449529"
     },
     {
       "name": "workspace",
@@ -6986,8 +7002,8 @@
         "/home/skill/workspace/git/diameterkit",
         "/home/skill/workspace/git/diameterkit/adapters/sctp"
       ],
-      "cwd": "/tmp/diameterkit-ci-gs5uzvv7",
-      "log": ".cache/b93-cross/workspace.log",
+      "cwd": "/tmp/diameterkit-ci-4pehg0n6",
+      "log": ".cache/b93-rc2-cross/workspace.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -6997,10 +7013,10 @@
         "go",
         "work",
         "edit",
-        "-replace=github.com/skill215/diameterkit@v0.0.0-diameterkit.batch85=/home/skill/workspace/git/diameterkit"
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.1=/home/skill/workspace/git/diameterkit"
       ],
-      "cwd": "/tmp/diameterkit-ci-gs5uzvv7",
-      "log": ".cache/b93-cross/checkout-binding.log",
+      "cwd": "/tmp/diameterkit-ci-4pehg0n6",
+      "log": ".cache/b93-rc2-cross/checkout-binding.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -7014,7 +7030,7 @@
         "all"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-cross/module-graph.log",
+      "log": ".cache/b93-rc2-cross/module-graph.log",
       "status": "passed",
       "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942"
     },
@@ -7027,7 +7043,7 @@
         "github.com/skill215/sctp@v0.8.0"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-cross/dependency-download.log",
+      "log": ".cache/b93-rc2-cross/dependency-download.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -7039,7 +7055,7 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-cross/core-build-linux-arm64.log",
+      "log": ".cache/b93-rc2-cross/core-build-linux-arm64.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -7051,7 +7067,7 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-cross/adapter-build-linux-arm64.log",
+      "log": ".cache/b93-rc2-cross/adapter-build-linux-arm64.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -7063,7 +7079,7 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-cross/core-build-linux-386.log",
+      "log": ".cache/b93-rc2-cross/core-build-linux-386.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -7075,7 +7091,7 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-cross/adapter-build-linux-386.log",
+      "log": ".cache/b93-rc2-cross/adapter-build-linux-386.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -7087,7 +7103,7 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b93-cross/core-build-windows-amd64.log",
+      "log": ".cache/b93-rc2-cross/core-build-windows-amd64.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -7099,7 +7115,7 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b93-cross/adapter-build-windows-amd64.log",
+      "log": ".cache/b93-rc2-cross/adapter-build-windows-amd64.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
@@ -7127,7 +7143,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "13084364f3d0d8c84c01a252f94928d38ac0d34cf497c35677e40138f364159d"
+      "sha256": "9716b33c96e5c483cff5363020fad0abaa1dfcbb1e306c9f88ed4fb24d0903bd"
     },
     {
       "path": "adapters/sctp/AI_DISCLOSURE.md",
@@ -7135,7 +7151,7 @@
     },
     {
       "path": "adapters/sctp/README.md",
-      "sha256": "11170ca8a64176f367a001a4193d5c838c1dc57a4c14d9b8a812712c118980ca"
+      "sha256": "c163fa1a0394dc2eda2220dc04c9df95e9a68644c5c58e3ca5d5fb810fdb01b9"
     },
     {
       "path": "adapters/sctp/config.go",
@@ -7771,7 +7787,7 @@
     },
     {
       "path": "doc/diameterkit-specification.md",
-      "sha256": "2a40d674d05c246e5901ba1b67da15e63e48c25c1368737cc082ba49e16da4c2"
+      "sha256": "7ea20be60a173df88374291bfc142ef3436e26ef3103f81552b7c625f892057a"
     },
     {
       "path": "doc/diameterkit-state-consistency.md",
@@ -7783,7 +7799,7 @@
     },
     {
       "path": "doc/diameterkit-usage-coverage.md",
-      "sha256": "fd52fbb755faad16819723e4d7213dbc4e206fbbb74007d3885c3039ff541e9a"
+      "sha256": "8de39e74bb4f6f7d0d8710cc7924fdda055bb5f7ced9b16f3a0200582d36c947"
     },
     {
       "path": "doc/load-checks.md",
@@ -7795,7 +7811,7 @@
     },
     {
       "path": "doc/releases/v0.1.0-rc.md",
-      "sha256": "7e9172713719bb8ef3b7d2d22c1456e6b4e8c8cceea33e318fd3a6098723651c"
+      "sha256": "05e11e8b29a6a427b5bd774206bec95463dc13fa011aab9897a0bdcf59308aec"
     },
     {
       "path": "doc/ro-recovery-handoff.md",
@@ -7803,7 +7819,7 @@
     },
     {
       "path": "doc/s6c-routing-helpers.md",
-      "sha256": "40730d1a20d0f596f684404f3bb87ad4c6a1ec5d5d775d82b5b41dc61de61ea6"
+      "sha256": "925e14e868e3cefe1e0be9718006e9d01e3666b1230f196110aaf942cd51c298"
     },
     {
       "path": "doc/sctp-upstream-improvement-plan.md",
@@ -7815,7 +7831,7 @@
     },
     {
       "path": "doc/version-install-policy.md",
-      "sha256": "e9d5f0037a94d92836f160ebd53fb09ad1081572758bddec76478a806235224f"
+      "sha256": "705d3ad447d3673fb8ec6f6b9ef9ef7e686170be45f159769af875aa7799cc64"
     },
     {
       "path": "dra_test.go",
@@ -9126,6 +9142,10 @@
       "sha256": "4724dc9bf7bd8d711a9e4dd2d6f03658a27a3654f9ae738f3d2da1d5347c42a8"
     },
     {
+      "path": "spec/evidence/batch-93-published-install.json",
+      "sha256": "331f752734cf7157adb79a312444a4747a9f7cde12e551eddc11b75929be371e"
+    },
+    {
       "path": "spec/evidence/batch-93-version-install.json",
       "sha256": "b872a9895edcbfcc9eea471c9d6d4ca72c6d2ee4119f7f258a1d80703755dd0c"
     },
@@ -9514,12 +9534,16 @@
       "sha256": "75ef1127fec9c565c0158b2f808e7e6cc4a99a5efe9e4640db66baf72f7b5c9f"
     },
     {
+      "path": "spec/release/published-modules.json",
+      "sha256": "9350576beca6a10948dec83dd5bf36c2b41b1b1ae91262520de9b1290491fb2e"
+    },
+    {
       "path": "spec/release/support-matrix.json",
-      "sha256": "8dd3544109adbba4b08f1ac5d0bd467bf434c9ba86c9c29110281d2f7a065e93"
+      "sha256": "25fcd66a7784beb036ac4c3361b014fc53159dfbee53a9282a251d52a2424596"
     },
     {
       "path": "spec/release/version-policy.json",
-      "sha256": "71f6c3d000684007265ae4b85e075075660dd47ffbd020278859a5ed1ccea229"
+      "sha256": "fa29fa74c32297e7373b968e95739af76b95981ff6a9c275d1782d3f6e690d78"
     },
     {
       "path": "spec/reviews/2026-11-09-global-progress.json",
@@ -9707,10 +9731,9 @@
     }
   ],
   "next_batch": [
-    "Finish batch93 release acceptance: authorize and publish reviewed immutable core v0.1.0-rc.1; then pin adapter to the real downloaded core and authenticated sums, revalidate and publish adapters/sctp/v0.1.0-rc.1. Proposed versions are not published.",
-    "Run spec/tools/release_install.py with exact released versions, GOWORK=off/no-replace and two independent fresh caches; both actual consumers must pass before closing the release gate.",
-    "Review actual hosted checkout and install workflow runs after publication; local actionlint is not hosted evidence.",
-    "Private template/OCS/target acceptance and deployment workload capacity remain independent gates."
+    "Prioritize named private six-template/PSP/ACA/1292 and target deduplication/session-continuity evidence; do not infer missing mappings.",
+    "Deployment-specific long-soak/saturation/multi-tenant resource acceptance needs declared workloads and budgets.",
+    "Keep v0 API review and immutable version policy for subsequent changes; stable-v1 readiness remains separate."
   ],
   "deferred_from_this_batch": [
     "Complete four-application semantics/fields/contexts and full public release acceptance remain Partial/Planned; v1 includesRo andsmsfw migration, not a replacement-ready claim.",
@@ -9943,11 +9966,12 @@
       "Batch90 selected standalone smsfwro/legacy420 operations and three named bindings no-answer cross-target/import public consumers completed; private/target/release evidence remains separate.",
       "Batch91 dual-module checkout workflow/scripts, generated/API drift rejection, pure/race/vet/cross local acceptance; existing SCTP cancellation test queue isolation fixed without runtime relaxation.",
       "Batch92 bounded local fuzz/stress/peak-resource and initial performance baseline completed with fixed workloads, failure checks and reproducible commands; no production-capacity or hostedCI claim.",
-      "Batch93 version/API policy and strict real-install tooling are implemented and locally tested; actual release installation remains pending publication after recorded404 failures."
+      "Batch93 version/API policy and strict real-install tooling are implemented and locally tested; actual release installation remains pending publication after recorded404 failures.",
+      "Batch93 API/v0 policy and dual-module immutable publication/cold consumption completed; actual hosted checkout/install CI verified."
     ],
-    "resolution_evidence": "spec/evidence/batch-93-version-install.json",
-    "prior_resolution_evidence": "spec/evidence/batch-92-bounded-load.json",
-    "production_sources_changed": false,
+    "resolution_evidence": "spec/evidence/batch-93-published-install.json",
+    "prior_resolution_evidence": "spec/evidence/batch-93-version-install.json",
+    "production_sources_changed": true,
     "original_scan": {
       "evidence": "spec/reviews/2026-11-09-global-progress.json",
       "implementation_batch": 67
@@ -9959,16 +9983,17 @@
         "priority": "P1 release engineering",
         "status": "partial",
         "batch91_completed": "workflow and local dual-module generated/API/pure/race/vet/cross checks",
-        "remaining": "hosted CI verification; deployment-specific long-soak/saturation and statistical comparisons are separate from the completed bounded local slice",
-        "batch92_completed": "five bounded fuzz targets, fixedTCP/SCTP pressure20x in pure/race, logical/heap/RSS metrics and eight initial benchmarks"
+        "remaining": "Deployment-specific long-soak/saturation/statistical comparisons require declared budgets.",
+        "batch92_completed": "five bounded fuzz targets, fixedTCP/SCTP pressure20x in pure/race, logical/heap/RSS metrics and eight initial benchmarks",
+        "batch93_completed": "Hosted seven-suite checkout and cold published-install workflow verified"
       },
       {
         "name": "API与双module发行",
         "priority": "P1 release gate",
-        "status": "partial_pending_publication",
+        "status": "completed_selected_v0_gate",
         "batch93_completed": "v0 policy and cold install gate; unit and checkout consumer tests passed",
-        "remaining": "No remote tags; actual core/adapter downloads404. Publish core then pin/publish adapter; rerun real cold consumers.",
-        "evidence": "spec/evidence/batch-93-version-install.json"
+        "remaining": "Stable-v1 readiness separate",
+        "evidence": "spec/evidence/batch-93-published-install.json"
       },
       {
         "name": "六模板与私有恢复证据",
@@ -9991,7 +10016,8 @@
         "batch89_completed": "combined selected operations plus error-answer cross-target",
         "batch90_completed": "standalone smsfwro/legacy420 and three named bindings four-scenario cross-target matrix;156 new positive cases and24 import negatives"
       }
-    ]
+    ],
+    "production_change_scope": "AI provenance comments only; generator emits same metadata; API documentation and runtime behavior unchanged"
   },
   "public_api_evidence": "spec/evidence/batch-87-s6c-helpers.json",
   "local_notes_update": {
@@ -10422,21 +10448,11 @@
     ]
   },
   "release_installation": {
-    "status": "pending_publication",
-    "attempt_status": "failed",
-    "evidence": "spec/evidence/batch-93-version-install.json",
-    "policy": "spec/release/version-policy.json",
-    "command": "python3 spec/tools/release_install.py --core-version v0.1.0-rc.1 --adapter-version v0.1.0-rc.1 --output .cache/published-install-rc1",
-    "manifest_change": "deferred until core version genuinely exists; batch85 unchanged, no fabricated sums"
-  },
-  "publication_in_progress": {
-    "core_rc1": "1bdc839e91fa3835fb7e2a908788e57e0df63410",
-    "core_next": "v0.1.0-rc.2",
-    "adapter_next": "v0.1.0-rc.1",
-    "rc1_ci": "https://github.com/skill215/diameterkit/actions/runs/43809506586",
-    "reason_for_rc2": "User requested English publication guides and Go AI headers after rc.1 publication; tags remain immutable.",
-    "core_rc2": "010f72133a6d2e467db7f7188c7c1d0667fff055",
-    "core_rc2_cold_consumer": "passed",
-    "adapter_core_pin": "v0.1.0-rc.2"
+    "status": "passed",
+    "evidence": "spec/evidence/batch-93-published-install.json",
+    "receipt": "spec/release/published-modules.json",
+    "core": "v0.1.0-rc.2",
+    "adapter": "v0.1.0-rc.1",
+    "command": "python3 spec/tools/release_install.py --core-version v0.1.0-rc.2 --adapter-version v0.1.0-rc.1 --output .cache/published-install-new"
   }
 }

@@ -39,7 +39,10 @@ Use the pinned Go version, Python 3, Linux/amd64 with SCTP, and a C compiler for
 the race tool. Choose a nonexistent output directory:
 
 ```sh
-python3 spec/tools/release_install.py   --core-version v0.1.0-rc.2   --adapter-version v0.1.0-rc.1   --output .cache/published-install-rc2
+python3 spec/tools/release_install.py \
+  --core-version v0.1.0-rc.2 \
+  --adapter-version v0.1.0-rc.1 \
+  --output .cache/published-install-rc2
 ```
 
 The gate rejects branch/latest/pseudo-version/offline batch inputs, v1, build

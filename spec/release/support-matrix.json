@@ -1,7 +1,7 @@
 {
   "format": 1,
   "date": "2026-11-16",
-  "basis": "batch93 version/API policy and tested gate; actual immutable installation pending publication,24SPEC remainpartial",
+  "basis": "Batch93 immutable v0 modules and actual cold/hosted install verified;24 broaderSPEC IDs remain partial.",
   "release_status": "not_ready",
   "api_snapshot": "spec/release/public-api.json",
   "profiles": [
@@ -316,9 +316,10 @@
         "spec/evidence/batch-92-bounded-load.json",
         "spec/release/performance-baseline.json",
         "doc/load-checks.md",
-        "spec/tools/load_checks.py"
+        "spec/tools/load_checks.py",
+        "spec/evidence/batch-93-published-install.json"
       ],
-      "exit": "Bounded local engineering slice complete. Verify hostedCI when authorized; production workload/long-soak/saturation/statistical comparisons require declared budgets. Keep immutable module installation under its separate release gate.",
+      "exit": "Finite release-engineering and hosted gates passed; deployment-specific capacity/long-soak/statistical comparisons remain separate.",
       "batch91_completed": [
         "fixed toolchain/workflow and temporary current-checkout module graph",
         "11 generated files/determinism, API two-platform snapshot and actual negative controls",
@@ -328,29 +329,10 @@
         "5 fuzz targets30s/two workers",
         "TCP1/8/16 windows andSCTP4pairs pressure20x per pure/race mode, zero skips",
         "logical/heap/RSS observations and8 benchmarks200x5 with environment/workload hashes"
-      ]
-    },
-    {
-      "name": "API与双module发行",
-      "priority": "P1 release gate",
-      "requirement_refs": [
-        "SPEC-RELEASE-01"
       ],
-      "usage_ref": "P7",
-      "status": "partial_pending_publication",
-      "evidence": [
-        "spec/release/public-api.json",
-        "adapters/sctp/go.mod",
-        "spec/evidence/batch-93-version-install.json",
-        "spec/release/version-policy.json",
-        "doc/version-install-policy.md",
-        "spec/tools/release_install.py",
-        ".github/workflows/release-install.yml"
-      ],
-      "exit": "真实核心/adapter安装失败404，远端无标签。发布核心后更新adapter真实依赖和校验和并发布，完成两个GOWORK=off/无replace/冷缓存实际消费；工具与checkout成功不关闭此门。",
       "batch93_completed": [
-        "v0 independent module/tag/API policy",
-        "strict cold-install gate and public consumer probes; local tests passed"
+        "Actual hosted seven-suite checkout",
+        "Actual hosted independent cold module installation"
       ]
     },
     {
@@ -433,6 +415,31 @@
         "standalone smsfwro IEC/INITIAL/TERM and legacy420 debit/balance/refund",
         "three named bindings error/no-answer same-Node cross-target and new-Node import; late primary answer isolation",
         "24 import refusal cases and independent local-source consumer"
+      ]
+    },
+    {
+      "name": "API与双module发行",
+      "priority": "P1 release gate",
+      "requirement_refs": [
+        "SPEC-RELEASE-01"
+      ],
+      "usage_ref": "P7",
+      "status": "completed_selected_v0_gate",
+      "evidence": [
+        "spec/release/public-api.json",
+        "adapters/sctp/go.mod",
+        "spec/evidence/batch-93-version-install.json",
+        "spec/release/version-policy.json",
+        "doc/version-install-policy.md",
+        "spec/tools/release_install.py",
+        ".github/workflows/release-install.yml",
+        "spec/evidence/batch-93-published-install.json",
+        "spec/release/published-modules.json"
+      ],
+      "exit": "Independent immutable candidate tags and real authenticated cold installs verified. Stable-v1 and broader support/target readiness remain separate.",
+      "batch93_completed": [
+        "v0 independent module/tag/API policy",
+        "strict cold-install gate and public consumer probes; local tests passed"
       ]
     }
   ]

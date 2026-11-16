@@ -45,4 +45,4 @@ and zero values. Request HSS-ID is not answer IMSI.
 Tests cover construction/ownership, node shapes, result namespaces, named context,
 real TCP query/submit/cancel and retention of original exchange evidence. See
 [the runnable example](../examples/s6c/README.md) and
-[batch87 evidence](../spec/evidence/batch-87-s6c-helpers.json).
+[batch 87 evidence](../spec/evidence/batch-87-s6c-helpers.json).

@@ -1,7 +1,7 @@
 # Diameter SCTP adapter
 
 > **AI-written:** generated and revised with OpenAI Codex under maintainer direction.
-> Historical model identities are unrecorded; see [AI disclosure](../../AI_DISCLOSURE.md).
+> Historical model identities are unrecorded; see [AI disclosure](AI_DISCLOSURE.md).
 
 This independent module uses pure Go 1.26 and the published upstream release
 `github.com/skill215/sctp v0.8.0`.
@@ -31,8 +31,8 @@ same method and destination; a terminal event forbids continuation. Notification
 tails are never retained. The fixed notification size and rate limits close on
 excess; no queue or growing buffer is used.
 
-PPID is 46. CER/CEA/DWR/DWA/DPR/DPA use ordered stream0. Node enables unordered
-stream0 for application frames after its handshake barrier; the responder
+PPID is 46. CER/CEA/DWR/DWA/DPR/DPA use ordered stream 0. Node enables unordered
+stream 0 for application frames after its handshake barrier; the responder
 immediately queues a DWR after CEA and keeps applications ordered until a
 matched DWA or other valid post-handshake message. The barrier has a fixed
 Handshake timeout. Direct `WriteFrame` is always ordered; the optional
@@ -40,7 +40,7 @@ Handshake timeout. Direct `WriteFrame` is always ordered; the optional
 Incoming streams may differ from local outbound streams. Explicit
 `OrderedMultiStream` and `PPID0Compatibility` are available as described below.
 DTLS and SEND_FAILED attempt association are not enabled.
-SEND_FAILED with Context0 is a bounded diagnostic, never delivery confirmation
+SEND_FAILED with Context=0 is a bounded diagnostic, never delivery confirmation
 or permission to retry. No application sessions, persistence or business replay
 are added.
 
@@ -49,19 +49,19 @@ are added.
 `DefaultConfig()` retains `UnorderedStream0` and `PPID46`. The policies are
 independent and frozen when a socket/dialer/listener is constructed. No receive
 packet, DRA advertisement or notification changes them. `PPID46` sends and
-accepts only46; `PPID0Compatibility` sends0 and accepts0 or46. Both reject47 and
+accepts only 46; `PPID0Compatibility` sends 0 and accepts 0 or 46. Both reject 47 and
 unknown values. Enable compatibility only for an endpoint with that deployment
 agreement; it does not provide DTLS or endpoint authorization.
 
-`OrderedMultiStream` uses ordered stream0 for Base CER/CEA/DWR/DWA/DPR/DPA and
+`OrderedMultiStream` uses ordered stream 0 for Base CER/CEA/DWR/DWA/DPR/DPA and
 all frames sent with the handshake barrier. After the barrier, application
 frames use `1 + hash % (actual Ostreams - 1)`. Actual Ostreams=1 falls back to
-ordered stream0. `OutboundStreams` and `MaxInboundStreams` request counts from
-the kernel, never replace negotiated directional counts. Zero chooses outbound1
-in default mode, outbound16 in ordered mode, and inbound16 in either mode.
+ordered stream 0. `OutboundStreams` and `MaxInboundStreams` request counts from
+the kernel, never replace negotiated directional counts. Zero chooses outbound 1
+in default mode, outbound 16 in ordered mode, and inbound 16 in either mode.
 
-Mapping is fixed FNV-1a64: byte1 followed by exact top-level vendor0 Session-Id;
-without Session, byte2 followed by AppID(4), CommandCode(3), E2E(4), all in wire
+Mapping is fixed 64-bit FNV-1a: byte 1 followed by exact top-level vendor 0 Session-Id;
+without Session, byte 2 followed by AppID(4), CommandCode(3), E2E(4), all in wire
 byte order. HBH/R/T are excluded. Only the public wire top-level walker is used;
 groups are opaque, padding ignored, and ambiguous/empty Session-Id or malformed
 AVP boundaries rejected before send. No application decode, per-session table,
@@ -69,9 +69,9 @@ payload copy or stream queue is added. Hash collisions may share a stream;
 reconnects may negotiate different counts. This is not cross-connection session
 ordering or business deduplication.
 
-`WriteFrame` and `WriteFrameOrdered(..., true)` force ordered stream0.
+`WriteFrame` and `WriteFrameOrdered(..., true)` force ordered stream 0.
 `WriteFrameOrdered(..., false)` permits the configured post-handshake policy;
-Base control still uses ordered0. Answers independently use local outbound
+Base control still uses ordered stream 0. Answers independently use local outbound
 counts, never the remote request's SID. The existing CEA/DWR barrier remains in
 Node; notifications do not clear it. DPR/DPA is not a remote delivery fence
 across streams. Receive still accepts any negotiated inbound stream and either
@@ -81,7 +81,7 @@ A returned `transport.Conn` implements `ModeReporter`:
 `c.(sctp.ModeReporter).SCTPMode()` returns an immutable `ModeInfo` with both
 actual stream counts and `SingleStreamFallback`. Query this before transfer to
 Node if needed; no raw socket ownership is exposed. Fallback has ordered HOL,
-and level0 partial delivery retains receive HOL even with multiple streams.
+and level 0 partial delivery retains receive HOL even with multiple streams.
 Mode fields and the temporary wire cursor fit the existing fixed reserve;
 logical default budgets remain 17756/99676/52620 on Linux/amd64. This says
 nothing about kernel per-stream memory or end-to-end latency.
@@ -165,8 +165,8 @@ cancellation hook survives successful handoff. Serve cancellation closes the
 listener and unfinished candidate, leaving established Peer connections usable;
 Maintain cancellation retires its connection domain. Core Wait includes setup
 borrowers until actual return. Reconnect passes through REOPEN and never replays
-business requests. Formal v0.8.0 regression is in [batch67](../../spec/history/batch-67.json); migration evidence is in [batch66](../../spec/history/batch-66.json). Prior managed
-contracts remain in [batch65](../../spec/history/batch-65.json).
+business requests. Formal v0.8.0 regression is in [batch 67](../../spec/history/batch-67.json); migration evidence is in [batch 66](../../spec/history/batch-66.json). Prior managed
+contracts remain in [batch 65](../../spec/history/batch-65.json).
 
 ## Installation and development
 

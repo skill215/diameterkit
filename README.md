@@ -16,11 +16,10 @@ codecs; TCP/TLS are included and Linux SCTP is a separate module.
 [Quick start](#quick-start) · [Go API](#go-api) · [Support](#protocol-support) ·
 [Examples](#examples) · [Documentation](#documentation) · [Benchmarks](#benchmarks)
 
-**Development release candidates.** Core `v0.1.0-rc.1` is the initial immutable
-candidate. `v0.1.0-rc.2` adds English publication guides and provenance headers;
-the first SCTP adapter candidate is `v0.1.0-rc.1`. Check the
-[publication record](doc/releases/v0.1.0-rc.md) for actual availability and
-acceptance. v0 is not a stable-v1 or complete-standards promise.
+**Published development candidates:** core `v0.1.0-rc.2` and SCTP adapter
+`v0.1.0-rc.1`. Both passed independent cold-cache installation and hosted CI.
+See the [publication record](doc/releases/v0.1.0-rc.md) for immutable commits and
+acceptance evidence. v0 is not a stable-v1 or complete-standards promise.
 
 ## What it provides
 
@@ -50,9 +49,9 @@ go get github.com/skill215/diameterkit@v0.1.0-rc.2
 go get github.com/skill215/diameterkit/adapters/sctp@v0.1.0-rc.1
 ```
 
-These commands require the corresponding published tags. The
-[release record](doc/releases/v0.1.0-rc.md) distinguishes publication, cold-cache
-installation and hosted CI; a checkout test is not installed-version evidence.
+These exact versions were verified with `GOWORK=off`, no `replace` directives,
+empty caches and authenticated public downloads. See the
+[release record](doc/releases/v0.1.0-rc.md) for reproduction commands.
 
 ### Run a local request and responder
 
@@ -153,7 +152,7 @@ references retain their original language and are not new release claims.
 
 Existing measurements from **2026-11-16**, Go **1.26.10**, Linux/amd64 under
 WSL2, **AMD Ryzen 7 6800H**. Median of five samples, **200 iterations per sample**,
-`-cpu=1`, CGO=0. These are the recorded batch92 baseline, not a new timing run
+`-cpu=1`, CGO=0. These are the recorded batch 92 baseline, not a new timing run
 caused by this documentation change.
 
 | Workload | Median ns/op | B/op | allocs/op |
