@@ -1,0 +1,3124 @@
+{
+  "batch": 100,
+  "date": "2026-11-17",
+  "status": "local_verified_hosted_pending",
+  "scope": "Bounded generated typed-length5014 diagnostics for complete AVP framing; pure Go, no persistence.",
+  "priority_selection": {
+    "source": "spec/history/batch-99.json",
+    "requirement_refs": [
+      "SPEC-ERROR-01",
+      "SPEC-CODEC-01",
+      "SPEC-PROFILE-01",
+      "SPEC-BUDGET-01"
+    ],
+    "reason": "Batch99 prioritized typed-length5014 with exact-instance evidence and explicit separation from framing, resource and manual-domain errors."
+  },
+  "checks": [
+    {
+      "name": "length-diagnostics",
+      "command": [
+        "go",
+        "test",
+        ".",
+        "./internal/excessavp",
+        "./internal/codegen",
+        "-run=Test(Length|RejectLength|Invalid|RejectInvalid|ExternalGenerated|Generated|ProductionImport)",
+        "-count=20",
+        "-json",
+        "-timeout=5m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-repeat-pure/length-diagnostics.log",
+      "status": "passed",
+      "sha256": "bf079a820df1cecac7a6b60cad51a247e61a19f1550c59e6f0b804f18fe8c5c8",
+      "test_subtest_seed_passes": 7920,
+      "test_skips": 0,
+      "suite": "repeat-pure"
+    },
+    {
+      "name": "length-diagnostics",
+      "command": [
+        "go",
+        "test",
+        ".",
+        "./internal/excessavp",
+        "./internal/codegen",
+        "-run=Test(Length|RejectLength|Invalid|RejectInvalid|ExternalGenerated|Generated|ProductionImport)",
+        "-count=20",
+        "-json",
+        "-timeout=5m",
+        "-race"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-repeat-race/length-diagnostics.log",
+      "status": "passed",
+      "sha256": "88dbea76fe4d15f5f626eeb25e7bdd958ae1df984828eeef782a0327f571e9c1",
+      "test_subtest_seed_passes": 7920,
+      "test_skips": 0,
+      "suite": "repeat-race"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
+      "suite": "static"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-static/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
+      "suite": "static"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-m0ho5zou",
+      "log": ".cache/b100-static/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-m0ho5zou",
+      "log": ".cache/b100-static/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-static/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
+      "suite": "static"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-static/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "ai-disclosure",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/check_ai_headers.py"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/ai-disclosure.log",
+      "status": "passed",
+      "sha256": "c22d455591e82350c278a5df3631d2d6aee6f022f474141103c36e2dfbb06373",
+      "suite": "static"
+    },
+    {
+      "name": "tooling-tests",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "spec/tools",
+        "-p",
+        "test_release*.py",
+        "-v"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/tooling-tests.log",
+      "status": "passed",
+      "sha256": "aa0bab1d2e7f03854ef07f794ce1cb8e43123593c9fd1e9c9488936a7ee159b9",
+      "suite": "static"
+    },
+    {
+      "name": "generator-build",
+      "command": [
+        "go",
+        "build",
+        "-o",
+        "/tmp/diameterkit-ci-m0ho5zou/diameter-schema",
+        "./cmd/diameter-schema"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/generator-build.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-base",
+      "command": [
+        "/tmp/diameterkit-ci-m0ho5zou/diameter-schema",
+        "-in",
+        "spec/base.json",
+        "-out",
+        "base/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/generated-base.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-sh",
+      "command": [
+        "/tmp/diameterkit-ci-m0ho5zou/diameter-schema",
+        "-in",
+        "spec/sh.json",
+        "-out",
+        "app/sh/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/generated-sh.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-s6c",
+      "command": [
+        "/tmp/diameterkit-ci-m0ho5zou/diameter-schema",
+        "-in",
+        "spec/s6c.json",
+        "-out",
+        "app/s6c/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/generated-s6c.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-sgd",
+      "command": [
+        "/tmp/diameterkit-ci-m0ho5zou/diameter-schema",
+        "-in",
+        "spec/sgd.json",
+        "-out",
+        "app/sgd/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/generated-sgd.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-ro",
+      "command": [
+        "/tmp/diameterkit-ci-m0ho5zou/diameter-schema",
+        "-in",
+        "spec/ro.json",
+        "-out",
+        "app/ro/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/generated-ro.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-roabort",
+      "command": [
+        "/tmp/diameterkit-ci-m0ho5zou/diameter-schema",
+        "-in",
+        "spec/roabort.json",
+        "-out",
+        "app/ro/abort/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/generated-roabort.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-dcca",
+      "command": [
+        "/tmp/diameterkit-ci-m0ho5zou/diameter-schema",
+        "-in",
+        "spec/dcca.json",
+        "-out",
+        "app/ro/dcca/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/generated-dcca.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-smsfwro",
+      "command": [
+        "/tmp/diameterkit-ci-m0ho5zou/diameter-schema",
+        "-in",
+        "spec/smsfwro.json",
+        "-out",
+        "compat/smsfwro/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/generated-smsfwro.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-legacy420",
+      "command": [
+        "/tmp/diameterkit-ci-m0ho5zou/diameter-schema",
+        "-in",
+        "spec/legacy420.json",
+        "-out",
+        "compat/smsfwro/legacy420/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/generated-legacy420.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-combined",
+      "command": [
+        "/tmp/diameterkit-ci-m0ho5zou/diameter-schema",
+        "-in",
+        "spec/combined.json",
+        "-out",
+        "compat/smsfwro/combined/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/generated-combined.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-scap1",
+      "command": [
+        "/tmp/diameterkit-ci-m0ho5zou/diameter-schema",
+        "-in",
+        "spec/scap1.json",
+        "-out",
+        "compat/scap1/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/generated-scap1.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-negative-control",
+      "command": [
+        "/tmp/diameterkit-ci-m0ho5zou/diameter-schema",
+        "-in",
+        "/home/skill/workspace/git/diameterkit/spec/base.json",
+        "-out",
+        "/tmp/diameterkit-ci-m0ho5zou/stale.go",
+        "-check"
+      ],
+      "status": "passed",
+      "expected_failure": true,
+      "log": ".cache/b100-static/generated-negative-control.log",
+      "sha256": "9ffd08e17338008c5917f4f4f36a7cc170803f0d5013642859f9b42439615175",
+      "suite": "static"
+    },
+    {
+      "name": "generator-determinism",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-json",
+        "./internal/codegen",
+        "-run",
+        "^TestGeneratedFilesCurrentAndDeterministic$"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/generator-determinism.log",
+      "status": "passed",
+      "sha256": "0990d2f99f6d2c1b890001648eae37138afd2fe8e67df328aaaeab21ccdb4e20",
+      "test_subtest_seed_passes": 1,
+      "test_skips": 0,
+      "suite": "static"
+    },
+    {
+      "name": "api-snapshot",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/public_api_snapshot.py",
+        "--check",
+        "--workspace",
+        "/tmp/diameterkit-ci-m0ho5zou/go.work"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/api-snapshot.log",
+      "status": "passed",
+      "sha256": "1debc4cbb0d2bd5220fa0bdc632c40e3439560db79b82355c4d4a3c68d13dfcb",
+      "suite": "static"
+    },
+    {
+      "name": "api-negative-control",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/public_api_snapshot.py",
+        "--check",
+        "--output",
+        "/tmp/diameterkit-ci-m0ho5zou/stale-api.json",
+        "--workspace",
+        "/tmp/diameterkit-ci-m0ho5zou/go.work"
+      ],
+      "status": "passed",
+      "expected_failure": true,
+      "log": ".cache/b100-static/api-negative-control.log",
+      "sha256": "64fa65d5163692d7809a4935279b295a5c3033511bfb5244d3fa97ce72c44f4c",
+      "suite": "static"
+    },
+    {
+      "name": "core-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-static/core-vet.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "adapter-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-static/adapter-vet.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-pure/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
+      "suite": "pure"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-pure/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
+      "suite": "pure"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-zqnym3r5",
+      "log": ".cache/b100-pure/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "pure"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-zqnym3r5",
+      "log": ".cache/b100-pure/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "pure"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-pure/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
+      "suite": "pure"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-pure/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "pure"
+    },
+    {
+      "name": "core-pure",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-pure/core-pure.log",
+      "status": "passed",
+      "sha256": "bdc28a9a337e8498411c0b19fb6e50521602dda9e9bcc548ea8fb13a13ecc379",
+      "test_subtest_seed_passes": 4622,
+      "test_skips": 0,
+      "suite": "pure"
+    },
+    {
+      "name": "adapter-pure",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-pure/adapter-pure.log",
+      "status": "passed",
+      "sha256": "fb02cc9fad0666cded76b7a7d19939a90ca10d6164df6d5b2c9824c2f951010b",
+      "test_subtest_seed_passes": 114,
+      "test_skips": 0,
+      "suite": "pure"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-race/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
+      "suite": "race"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-race/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
+      "suite": "race"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-mdnnr_g0",
+      "log": ".cache/b100-race/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "race"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-mdnnr_g0",
+      "log": ".cache/b100-race/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "race"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-race/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
+      "suite": "race"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-race/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "race"
+    },
+    {
+      "name": "core-race",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "-race",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-race/core-race.log",
+      "status": "passed",
+      "sha256": "06d592d152577e01fb7bee32224c9448221dec513beb6624a31ed3829ff8ff0e",
+      "test_subtest_seed_passes": 4622,
+      "test_skips": 0,
+      "suite": "race"
+    },
+    {
+      "name": "adapter-race",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "-race",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-race/adapter-race.log",
+      "status": "passed",
+      "sha256": "26ee48c551a1c71a7c4cb4449b66fbe9820b6fb4afe15e491cfb27ce68d35a08",
+      "test_subtest_seed_passes": 114,
+      "test_skips": 0,
+      "suite": "race"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-cross/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
+      "suite": "cross"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-cross/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
+      "suite": "cross"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-4sri0bur",
+      "log": ".cache/b100-cross/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "cross"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-4sri0bur",
+      "log": ".cache/b100-cross/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "cross"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-cross/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
+      "suite": "cross"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-cross/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "cross"
+    },
+    {
+      "name": "core-build-linux-arm64",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-cross/core-build-linux-arm64.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "cross"
+    },
+    {
+      "name": "adapter-build-linux-arm64",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-cross/adapter-build-linux-arm64.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "cross"
+    },
+    {
+      "name": "core-build-linux-386",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-cross/core-build-linux-386.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "cross"
+    },
+    {
+      "name": "adapter-build-linux-386",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-cross/adapter-build-linux-386.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "cross"
+    },
+    {
+      "name": "core-build-windows-amd64",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-cross/core-build-windows-amd64.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "cross"
+    },
+    {
+      "name": "adapter-build-windows-amd64",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-cross/adapter-build-windows-amd64.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "cross"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-fuzz/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
+      "suite": "fuzz"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-fuzz/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
+      "suite": "fuzz"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-cxwt9xo7",
+      "log": ".cache/b100-fuzz/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "fuzz"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-cxwt9xo7",
+      "log": ".cache/b100-fuzz/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "fuzz"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-fuzz/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
+      "suite": "fuzz"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-fuzz/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "fuzz"
+    },
+    {
+      "name": "fuzz-decode",
+      "command": [
+        "go",
+        "test",
+        "./codec",
+        "-run=^$",
+        "-fuzz=^FuzzDecode$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-fuzz/fuzz-decode.log",
+      "status": "passed",
+      "sha256": "3e5cc4adbc1ca84eae414b44c9904468ce86d8d3a6d06edfc8e9fae840dfbf82",
+      "suite": "fuzz"
+    },
+    {
+      "name": "fuzz-answer",
+      "command": [
+        "go",
+        "test",
+        "./codec",
+        "-run=^$",
+        "-fuzz=^FuzzDecodeAnswer$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-fuzz/fuzz-answer.log",
+      "status": "passed",
+      "sha256": "7c0b9db7ec97811f052d95653c4478d7384ff97b022f03b74d2e2eddaecaf93b",
+      "suite": "fuzz"
+    },
+    {
+      "name": "fuzz-canonical",
+      "command": [
+        "go",
+        "test",
+        "./codec",
+        "-run=^$",
+        "-fuzz=^FuzzCanonical$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-fuzz/fuzz-canonical.log",
+      "status": "passed",
+      "sha256": "05e1bf1602af78693db200bd7a9ae5fbb2046a242f89cdc685b75b03d2499a96",
+      "suite": "fuzz"
+    },
+    {
+      "name": "fuzz-missing-diagnostic",
+      "command": [
+        "go",
+        "test",
+        "./internal/missingavp",
+        "-run=^$",
+        "-fuzz=^FuzzMissingQuote$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-fuzz/fuzz-missing-diagnostic.log",
+      "status": "passed",
+      "sha256": "0e87e5ff4739dcae06ce02efddfd7a4dc1f9fa475d5567b548dfbe597db70829",
+      "suite": "fuzz"
+    },
+    {
+      "name": "fuzz-excess-diagnostic",
+      "command": [
+        "go",
+        "test",
+        "./internal/excessavp",
+        "-run=^$",
+        "-fuzz=^FuzzExcessQuote$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-fuzz/fuzz-excess-diagnostic.log",
+      "status": "passed",
+      "sha256": "6d692a705f72a2727144adde8b9835f7cb386ef524baef439bd095b1f658d0ee",
+      "suite": "fuzz"
+    },
+    {
+      "name": "fuzz-invalid-diagnostic",
+      "command": [
+        "go",
+        "test",
+        "./internal/excessavp",
+        "-run=^$",
+        "-fuzz=^FuzzInvalidQuote$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-fuzz/fuzz-invalid-diagnostic.log",
+      "status": "passed",
+      "sha256": "e8bb4342d5ff5197e138491c3070586d56b9c55c6058e880ef6acda92928d93b",
+      "suite": "fuzz"
+    },
+    {
+      "name": "fuzz-length-diagnostic",
+      "command": [
+        "go",
+        "test",
+        "./internal/excessavp",
+        "-run=^$",
+        "-fuzz=^FuzzLengthQuote$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-fuzz/fuzz-length-diagnostic.log",
+      "status": "passed",
+      "sha256": "c63c8712e7583a6015248852dc7ca2640b09bfae2c0619ef2165aef7220b97d3",
+      "suite": "fuzz"
+    },
+    {
+      "name": "fuzz-shdata",
+      "command": [
+        "go",
+        "test",
+        "./app/sh/shdata",
+        "-run=^$",
+        "-fuzz=^FuzzParse$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-fuzz/fuzz-shdata.log",
+      "status": "passed",
+      "sha256": "f7006cd16782aa83bcde63f96638a7ae0a10da89347b60e83ffbc8eb3df55e7e",
+      "suite": "fuzz"
+    },
+    {
+      "name": "fuzz-sctp-mode",
+      "command": [
+        "go",
+        "test",
+        ".",
+        "-run=^$",
+        "-fuzz=^FuzzSCTPModeSelection$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-fuzz/fuzz-sctp-mode.log",
+      "status": "passed",
+      "sha256": "be9010c52d72e9f9b4f5554256a9e6196e7319041741824485b286b51aa9b76d",
+      "suite": "fuzz"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-stress/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
+      "suite": "stress"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-stress/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
+      "suite": "stress"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-6h2bw1ov",
+      "log": ".cache/b100-stress/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "stress"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-6h2bw1ov",
+      "log": ".cache/b100-stress/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "stress"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-stress/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
+      "suite": "stress"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-stress/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "stress"
+    },
+    {
+      "name": "pressure-ro-pure",
+      "command": [
+        "go",
+        "test",
+        "./examples/ro",
+        "-run=^TestBoundedRoPressure$",
+        "-count=20",
+        "-json",
+        "-timeout=3m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-stress/pressure-ro-pure.log",
+      "status": "passed",
+      "sha256": "3182bf8990ef79415004543e47fd63b3353e89fa6155e45c08a3a5aac07e3d8a",
+      "test_subtest_seed_passes": 80,
+      "test_skips": 0,
+      "suite": "stress"
+    },
+    {
+      "name": "pressure-mixed-pure",
+      "command": [
+        "go",
+        "test",
+        "./examples/ro",
+        "-run=^TestBoundedMixedApplicationPressure$",
+        "-count=20",
+        "-json",
+        "-timeout=3m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-stress/pressure-mixed-pure.log",
+      "status": "passed",
+      "sha256": "17e02aa253093a3f13d00ef1eaa2797f1d789019731f6856c6076403e80503a0",
+      "test_subtest_seed_passes": 180,
+      "test_skips": 0,
+      "suite": "stress"
+    },
+    {
+      "name": "pressure-sctp-pure",
+      "command": [
+        "go",
+        "test",
+        ".",
+        "-run=^TestBoundedSCTPPressure$",
+        "-count=20",
+        "-json",
+        "-timeout=3m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-stress/pressure-sctp-pure.log",
+      "status": "passed",
+      "sha256": "4bb932b5bbce2badebdac4046f0b3e869842dd634dea13fade5b240a05641158",
+      "test_subtest_seed_passes": 20,
+      "test_skips": 0,
+      "suite": "stress"
+    },
+    {
+      "name": "pressure-ro-race",
+      "command": [
+        "go",
+        "test",
+        "./examples/ro",
+        "-run=^TestBoundedRoPressure$",
+        "-count=20",
+        "-json",
+        "-timeout=3m",
+        "-race"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-stress/pressure-ro-race.log",
+      "status": "passed",
+      "sha256": "86fe9e38339799c8d29a08a302d4fc26d53c006a8445e3ad0a0e97da91443c7e",
+      "test_subtest_seed_passes": 80,
+      "test_skips": 0,
+      "suite": "stress"
+    },
+    {
+      "name": "pressure-mixed-race",
+      "command": [
+        "go",
+        "test",
+        "./examples/ro",
+        "-run=^TestBoundedMixedApplicationPressure$",
+        "-count=20",
+        "-json",
+        "-timeout=3m",
+        "-race"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-stress/pressure-mixed-race.log",
+      "status": "passed",
+      "sha256": "0411229e2fd115497a8f24cc1ee3cd454e372a1d4ee3bb77ad0ec7383c77a936",
+      "test_subtest_seed_passes": 180,
+      "test_skips": 0,
+      "suite": "stress"
+    },
+    {
+      "name": "pressure-sctp-race",
+      "command": [
+        "go",
+        "test",
+        ".",
+        "-run=^TestBoundedSCTPPressure$",
+        "-count=20",
+        "-json",
+        "-timeout=3m",
+        "-race"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-stress/pressure-sctp-race.log",
+      "status": "passed",
+      "sha256": "3b8794210b1885b30b8ea811ecba4e7b4ea123d5f46a661b8a191f63d659c5af",
+      "test_subtest_seed_passes": 20,
+      "test_skips": 0,
+      "suite": "stress"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-bench/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
+      "suite": "bench"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-bench/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
+      "suite": "bench"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-0ught6_q",
+      "log": ".cache/b100-bench/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "bench"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-0ught6_q",
+      "log": ".cache/b100-bench/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "bench"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-bench/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
+      "suite": "bench"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-bench/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "bench"
+    },
+    {
+      "name": "bench-codec",
+      "command": [
+        "go",
+        "test",
+        "./codec",
+        "-run=^$",
+        "-bench=^BenchmarkCodec$",
+        "-benchtime=200x",
+        "-count=5",
+        "-benchmem",
+        "-cpu=1",
+        "-timeout=3m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-bench/bench-codec.log",
+      "status": "passed",
+      "sha256": "6bc915d0f0fdeafaf1de8b7e97c453718942a9c06c97cf4b6564cc161e4cd015",
+      "suite": "bench"
+    },
+    {
+      "name": "bench-ro",
+      "command": [
+        "go",
+        "test",
+        "./examples/ro",
+        "-run=^$",
+        "-bench=^BenchmarkRoRoundTrip$",
+        "-benchtime=200x",
+        "-count=5",
+        "-benchmem",
+        "-cpu=1",
+        "-timeout=3m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b100-bench/bench-ro.log",
+      "status": "passed",
+      "sha256": "098b7062c357c8a27dd5a3612d069c5a573913663a7ef5016788cd3ef6ac19d5",
+      "suite": "bench"
+    },
+    {
+      "name": "bench-sctp",
+      "command": [
+        "go",
+        "test",
+        ".",
+        "-run=^$",
+        "-bench=^BenchmarkSCTPFrame$",
+        "-benchtime=200x",
+        "-count=5",
+        "-benchmem",
+        "-cpu=1",
+        "-timeout=3m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b100-bench/bench-sctp.log",
+      "status": "passed",
+      "sha256": "3ac8b29bd80a8f9322319737fd7a922cb7640f6d009df7f0414da4183416649d",
+      "suite": "bench"
+    }
+  ],
+  "coverage": {
+    "selected_test_subtest_passes_per_run": 396,
+    "repetitions_per_mode": 20,
+    "pass_inventory": {
+      "repeat-pure": {
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/value": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/unsupported": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/bare": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/wrong-code": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/overflow-code": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/wrong-cause": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/optional": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/offset": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/flags": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/path": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/truncated": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/reply": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/field": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/depth": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/cycle": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/4": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP/enum": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/valid": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/bare": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/no-type": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/wrong-cause": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/wrong-type": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/valid-length": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/offset": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/flags": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/path": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/truncated": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/reply": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/field": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/count": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/depth": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/cyclic": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP/utf8-padding": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP/identity": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP/tbcd": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP/second-route-record": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP/unknown-top": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP/unknown-vendor-second-parent": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP/unknown-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS/enum": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS/utf8-padding": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS/identity": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS/tbcd": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS/second-route-record": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS/unknown-top": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS/unknown-vendor-second-parent": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS/unknown-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP/default": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP/session": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP/proxy": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP/manual-unsupported": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP/reply-budget": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP/resource-repeat": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP/bad-parent-flags": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP/truncated": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS/default": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS/session": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS/proxy": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS/manual-unsupported": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS/reply-budget": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS/resource-repeat": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS/bad-parent-flags": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS/truncated": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidEmergencyAndOptional/TCP/value": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidEmergencyAndOptional/TCP/unsupported": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidEmergencyAndOptional/TCP": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidEmergencyAndOptional/TLS/value": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidEmergencyAndOptional/TLS/unsupported": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidEmergencyAndOptional/TLS": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidEmergencyAndOptional": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/u32-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/u32-short-padding": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/u32-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/tbcd-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/tbcd-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/second-parent-vendor": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/i32-short-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/i32-long-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/i64-short-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/i64-long-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/u64-short": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/u64-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/time-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/time-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/address-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/address-family-short": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/address-ipv4-short": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/address-ipv4-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/address-ipv6-short": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/address-ipv6-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/u32-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/u32-short-padding": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/u32-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/tbcd-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/tbcd-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/second-parent-vendor": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/i32-short-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/i32-long-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/i64-short-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/i64-long-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/u64-short": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/u64-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/time-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/time-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/address-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/address-family-short": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/address-ipv4-short": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/address-ipv4-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/address-ipv6-short": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/address-ipv6-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthEmergency/TCP/tbcd-false": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthEmergency/TCP/tbcd-true": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthEmergency/TCP": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthEmergency/TLS/tbcd-false": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthEmergency/TLS/tbcd-true": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthEmergency/TLS": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthEmergency": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/default": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/session": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/proxy": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/reply": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/field": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/count": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/depth": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/repeat": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/ancestor-flags": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/truncated": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/bad-header": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/bare": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/address-zero": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/address-other-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/address-domain": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/default": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/session": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/proxy": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/reply": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/field": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/count": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/depth": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/repeat": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/ancestor-flags": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/truncated": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/bad-header": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/bare": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/address-zero": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/address-other-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/address-domain": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries": 20,
+        "github.com/skill215/diameterkit/TestProductionImportBoundaries": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestGeneratedFilesCurrentAndDeterministic": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestExternalGeneratedConsumer": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestLengthGeneratedExternal": 20
+      },
+      "repeat-race": {
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/value": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/unsupported": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/bare": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/wrong-code": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/overflow-code": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/wrong-cause": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/optional": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/offset": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/flags": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/path": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/truncated": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/reply": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/field": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/depth": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence/cycle": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestInvalidQuoteEvidence": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u32/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i32/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/time/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/u64/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/i64/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/tbcd/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/19": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP/enum": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address4/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address6/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/10": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP/utf8-padding": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-other/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/address-zero/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/0": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/1": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/2": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/3": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/4": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/5": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/6": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/7": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/8": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/9": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/10": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/11": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/12": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/13": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/14": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/15": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/16": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/17": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/18": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/19": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes/unknown/20": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteTypes": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/valid": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP/identity": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/bare": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/no-type": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/wrong-cause": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/wrong-type": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/valid-length": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/offset": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/flags": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/path": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/truncated": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/reply": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/field": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/count": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/depth": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries/cyclic": 20,
+        "github.com/skill215/diameterkit/internal/excessavp/TestLengthQuoteBoundaries": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP/tbcd": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP/second-route-record": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP/unknown-top": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP/unknown-vendor-second-parent": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP/unknown-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TCP": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS/enum": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS/utf8-padding": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS/identity": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS/tbcd": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS/second-route-record": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS/unknown-top": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS/unknown-vendor-second-parent": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS/unknown-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated/TLS": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidGenerated": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP/default": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP/session": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP/proxy": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP/manual-unsupported": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP/reply-budget": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP/resource-repeat": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP/bad-parent-flags": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP/truncated": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TCP": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS/default": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS/session": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS/proxy": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS/manual-unsupported": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS/reply-budget": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS/resource-repeat": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS/bad-parent-flags": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS/truncated": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries/TLS": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidClosedBoundaries": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidEmergencyAndOptional/TCP/value": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidEmergencyAndOptional/TCP/unsupported": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidEmergencyAndOptional/TCP": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidEmergencyAndOptional/TLS/value": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidEmergencyAndOptional/TLS/unsupported": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidEmergencyAndOptional/TLS": 20,
+        "github.com/skill215/diameterkit/TestRejectInvalidEmergencyAndOptional": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/u32-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/u32-short-padding": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/u32-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/tbcd-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/tbcd-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/second-parent-vendor": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/i32-short-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/i32-long-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/i64-short-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/i64-long-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/u64-short": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/u64-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/time-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/time-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/address-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/address-family-short": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/address-ipv4-short": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/address-ipv4-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/address-ipv6-short": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP/address-ipv6-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TCP": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/u32-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/u32-short-padding": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/u32-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/tbcd-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/tbcd-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/second-parent-vendor": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/i32-short-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/i32-long-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/i64-short-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/i64-long-deep": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/u64-short": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/u64-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/time-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/time-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/address-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/address-family-short": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/address-ipv4-short": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/address-ipv4-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/address-ipv6-short": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS/address-ipv6-long": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated/TLS": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthGenerated": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthEmergency/TCP/tbcd-false": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthEmergency/TCP/tbcd-true": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthEmergency/TCP": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthEmergency/TLS/tbcd-false": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthEmergency/TLS/tbcd-true": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthEmergency/TLS": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthEmergency": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/default": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/session": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/proxy": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/reply": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/field": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/count": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/depth": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/repeat": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/ancestor-flags": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/truncated": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/bad-header": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/bare": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/address-zero": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/address-other-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP/address-domain": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TCP": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/default": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/session": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/proxy": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/reply": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/field": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/count": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/depth": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/repeat": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/ancestor-flags": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/truncated": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/bad-header": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/bare": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/address-zero": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/address-other-empty": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS/address-domain": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries/TLS": 20,
+        "github.com/skill215/diameterkit/TestRejectLengthClosedBoundaries": 20,
+        "github.com/skill215/diameterkit/TestProductionImportBoundaries": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestGeneratedFilesCurrentAndDeterministic": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestExternalGeneratedConsumer": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestLengthGeneratedExternal": 20
+      }
+    },
+    "typed_network_leaf_cases_per_transport": 20,
+    "emergency_leaf_cases_per_transport": 2,
+    "refusal_cases_per_transport": 15,
+    "evidence_type_length_pairs": 231,
+    "provenance_boundary_cases": 15,
+    "hosted_fuzz_targets": 9
+  },
+  "assertions": [
+    "5014 requires generated invalid-instance metadata plus a fixed wire-type name. The walker independently rechecks length on the original selected instance.",
+    "u32/i32/time require four payload bytes; u64/i64 require eight. Current TBCD accepts one through eight bytes; in-bound digit/nibble errors retain5004.",
+    "Address covers missing family bytes and IPv4/IPv6 widths including the two-byte family. Other families remain opaque; family-zero, empty opaque-family data and manual subset restrictions gain no length mapping.",
+    "The quote preserves exact leaf header/data/padding and minimal ancestor headers, including repeated parent offsets. Metadata retains no request bytes. Sentinels and FieldError paths remain available.",
+    "Source framing, field/count/depth/repeated limits and full reply grammar/reservations bound output. Failed-AVP wrapper consumes ordinary limits; malformed/untrusted/resource inputs remain closed.",
+    "TCP/TLS normal/emergency rejection preserves Session/Proxy envelopes, prevents invalid delivery, retains held charges and accepts following valid work; Close/Wait retires charges.",
+    "Generated external code uses only public imports; a synthetic consumer validates all seven type names and opaque Address-family behavior.",
+    "Existing5004/5001/5005/5009 regression and nine bounded fuzz targets remain included. No zero-filled repair or framing resynchronization is added."
+  ],
+  "api_review": {
+    "classification": "Public signatures and struct layouts unchanged; generator DefinitionDigest constants and Bundle fingerprints change.",
+    "generator_version": 17,
+    "review": [
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/app/ro",
+        "source_changes": [
+          "app/ro/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/app/ro/abort",
+        "source_changes": [
+          "app/ro/abort/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/app/ro/dcca",
+        "source_changes": [
+          "app/ro/dcca/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/app/s6c",
+        "source_changes": [
+          "app/s6c/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/app/sgd",
+        "source_changes": [
+          "app/sgd/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/app/sh",
+        "source_changes": [
+          "app/sh/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/base",
+        "source_changes": [
+          "base/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/compat/scap1",
+        "source_changes": [
+          "compat/scap1/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/compat/smsfwro",
+        "source_changes": [
+          "compat/smsfwro/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/compat/smsfwro/combined",
+        "source_changes": [
+          "compat/smsfwro/combined/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/compat/smsfwro/legacy420",
+        "source_changes": [
+          "compat/smsfwro/legacy420/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/app/ro",
+        "source_changes": [
+          "app/ro/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/app/ro/abort",
+        "source_changes": [
+          "app/ro/abort/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/app/ro/dcca",
+        "source_changes": [
+          "app/ro/dcca/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/app/s6c",
+        "source_changes": [
+          "app/s6c/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/app/sgd",
+        "source_changes": [
+          "app/sgd/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/app/sh",
+        "source_changes": [
+          "app/sh/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/base",
+        "source_changes": [
+          "base/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/compat/scap1",
+        "source_changes": [
+          "compat/scap1/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/compat/smsfwro",
+        "source_changes": [
+          "compat/smsfwro/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/compat/smsfwro/combined",
+        "source_changes": [
+          "compat/smsfwro/combined/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/compat/smsfwro/legacy420",
+        "source_changes": [
+          "compat/smsfwro/legacy420/zz_generated_messages.go"
+        ],
+        "documentation_change": "DefinitionDigest constant and generator version banner only"
+      }
+    ],
+    "version_choice": "Existing planned core v0.2.0-rc.1 under the v0 minor rule. No publication in this batch; adapter remains pinned to published core rc.2.",
+    "migration": "Settle earlier recovery records under their original reviewed build; never relabel fingerprints. A new immutable pair and cold-cache no-replace installation remain separate gates."
+  },
+  "hosted_ci": {
+    "status": "pending",
+    "scope": "Hosted checkout has not yet run for this batch."
+  },
+  "source_sha256": {
+    "README.md": "ccf2314264ee22950e02cc03c8f74e5512decab644ac06f41fb49ac67a556cc0",
+    "doc/length-avp-diagnostics.md": "b86f98102ee6c66971fb4ef54fbd88ec7bf26ee3040c9b7744deeb4409c2b272",
+    "doc/invalid-avp-diagnostics.md": "52a97a9bc64b5acb1f91bde69f531fbd582cbf03d850ee3b33fe99c89f9fdbec",
+    "doc/excess-avp-diagnostics.md": "f00a1725e25697acfa04bd0ad1271e87fe77650850ff33e0400318011ebd630a",
+    "doc/remaining-gaps.md": "802d7022ee26d57a47da3af41150e487f71154d5f17b5abf2428fec56227cee5",
+    "doc/diameterkit-support-matrix.md": "de39572e739fcb9f5146af69134fec4811a545e70e20389a30d0f2820140db47",
+    "doc/diameterkit-application-definitions.md": "200011cca161149fba5b59b50f7bd2baed1d8aef9e81273d1b17072de1cfc1ac",
+    "doc/version-install-policy.md": "bc76132e81b041c557bb3b6bf1fdffb4bfd186155e2897c010af23cf9bb4d463",
+    "doc/releases/v0.1.0-rc.md": "5c579f0f9eaf6f4d6477d9336cc88425388a69b54839940ad8d77e12d0575c87",
+    "doc/load-checks.md": "79a2c5725d5e7dfc5cfcc17f90bb0f0c18982b6cc8e8395bfb4d879b5e92c7f1",
+    "doc/release-checks.md": "b28c0d0132a05922abfd1b40894d2072cb68d65fbac92eca701ec9af70b82a3a",
+    "internal/codegen/generate.go": "1bbddf8713afb1b126210ad1a8a6e83df0593a4146334c5ed2f2d31c4dad549c",
+    "internal/codegen/length_test.go": "1cd6838dffcf51ae0770ca18da98e2bb5811724b27919fbfc459bc0f3961d4e2",
+    "internal/excessavp/excess.go": "8cd854a278d006f68e73ef676bb3c195a2bf38ff5fc7244ffb8b0bb5d092b01f",
+    "internal/excessavp/length_test.go": "b82866c1fca81cda63b1bcfe04021be3268c6600b33742cfce44249b1549498e",
+    "reject_length_test.go": "6a00518649edd6d81c3da330972fd4e8790381df268967531b9f8dc0b78fd1d6",
+    "reject_invalid_test.go": "caa66df514297612269c35ad754bfb81a8a5af5912760634b1fdbba9f8177e0e",
+    "spec/tools/load_checks.py": "5ee770f30857bb653e7244053c766c12396b0d1d7d71d8abe00f1b0826108ea1",
+    "spec/release/public-api.json": "8dc21eaa1b2702adddee2567d1916efcb104019c84c5183dc8ecdc2939a93830",
+    "app/ro/abort/zz_generated_messages.go": "437557ef806f966042b6289376d1f6eb3aad2a9f29872a8b4a1209ca087a2274",
+    "app/ro/dcca/zz_generated_messages.go": "8fbd0006b2284e997cdaa2af0d19d83b84c7ebde7f834d41550afbd4925307cd",
+    "app/ro/zz_generated_messages.go": "1330061f5c6df420817748414adab4b3ce5ba64d0d7e028a02cc69542e54a4df",
+    "app/s6c/zz_generated_messages.go": "75c0233fd294623e6e0667c642cafa4c67c4e1d29ddc1b3a518c1b4421077887",
+    "app/sgd/zz_generated_messages.go": "3666897f5225de54b0822adbeefd0019a9ba6ba5fcf121a3c110bf067688b676",
+    "app/sh/zz_generated_messages.go": "71bd885ca4ebf544e94ce63a850f7b86836906f5ee0adc5f6c5995fa0b6ae521",
+    "base/zz_generated_messages.go": "4b43bb90a501a03439076477d0442100fc2f56e45a4397a6996d82e387960b30",
+    "compat/scap1/zz_generated_messages.go": "8baca740d8fe0a2ad1fa886eb03e9ec60a997c1cf9a33403b76100f33616c443",
+    "compat/smsfwro/combined/zz_generated_messages.go": "29d349c6e5ea9da30ecafe59c8cc85e736551b6a083f7becfac11cd4e3742a31",
+    "compat/smsfwro/legacy420/zz_generated_messages.go": "270214b71f3310f10bb54bb608fb35ac869692b2380c4dfd5a8cae1a9c40f987",
+    "compat/smsfwro/zz_generated_messages.go": "d3ca077e847f139518070053c50b2649d84cb0ebf4922fc9be641e9b3172ffc5"
+  },
+  "resolved_fixture": {
+    "log": ".cache/b100-fixture-failure.log",
+    "sha256": "6afe8eaa31e89ba704ff3c270da9a4a4bcac63765c6ad45748b14f6f2f22157f",
+    "correction": "Use the selected Ro family8 decimal address before raw mutation. The initial IP-family fixture violated an existing application subset. Rules were not relaxed; complete IP domain refusal is explicitly retained."
+  },
+  "resolved_gate_overlap": {
+    "reason": "Initial pure/race test steps passed, but their protected-input guard detected the concurrently completed API snapshot update. Both full gates were repeated after fixing the snapshot; no guard was disabled.",
+    "summaries": {
+      ".cache/b100-pure-input-change.json": "a84dc163fd1f124b154462086b9b66c88e83d28e1b1e181c490a8bca4b840177",
+      ".cache/b100-race-input-change.json": "12aaa17434b75d941be2d743a416f44d0d85b5413f01badaebb6a46a66ff8fd0"
+    }
+  },
+  "unchanged": [
+    "Protocol JSON inputs and profile slice versions",
+    "Public signature and struct-layout inventory",
+    "Module manifests/sums and published immutable tags",
+    "Historical benchmark baseline",
+    "Pure-Go/no-persistence boundary"
+  ],
+  "remaining": [
+    "Manual/domain and Proxy/VSAI internals, handshake-specific mappings and malformed-header5014 reconstruction; Redirect3006",
+    "Missing Grouped/variable-length/manual/conditional/cardinality-min>1 diagnostics beyond earlier selected omissions",
+    "Larger tenant/mixed-transport/long-soak and real-target deduplication, retention and recovery evidence",
+    "Private six-template/ACA/PSP/1292 and deployment evidence",
+    "Next immutable core/adapter publication and cold-cache no-replace installation"
+  ],
+  "reproduce": [
+    "CGO_ENABLED=0 go test . ./internal/excessavp ./internal/codegen -run \"Test(Length|RejectLength|Invalid|RejectInvalid|ExternalGenerated|Generated|ProductionImport)\" -count=20 -timeout=5m",
+    "CGO_ENABLED=1 go test -race . ./internal/excessavp ./internal/codegen -run \"Test(Length|RejectLength|Invalid|RejectInvalid|ExternalGenerated|Generated|ProductionImport)\" -count=20 -timeout=5m",
+    "CGO_ENABLED=0 go test ./internal/excessavp -run ^$ -fuzz ^FuzzLengthQuote$ -fuzztime=30s -parallel=2 -timeout=2m",
+    "python3 spec/tools/release_check.py --suite all"
+  ],
+  "supplemental_load": {
+    "fuzz": [
+      {
+        "target": "FuzzDecode",
+        "seconds": 30,
+        "workers": 2,
+        "executions": 353308
+      },
+      {
+        "target": "FuzzDecodeAnswer",
+        "seconds": 30,
+        "workers": 2,
+        "executions": 318194
+      },
+      {
+        "target": "FuzzCanonical",
+        "seconds": 30,
+        "workers": 2,
+        "executions": 343735
+      },
+      {
+        "target": "FuzzMissingQuote",
+        "seconds": 30,
+        "workers": 2,
+        "executions": 575980
+      },
+      {
+        "target": "FuzzExcessQuote",
+        "seconds": 30,
+        "workers": 2,
+        "executions": 921897
+      },
+      {
+        "target": "FuzzInvalidQuote",
+        "seconds": 30,
+        "workers": 2,
+        "executions": 792687
+      },
+      {
+        "target": "FuzzLengthQuote",
+        "seconds": 30,
+        "workers": 2,
+        "executions": 747485
+      },
+      {
+        "target": "FuzzParse",
+        "seconds": 30,
+        "workers": 2,
+        "executions": 793818
+      },
+      {
+        "target": "FuzzSCTPModeSelection",
+        "seconds": 30,
+        "workers": 2,
+        "executions": 439209
+      }
+    ],
+    "pressure": {
+      "runs": {
+        "pure": {
+          "samples": 60,
+          "requests": 8000,
+          "peaks": {
+            "ClientLogicalPeak": 115118080,
+            "ServerLogicalPeak": 297603072,
+            "SampledHeapAlloc": 3575600,
+            "ProcessRSSHighWater": 13541376
+          }
+        },
+        "race": {
+          "samples": 60,
+          "requests": 8000,
+          "peaks": {
+            "ClientLogicalPeak": 115118080,
+            "ServerLogicalPeak": 297603072,
+            "SampledHeapAlloc": 3595328,
+            "ProcessRSSHighWater": 56680448
+          }
+        }
+      },
+      "mixed_runs": {
+        "pure": {
+          "samples": 160,
+          "requests": 32000,
+          "peaks": {
+            "ClientLogicalPeak": 108928000,
+            "ServerLogicalPeak": 286420992,
+            "SampledHeapAlloc": 3582384,
+            "ProcessRSSHighWater": 14901248
+          }
+        },
+        "race": {
+          "samples": 160,
+          "requests": 32000,
+          "peaks": {
+            "ClientLogicalPeak": 108928000,
+            "ServerLogicalPeak": 286420992,
+            "SampledHeapAlloc": 3523096,
+            "ProcessRSSHighWater": 66879488
+          }
+        }
+      }
+    },
+    "benchmarks": {
+      "format": 1,
+      "scope": "Batch100 acceptance samples; historical batch92 baseline unchanged; no controlled speedup or production capacity claim.",
+      "environment": {
+        "platform": "Linux-6.6.114.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+        "cpu": "AMD Ryzen 7 6800H with Radeon Graphics",
+        "available_cpus": 16,
+        "go": "1.26.10",
+        "benchmark_cpus": 1,
+        "cgo": 0
+      },
+      "iterations_per_sample": 200,
+      "samples_per_benchmark": 5,
+      "benchmarks": {
+        "BenchmarkCodec/base-dwr/Decode": {
+          "samples": [
+            {
+              "ns/op": 1251.0,
+              "MB/s": 57.54,
+              "B/op": 280.0,
+              "allocs/op": 6.0
+            },
+            {
+              "ns/op": 1400.0,
+              "MB/s": 51.44,
+              "B/op": 280.0,
+              "allocs/op": 6.0
+            },
+            {
+              "ns/op": 873.2,
+              "MB/s": 82.46,
+              "B/op": 280.0,
+              "allocs/op": 6.0
+            },
+            {
+              "ns/op": 877.3,
+              "MB/s": 82.07,
+              "B/op": 280.0,
+              "allocs/op": 6.0
+            },
+            {
+              "ns/op": 811.5,
+              "MB/s": 88.72,
+              "B/op": 280.0,
+              "allocs/op": 6.0
+            }
+          ],
+          "statistics": {
+            "ns/op": {
+              "min": 811.5,
+              "median": 877.3,
+              "max": 1400.0
+            },
+            "MB/s": {
+              "min": 51.44,
+              "median": 82.07,
+              "max": 88.72
+            },
+            "B/op": {
+              "min": 280.0,
+              "median": 280.0,
+              "max": 280.0
+            },
+            "allocs/op": {
+              "min": 6.0,
+              "median": 6.0,
+              "max": 6.0
+            }
+          }
+        },
+        "BenchmarkCodec/base-dwr/AppendReuse": {
+          "samples": [
+            {
+              "ns/op": 756.5,
+              "MB/s": 95.17,
+              "B/op": 224.0,
+              "allocs/op": 2.0
+            },
+            {
+              "ns/op": 518.2,
+              "MB/s": 138.94,
+              "B/op": 224.0,
+              "allocs/op": 2.0
+            },
+            {
+              "ns/op": 488.8,
+              "MB/s": 147.29,
+              "B/op": 224.0,
+              "allocs/op": 2.0
+            },
+            {
+              "ns/op": 535.3,
+              "MB/s": 134.5,
+              "B/op": 224.0,
+              "allocs/op": 2.0
+            },
+            {
+              "ns/op": 535.4,
+              "MB/s": 134.48,
+              "B/op": 224.0,
+              "allocs/op": 2.0
+            }
+          ],
+          "statistics": {
+            "ns/op": {
+              "min": 488.8,
+              "median": 535.3,
+              "max": 756.5
+            },
+            "MB/s": {
+              "min": 95.17,
+              "median": 134.5,
+              "max": 147.29
+            },
+            "B/op": {
+              "min": 224.0,
+              "median": 224.0,
+              "max": 224.0
+            },
+            "allocs/op": {
+              "min": 2.0,
+              "median": 2.0,
+              "max": 2.0
+            }
+          }
+        },
+        "BenchmarkCodec/v-srr-01/Decode": {
+          "samples": [
+            {
+              "ns/op": 2162.0,
+              "MB/s": 90.66,
+              "B/op": 784.0,
+              "allocs/op": 9.0
+            },
+            {
+              "ns/op": 2663.0,
+              "MB/s": 73.61,
+              "B/op": 784.0,
+              "allocs/op": 9.0
+            },
+            {
+              "ns/op": 2545.0,
+              "MB/s": 77.01,
+              "B/op": 784.0,
+              "allocs/op": 9.0
+            },
+            {
+              "ns/op": 2358.0,
+              "MB/s": 83.13,
+              "B/op": 784.0,
+              "allocs/op": 9.0
+            },
+            {
+              "ns/op": 2170.0,
+              "MB/s": 90.32,
+              "B/op": 784.0,
+              "allocs/op": 9.0
+            }
+          ],
+          "statistics": {
+            "ns/op": {
+              "min": 2162.0,
+              "median": 2358.0,
+              "max": 2663.0
+            },
+            "MB/s": {
+              "min": 73.61,
+              "median": 83.13,
+              "max": 90.66
+            },
+            "B/op": {
+              "min": 784.0,
+              "median": 784.0,
+              "max": 784.0
+            },
+            "allocs/op": {
+              "min": 9.0,
+              "median": 9.0,
+              "max": 9.0
+            }
+          }
+        },
+        "BenchmarkCodec/v-srr-01/AppendReuse": {
+          "samples": [
+            {
+              "ns/op": 678.9,
+              "MB/s": 288.71,
+              "B/op": 224.0,
+              "allocs/op": 2.0
+            },
+            {
+              "ns/op": 639.5,
+              "MB/s": 306.48,
+              "B/op": 224.0,
+              "allocs/op": 2.0
+            },
+            {
+              "ns/op": 1358.0,
+              "MB/s": 144.32,
+              "B/op": 224.0,
+              "allocs/op": 2.0
+            },
+            {
+              "ns/op": 1166.0,
+              "MB/s": 168.16,
+              "B/op": 224.0,
+              "allocs/op": 2.0
+            },
+            {
+              "ns/op": 3414.0,
+              "MB/s": 57.41,
+              "B/op": 224.0,
+              "allocs/op": 2.0
+            }
+          ],
+          "statistics": {
+            "ns/op": {
+              "min": 639.5,
+              "median": 1166.0,
+              "max": 3414.0
+            },
+            "MB/s": {
+              "min": 57.41,
+              "median": 168.16,
+              "max": 306.48
+            },
+            "B/op": {
+              "min": 224.0,
+              "median": 224.0,
+              "max": 224.0
+            },
+            "allocs/op": {
+              "min": 2.0,
+              "median": 2.0,
+              "max": 2.0
+            }
+          }
+        },
+        "BenchmarkCodec/v-srr-01/Canonical": {
+          "samples": [
+            {
+              "ns/op": 7137.0,
+              "MB/s": 27.46,
+              "B/op": 2784.0,
+              "allocs/op": 27.0
+            },
+            {
+              "ns/op": 6621.0,
+              "MB/s": 29.6,
+              "B/op": 2784.0,
+              "allocs/op": 27.0
+            },
+            {
+              "ns/op": 4391.0,
+              "MB/s": 44.64,
+              "B/op": 2784.0,
+              "allocs/op": 27.0
+            },
+            {
+              "ns/op": 4791.0,
+              "MB/s": 40.91,
+              "B/op": 2784.0,
+              "allocs/op": 27.0
+            },
+            {
+              "ns/op": 5496.0,
+              "MB/s": 35.66,
+              "B/op": 2784.0,
+              "allocs/op": 27.0
+            }
+          ],
+          "statistics": {
+            "ns/op": {
+              "min": 4391.0,
+              "median": 5496.0,
+              "max": 7137.0
+            },
+            "MB/s": {
+              "min": 27.46,
+              "median": 35.66,
+              "max": 44.64
+            },
+            "B/op": {
+              "min": 2784.0,
+              "median": 2784.0,
+              "max": 2784.0
+            },
+            "allocs/op": {
+              "min": 27.0,
+              "median": 27.0,
+              "max": 27.0
+            }
+          }
+        },
+        "BenchmarkRoRoundTrip": {
+          "samples": [
+            {
+              "ns/op": 294338.0,
+              "B/op": 27746.0,
+              "allocs/op": 244.0
+            },
+            {
+              "ns/op": 238765.0,
+              "B/op": 27744.0,
+              "allocs/op": 244.0
+            },
+            {
+              "ns/op": 239621.0,
+              "B/op": 27744.0,
+              "allocs/op": 244.0
+            },
+            {
+              "ns/op": 218971.0,
+              "B/op": 27744.0,
+              "allocs/op": 244.0
+            },
+            {
+              "ns/op": 214698.0,
+              "B/op": 27744.0,
+              "allocs/op": 244.0
+            }
+          ],
+          "statistics": {
+            "ns/op": {
+              "min": 214698.0,
+              "median": 238765.0,
+              "max": 294338.0
+            },
+            "B/op": {
+              "min": 27744.0,
+              "median": 27744.0,
+              "max": 27746.0
+            },
+            "allocs/op": {
+              "min": 244.0,
+              "median": 244.0,
+              "max": 244.0
+            }
+          }
+        },
+        "BenchmarkSCTPFrame/256": {
+          "samples": [
+            {
+              "ns/op": 56684.0,
+              "MB/s": 4.52,
+              "B/op": 2068.0,
+              "allocs/op": 34.0
+            },
+            {
+              "ns/op": 44641.0,
+              "MB/s": 5.73,
+              "B/op": 2068.0,
+              "allocs/op": 34.0
+            },
+            {
+              "ns/op": 50518.0,
+              "MB/s": 5.07,
+              "B/op": 2068.0,
+              "allocs/op": 34.0
+            },
+            {
+              "ns/op": 42867.0,
+              "MB/s": 5.97,
+              "B/op": 2068.0,
+              "allocs/op": 34.0
+            },
+            {
+              "ns/op": 50456.0,
+              "MB/s": 5.07,
+              "B/op": 2068.0,
+              "allocs/op": 34.0
+            }
+          ],
+          "statistics": {
+            "ns/op": {
+              "min": 42867.0,
+              "median": 50456.0,
+              "max": 56684.0
+            },
+            "MB/s": {
+              "min": 4.52,
+              "median": 5.07,
+              "max": 5.97
+            },
+            "B/op": {
+              "min": 2068.0,
+              "median": 2068.0,
+              "max": 2068.0
+            },
+            "allocs/op": {
+              "min": 34.0,
+              "median": 34.0,
+              "max": 34.0
+            }
+          }
+        },
+        "BenchmarkSCTPFrame/4096": {
+          "samples": [
+            {
+              "ns/op": 59549.0,
+              "MB/s": 68.78,
+              "B/op": 5908.0,
+              "allocs/op": 34.0
+            },
+            {
+              "ns/op": 52549.0,
+              "MB/s": 77.95,
+              "B/op": 5908.0,
+              "allocs/op": 34.0
+            },
+            {
+              "ns/op": 50375.0,
+              "MB/s": 81.31,
+              "B/op": 5908.0,
+              "allocs/op": 34.0
+            },
+            {
+              "ns/op": 50044.0,
+              "MB/s": 81.85,
+              "B/op": 5908.0,
+              "allocs/op": 34.0
+            },
+            {
+              "ns/op": 65480.0,
+              "MB/s": 62.55,
+              "B/op": 5908.0,
+              "allocs/op": 34.0
+            }
+          ],
+          "statistics": {
+            "ns/op": {
+              "min": 50044.0,
+              "median": 52549.0,
+              "max": 65480.0
+            },
+            "MB/s": {
+              "min": 62.55,
+              "median": 77.95,
+              "max": 81.85
+            },
+            "B/op": {
+              "min": 5908.0,
+              "median": 5908.0,
+              "max": 5908.0
+            },
+            "allocs/op": {
+              "min": 34.0,
+              "median": 34.0,
+              "max": 34.0
+            }
+          }
+        }
+      },
+      "workload_sha256": {
+        "codec/benchmark_test.go": "e404dac57d655d05c2ddaac01a818556f6a762d833d85b977307660ab5fd7545",
+        "examples/ro/pressure_test.go": "6e18d175c553be7f748dc88c04f08a05fc4c1a73f5f79a6ba51ba9accf946f12",
+        "adapters/sctp/pressure_linux_test.go": "0fbbedf6159f8e0a4c29407f69de1b59265df867d5f4d7163295a305055424fa"
+      }
+    },
+    "artifact_sha256": {
+      ".cache/b100-fuzz/fuzz.json": "01b7b43f922442c636e3b0fa6447882026fa78911672821f07a60e697737fcc3",
+      ".cache/b100-stress/pressure.json": "b6781936aa51b734b7f64d1fd0ef7cc3791b6c94cc55479240f6130fd27e0a1b",
+      ".cache/b100-bench/performance.json": "d53b74924ee82161a06638ccad598e0b275d01b1e91938d78c97aaa64624da8e"
+    },
+    "environment_note": "Fuzz and pressure may overlap local acceptance; benchmarks run separately. These measurements do not establish production capacity."
+  }
+}

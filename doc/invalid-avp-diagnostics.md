@@ -45,11 +45,12 @@ answer. `CloseOnFailure` remains the default policy. A manual `ErrUnsupported`
 does not establish an unknown Mandatory AVP, and a manual `ErrField` does not
 establish a safely quotable isolated value.
 
-Fixed-width parse errors, Address parsing, empty/oversized TBCD and other length
-failures do not acquire a guessed 5004 mapping. Nonempty-octet and manual domain
-rules, Proxy/VSAI internals, handshake-specific mappings, 5014 length diagnostics,
-Redirect 3006 and other omitted-value diagnostics remain separate work. This
-batch does not change protocol definition inputs or their declared scope.
+Length failures do not acquire a guessed 5004 mapping. The later
+[batch 100 extension](length-avp-diagnostics.md) adds selected generated 5014
+evidence for fixed-width values, Address and TBCD. Nonempty-octet and manual
+domain rules, Proxy/VSAI internals, handshake-specific mappings, malformed-header
+5014, Redirect 3006 and other omission diagnostics remain separate work.
+Protocol definition inputs and their declared scope are unchanged.
 
 ## Compatibility and acceptance
 

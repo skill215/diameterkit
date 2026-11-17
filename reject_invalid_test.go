@@ -192,7 +192,7 @@ func TestRejectInvalidGenerated(t *testing.T) {
 
 func TestRejectInvalidClosedBoundaries(t *testing.T) {
 	eachNetwork(t, func(t *testing.T, tls bool) {
-		for _, kind := range []string{"default", "session", "proxy", "manual-unsupported", "numeric-length", "tbcd-length", "reply-budget", "resource-repeat", "bad-parent-flags", "truncated"} {
+		for _, kind := range []string{"default", "session", "proxy", "manual-unsupported", "reply-budget", "resource-repeat", "bad-parent-flags", "truncated"} {
 			t.Run(kind, func(t *testing.T) {
 				cfg := rejectConfig(t)
 				if kind == "default" {
@@ -221,11 +221,6 @@ func TestRejectInvalidClosedBoundaries(t *testing.T) {
 					req.Body.(*s6c.SRR).SMRPMTI = avp.Some(uint32(0))
 					path[0].key = avp.Key{VendorID: 10415, Code: 3308}
 					payload = []byte{0, 0, 0, 2}
-				case "numeric-length":
-					payload = []byte{1, 2, 3}
-				case "tbcd-length":
-					path[0].key = avp.Key{VendorID: 10415, Code: 3300}
-					payload = nil
 				case "resource-repeat", "bad-parent-flags":
 					req.Body.(*s6c.SRR).SupportedFeatures = []s6c.SupportedFeatures{{VendorID: 10415, FeatureListID: 1, FeatureList: 1}, {VendorID: 10415, FeatureListID: 2, FeatureList: 2}}
 					path = []missingSelector{{avp.Key{VendorID: 10415, Code: 628}, 1}}

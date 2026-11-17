@@ -49,7 +49,8 @@ trusted code; their metadata is not remote-peer authentication.
 
 Manual Proxy/VSAI cardinality and handshake-specific 5009 handling remain outside
 this slice. The later [batch 98 extension](invalid-avp-diagnostics.md) adds generated
-5001/5004. Redirect 3006 and manual/domain/length mappings remain separate, as do the
+5001/5004. The [batch 100 extension](length-avp-diagnostics.md) adds selected typed-length 5014.
+Redirect 3006 and manual/domain/malformed-header mappings remain separate, as do the
 unsupported omission kinds listed in the [missing-AVP guide](missing-avp-diagnostics.md).
 This extension does not grant a new business retry or recovery permission.
 

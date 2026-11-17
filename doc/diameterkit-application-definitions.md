@@ -43,8 +43,9 @@ generator output byte-for-byte, including AI provenance headers. CI checks rathe
 than repairs stale files, and exercises an intentionally stale negative control.
 Generated public declarations participate in the reviewed API snapshot.
 
-Generators v14/v15/v16 add private decode-time omission/cardinality/value metadata without
-requiring an internal-package import in external generated code. Their DefinitionDigest changes
+Generators v14–v17 add private decode-time omission, cardinality, value and length
+metadata without requiring an internal-package import in external generated code.
+Their DefinitionDigest changes
 invalidate earlier Bundle fingerprints; see the [diagnostic and recovery migration
 scope](missing-avp-diagnostics.md#compatibility-and-recovery). Definition fields,
 wire grammars and profile slice versions are unchanged in these batches.

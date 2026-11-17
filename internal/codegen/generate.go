@@ -22,7 +22,7 @@ import (
 )
 
 const maxDefinition = 4 << 20
-const GeneratorVersion = "16"
+const GeneratorVersion = "17"
 
 type Definition struct {
 	Format   int       `json:"format"`
@@ -154,7 +154,7 @@ func validate(d Definition) error {
 	if d.Format != 1 || !identifier(d.Package) || d.Profile == "" || d.Version == "" || len(d.Sources) == 0 || len(d.Commands) == 0 || len(d.Commands) > 64 || len(d.Groups) > 64 {
 		return fmt.Errorf("invalid definition header")
 	}
-	names := map[string]bool{"Profile": true, "DefinitionDigest": true, "Version": true, "profileDiagnosticGroups": true, "profileErrorUnsupported": true, "profileOmission": true, "profileMissing": true, "profileWithin": true, "profileExcess": true, "profileTooMany": true, "profileInvalid": true, "profileBadValue": true}
+	names := map[string]bool{"Profile": true, "DefinitionDigest": true, "Version": true, "profileDiagnosticGroups": true, "profileErrorUnsupported": true, "profileOmission": true, "profileMissing": true, "profileWithin": true, "profileExcess": true, "profileTooMany": true, "profileInvalid": true, "profileBadValue": true, "profileBadLength": true}
 	groups := map[string]Group{}
 	for _, g := range d.Groups {
 		if !exported(g.Name) || names[g.Name] {
@@ -496,11 +496,15 @@ func (*profileExcess) Unwrap() error {return validation.ErrDuplicate}
 func (e *profileExcess) DiameterExcessAVPV1() (avp.Key,byte,int,int,error) {
  if e.child==nil {return e.key,e.flags,e.offset,e.maximum,nil};return e.key,e.flags,e.offset,e.maximum,e.child
 }
-type profileInvalid struct { key avp.Key; flags byte; offset int; code uint32; cause error; child *profileInvalid }
+type profileInvalid struct { key avp.Key; flags byte; offset int; code uint32; cause error; child *profileInvalid; lengthType string }
 func (e *profileInvalid) Error() string {return e.cause.Error()}
 func (e *profileInvalid) Unwrap() error {return e.cause}
 func (e *profileInvalid) DiameterInvalidAVPV1() (avp.Key,byte,int,uint32,error) {
  if e.child==nil {return e.key,e.flags,e.offset,e.code,nil};return e.key,e.flags,e.offset,e.code,e.child
+}
+func (e *profileInvalid) DiameterLengthAVPV1() string {return e.lengthType}
+func profileBadLength(v wire.View,kind string,cause error) error {
+ return validation.At(v.Key,&profileInvalid{key:v.Key,flags:v.Flags,offset:v.Offset,code:5014,cause:cause,lengthType:kind})
 }
 func profileBadValue(v wire.View,code uint32,cause error) error {
  return validation.At(v.Key,&profileInvalid{key:v.Key,flags:v.Flags,offset:v.Offset,code:code,cause:cause})
@@ -810,17 +814,17 @@ func (w *writer) decode(name string, fs []Field) {
 		case "octets", "tbcd":
 			w.p("x:=v.Data")
 		case "u32":
-			w.p("x,err:=wire.U32(v.Data);if err!=nil{return nil,validation.At(v.Key,err)}")
+			w.p("x,err:=wire.U32(v.Data);if err!=nil{return nil,profileBadLength(v,\"u32\",err)}")
 		case "i64":
-			w.p("x,err:=wire.I64(v.Data);if err!=nil{return nil,validation.At(v.Key,err)}")
+			w.p("x,err:=wire.I64(v.Data);if err!=nil{return nil,profileBadLength(v,\"i64\",err)}")
 		case "i32":
-			w.p("x,err:=wire.I32(v.Data);if err!=nil{return nil,validation.At(v.Key,err)}")
+			w.p("x,err:=wire.I32(v.Data);if err!=nil{return nil,profileBadLength(v,\"i32\",err)}")
 		case "u64":
-			w.p("x,err:=wire.U64(v.Data);if err!=nil{return nil,validation.At(v.Key,err)}")
+			w.p("x,err:=wire.U64(v.Data);if err!=nil{return nil,profileBadLength(v,\"u64\",err)}")
 		case "time":
-			w.p("seconds,err:=wire.U32(v.Data);if err!=nil{return nil,validation.At(v.Key,err)};x:=avp.Time(seconds)")
+			w.p("seconds,err:=wire.U32(v.Data);if err!=nil{return nil,profileBadLength(v,\"time\",err)};x:=avp.Time(seconds)")
 		case "address":
-			w.p("x,err:=avp.ParseAddress(v.Data);if err!=nil{return nil,validation.At(v.Key,err)}")
+			w.p("x,err:=avp.ParseAddress(v.Data);if err!=nil{if len(v.Data)<2 || v.Data[0]==0 && (v.Data[1]==1 && len(v.Data)!=6 || v.Data[1]==2 && len(v.Data)!=18){return nil,profileBadLength(v,\"address\",err)};return nil,validation.At(v.Key,err)}")
 		case "diagnostic":
 			w.p("complete,err:=d.Diagnostic(v.Data,profileDiagnosticGroups());if err!=nil{return nil,validation.At(v.Key,err)};x:=pdu.FailedAVP{Data:v.Data,Incomplete:!complete}")
 		case "proxy", "vsai":
@@ -833,14 +837,14 @@ func (w *writer) decode(name string, fs []Field) {
 			}
 		}
 		// Validate isolated values while the actual wire instance is known.
-		// Parse-length errors and manual cross-field rules do not gain 5004.
+		// Typed-length errors gain 5014; manual cross-field rules gain no mapping.
 		switch f.Type {
 		case "identity":
 			w.p("if err:=avp.Identity(x);err!=nil{return nil,profileBadValue(v,5004,err)}")
 		case "utf8":
 			w.p("if err:=avp.UTF8(x);err!=nil{return nil,profileBadValue(v,5004,err)}")
 		case "tbcd":
-			w.p("if err:=avp.CheckTBCD(x);err!=nil{if len(x)==0||len(x)>8{return nil,validation.At(v.Key,err)};return nil,profileBadValue(v,5004,err)}")
+			w.p("if err:=avp.CheckTBCD(x);err!=nil{if len(x)==0||len(x)>8{return nil,profileBadLength(v,\"tbcd\",err)};return nil,profileBadValue(v,5004,err)}")
 		case "u32":
 			if len(f.Values) > 0 {
 				var vals []string

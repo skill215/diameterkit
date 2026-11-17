@@ -35,10 +35,11 @@ the same declarations and behavior. Snapshot source hashes are reviewed accordin
 
 ## Reproducible installation
 
-The unreleased batch 96 [omission extension](missing-avp-diagnostics.md) and
-batch 97 [cardinality extension](excess-avp-diagnostics.md) and batch 98
-[value/unsupported extension](invalid-avp-diagnostics.md) change generated
-DefinitionDigest constants and Bundle fingerprints through generator v14/v15/v16. Public signatures
+Unreleased diagnostic changes in batch 96 ([omissions](missing-avp-diagnostics.md)),
+batch 97 ([cardinality](excess-avp-diagnostics.md)), batch 98
+([value/unsupported AVPs](invalid-avp-diagnostics.md)) and batch 100
+([typed lengths](length-avp-diagnostics.md)) change generated DefinitionDigest
+constants and Bundle fingerprints through generators v14–v17. Public signatures
 remain unchanged, but earlier recovery records cannot be imported under the new
 Bundle. The planned next core candidate is `v0.2.0-rc.1`, with no publication in
 this batch. Published core/adapter versions and their dependency pins stay intact.

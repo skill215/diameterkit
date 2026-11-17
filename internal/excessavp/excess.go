@@ -1,7 +1,7 @@
 // SPDX-AI-Disclosure: ai-generated
 // SPDX-AI-Model: GPT-6
 // SPDX-AI-Provider: OpenAI
-// SPDX-AI-Scope: Bounded first-excess AVP diagnostic construction.
+// SPDX-AI-Scope: Bounded present-AVP and typed-length diagnostic construction.
 // SPDX-AI-Date: 2026-11-17
 
 // Package excessavp resolves generated present-AVP evidence against the request.
@@ -27,8 +27,33 @@ type invalidEvidence interface {
 	DiameterInvalidAVPV1() (avp.Key, byte, int, uint32, error)
 }
 
+// A length mapping additionally names a generated wire type. The walker checks
+// its length rule again against the selected instance; ErrValue alone is not proof.
+type lengthEvidence interface {
+	DiameterLengthAVPV1() string
+}
+
+func invalidLength(kind string, data []byte) bool {
+	switch kind {
+	case "u32", "i32", "time":
+		return len(data) != 4
+	case "u64", "i64":
+		return len(data) != 8
+	case "tbcd":
+		return len(data) == 0 || len(data) > 8
+	case "address":
+		if len(data) < 2 {
+			return true
+		}
+		family := binary.BigEndian.Uint16(data)
+		return family == 1 && len(data) != 6 || family == 2 && len(data) != 18
+	default:
+		return false
+	}
+}
+
 // invalidNode adapts value evidence to the common bounded instance walker.
-// Negative detail values are reserved for the two selected result codes.
+// Negative detail values are reserved for the selected result codes.
 type invalidNode struct{ invalidEvidence }
 
 func (n invalidNode) Error() string { return "invalid AVP evidence" }
@@ -38,14 +63,14 @@ func (n invalidNode) DiameterExcessAVPV1() (avp.Key, byte, int, int, error) {
 		child = invalidNode{p}
 	}
 	// Check before converting to int, including on 32-bit targets.
-	if code != 0 && code != 5001 && code != 5004 {
+	if code != 0 && code != 5001 && code != 5004 && code != 5014 {
 		return k, flags, offset, -1, child
 	}
 	return k, flags, offset, -int(code), child
 }
 
-// QuoteInvalid quotes a generated isolated value or unknown Mandatory AVP.
-// Bare/manual errors and resource/parse-length failures supply no such proof.
+// QuoteInvalid quotes a generated isolated value, unknown Mandatory AVP or
+// typed-length failure. Bare/manual, framing and resource errors supply no proof.
 func QuoteInvalid(src []byte, cause error, limits wire.Limits, maxBytes int) ([]byte, uint32, bool) {
 	var code uint32
 	out, ok := quote(src, cause, limits, maxBytes, &code)
@@ -124,6 +149,15 @@ func quote(src []byte, cause error, limits wire.Limits, maxBytes int, result *ui
 					}
 				case -5004:
 					if !errors.Is(cause, validation.ErrField) && !errors.Is(cause, avp.ErrValue) {
+						return nil, false
+					}
+				case -5014:
+					n, ok := proof.(invalidNode)
+					if !ok || !errors.Is(cause, avp.ErrValue) {
+						return nil, false
+					}
+					typed, ok := n.invalidEvidence.(lengthEvidence)
+					if !ok || !invalidLength(typed.DiameterLengthAVPV1(), selected.Data) {
 						return nil, false
 					}
 				default:

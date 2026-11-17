@@ -17,6 +17,7 @@ FUZZ_TARGETS = [
     ("missing-diagnostic", ".", "./internal/missingavp", "FuzzMissingQuote"),
     ("excess-diagnostic", ".", "./internal/excessavp", "FuzzExcessQuote"),
     ("invalid-diagnostic", ".", "./internal/excessavp", "FuzzInvalidQuote"),
+    ("length-diagnostic", ".", "./internal/excessavp", "FuzzLengthQuote"),
     ("shdata", ".", "./app/sh/shdata", "FuzzParse"),
     ("sctp-mode", "adapters/sctp", ".", "FuzzSCTPModeSelection"),
 ]
