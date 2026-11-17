@@ -172,6 +172,7 @@ endpoint. Local duplicate handling is not a durable charging ledger.
 - [Combined binding: volatile duplicate acceptance](doc/combined-duplicate-acceptance.md)
 - [Bounded missing-AVP diagnostics](doc/missing-avp-diagnostics.md)
 - [First-excess AVP diagnostics](doc/excess-avp-diagnostics.md)
+- [Invalid and unsupported AVP diagnostics](doc/invalid-avp-diagnostics.md)
 - [Current remaining gaps](doc/remaining-gaps.md)
 - [Machine-readable progress and historical evidence](spec/README.md)
 - [AI authorship and review limits](AI_DISCLOSURE.md)

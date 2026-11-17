@@ -50,7 +50,8 @@ financial deduplication or full mixed-profile/cache coverage.
 
 The unreleased [missing-AVP extension](missing-avp-diagnostics.md) adds bounded
 5005 placeholders; [first-excess diagnostics](excess-avp-diagnostics.md) add
-generated 5009 instance copies. Other mappings remain partial. Generator v15
+generated 5009 instance copies. [Invalid/unsupported diagnostics](invalid-avp-diagnostics.md)
+add selected 5004/5001 mappings. Other mappings remain partial. Generator v16
 changes Bundle fingerprints; earlier recovery records require their original
 build. The [current gap list](remaining-gaps.md) separates implementation,
 verification and external evidence from historical batch descriptions.

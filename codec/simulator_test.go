@@ -27,13 +27,28 @@ func TestSimulatorInputDecisions(t *testing.T) {
 		name string
 		want error
 	}{
-		{"mme-ofr-original", wire.ErrFrame}, {"mme-ofr-header-fixed", validation.ErrField}, {"mme-ofr-host-invalid", avp.ErrValue}, {"mme-alr-original", wire.ErrFrame}, {"mme-ofr-host-fixed", validation.ErrField}, {"mme-alr-both-identities", validation.ErrField},
+		{"mme-ofr-original", wire.ErrFrame}, {"mme-ofr-header-fixed", avp.ErrValue}, {"mme-ofr-host-invalid", avp.ErrValue}, {"mme-alr-original", wire.ErrFrame}, {"mme-ofr-host-fixed", validation.ErrField}, {"mme-alr-both-identities", validation.ErrField},
 		{"mme-sra-5012", validation.ErrField}, {"poc-ofa-state0", validation.ErrField}, {"sh-uda-2001", validation.ErrMissing},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			_, e := c.Decode(fixture(t, "b77-sim-"+tc.name))
 			if !errors.Is(e, tc.want) {
 				t.Fatal(e, "want", tc.want)
+			}
+			if tc.name == "mme-ofr-header-fixed" {
+				// This multi-fault fixture now reports the first invalid wire value
+				// before the later schema-order enum check. It remains rejected.
+				var field *validation.FieldError
+				var proof interface {
+					DiameterInvalidAVPV1() (avp.Key, byte, int, uint32, error)
+				}
+				if !errors.As(e, &field) || len(field.Path) != 1 || field.Path[0] != (avp.Key{Code: 264}) || !errors.As(e, &proof) {
+					t.Fatal("lost first-instance proof", e)
+				}
+				key, _, offset, code, child := proof.DiameterInvalidAVPV1()
+				if key != field.Path[0] || offset < 0 || code != 5004 || child != nil {
+					t.Fatal("wrong invalid-value evidence")
+				}
 			}
 		})
 	}

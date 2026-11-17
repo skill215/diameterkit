@@ -48,7 +48,8 @@ metadata types are emitted with public dependencies only. Schema callbacks remai
 trusted code; their metadata is not remote-peer authentication.
 
 Manual Proxy/VSAI cardinality and handshake-specific 5009 handling remain outside
-this slice. Automatic 5001/5004 and Redirect 3006 remain separate work, as do the
+this slice. The later [batch 98 extension](invalid-avp-diagnostics.md) adds generated
+5001/5004. Redirect 3006 and manual/domain/length mappings remain separate, as do the
 unsupported omission kinds listed in the [missing-AVP guide](missing-avp-diagnostics.md).
 This extension does not grant a new business retry or recovery permission.
 

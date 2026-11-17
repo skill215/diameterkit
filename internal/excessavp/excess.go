@@ -4,7 +4,7 @@
 // SPDX-AI-Scope: Bounded first-excess AVP diagnostic construction.
 // SPDX-AI-Date: 2026-11-17
 
-// Package excessavp resolves generated cardinality evidence against the request.
+// Package excessavp resolves generated present-AVP evidence against the request.
 // Errors retain offsets and schema limits, never request bytes or subscriber values.
 package excessavp
 
@@ -23,14 +23,61 @@ type evidence interface {
 	DiameterExcessAVPV1() (avp.Key, byte, int, int, error)
 }
 
+type invalidEvidence interface {
+	DiameterInvalidAVPV1() (avp.Key, byte, int, uint32, error)
+}
+
+// invalidNode adapts value evidence to the common bounded instance walker.
+// Negative detail values are reserved for the two selected result codes.
+type invalidNode struct{ invalidEvidence }
+
+func (n invalidNode) Error() string { return "invalid AVP evidence" }
+func (n invalidNode) DiameterExcessAVPV1() (avp.Key, byte, int, int, error) {
+	k, flags, offset, code, child := n.DiameterInvalidAVPV1()
+	if p, ok := child.(invalidEvidence); ok {
+		child = invalidNode{p}
+	}
+	// Check before converting to int, including on 32-bit targets.
+	if code != 0 && code != 5001 && code != 5004 {
+		return k, flags, offset, -1, child
+	}
+	return k, flags, offset, -int(code), child
+}
+
+// QuoteInvalid quotes a generated isolated value or unknown Mandatory AVP.
+// Bare/manual errors and resource/parse-length failures supply no such proof.
+func QuoteInvalid(src []byte, cause error, limits wire.Limits, maxBytes int) ([]byte, uint32, bool) {
+	var code uint32
+	out, ok := quote(src, cause, limits, maxBytes, &code)
+	if !ok {
+		return nil, 0, false
+	}
+	return out, code, true
+}
+
 // Quote copies the first instance exceeding a compiled maximum, together with
 // minimal ancestor headers. src is the AVP area of the original request. The
 // caller must also validate the full response, including known diagnostic groups.
 func Quote(src []byte, cause error, limits wire.Limits, maxBytes int) ([]byte, bool) {
+	return quote(src, cause, limits, maxBytes, nil)
+}
+
+func quote(src []byte, cause error, limits wire.Limits, maxBytes int, result *uint32) ([]byte, bool) {
 	var field *validation.FieldError
 	var proof evidence
-	if limits.Validate() != nil || len(src) > limits.MaxFrameBytes-20 || maxBytes < 0 || !errors.Is(cause, validation.ErrDuplicate) || !errors.As(cause, &field) || !errors.As(cause, &proof) {
+	if limits.Validate() != nil || len(src) > limits.MaxFrameBytes-20 || maxBytes < 0 || !errors.As(cause, &field) {
 		return nil, false
+	}
+	if result == nil {
+		if !errors.Is(cause, validation.ErrDuplicate) || !errors.As(cause, &proof) {
+			return nil, false
+		}
+	} else {
+		var invalid invalidEvidence
+		if !errors.As(cause, &invalid) {
+			return nil, false
+		}
+		proof = invalidNode{invalid}
 	}
 	var parents [64]wire.View
 	depth, headers := 0, 0
@@ -62,8 +109,27 @@ func Quote(src []byte, cause error, limits wire.Limits, maxBytes int) ([]byte, b
 			}
 		}
 		if child == nil {
-			if depth+1 != len(field.Path) || maximum < 1 || maximum > 256 || seen != maximum+1 || seen > limits.MaxRepeated {
+			if depth+1 != len(field.Path) || seen > limits.MaxRepeated {
 				return nil, false
+			}
+			if result == nil {
+				if maximum < 1 || maximum > 256 || seen != maximum+1 {
+					return nil, false
+				}
+			} else {
+				switch maximum {
+				case -5001:
+					if flags&avp.MandatoryFlag == 0 || !errors.Is(cause, validation.ErrUnsupported) {
+						return nil, false
+					}
+				case -5004:
+					if !errors.Is(cause, validation.ErrField) && !errors.Is(cause, avp.ErrValue) {
+						return nil, false
+					}
+				default:
+					return nil, false
+				}
+				*result = uint32(-maximum)
 			}
 			head := 8
 			if key.VendorID != 0 {

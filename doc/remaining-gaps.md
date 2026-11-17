@@ -1,6 +1,6 @@
 # Current remaining gaps
 
-This is the current implementation overview for **batch 97, Draft 0.98**
+This is the current implementation overview for **batch 98, Draft 0.99**
 (2026-11-17). [Progress](../spec/progress.json) records actual check completion;
 the broad release status remains `not_ready`. The 24 SPEC IDs span implementation,
 verification and external acceptance; their `partial` labels are not a percentage
@@ -11,15 +11,16 @@ their historical meaning.
 
 | Area | Completed selected scope | Remaining work |
 | --- | --- | --- |
-| Error diagnostics | Five earlier Base omissions; generated fixed-width 5005; generated finite-maximum first-excess 5009 | Bounded 5004/5001, Redirect 3006, manual/handshake cardinality, and whole-group/variable/conditional/minimum-greater-than-one omissions |
+| Error diagnostics | Five earlier Base omissions; generated fixed-width 5005; generated finite-maximum first-excess 5009; generated isolated-value 5004 and unknown-M 5001 | Manual/domain and length diagnostics, Redirect 3006, manual/handshake cardinality, and whole-group/variable/conditional/minimum-greater-than-one omissions |
 | Duplicate acceptance | Generic cross-peer tests and selected combined same-peer TCP/TLS cache/result/lifecycle tests | Combined cross-peer scenarios and mixed-profile cache budgets |
-| Load acceptance | Seven bounded fuzz targets, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads |
+| Load acceptance | Eight bounded fuzz targets, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads |
 | Publication | Reviewed API/generated output and dual-module checkout CI; immutable rc.2/rc.1 installation receipts | Publish and cold-install a new reviewed core/adapter pair after the generator fingerprint transitions; planned core candidate `v0.2.0-rc.1` |
 
-Prioritize bounded 5004/5001 evidence next. Locate the actual offending instance
-and prove its framing before quoting it. Keep malformed/untrusted/resource-limit
-failures closed when a safe response cannot be built. Redirect needs its own
-URI/required-field scope and should be a separate implementation slice.
+Next, prioritize combined cross-peer and mixed-profile duplicate/cache acceptance.
+For further diagnostics, distinguish typed length errors (5014) from manual domain
+constraints before adding mappings; existing 5004/5001 support covers generated
+instance evidence only. Redirect 3006 needs its own URI/required-field slice.
+Keep malformed/untrusted/resource-limit failures closed when no safe reply exists.
 
 ## Evidence-dependent work
 
@@ -48,7 +49,8 @@ Do not convert dated statements that these were missing into new implementation
 tasks. Native SCTP and platform stubs remain explicitly distinguished in the
 [support matrix](diameterkit-support-matrix.md).
 
-Generator v15 fingerprints differ from earlier builds. Existing published tags
+Generator v16 fingerprints differ from earlier builds. Existing published tags
 remain immutable, and earlier recovery records require their original build.
 See the [version policy](version-install-policy.md),
-[5005 guide](missing-avp-diagnostics.md) and [5009 guide](excess-avp-diagnostics.md).
+[5005 guide](missing-avp-diagnostics.md), [5009 guide](excess-avp-diagnostics.md)
+and [5004/5001 guide](invalid-avp-diagnostics.md).

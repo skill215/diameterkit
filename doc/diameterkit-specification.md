@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.98 — 2026-11-17, batch 97.** The [progress record](../spec/progress.json)
+**Draft 0.99 — 2026-11-17, batch 98.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1209,3 +1209,5 @@ Batch95 combined duplicate acceptance: the fixed combined binding now has six co
 Batch96 missing-AVP diagnostics: generatorv14 and opt-in BaseErrorFailures now implement5005 for generated min=1 fixed-width required leaves, with zero4/8-byte payloads and actual-instance Grouped ancestors. Limits include Failed-AVP depth/count and bounded field/frame/reply bytes; untrusted envelopes and unsupported omissions still fail closed. See [English guide](missing-avp-diagnostics.md) and [evidence](../spec/evidence/batch-96-missing-diagnostics.json). Public shapes unchanged; DefinitionDigest/Bundle fingerprints change, so earlier recovery records require their original build. No new immutable version is published. Other omission/result mappings, private/target/capacity gates remain open; all24 requirements remain partial. Current implementation evidence is Draft0.97 in [progress](../spec/progress.json).
 
 Batch97 first-excess diagnostics: generatorv15 and opt-in BaseErrorFailures implement5009 for generated finite maxima, quoting the first excess instance with original header/data/padding and minimal actual-instance ancestors. Local resource limits take precedence; unsupported/untrusted cases remain closed. Ordinary/emergency TCP/TLS, bounded fuzz and full dual-module checks are recorded in the [English guide](excess-avp-diagnostics.md) and [evidence](../spec/evidence/batch-97-excess-diagnostics.json). Public shapes are unchanged; DefinitionDigest/Bundle fingerprints change. No new immutable release is published. See [current remaining gaps](remaining-gaps.md) for5001/5004/3006, remaining omissions, duplicate workloads and external/version gates. Current progress is Draft0.98.
+
+Batch98 invalid/unsupported diagnostics: generatorv16 and opt-in BaseErrorFailures implement selected5004 for generated isolated values and5001 for unknown Mandatory AVPs. Exact-instance raw quotes share bounded traversal with5009; manual/domain/parse-length errors gain no guessed mapping. Scalar checks now run during decode, changing first-error order for some multi-fault inputs. TCP/TLS normal/emergency and dual-module checks are recorded in the [English guide](invalid-avp-diagnostics.md) and [evidence](../spec/evidence/batch-98-invalid-diagnostics.json). Public shapes and protocol inputs are unchanged; fingerprints change and require original-build recovery handling. No immutable version published. Current progress is Draft0.99; see [remaining gaps](remaining-gaps.md).

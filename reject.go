@@ -227,6 +227,9 @@ func (n *Node) rejectFrame(raw []byte, maxBytes int, reason rejectReason, cause 
 		code = 3007
 	case rejectDecode:
 		var ok bool
+		if diagnostic, code, ok = excessavp.QuoteInvalid(raw[20:], cause, n.cfg.Limits, maxBytes); ok {
+			break
+		}
 		if errors.Is(cause, validation.ErrDuplicate) {
 			diagnostic, ok = excessavp.Quote(raw[20:], cause, n.cfg.Limits, maxBytes)
 			if !ok {
