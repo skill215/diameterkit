@@ -1,8 +1,25 @@
 # diameterkit Library Specification
 
+## Current implementation status
+
+**Draft 0.98 — 2026-11-17, batch 97.** The [progress record](../spec/progress.json)
+records current test and hosted-CI completion. Start with the English
+[current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
+All 24 broader requirements remain partial and release readiness remains `not_ready`.
+The first-release scope includes Sh, S6c, SGd/Gdd, Ro/DCCA, the selected sms-fw
+templates, SCAP1 and RO-06 recovery. Pure Go, library-only and no persistence
+boundaries remain unchanged. Dated implementation sections below are historical
+evidence; their old missing-work statements do not override later verified batches.
+
+<details>
+<summary>Historical scope and implementation summary (2026-11-10)</summary>
+
 > **当前范围（2026-11-10，Draft 0.87）：** 第一阶段=首版/v1，包含Sh、S6c、SGd/Gdd、Ro/DCCA及sms-fw实际所需六模板、SCAP1和RO-06恢复能力；Go 1.26、纯Go实现（含依赖与SCTP适配器，发布路径CGO_ENABLED=0）、公开Go库、无持久化边界不变。明确撤销第十九轮“Ro后置”分期；带日期的旧分期/统计仅作历史证据，不再授予Ro跳过首版验收的例外。限定S6a、完整SCUR/PRICE_ENQUIRY等未承诺能力仍后置。范围及剩余缺口见[Specification §3/§7](diameterkit-specification.md)，顺序见[总设计§14](diameterkit-design.md)，验收见[覆盖§39](diameterkit-usage-coverage.md)。2026-11-10已完成前八十六批有界实施（Base/S6c基础、公共包络与关联、出站运行时、关闭与选举、TCP/TLS生产适配、有限Inbound/应答、有限Reject/应急预算、Canonical/有限重复缓存及多Arrival重答、固定同终端Route/多attempt与活动请求原身份重传、有限Dialer/Maintain拨号及重连、按class/编码字节DRR调度、固定Peer的有限Listener/Serve、有界标识源/Session/guard、Base/S6c有限Context/Report、S6c普通RDR/RDA及HSS ALR/ALA、SGd/Gdd普通OFR/OFA与TFR/TFA、Sh普通四组命令及透明User-Data、Ref24/25有限Sh-Data helper、Sh单订阅/退订及Ref11/12有限数据、Sh特性/混合订阅/5011、S6c普通HSS节点及SRR/SRA成对路由条件、S6c普通多节点投递报告、MME/SGSN普通提醒及角色证据、SGd/Gdd直达重投时间及显式era/应用证据、T4 MO顶层计费身份及原请求绑定、S6c T4无MSISDN报告与HSS提醒、T4已知IMSI路由查询、SRA实验失败/诊断及角色UNRI、SGd OFA实验5001及接口证据、S6c IP-SM-GW节点及Realm接收边界、普通RDR的IP-SM-GW结果、IMS RDR/RDA身份绑定、IMS ALR/ALA提醒用途、IMS SRR/SRA身份及固定HSS恢复、IMS OFR/OFA转发用途及IMS TFR/TFA目标绑定、IMS MO可用IMSI与真实MSISDN、T4报告IP-SM-GW结果、Ro标准SMS IEC直接扣费基础及无UPDATE的ECUR I/T）；已执行范围及未完成项以[Specification §6](diameterkit-specification.md#6-需求与证据的维护)和[spec进度](../spec/progress.json)为准，未列明的运行验收仍Planned。
 
 状态：Draft 0.87，2026-11-04将Ro并入第一阶段/首版；保留2026-11-03收尾的行为基线并显式修订范围；协议分析截至2026-10-31第三十一轮。本文规定拟交付库的可观察行为与验收要求；2026-11-10前八十六批实现状态见§6.1–6.86，尚不表示稳定 Go API 或完整协议符合性认证。基准为 Go 1.26；仅提供 Go 库。
+
+
+</details>
 
 ## 1. 为什么需要这份 specification
 
@@ -1190,3 +1207,5 @@ Batch94 mixed application acceptance: Sh/S6c/SGd/Ro share one TCP connection wit
 Batch95 combined duplicate acceptance: the fixed combined binding now has six construction paths with normal/E cached results, per-arrival envelopes, content/cross-template conflicts, immutable request/result ownership, finite admission/expiry and Respond/Close coverage on TCP/TLS. Twenty pure/race repetitions and dual-module regression passed. See [English guide](combined-duplicate-acceptance.md) and [evidence](../spec/evidence/batch-95-combined-duplicates.json). No runtime/API/persistence change; deep diagnostics, broader mixed-profile/cross-peer cache and private/target/capacity gates remain open. All 24 requirements remain partial.
 
 Batch96 missing-AVP diagnostics: generatorv14 and opt-in BaseErrorFailures now implement5005 for generated min=1 fixed-width required leaves, with zero4/8-byte payloads and actual-instance Grouped ancestors. Limits include Failed-AVP depth/count and bounded field/frame/reply bytes; untrusted envelopes and unsupported omissions still fail closed. See [English guide](missing-avp-diagnostics.md) and [evidence](../spec/evidence/batch-96-missing-diagnostics.json). Public shapes unchanged; DefinitionDigest/Bundle fingerprints change, so earlier recovery records require their original build. No new immutable version is published. Other omission/result mappings, private/target/capacity gates remain open; all24 requirements remain partial. Current implementation evidence is Draft0.97 in [progress](../spec/progress.json).
+
+Batch97 first-excess diagnostics: generatorv15 and opt-in BaseErrorFailures implement5009 for generated finite maxima, quoting the first excess instance with original header/data/padding and minimal actual-instance ancestors. Local resource limits take precedence; unsupported/untrusted cases remain closed. Ordinary/emergency TCP/TLS, bounded fuzz and full dual-module checks are recorded in the [English guide](excess-avp-diagnostics.md) and [evidence](../spec/evidence/batch-97-excess-diagnostics.json). Public shapes are unchanged; DefinitionDigest/Bundle fingerprints change. No new immutable release is published. See [current remaining gaps](remaining-gaps.md) for5001/5004/3006, remaining omissions, duplicate workloads and external/version gates. Current progress is Draft0.98.

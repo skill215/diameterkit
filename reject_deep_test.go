@@ -153,7 +153,7 @@ func TestRejectDeepMissingGenerated(t *testing.T) {
 					t.Fatal("no proven diagnostic", err)
 				}
 				assertMissingChain(t, quote, tc.path, tc.width, tc.flags)
-				if _, e := n.rejectFrame(raw, 20, rejectMissing, err); e == nil {
+				if _, e := n.rejectFrame(raw, 20, rejectDecode, err); e == nil {
 					t.Fatal("reply budget bypass")
 				}
 				sendRejectRaw(t, remote, raw)
@@ -244,7 +244,7 @@ func TestMissingWholeGroupRemainsUnsupported(t *testing.T) {
 	if b, ok := missingavp.Quote(err, cfg.Limits, 1024); ok {
 		t.Fatal("invented Grouped payload", b)
 	}
-	if _, err = n.rejectFrame(raw, 1024, rejectMissing, err); !errors.Is(err, ErrUnsupported) {
+	if _, err = n.rejectFrame(raw, 1024, rejectDecode, err); !errors.Is(err, ErrUnsupported) {
 		t.Fatal(err)
 	}
 }

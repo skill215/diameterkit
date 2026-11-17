@@ -269,7 +269,7 @@ func (n *Node) readInbound(c *connection, h pdu.Header, size int) error {
 	if err == nil {
 		request, err = n.engine.DecodeOwned(b)
 	}
-	reason := rejectMissing
+	reason := rejectDecode
 	if err == nil {
 		err = checkInboundBinding(request, policy, n)
 		if errors.Is(err, validation.ErrSource) {

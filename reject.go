@@ -16,6 +16,7 @@ import (
 	"github.com/skill215/diameterkit/base"
 	"github.com/skill215/diameterkit/internal/budget"
 	"github.com/skill215/diameterkit/internal/codecengine"
+	"github.com/skill215/diameterkit/internal/excessavp"
 	"github.com/skill215/diameterkit/internal/missingavp"
 	"github.com/skill215/diameterkit/pdu"
 	"github.com/skill215/diameterkit/schema"
@@ -52,7 +53,7 @@ const (
 	rejectDeadline
 	rejectCommand
 	rejectApplication
-	rejectMissing
+	rejectDecode
 )
 
 func rejectionReserve(cfg NodeConfig, e *codecengine.Engine) (uint64, error) {
@@ -224,8 +225,16 @@ func (n *Node) rejectFrame(raw []byte, maxBytes int, reason rejectReason, cause 
 		code = 3001
 	case rejectApplication:
 		code = 3007
-	case rejectMissing:
+	case rejectDecode:
 		var ok bool
+		if errors.Is(cause, validation.ErrDuplicate) {
+			diagnostic, ok = excessavp.Quote(raw[20:], cause, n.cfg.Limits, maxBytes)
+			if !ok {
+				return nil, ErrUnsupported
+			}
+			code = 5009
+			break
+		}
 		diagnostic, ok = missingavp.Quote(cause, n.cfg.Limits, maxBytes)
 		if !ok {
 			diagnostic, ok = missingDiagnostic(cause)
@@ -358,7 +367,7 @@ func (n *Node) readEmergency(c *connection, h pdu.Header, size int, reason rejec
 			var request pdu.Message
 			request, cause = n.engine.DecodeOwned(raw)
 			if cause != nil {
-				reason = rejectMissing
+				reason = rejectDecode
 			} else {
 				cause = checkInboundBinding(request, *policy, n)
 				if errors.Is(cause, validation.ErrSource) {

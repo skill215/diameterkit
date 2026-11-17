@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "date": "2026-11-16",
-  "basis": "Batch96 bounded generated missing-AVP diagnostics verified; generatorv14 changes Bundle fingerprints. Published batch93 versions unchanged; all24 broader SPEC IDs remain partial.",
+  "date": "2026-11-17",
+  "basis": "Batch97 generated finite-maximum first-excess5009 verified; generatorv15 changes Bundle fingerprints. Published batch93 versions unchanged; all24 broader SPEC IDs remain partial.",
   "release_status": "not_ready",
   "api_snapshot": "spec/release/public-api.json",
   "profiles": [
@@ -371,6 +371,37 @@
         "doc/diameterkit-usage-coverage.md"
       ],
       "exit": "部署方核验DRA/最终HSS/MME/OCS角色、保护条件、目标恢复许可及业务映射。库端受控验收与现场投产分开，不以本机双Node代替目标验收。"
+    },
+    {
+      "name": "Remaining automatic error diagnostics",
+      "priority": "P1 local implementation",
+      "status": "partial",
+      "requirement_refs": [
+        "SPEC-ERROR-01"
+      ],
+      "evidence": [
+        "spec/evidence/batch-97-excess-diagnostics.json",
+        "doc/remaining-gaps.md"
+      ],
+      "remaining": "Automatic 5001/5004 and Redirect 3006 mappings; manual/handshake cardinality handling; Missing Grouped/variable-length/manual/conditional/cardinality-min>1 diagnostics beyond earlier five Base leaves"
+    },
+    {
+      "name": "Combined cross-peer and mixed-profile duplicate acceptance",
+      "priority": "local acceptance",
+      "status": "partial",
+      "requirement_refs": [
+        "SPEC-DUP-01"
+      ],
+      "remaining": "Combined cross-peer and mixed-profile cache-budget acceptance"
+    },
+    {
+      "name": "Next immutable core/adapter release acceptance",
+      "priority": "release gate",
+      "status": "pending_new_version",
+      "requirement_refs": [
+        "SPEC-RELEASE-01"
+      ],
+      "remaining": "Future v0.2 release and cold-cache no-replace core/adapter installation"
     }
   ],
   "completed": [
@@ -463,7 +494,7 @@
         "smsfw_combined_duplicate_test.go",
         "doc/combined-duplicate-acceptance.md"
       ],
-      "remaining": "Mixed-profile/cache workloads, cross-peer combined cases, deep diagnostics and real target/durable financial behavior remain separate."
+      "remaining": "Combined cross-peer and mixed-profile/cache workloads and real-target/durable financial behavior remain separate. Selected deep diagnostics are now covered by batches96/97."
     },
     {
       "name": "Generated fixed-width missing-AVP diagnostics",
@@ -479,7 +510,24 @@
         "spec/evidence/batch-96-missing-diagnostics.json",
         "doc/missing-avp-diagnostics.md"
       ],
-      "remaining": "Other omission kinds, present-AVP mappings, real-target and next-version publication/install gates remain separate."
+      "remaining": "Other omission kinds, automatic5001/5004, Redirect3006, manual/handshake cardinality and real-target/new-version gates remain separate. Generated5009 is covered by batch97."
+    },
+    {
+      "name": "Generated first-excess AVP diagnostics",
+      "priority": "SPEC-ERROR-01 present-instance diagnostic slice",
+      "status": "completed_selected_slice",
+      "requirement_refs": [
+        "SPEC-ERROR-01",
+        "SPEC-CODEC-01",
+        "SPEC-PROFILE-01",
+        "SPEC-BUDGET-01"
+      ],
+      "evidence": [
+        "spec/evidence/batch-97-excess-diagnostics.json",
+        "doc/excess-avp-diagnostics.md"
+      ],
+      "remaining": "Automatic 5001/5004 and Redirect 3006 mappings; manual/handshake cardinality handling; Missing Grouped/variable-length/manual/conditional/cardinality-min>1 diagnostics beyond earlier five Base leaves; Combined cross-peer and mixed-profile cache-budget acceptance; Private original six-template/ACA/PSP/1292 and real target/deployment capacity acceptance; Future v0.2 release and cold-cache no-replace core/adapter installation"
     }
-  ]
+  ],
+  "current_gap_overview": "doc/remaining-gaps.md"
 }

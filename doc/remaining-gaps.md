@@ -1,0 +1,54 @@
+# Current remaining gaps
+
+This is the current implementation overview for **batch 97, Draft 0.98**
+(2026-11-17). [Progress](../spec/progress.json) records actual check completion;
+the broad release status remains `not_ready`. The 24 SPEC IDs span implementation,
+verification and external acceptance; their `partial` labels are not a percentage
+of unfinished code. Dated specification sections and frozen batch records retain
+their historical meaning.
+
+## Next local work
+
+| Area | Completed selected scope | Remaining work |
+| --- | --- | --- |
+| Error diagnostics | Five earlier Base omissions; generated fixed-width 5005; generated finite-maximum first-excess 5009 | Bounded 5004/5001, Redirect 3006, manual/handshake cardinality, and whole-group/variable/conditional/minimum-greater-than-one omissions |
+| Duplicate acceptance | Generic cross-peer tests and selected combined same-peer TCP/TLS cache/result/lifecycle tests | Combined cross-peer scenarios and mixed-profile cache budgets |
+| Load acceptance | Seven bounded fuzz targets, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads |
+| Publication | Reviewed API/generated output and dual-module checkout CI; immutable rc.2/rc.1 installation receipts | Publish and cold-install a new reviewed core/adapter pair after the generator fingerprint transitions; planned core candidate `v0.2.0-rc.1` |
+
+Prioritize bounded 5004/5001 evidence next. Locate the actual offending instance
+and prove its framing before quoting it. Keep malformed/untrusted/resource-limit
+failures closed when a safe response cannot be built. Redirect needs its own
+URI/required-field scope and should be a separate implementation slice.
+
+## Evidence-dependent work
+
+- Original six-template inputs, complete requests/answers and deployment versions;
+  PSP/private ACA/1292 mappings; 420/2018 target acceptance; independent SCAP1
+  recovery authorization.
+- Target recovery deduplication keys/content/retention, ECUR continuity and
+  DRA/ultimate-terminal roles. Local simulated peers cannot provide these claims.
+- Application-owned durable intent, old-worker fencing and unknown-result
+  reconciliation. These are deployment/migration duties, not library persistence.
+- Existing restricted protocol branches: standard SMS failure/sequence fields,
+  normal CCA experimental 5011 generation pairing, ordinary no-IMSI success SRA,
+  disputed Realm combinations and requested/maximum-time equality. Extend only
+  with the required direct specification or named compatibility evidence.
+
+Full SCUR/PRICE_ENQUIRY, S6a and full Sh XSD/internationalization are deferred
+capabilities, not newly added blockers for the selected first-release scope.
+
+## Already implemented
+
+S6c `NewSRR`, `InterpretSRA` and `client/s6c` were completed in batch 87. Selected
+Ro recovery and independent binding/no-answer/import public consumption were
+completed in batches 88–90. Dual-module CI, generated/API/race checks, bounded
+load tooling and historical immutable cold installs have passed recorded gates.
+Do not convert dated statements that these were missing into new implementation
+tasks. Native SCTP and platform stubs remain explicitly distinguished in the
+[support matrix](diameterkit-support-matrix.md).
+
+Generator v15 fingerprints differ from earlier builds. Existing published tags
+remain immutable, and earlier recovery records require their original build.
+See the [version policy](version-install-policy.md),
+[5005 guide](missing-avp-diagnostics.md) and [5009 guide](excess-avp-diagnostics.md).

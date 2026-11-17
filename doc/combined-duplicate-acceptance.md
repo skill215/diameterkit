@@ -73,7 +73,9 @@ The ordinary pure/race CI suites include these tests. See the
 results, commands and log hashes. The libraries remain pure Go; race uses CGO only
 for instrumentation. Process notes remain under ignored `spec/local/batches/`.
 
-Deep/instance-specific Failed-AVP generation, other mixed-profile cache workloads,
-cross-peer combined scenarios, private ACA/PSP/1292 mappings, real target recovery
-and deployment capacity remain separate acceptance items. No published version
+Subsequent batches implement [selected 5005](missing-avp-diagnostics.md) and
+[5009](excess-avp-diagnostics.md) diagnostics. Other diagnostic mappings,
+mixed-profile cache workloads, cross-peer combined scenarios, private ACA/PSP/1292
+mappings, real target recovery and deployment capacity remain separate acceptance
+items. See the [current gap list](remaining-gaps.md). No published version
 tag or measured benchmark baseline is changed by this acceptance work.

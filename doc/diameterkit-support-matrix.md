@@ -49,9 +49,11 @@ financial deduplication or full mixed-profile/cache coverage.
 ## Remaining gates
 
 The unreleased [missing-AVP extension](missing-avp-diagnostics.md) adds bounded
-5005 placeholders for generated required fixed-width leaves and actual Grouped
-ancestor chains. Other diagnostic mappings remain partial. Generator v14 changes
-Bundle fingerprints; earlier recovery records require their original build.
+5005 placeholders; [first-excess diagnostics](excess-avp-diagnostics.md) add
+generated 5009 instance copies. Other mappings remain partial. Generator v15
+changes Bundle fingerprints; earlier recovery records require their original
+build. The [current gap list](remaining-gaps.md) separates implementation,
+verification and external evidence from historical batch descriptions.
 
 - **Release:** exact available versions, commits, authenticated checksums and cold
   consumers are recorded in the [publication record](releases/v0.1.0-rc.md).

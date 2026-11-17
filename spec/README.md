@@ -6,6 +6,7 @@ progress and reproducible acceptance evidence; it does not introduce a second se
 of requirement IDs or an OpenSpec workflow.
 
 Start with the English [support matrix](../doc/diameterkit-support-matrix.md),
+[current remaining gaps](../doc/remaining-gaps.md),
 [definition guide](../doc/diameterkit-application-definitions.md),
 [version policy](../doc/version-install-policy.md) and
 [publication record](../doc/releases/v0.1.0-rc.md).

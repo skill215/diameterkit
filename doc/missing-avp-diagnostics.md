@@ -48,8 +48,9 @@ untrusted/duplicate Session-Id, invalid Proxy-Info, illegal parent flags, exhaus
 limits, or an unsupported omission. Missing whole groups, variable-length fields
 beyond the existing five placeholders, manual/conditional rules, and cardinality
 minima greater than one do not gain guessed placeholders. A bare public
-`validation.FieldError` path alone cannot create a new deep diagnostic. Complete
-5001/5004/5009/3006 generation remains outside this slice.
+`validation.FieldError` path alone cannot create a new deep diagnostic. Batch 97
+adds [generated first-excess 5009 diagnostics](excess-avp-diagnostics.md); manual
+cardinality and complete 5001/5004/3006 generation remain separate.
 
 ## Compatibility and recovery
 
@@ -57,6 +58,7 @@ Generator v14 changes the 11 generated DefinitionDigest constants and therefore
 Bundle fingerprints, while leaving message fields and profile slice versions
 unchanged. Public signatures and struct layouts are unchanged. The API snapshot
 review covers source hashes, those constants and the generator-version banner.
+Batch 97 advances the generator to v15 with another fingerprint transition.
 
 Recovery records tied to an earlier fingerprint must continue to fail import under
 the new Bundle. Drain or settle outstanding records under their original reviewed
