@@ -119,10 +119,10 @@ func DecodeProxy(d *wire.Decoder) (*pdu.ProxyInfo, error) {
 		}
 	}
 	if !host {
-		return nil, validation.At(avp.Key{Code: 280}, validation.ErrMissing)
+		return nil, constraintFailure("proxy-host-missing", avp.Key{Code: 280}, validation.ErrMissing)
 	}
 	if !state {
-		return nil, validation.At(avp.Key{Code: 33}, validation.ErrMissing)
+		return nil, constraintFailure("proxy-state-missing", avp.Key{Code: 33}, validation.ErrMissing)
 	}
 	return m, ValidateProxy(m, validation.Receive)
 }
@@ -206,6 +206,12 @@ func DecodeVSAI(d *wire.Decoder) (*pdu.VendorSpecificApplicationID, error) {
 	}
 	if !vendor {
 		return nil, profileMissing(avp.Key{Code: 266}, avp.MandatoryFlag, 4)
+	}
+	if m.AuthApplicationID.Present && m.AcctApplicationID.Present {
+		return nil, constraintFailure("vsai-both", avp.Key{}, validation.ErrDuplicate)
+	}
+	if !m.AuthApplicationID.Present && !m.AcctApplicationID.Present {
+		return nil, constraintFailure("vsai-neither", avp.Key{}, validation.ErrMissing)
 	}
 	return m, ValidateVSAI(m, validation.Receive)
 }

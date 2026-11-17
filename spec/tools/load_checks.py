@@ -20,6 +20,7 @@ FUZZ_TARGETS = [
     ("length-diagnostic", ".", "./internal/excessavp", "FuzzLengthQuote"),
     ("diameter-uri", ".", "./avp", "FuzzDiameterURI"),
     ("manual-diagnostic", ".", "./base", "FuzzManualDiagnostics"),
+    ("group-constraint", ".", "./internal/groupavp", "FuzzGroupQuote"),
     ("shdata", ".", "./app/sh/shdata", "FuzzParse"),
     ("sctp-mode", "adapters/sctp", ".", "FuzzSCTPModeSelection"),
 ]

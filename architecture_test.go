@@ -22,7 +22,7 @@ func TestProductionImportBoundaries(t *testing.T) {
 	const module = "github.com/skill215/diameterkit"
 	allowed := map[string][]string{
 		"client/s6c":               {"app/s6c", "validation"},
-		".":                        {"internal/excessavp", "internal/missingavp", "avp", "pdu", "schema", "wire", "validation", "base", "internal/budget", "internal/codecengine", "transport"},
+		".":                        {"internal/groupavp", "internal/excessavp", "internal/missingavp", "avp", "pdu", "schema", "wire", "validation", "base", "internal/budget", "internal/codecengine", "transport"},
 		"internal/streamtransport": {"transport"}, "transport/tcp": {"transport", "internal/streamtransport"}, "transport/tls": {"internal/streamtransport", "transport"},
 		"internal/smsidentity": {"avp", "validation"},
 		// SCTP uses only wire's bounded top-level walker to select Session-Id's
@@ -30,6 +30,7 @@ func TestProductionImportBoundaries(t *testing.T) {
 		"internal/budget": {}, "transport": {}, "adapters/sctp": {"transport", "wire"}, "internal/testkit": {"transport"}, "avp": {}, "pdu": {"avp"}, "internal/contextvalue": {},
 		"internal/missingavp": {"avp", "validation", "wire"},
 		"internal/excessavp":  {"avp", "validation", "wire"},
+		"internal/groupavp":   {"avp", "validation", "wire"},
 		"validation":          {"avp", "internal/contextvalue"}, "wire": {"avp", "pdu"},
 		"schema":                   {"avp", "pdu", "wire", "validation"},
 		"base":                     {"avp", "pdu", "wire", "validation", "schema"},

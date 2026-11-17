@@ -51,6 +51,10 @@ Batch 102 [Proxy/VSAI diagnostics](manual-group-diagnostics.md) advances the
 generator to v18, changes eleven generated digests and Bundle fingerprints, and
 preserves public shapes and ops9. Regenerate external bindings for the new
 evidence bridge. No new immutable version is published. Published core/adapter versions and their dependency pins stay intact.
+Batch 103 [group constraints](group-constraint-diagnostics.md) advances the generator
+to v19 for conditional VSAI and variable Proxy omissions. It again changes all
+eleven digests and fingerprints while preserving public shapes and ops9. The
+same regeneration, original-build recovery and separate publication gates apply.
 
 Use the pinned Go version, Python 3, Linux/amd64 with SCTP, and a C compiler for
 the race tool. For the recorded rc.2/rc.1 pair, run from publication checkout

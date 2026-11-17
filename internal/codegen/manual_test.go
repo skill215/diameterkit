@@ -54,6 +54,22 @@ func TestManualBridge(t *testing.T){
   }
  })}
 }
+
+func TestGroupBridge(t *testing.T){
+ for _,kind:=range []string{"both","neither","host","state"}{t.Run(kind,func(t *testing.T){
+ group:=uint32(260);key:=avp.Key{};rule:="vsai-"+kind
+ good:=append(part(266,make([]byte,4)),part(258,make([]byte,4))...);bad:=part(266,make([]byte,4))
+ if kind=="both"{bad=append(append(bad,part(258,make([]byte,4))...),part(259,make([]byte,4))...)}
+ if kind=="host"||kind=="state"{group=284;good=append(part(280,[]byte("p")),part(33,nil)...);rule="proxy-"+kind+"-missing";key.Code=280;bad=part(33,nil);if kind=="state"{key.Code=33;bad=part(280,[]byte("p"))}}
+ raw:=append(part(900,part(group,good)),part(900,append(part(group,good),part(group,bad)...))...)
+ _,e:=decodeRequest(wire.NewDecoder(raw,wire.DefaultLimits()));var field *validation.FieldError;var p interface{DiameterGroupAVPV1()(avp.Key,byte,int,string,error)}
+ if !errors.As(e,&field)||!errors.As(e,&p){t.Fatal("missing evidence",e)}
+ size:=2;if group==284{size++};if len(field.Path)!=size{t.Fatal("path",field.Path)}
+ for depth:=0;depth<2;depth++{k,flags,offset,r,child:=p.DiameterGroupAVPV1();if k!=field.Path[depth]||flags!=64||offset==0||r!=""||child==nil{t.Fatal("parent metadata")};d:=wire.NewDecoder(raw,wire.DefaultLimits());for{v,ok,e:=d.Next();if e!=nil||!ok{t.Fatal("wrong offset")};if v.Offset==offset{if v.Key!=k{t.Fatal("key")};raw=v.Data;break}};p=child.(interface{DiameterGroupAVPV1()(avp.Key,byte,int,string,error)})}
+ k,flags,offset,r,child:=p.DiameterGroupAVPV1();if k!=key||flags!=0||offset!=0||r!=rule||child!=nil||!bytes.Equal(raw,bad){t.Fatal("terminal")}
+ })}
+}
+
 `}
 	for name, data := range files {
 		if e = os.WriteFile(filepath.Join(dir, name), []byte(data), 0644); e != nil {

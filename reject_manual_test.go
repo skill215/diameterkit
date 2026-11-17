@@ -18,6 +18,7 @@ import (
 	"github.com/skill215/diameterkit/base"
 	"github.com/skill215/diameterkit/codec"
 	"github.com/skill215/diameterkit/internal/excessavp"
+	"github.com/skill215/diameterkit/internal/groupavp"
 	"github.com/skill215/diameterkit/internal/missingavp"
 	"github.com/skill215/diameterkit/pdu"
 	"github.com/skill215/diameterkit/validation"
@@ -37,6 +38,9 @@ func manualConfig(t *testing.T) NodeConfig {
 	return cfg
 }
 func manualQuote(raw []byte, e error, l wire.Limits, budget int) ([]byte, uint32, bool) {
+	if q, code, ok := groupavp.Quote(raw, e, l, budget); ok {
+		return q, code, true
+	}
 	if q, ok := excessavp.Quote(raw, e, l, budget); ok {
 		return q, 5009, true
 	}
@@ -201,7 +205,13 @@ func TestRejectManualProxyClosed(t *testing.T) {
 						data = invalidPart(t, avp.Key{Code: 280}, 64, []byte("second.example"))
 					}
 					raw, _ = invalidRaw(t, co, req, path[:1], data, avp.Key{})
-					code = 0
+					code = 5005
+					want = invalidPart(t, avp.Key{Code: 280}, 64, []byte{0})
+					clear(want[9:])
+					if kind == "missing-state" {
+						path[1].key.Code = 33
+						want = invalidPart(t, avp.Key{Code: 33}, 64, nil)
+					}
 				}
 				_, cause := co.Decode(raw)
 				q, result, ok := manualQuote(raw[20:], cause, cfg.Limits, 1024)
@@ -336,7 +346,7 @@ func TestManualProofBounds(t *testing.T) {
 
 func TestRejectManualVSAIClosed(t *testing.T) {
 	eachNetwork(t, func(t *testing.T, encrypted bool) {
-		for _, kind := range []string{"default", "reply", "repeat", "field", "count", "depth", "both-apps", "neither-app", "session"} {
+		for _, kind := range []string{"default", "reply", "repeat", "field", "count", "depth", "session"} {
 			t.Run(kind, func(t *testing.T) {
 				cfg := manualConfig(t)
 				// Isolate this policy from cross-peer duplicate-domain equality checks.

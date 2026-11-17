@@ -398,6 +398,9 @@ func decodeError(d *wire.Decoder, key pdu.CommandKey, groups []avp.Key, options 
 			if err == nil {
 				var x *pdu.ProxyInfo
 				x, err = DecodeProxy(child)
+				if err != nil {
+					return nil, profileWithin(v, err)
+				}
 				if err == nil {
 					m.ProxyInfo = append(m.ProxyInfo, *x)
 				}
@@ -415,6 +418,9 @@ func decodeError(d *wire.Decoder, key pdu.CommandKey, groups []avp.Key, options 
 			if err == nil {
 				var x *pdu.VendorSpecificApplicationID
 				x, err = DecodeVSAI(child)
+				if err != nil {
+					return nil, profileWithin(v, err)
+				}
 				if err == nil {
 					m.VendorSpecificApplicationID = avp.Some(*x)
 				}

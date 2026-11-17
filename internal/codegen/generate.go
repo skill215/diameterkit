@@ -22,7 +22,7 @@ import (
 )
 
 const maxDefinition = 4 << 20
-const GeneratorVersion = "18"
+const GeneratorVersion = "19"
 
 type Definition struct {
 	Format   int       `json:"format"`
@@ -154,7 +154,7 @@ func validate(d Definition) error {
 	if d.Format != 1 || !identifier(d.Package) || d.Profile == "" || d.Version == "" || len(d.Sources) == 0 || len(d.Commands) == 0 || len(d.Commands) > 64 || len(d.Groups) > 64 {
 		return fmt.Errorf("invalid definition header")
 	}
-	names := map[string]bool{"Profile": true, "DefinitionDigest": true, "Version": true, "profileDiagnosticGroups": true, "profileErrorUnsupported": true, "profileOmission": true, "profileMissing": true, "profileWithin": true, "profileExcess": true, "profileTooMany": true, "profileInvalid": true, "profileBadValue": true, "profileBadLength": true}
+	names := map[string]bool{"Profile": true, "DefinitionDigest": true, "Version": true, "profileDiagnosticGroups": true, "profileErrorUnsupported": true, "profileOmission": true, "profileMissing": true, "profileWithin": true, "profileExcess": true, "profileTooMany": true, "profileInvalid": true, "profileBadValue": true, "profileBadLength": true, "profileConstraint": true}
 	groups := map[string]Group{}
 	for _, g := range d.Groups {
 		if !exported(g.Name) || names[g.Name] {
@@ -472,6 +472,12 @@ func profileMissing(key avp.Key,flags byte,width int) error {
  return validation.At(key,&profileOmission{key:key,flags:flags,width:width})
 }
 func profileWithin(v wire.View,err error) error {
+ var group interface {error; DiameterGroupAVPV1() (avp.Key,byte,int,string,error)}
+ if errors.As(err,&group) {
+  outer:=validation.At(v.Key,err).(*validation.FieldError)
+  outer.Cause=&profileConstraint{key:v.Key,flags:v.Flags,offset:v.Offset,cause:err,child:group}
+  return outer
+ }
  var invalid interface {error; DiameterInvalidAVPV1() (avp.Key,byte,int,uint32,error)}
  if errors.As(err,&invalid) {
   outer:=validation.At(v.Key,err).(*validation.FieldError)
@@ -490,6 +496,10 @@ func profileWithin(v wire.View,err error) error {
  outer.Cause=&profileOmission{key:v.Key,flags:v.Flags,child:proof}
  return outer
 }
+type profileConstraint struct {key avp.Key; flags byte; offset int; cause,child error}
+func (e *profileConstraint) Error() string {return e.cause.Error()}
+func (e *profileConstraint) Unwrap() error {return e.cause}
+func (e *profileConstraint) DiameterGroupAVPV1() (avp.Key,byte,int,string,error) {return e.key,e.flags,e.offset,"",e.child}
 type profileExcess struct { key avp.Key; flags byte; offset,maximum int; child error }
 func (*profileExcess) Error() string {return validation.ErrDuplicate.Error()}
 func (*profileExcess) Unwrap() error {return validation.ErrDuplicate}

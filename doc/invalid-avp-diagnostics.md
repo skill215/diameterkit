@@ -86,5 +86,7 @@ establish real target interoperability or application recovery permission.
 
 [Batch 102](manual-group-diagnostics.md) extends selected mappings into handwritten
 Proxy/VSAI decoders and preserves exact-instance evidence across generated
-parents. Unsafe Proxy envelopes still close; conditional and variable omissions
-remain separate. Generator v18 changes generated digests and Bundle fingerprints.
+parents. [Batch 103](group-constraint-diagnostics.md) adds conditional VSAI pairs
+and bounded Proxy omission minima. Unsafe Proxy envelopes still close; other
+conditional and variable omissions remain separate. Generator v19 changes
+generated digests and Bundle fingerprints.

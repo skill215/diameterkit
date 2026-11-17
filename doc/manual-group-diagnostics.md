@@ -45,9 +45,8 @@ or state, or copies only the valid siblings to force an answer through.
 
 The following remain outside this selected mapping:
 
-- Missing variable-length Proxy-Host/Proxy-State placeholders.
-- VSAI with both or neither Auth/Acct application IDs: these need explicit
-  multiple-leaf conditional diagnostics, not a single-leaf 5004/5005 guess.
+- Other whole-group, conditional and variable-length omissions beyond the
+  [batch 103 VSAI/Proxy rules](group-constraint-diagnostics.md).
 - Application-specific identity/domain constraints and handshake-specific answer
   mappings. Repeated CER VSAI tests provide offline codec evidence only.
 - Profiles that deliberately treat VSAI as opaque, including the selected SMS
@@ -61,10 +60,11 @@ recovery or durable deduplication claim is introduced.
 
 Tests cover the second repeated Proxy/VSAI parent, exact duplicate instances and
 padding, all three VSAI integer keys, source-byte ownership, tampered paths and
-offsets, resource ceilings, conditional exclusions and TCP/TLS close boundaries.
+offsets, resource ceilings, the original conditional exclusions and TCP/TLS close boundaries. Batch 103
+adds explicit conditional and Proxy-omission evidence as described in its guide.
 A generated external module checks evidence through two repeated ancestor levels
 using only public imports. `FuzzManualDiagnostics` exercises real handwritten
-decoders and bounded copying; the release suite now has eleven fuzz targets.
+decoders and bounded copying; batch 102 added the eleventh target. Batch 103 adds a twelfth constraint target.
 
 ```sh
 CGO_ENABLED=0 go test . ./base ./internal/excessavp ./internal/codegen -run 'Test(Manual|RejectManual|Length|RejectLength|Invalid|RejectInvalid|ExternalGenerated|Generated|ProductionImport)' -count=20 -timeout=5m

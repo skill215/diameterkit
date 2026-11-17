@@ -17,6 +17,7 @@ import (
 	"github.com/skill215/diameterkit/internal/budget"
 	"github.com/skill215/diameterkit/internal/codecengine"
 	"github.com/skill215/diameterkit/internal/excessavp"
+	"github.com/skill215/diameterkit/internal/groupavp"
 	"github.com/skill215/diameterkit/internal/missingavp"
 	"github.com/skill215/diameterkit/pdu"
 	"github.com/skill215/diameterkit/schema"
@@ -227,6 +228,9 @@ func (n *Node) rejectFrame(raw []byte, maxBytes int, reason rejectReason, cause 
 		code = 3007
 	case rejectDecode:
 		var ok bool
+		if diagnostic, code, ok = groupavp.Quote(raw[20:], cause, n.cfg.Limits, maxBytes); ok {
+			break
+		}
 		if diagnostic, code, ok = excessavp.QuoteInvalid(raw[20:], cause, n.cfg.Limits, maxBytes); ok {
 			break
 		}
