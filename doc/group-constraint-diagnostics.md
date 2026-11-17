@@ -76,6 +76,6 @@ and review external bindings. Settle earlier recovery records with their origina
 build; never relabel fingerprints. The planned core remains `v0.2.0-rc.1`, and
 this batch publishes no immutable version. See the [version policy](version-install-policy.md),
 [batch receipt](../spec/evidence/batch-103-group-constraints.json) and
-[remaining gaps](remaining-gaps.md). Other domain/handshake diagnostics,
-malformed-header length failures, whole-group omissions and cardinality minima
-greater than one still require separate evidence.
+[remaining gaps](remaining-gaps.md). [Batch 104](minimum-group-diagnostics.md) adds selected whole-group minima.
+Other domain/handshake diagnostics, malformed-header length failures, unreviewed
+whole-group omissions and cardinality minima greater than one remain separate.

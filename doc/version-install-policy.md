@@ -100,6 +100,12 @@ The final independent GitHub tag check still uses the network. Race needs CGO=1
 for instrumentation; production modules remain pure Go. Build caches and evidence
 logs do not create a library persistence boundary.
 
+Batch 104 [minimum-group diagnostics](minimum-group-diagnostics.md) uses generator
+v20 and explicit diagnostic opt-ins in four definitions. Existing wire fields,
+rules, slice versions, public Go shapes and ops9 stay unchanged. All eleven
+digests and Bundle fingerprints change. External regeneration and original-build
+recovery remain required; publication/cold-install acceptance stays separate.
+
 ## Publication order and CI
 
 Publish the reviewed immutable core first. Download and verify it, then update the

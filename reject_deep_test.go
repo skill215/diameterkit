@@ -231,11 +231,12 @@ func TestRejectDeepMissingFailsClosed(t *testing.T) {
 	})
 }
 
-func TestMissingWholeGroupRemainsUnsupported(t *testing.T) {
+func TestMissingUnreviewedWholeGroupRemainsUnsupported(t *testing.T) {
 	cfg := combinedConfig(t)
 	n, co := newInboundNode(t, cfg)
 	req := combinedDuplicateRequest(t, n, co, "general", 9605, 9606)
-	path := []missingSelector{{avp.Key{Code: 456}, 0}, {avp.Key{Code: 437}, 0}, {avp.Key{Code: 413}, 0}, {avp.Key{Code: 445}, 0}}
+	// RequestMSCC has contextual requirements and no reviewed minimum grammar.
+	path := []missingSelector{{avp.Key{Code: 456}, 0}}
 	raw := missingRaw(t, co, req, path, false)
 	_, err := co.Decode(raw)
 	if !errors.Is(err, validation.ErrMissing) {

@@ -77,3 +77,9 @@ The Sh payload helper covers selected Ref11/12/24/25 forms with separate byte/de
 bounds. A valid Diameter answer does not imply valid XML, subscriber permission or
 business success. No definition grants automatic delivery, charging, retry,
 persistence or target authorization.
+
+Batch 104 [minimum-group diagnostics](minimum-group-diagnostics.md) uses generator
+v20 and explicit diagnostic opt-ins in four definitions. Existing wire fields,
+rules, slice versions, public Go shapes and ops9 stay unchanged. All eleven
+digests and Bundle fingerprints change. External regeneration and original-build
+recovery remain required; publication/cold-install acceptance stays separate.

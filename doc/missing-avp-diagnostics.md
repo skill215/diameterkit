@@ -45,11 +45,12 @@ bounded rejection slots and resource accounting remain in force.
 
 The connection closes when a safe response cannot be built. This includes
 untrusted/duplicate Session-Id, invalid Proxy-Info, illegal parent flags, exhausted
-limits, or an unsupported omission. Missing whole groups, variable-length fields
+limits, or an unsupported omission. Unreviewed whole groups and variable-length fields
 beyond explicitly supported minima, other manual/conditional rules, and
 cardinality minima greater than one do not gain guessed placeholders.
 [Batch 103](group-constraint-diagnostics.md) adds selected VSAI conditional pairs
-and minimum Proxy omission examples. A bare public
+and minimum Proxy omission examples. [Batch 104](minimum-group-diagnostics.md)
+adds explicitly reviewed whole-group minima. A bare public
 `validation.FieldError` path alone cannot create a new deep diagnostic. Batch 97
 adds [generated first-excess 5009 diagnostics](excess-avp-diagnostics.md); manual
 cardinality and other unproven mappings remain separate. See the

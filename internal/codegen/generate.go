@@ -22,7 +22,7 @@ import (
 )
 
 const maxDefinition = 4 << 20
-const GeneratorVersion = "19"
+const GeneratorVersion = "20"
 
 type Definition struct {
 	Format   int       `json:"format"`
@@ -34,10 +34,11 @@ type Definition struct {
 	Commands []Command `json:"commands"`
 }
 type Group struct {
-	CaptureMandatory bool    `json:"capture_mandatory,omitempty"`
-	Name             string  `json:"name"`
-	Fields           []Field `json:"fields"`
-	Rule             string  `json:"rule,omitempty"`
+	DiagnosticMinimum bool    `json:"diagnostic_minimum,omitempty"`
+	CaptureMandatory  bool    `json:"capture_mandatory,omitempty"`
+	Name              string  `json:"name"`
+	Fields            []Field `json:"fields"`
+	Rule              string  `json:"rule,omitempty"`
 }
 type Command struct {
 	ErrorRule       string  `json:"error_rule,omitempty"`
@@ -154,7 +155,7 @@ func validate(d Definition) error {
 	if d.Format != 1 || !identifier(d.Package) || d.Profile == "" || d.Version == "" || len(d.Sources) == 0 || len(d.Commands) == 0 || len(d.Commands) > 64 || len(d.Groups) > 64 {
 		return fmt.Errorf("invalid definition header")
 	}
-	names := map[string]bool{"Profile": true, "DefinitionDigest": true, "Version": true, "profileDiagnosticGroups": true, "profileErrorUnsupported": true, "profileOmission": true, "profileMissing": true, "profileWithin": true, "profileExcess": true, "profileTooMany": true, "profileInvalid": true, "profileBadValue": true, "profileBadLength": true, "profileConstraint": true}
+	names := map[string]bool{"Profile": true, "DefinitionDigest": true, "Version": true, "profileDiagnosticGroups": true, "profileErrorUnsupported": true, "profileOmission": true, "profileMissing": true, "profileWithin": true, "profileExcess": true, "profileTooMany": true, "profileInvalid": true, "profileBadValue": true, "profileBadLength": true, "profileConstraint": true, "profileGroupOmission": true, "profileMissingGroup": true}
 	groups := map[string]Group{}
 	for _, g := range d.Groups {
 		if !exported(g.Name) || names[g.Name] {
@@ -316,6 +317,13 @@ func validate(d Definition) error {
 			return err
 		}
 	}
+	for _, g := range d.Groups {
+		if g.DiagnosticMinimum {
+			if _, err := minimumPlan(Field{Code: 1, Type: g.Name}, groups); err != nil {
+				return err
+			}
+		}
+	}
 	symbols := map[string]bool{"Profile": true, "Version": true, "DefinitionDigest": true}
 	for name := range names {
 		symbols[name] = true
@@ -392,6 +400,7 @@ func fieldType(f Field) string {
 
 type writer struct {
 	bytes.Buffer
+	groups             map[string]Group
 	capture            map[string]bool
 	prefix             string
 	answer, ignoreVSAI bool
@@ -420,9 +429,10 @@ func Generate(d Definition) ([]byte, error) {
 	canonical, _ := json.Marshal(d)
 	sum := sha256.Sum256(append([]byte("diameter-schema/"+GeneratorVersion+"\n"), canonical...))
 	digest := hex.EncodeToString(sum[:])
-	w := &writer{capture: map[string]bool{}}
+	w := &writer{capture: map[string]bool{}, groups: map[string]Group{}}
 	for _, g := range d.Groups {
 		w.capture[g.Name] = g.CaptureMandatory
+		w.groups[g.Name] = g
 	}
 	if d.Package != "base" {
 		w.prefix = "base."
@@ -471,7 +481,15 @@ func profileMissing(key avp.Key,flags byte,width int) error {
  if width!=4&&width!=8{return validation.At(key,validation.ErrMissing)}
  return validation.At(key,&profileOmission{key:key,flags:flags,width:width})
 }
+type profileGroupOmission struct {key avp.Key;flags byte;plan string;child error}
+func (*profileGroupOmission) Error()string{return validation.ErrMissing.Error()}
+func (*profileGroupOmission) Unwrap()error{return validation.ErrMissing}
+func(e *profileGroupOmission) DiameterMissingGroupV1()(avp.Key,byte,string,error){return e.key,e.flags,e.plan,e.child}
+func profileMissingGroup(key avp.Key,flags byte,plan string)error{return validation.At(key,&profileGroupOmission{key:key,flags:flags,plan:plan})}
 func profileWithin(v wire.View,err error) error {
+ var tree interface{error;DiameterMissingGroupV1()(avp.Key,byte,string,error)}
+ if errors.As(err,&tree){outer:=validation.At(v.Key,err).(*validation.FieldError);outer.Cause=&profileGroupOmission{key:v.Key,flags:v.Flags,child:tree};return outer}
+
  var group interface {error; DiameterGroupAVPV1() (avp.Key,byte,int,string,error)}
  if errors.As(err,&group) {
   outer:=validation.At(v.Key,err).(*validation.FieldError)
@@ -881,6 +899,14 @@ func (w *writer) decode(name string, fs []Field) {
 	w.p("default:if v.Flags&avp.MandatoryFlag!=0{return nil,profileBadValue(v,5001,validation.ErrUnsupported)};if len(m.Extra)>=d.Limits().MaxRepeated{return nil,wire.ErrLimit};m.Extra=append(m.Extra,avp.Raw{Key:v.Key,Flags:v.Flags,Data:v.Data})}}")
 	for i, f := range fs {
 		if f.Min > 0 {
+			if f.Min == 1 && w.groups[f.Type].DiagnosticMinimum {
+				plan, err := minimumPlan(f, w.groups)
+				if err != nil {
+					panic(err)
+				}
+				w.p("if seen[%d]==0{return nil,profileMissingGroup(%s,%d,%q)}", i, key(f), f.Flags, plan)
+				continue
+			}
 			width := -1
 			if f.Min == 1 {
 				switch f.Type {
