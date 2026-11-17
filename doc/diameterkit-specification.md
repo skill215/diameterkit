@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.102 — 2026-11-17, batch 101.** The [progress record](../spec/progress.json)
+**Draft 0.103 — 2026-11-17, batch 102.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1217,3 +1217,5 @@ Batch99 cross-peer/mixed-profile duplicate acceptance: selected combined six-inp
 Batch100 typed-length diagnostics: generatorv17 and opt-in BaseErrorFailures implement selected5014 for generated scalar/time, Address family-prefix/IP widths and current TBCD byte-length failures. Type and exact-instance evidence are checked before bounded quoting; malformed framing, resources and manual/domain errors gain no guessed mapping. See the [English guide](length-avp-diagnostics.md) and [evidence](../spec/evidence/batch-100-length-diagnostics.json). Public signatures/layouts and protocol inputs are unchanged; fingerprints change and earlier recovery records require their original build. No new immutable version is published. Pure Go/no persistence remain; current progress is Draft0.101.
 
 Batch101 Redirect handling: common E answers support bounded advisory3006 with a selected DiameterURI subset, required hosts, usage0..6 and conditional cache time. Owned snapshots, source/envelope checks and field/count/frame/runtime budgets apply. TCP/TLS route policies do not auto-follow; cross-peer duplicate replay retains configured deadlines. See the [English guide](redirect-handling.md) and [evidence](../spec/evidence/batch-101-redirect.json). Public API fields/helper/limits are additive; use keyed literals. Common ops9 changes Bundle fingerprints while generatorv17 and eleven generated outputs remain unchanged. Earlier recovery records require their original build. No new immutable version is published. Pure Go/no persistence remain; current progress is Draft0.102.
+
+Batch102 manual-group diagnostics: generatorv18 preserves handwritten Proxy/VSAI evidence across generated parents. Selected5001/5004/5009/5014 present-instance quotes and missing VendorId5005 are bounded; repeated ancestors, original leaf bytes, normal/emergency TCP/TLS and unsafe Proxy closure are verified. See the [English guide](manual-group-diagnostics.md) and [evidence](../spec/evidence/batch-102-manual-diagnostics.json). Public shapes, ops9 and protocol inputs stay unchanged; eleven generated digests and Bundle fingerprints change. Earlier recovery records require original builds. Conditional Auth/Acct pairs, variable omissions and handshake/domain/malformed-header mappings remain separate. No new immutable version is published; pure Go/no persistence remain. Current progress is Draft0.103.

@@ -47,7 +47,10 @@ these diagnostic batches. Batch 101 [Redirect handling](redirect-handling.md) ad
 struct literals. Its shared error grammar advances operations `ops8` to `ops9`,
 changing Bundle fingerprints without changing generator v17 or generated files.
 Settle earlier recovery records with their original build; never relabel them.
-No new immutable version is published. Published core/adapter versions and their dependency pins stay intact.
+Batch 102 [Proxy/VSAI diagnostics](manual-group-diagnostics.md) advances the
+generator to v18, changes eleven generated digests and Bundle fingerprints, and
+preserves public shapes and ops9. Regenerate external bindings for the new
+evidence bridge. No new immutable version is published. Published core/adapter versions and their dependency pins stay intact.
 
 Use the pinned Go version, Python 3, Linux/amd64 with SCTP, and a C compiler for
 the race tool. For the recorded rc.2/rc.1 pair, run from publication checkout

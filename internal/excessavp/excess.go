@@ -4,7 +4,7 @@
 // SPDX-AI-Scope: Bounded present-AVP and typed-length diagnostic construction.
 // SPDX-AI-Date: 2026-11-17
 
-// Package excessavp resolves generated present-AVP evidence against the request.
+// Package excessavp resolves compiled present-AVP evidence against the request.
 // Errors retain offsets and schema limits, never request bytes or subscriber values.
 package excessavp
 
@@ -69,8 +69,9 @@ func (n invalidNode) DiameterExcessAVPV1() (avp.Key, byte, int, int, error) {
 	return k, flags, offset, -int(code), child
 }
 
-// QuoteInvalid quotes a generated isolated value, unknown Mandatory AVP or
-// typed-length failure. Bare/manual, framing and resource errors supply no proof.
+// QuoteInvalid quotes a selected isolated value, unknown Mandatory AVP or
+// typed-length failure from generated or handwritten decoders. Bare sentinels,
+// unsupported domain rules, framing and resource errors supply no proof.
 func QuoteInvalid(src []byte, cause error, limits wire.Limits, maxBytes int) ([]byte, uint32, bool) {
 	var code uint32
 	out, ok := quote(src, cause, limits, maxBytes, &code)

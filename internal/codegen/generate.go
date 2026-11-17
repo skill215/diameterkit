@@ -22,7 +22,7 @@ import (
 )
 
 const maxDefinition = 4 << 20
-const GeneratorVersion = "17"
+const GeneratorVersion = "18"
 
 type Definition struct {
 	Format   int       `json:"format"`
@@ -461,7 +461,7 @@ func Generate(d Definition) ([]byte, error) {
 		w.p(`import "errors"`)
 		// Keep generated extensions consumable outside this module: the error
 		// carries versioned structural metadata, not an internal-package import.
-		w.p(`type profileOmission struct { key avp.Key; flags byte; width int; child *profileOmission }
+		w.p(`type profileOmission struct { key avp.Key; flags byte; width int; child error }
 func (*profileOmission) Error() string {return validation.ErrMissing.Error()}
 func (*profileOmission) Unwrap() error {return validation.ErrMissing}
 func (e *profileOmission) DiameterMissingAVPV1() (avp.Key,byte,int,error) {
@@ -472,31 +472,31 @@ func profileMissing(key avp.Key,flags byte,width int) error {
  return validation.At(key,&profileOmission{key:key,flags:flags,width:width})
 }
 func profileWithin(v wire.View,err error) error {
- var invalid *profileInvalid
+ var invalid interface {error; DiameterInvalidAVPV1() (avp.Key,byte,int,uint32,error)}
  if errors.As(err,&invalid) {
   outer:=validation.At(v.Key,err).(*validation.FieldError)
-  outer.Cause=&profileInvalid{key:v.Key,flags:v.Flags,offset:v.Offset,cause:invalid.cause,child:invalid}
+  outer.Cause=&profileInvalid{key:v.Key,flags:v.Flags,offset:v.Offset,cause:err,child:invalid}
   return outer
  }
- var excess *profileExcess
+ var excess interface {error; DiameterExcessAVPV1() (avp.Key,byte,int,int,error)}
  if errors.As(err,&excess) {
   outer:=validation.At(v.Key,err).(*validation.FieldError)
   outer.Cause=&profileExcess{key:v.Key,flags:v.Flags,offset:v.Offset,child:excess}
   return outer
  }
- var proof *profileOmission
+ var proof interface {error; DiameterMissingAVPV1() (avp.Key,byte,int,error)}
  if !errors.As(err,&proof){return validation.At(v.Key,err)}
  outer:=validation.At(v.Key,err).(*validation.FieldError)
  outer.Cause=&profileOmission{key:v.Key,flags:v.Flags,child:proof}
  return outer
 }
-type profileExcess struct { key avp.Key; flags byte; offset,maximum int; child *profileExcess }
+type profileExcess struct { key avp.Key; flags byte; offset,maximum int; child error }
 func (*profileExcess) Error() string {return validation.ErrDuplicate.Error()}
 func (*profileExcess) Unwrap() error {return validation.ErrDuplicate}
 func (e *profileExcess) DiameterExcessAVPV1() (avp.Key,byte,int,int,error) {
  if e.child==nil {return e.key,e.flags,e.offset,e.maximum,nil};return e.key,e.flags,e.offset,e.maximum,e.child
 }
-type profileInvalid struct { key avp.Key; flags byte; offset int; code uint32; cause error; child *profileInvalid; lengthType string }
+type profileInvalid struct { key avp.Key; flags byte; offset int; code uint32; cause error; child error; lengthType string }
 func (e *profileInvalid) Error() string {return e.cause.Error()}
 func (e *profileInvalid) Unwrap() error {return e.cause}
 func (e *profileInvalid) DiameterInvalidAVPV1() (avp.Key,byte,int,uint32,error) {
@@ -829,7 +829,7 @@ func (w *writer) decode(name string, fs []Field) {
 			w.p("complete,err:=d.Diagnostic(v.Data,profileDiagnosticGroups());if err!=nil{return nil,validation.At(v.Key,err)};x:=pdu.FailedAVP{Data:v.Data,Incomplete:!complete}")
 		case "proxy", "vsai":
 			name := map[string]string{"proxy": "Proxy", "vsai": "VSAI"}[f.Type]
-			w.p("child,err:=d.Child(v.Data);if err!=nil{return nil,validation.At(v.Key,err)};value,err:=%sDecode%s(child);if err!=nil{return nil,validation.At(v.Key,err)};x:=*value", w.prefix, name)
+			w.p("child,err:=d.Child(v.Data);if err!=nil{return nil,validation.At(v.Key,err)};value,err:=%sDecode%s(child);if err!=nil{return nil,profileWithin(v,err)};x:=*value", w.prefix, name)
 		default:
 			w.p("child,err:=d.Child(v.Data);if err!=nil{return nil,validation.At(v.Key,err)};value,err:=decode%s(child);if err!=nil{return nil,profileWithin(v,err)};x:=*value", f.Type)
 			if w.capture[f.Type] {

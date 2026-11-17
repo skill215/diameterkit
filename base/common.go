@@ -90,17 +90,29 @@ func DecodeProxy(d *wire.Decoder) (*pdu.ProxyInfo, error) {
 		switch v.Key {
 		case avp.Key{Code: 280}:
 			if host {
-				return nil, validation.At(v.Key, validation.ErrDuplicate)
+				if d.Limits().MaxRepeated < 2 {
+					return nil, wire.ErrLimit
+				}
+				return nil, profileTooMany(v, 1)
 			}
 			host = true
 			m.ProxyHost = string(v.Data)
+			if err := avp.Identity(m.ProxyHost); err != nil {
+				return nil, profileBadValue(v, 5004, err)
+			}
 		case avp.Key{Code: 33}:
 			if state {
-				return nil, validation.At(v.Key, validation.ErrDuplicate)
+				if d.Limits().MaxRepeated < 2 {
+					return nil, wire.ErrLimit
+				}
+				return nil, profileTooMany(v, 1)
 			}
 			state = true
 			m.ProxyState = v.Data
 		default:
+			if v.Flags&avp.MandatoryFlag != 0 {
+				return nil, profileBadValue(v, 5001, validation.ErrUnsupported)
+			}
 			if err := appendExtra(&m.Extra, v, d.Limits()); err != nil {
 				return nil, err
 			}
@@ -163,34 +175,37 @@ func DecodeVSAI(d *wire.Decoder) (*pdu.VendorSpecificApplicationID, error) {
 			break
 		}
 		if v.Key.VendorID == 0 && (v.Key.Code == 266 || v.Key.Code == 258 || v.Key.Code == 259) {
+			duplicate := v.Key.Code == 266 && vendor || v.Key.Code == 258 && m.AuthApplicationID.Present || v.Key.Code == 259 && m.AcctApplicationID.Present
+			if duplicate {
+				if d.Limits().MaxRepeated < 2 {
+					return nil, wire.ErrLimit
+				}
+				return nil, profileTooMany(v, 1)
+			}
 			n, err := wire.U32(v.Data)
 			if err != nil {
-				return nil, validation.At(v.Key, err)
+				return nil, profileBadLength(v, "u32", err)
 			}
 			switch v.Key.Code {
 			case 266:
-				if vendor {
-					return nil, validation.At(v.Key, validation.ErrDuplicate)
-				}
 				vendor = true
 				m.VendorID = n
 			case 258:
-				if m.AuthApplicationID.Present {
-					return nil, validation.At(v.Key, validation.ErrDuplicate)
-				}
 				m.AuthApplicationID = avp.Some(n)
 			case 259:
-				if m.AcctApplicationID.Present {
-					return nil, validation.At(v.Key, validation.ErrDuplicate)
-				}
 				m.AcctApplicationID = avp.Some(n)
 			}
-		} else if err := appendExtra(&m.Extra, v, d.Limits()); err != nil {
-			return nil, err
+		} else {
+			if v.Flags&avp.MandatoryFlag != 0 {
+				return nil, profileBadValue(v, 5001, validation.ErrUnsupported)
+			}
+			if err := appendExtra(&m.Extra, v, d.Limits()); err != nil {
+				return nil, err
+			}
 		}
 	}
 	if !vendor {
-		return nil, validation.At(avp.Key{Code: 266}, validation.ErrMissing)
+		return nil, profileMissing(avp.Key{Code: 266}, avp.MandatoryFlag, 4)
 	}
 	return m, ValidateVSAI(m, validation.Receive)
 }

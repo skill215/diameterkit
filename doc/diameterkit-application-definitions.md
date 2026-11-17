@@ -55,6 +55,11 @@ grammar. Operations `ops9` invalidates earlier Bundle fingerprints independently
 of generator v17, unchanged generated files and profile slice versions. The
 common `ErrorAnswer` API grows three fields; use keyed literals.
 
+Batch 102 [manual-group diagnostics](manual-group-diagnostics.md) uses generator
+v18 to preserve handwritten evidence through generated parents. Eleven digests
+and Bundle fingerprints change; public shapes, ops9 and profile slices stay
+unchanged. Regenerate external bindings to gain the evidence bridge.
+
 Change definitions, handwritten rules, independent wire vectors and contextual
 negative tests together when expanding a slice. Review ownership, envelope/source
 association, error namespace, role evidence and resource limits. Update the slice

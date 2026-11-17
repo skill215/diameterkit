@@ -83,3 +83,8 @@ python3 spec/tools/release_check.py --suite all
 See the [batch 98 receipt](../spec/evidence/batch-98-invalid-diagnostics.json) and
 [current remaining gaps](remaining-gaps.md). These local and hosted checks do not
 establish real target interoperability or application recovery permission.
+
+[Batch 102](manual-group-diagnostics.md) extends selected mappings into handwritten
+Proxy/VSAI decoders and preserves exact-instance evidence across generated
+parents. Unsafe Proxy envelopes still close; conditional and variable omissions
+remain separate. Generator v18 changes generated digests and Bundle fingerprints.

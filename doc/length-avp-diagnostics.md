@@ -87,3 +87,8 @@ interoperability or application recovery authorization.
 
 [Batch 101](redirect-handling.md) subsequently adds bounded advisory Redirect 3006
 and advances common operations to `ops9`; generator v17 remains unchanged.
+
+[Batch 102](manual-group-diagnostics.md) extends selected mappings into handwritten
+Proxy/VSAI decoders and preserves exact-instance evidence across generated
+parents. Unsafe Proxy envelopes still close; conditional and variable omissions
+remain separate. Generator v18 changes generated digests and Bundle fingerprints.

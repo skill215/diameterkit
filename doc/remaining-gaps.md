@@ -1,6 +1,6 @@
 # Current remaining gaps
 
-This is the current implementation overview for **batch 101, Draft 0.102**
+This is the current implementation overview for **batch 102, Draft 0.103**
 (2026-11-17). [Progress](../spec/progress.json) records actual check completion;
 the broad release status remains `not_ready`. The 24 SPEC IDs span implementation,
 verification and external acceptance; their `partial` labels are not a percentage
@@ -11,17 +11,19 @@ their historical meaning.
 
 | Area | Completed selected scope | Remaining work |
 | --- | --- | --- |
-| Error diagnostics | Five earlier Base omissions; generated fixed-width 5005; generated finite-maximum first-excess 5009; generated isolated-value 5004, unknown-M 5001 and typed-length 5014; bounded Redirect 3006 URI/required fields | Manual/domain and malformed-header length diagnostics, manual/handshake cardinality, and whole-group/variable/conditional/minimum-greater-than-one omissions |
+| Error diagnostics | Five earlier Base omissions; generated fixed-width 5005; generated finite-maximum first-excess 5009; generated isolated-value 5004, unknown-M 5001 and typed-length 5014; bounded Redirect 3006 URI/required fields; selected handwritten Proxy/VSAI diagnostics | Remaining domain/conditional and malformed-header length diagnostics, manual/handshake cardinality, and whole-group/variable/conditional/minimum-greater-than-one omissions |
 | Duplicate acceptance | Generic and combined cross-peer TCP/TLS tests; four-profile identity, simultaneous arrivals and shared/independent slot/byte cache acceptance | Larger tenant and mixed-transport workloads, real-target deduplication domains and durable application behavior |
-| Load acceptance | Ten bounded fuzz targets, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads |
+| Load acceptance | Eleven bounded fuzz targets, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads |
 | Publication | Reviewed API/generated output and dual-module checkout CI; immutable rc.2/rc.1 installation receipts | Publish and cold-install a new reviewed core/adapter pair after the generator fingerprint transitions; planned core candidate `v0.2.0-rc.1` |
 
 The selected combined cross-peer and mixed-profile cache slice is now covered by
 [batch 99 acceptance](cross-peer-duplicate-acceptance.md). The [batch 100 extension](length-avp-diagnostics.md) now covers selected generated
 typed-length 5014 errors. [Batch 101](redirect-handling.md) adds bounded Redirect
-3006 URI/required-field handling. Next, prioritize selected manual Proxy/VSAI
-diagnostics with exact-instance evidence; domain, handshake and malformed-header
-mappings still require independent review and must not be inferred from bare sentinels.
+3006 URI/required-field handling. [Batch 102](manual-group-diagnostics.md) adds
+selected handwritten Proxy/VSAI diagnostics and cross-package exact-instance
+evidence. Next, prioritize VSAI conditional Auth/Acct diagnostics with explicit
+multiple-leaf evidence. Variable Proxy omissions, other domain, handshake and
+malformed-header mappings remain separate; do not infer them from bare sentinels.
 Keep malformed/untrusted/resource-limit failures closed when no safe reply exists.
 
 ## Evidence-dependent work
@@ -51,8 +53,9 @@ Do not convert dated statements that these were missing into new implementation
 tasks. Native SCTP and platform stubs remain explicitly distinguished in the
 [support matrix](diameterkit-support-matrix.md).
 
-Generator v17 and common operations `ops9` fingerprints differ from earlier builds. Existing published tags
+Generator v18 and common operations `ops9` fingerprints differ from earlier builds. Existing published tags
 remain immutable, and earlier recovery records require their original build.
 See the [version policy](version-install-policy.md),
-[5005 guide](missing-avp-diagnostics.md), [5009 guide](excess-avp-diagnostics.md)
-[5004/5001 guide](invalid-avp-diagnostics.md) [5014 guide](length-avp-diagnostics.md) and [Redirect guide](redirect-handling.md).
+[5005 guide](missing-avp-diagnostics.md), [5009 guide](excess-avp-diagnostics.md),
+[5004/5001 guide](invalid-avp-diagnostics.md), [5014 guide](length-avp-diagnostics.md),
+[Redirect guide](redirect-handling.md) and [manual-group guide](manual-group-diagnostics.md).

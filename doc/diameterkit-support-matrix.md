@@ -58,7 +58,8 @@ generated 5009 instance copies. [Invalid/unsupported diagnostics](invalid-avp-di
 add selected 5004/5001 mappings. [Typed-length diagnostics](length-avp-diagnostics.md) add selected 5014 mappings.
 [Redirect handling](redirect-handling.md) adds bounded advisory 3006 fields and
 URI validation without automatic routing. Other mappings remain partial.
-Generator v17 and shared operations `ops9` change Bundle fingerprints; earlier recovery records require their original
+[Handwritten Proxy/VSAI diagnostics](manual-group-diagnostics.md) add selected
+leaf mappings and cross-package evidence. Generator v18 and shared operations `ops9` change Bundle fingerprints; earlier recovery records require their original
 build. The [current gap list](remaining-gaps.md) separates implementation,
 verification and external evidence from historical batch descriptions.
 

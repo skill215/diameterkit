@@ -86,3 +86,8 @@ python3 spec/tools/release_check.py --suite all
 See [batch 97 evidence](../spec/evidence/batch-97-excess-diagnostics.json) and the
 [current remaining gaps](remaining-gaps.md). Local loopback tests do not establish
 real target interoperability.
+
+[Batch 102](manual-group-diagnostics.md) extends selected mappings into handwritten
+Proxy/VSAI decoders and preserves exact-instance evidence across generated
+parents. Unsafe Proxy envelopes still close; conditional and variable omissions
+remain separate. Generator v18 changes generated digests and Bundle fingerprints.
