@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.101 — 2026-11-17, batch 100.** The [progress record](../spec/progress.json)
+**Draft 0.102 — 2026-11-17, batch 101.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1215,3 +1215,5 @@ Batch98 invalid/unsupported diagnostics: generatorv16 and opt-in BaseErrorFailur
 Batch99 cross-peer/mixed-profile duplicate acceptance: selected combined six-input/three-result behavior now runs over two peers on TCP/TLS, including disconnected primary and independent source/policy/arrival checks. Four-profile identity collisions, simultaneous processing/replay, shared/independent slot/byte limits, no eviction, expiry and charged-resource retirement are verified. See the [English guide](cross-peer-duplicate-acceptance.md) and [evidence](../spec/evidence/batch-99-cross-profile-duplicates.json). This verification-only batch changes no production code, API snapshot, generator or Bundle fingerprints. No new version is published; pure Go/no persistence remain. Larger mixed-transport/tenant/long-soak, durable application and real-target gates remain separate. Current progress is Draft0.100.
 
 Batch100 typed-length diagnostics: generatorv17 and opt-in BaseErrorFailures implement selected5014 for generated scalar/time, Address family-prefix/IP widths and current TBCD byte-length failures. Type and exact-instance evidence are checked before bounded quoting; malformed framing, resources and manual/domain errors gain no guessed mapping. See the [English guide](length-avp-diagnostics.md) and [evidence](../spec/evidence/batch-100-length-diagnostics.json). Public signatures/layouts and protocol inputs are unchanged; fingerprints change and earlier recovery records require their original build. No new immutable version is published. Pure Go/no persistence remain; current progress is Draft0.101.
+
+Batch101 Redirect handling: common E answers support bounded advisory3006 with a selected DiameterURI subset, required hosts, usage0..6 and conditional cache time. Owned snapshots, source/envelope checks and field/count/frame/runtime budgets apply. TCP/TLS route policies do not auto-follow; cross-peer duplicate replay retains configured deadlines. See the [English guide](redirect-handling.md) and [evidence](../spec/evidence/batch-101-redirect.json). Public API fields/helper/limits are additive; use keyed literals. Common ops9 changes Bundle fingerprints while generatorv17 and eleven generated outputs remain unchanged. Earlier recovery records require their original build. No new immutable version is published. Pure Go/no persistence remain; current progress is Draft0.102.

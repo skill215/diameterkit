@@ -18,6 +18,7 @@ FUZZ_TARGETS = [
     ("excess-diagnostic", ".", "./internal/excessavp", "FuzzExcessQuote"),
     ("invalid-diagnostic", ".", "./internal/excessavp", "FuzzInvalidQuote"),
     ("length-diagnostic", ".", "./internal/excessavp", "FuzzLengthQuote"),
+    ("diameter-uri", ".", "./avp", "FuzzDiameterURI"),
     ("shdata", ".", "./app/sh/shdata", "FuzzParse"),
     ("sctp-mode", "adapters/sctp", ".", "FuzzSCTPModeSelection"),
 ]

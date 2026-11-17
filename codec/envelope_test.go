@@ -291,7 +291,7 @@ func TestErrorGrammarAndDiagnostics(t *testing.T) {
 		t.Fatal("known unimplemented E field accepted as opaque", err)
 	}
 	redirect := replaceTop(t, fixture(t, "e28-sra-3002"), 268, rawAVP(268, []byte{0, 0, 0x0b, 0xbe}))
-	if _, err = c.Decode(redirect); !errors.Is(err, validation.ErrUnsupported) {
+	if _, err = c.Decode(redirect); !errors.Is(err, validation.ErrMissing) {
 		t.Fatal("redirect requires its own fields", err)
 	}
 }
@@ -450,6 +450,11 @@ func FuzzDecodeAnswer(f *testing.F) {
 	for _, name := range []string{"v-sra-01", "v-sra-02", "b2-sra-e-5001", "b2-sra-e-5014-badlength"} {
 		f.Add(fixture(f, name))
 	}
+	redirect, err := c.CompleteAnswer(req, &pdu.ErrorAnswer{ResultCode: 3006, RedirectHost: []string{"aaas://redirect.example;transport=tcp;protocol=diameter"}, RedirectHostUsage: avp.Some(uint32(1)), RedirectMaxCacheTime: avp.Some(uint32(60))}, pdu.Origin{Host: "hss.example", Realm: "example.net"})
+	if err != nil {
+		f.Fatal(err)
+	}
+	f.Add(encoded(f, c, redirect))
 	f.Fuzz(func(t *testing.T, b []byte) {
 		m, err := c.DecodeAnswer(req, b, sources())
 		if err != nil {

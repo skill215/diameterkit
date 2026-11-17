@@ -50,6 +50,11 @@ invalidate earlier Bundle fingerprints; see the [diagnostic and recovery migrati
 scope](missing-avp-diagnostics.md#compatibility-and-recovery). Definition fields,
 wire grammars and profile slice versions are unchanged in these batches.
 
+Batch 101 adds [bounded Redirect handling](redirect-handling.md) to the common E
+grammar. Operations `ops9` invalidates earlier Bundle fingerprints independently
+of generator v17, unchanged generated files and profile slice versions. The
+common `ErrorAnswer` API grows three fields; use keyed literals.
+
 Change definitions, handwritten rules, independent wire vectors and contextual
 negative tests together when expanding a slice. Review ownership, envelope/source
 association, error namespace, role evidence and resource limits. Update the slice

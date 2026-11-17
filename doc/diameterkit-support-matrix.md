@@ -56,8 +56,9 @@ The unreleased [missing-AVP extension](missing-avp-diagnostics.md) adds bounded
 5005 placeholders; [first-excess diagnostics](excess-avp-diagnostics.md) add
 generated 5009 instance copies. [Invalid/unsupported diagnostics](invalid-avp-diagnostics.md)
 add selected 5004/5001 mappings. [Typed-length diagnostics](length-avp-diagnostics.md) add selected 5014 mappings.
-Other mappings remain partial. Generator v17
-changes Bundle fingerprints; earlier recovery records require their original
+[Redirect handling](redirect-handling.md) adds bounded advisory 3006 fields and
+URI validation without automatic routing. Other mappings remain partial.
+Generator v17 and shared operations `ops9` change Bundle fingerprints; earlier recovery records require their original
 build. The [current gap list](remaining-gaps.md) separates implementation,
 verification and external evidence from historical batch descriptions.
 

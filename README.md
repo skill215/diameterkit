@@ -175,6 +175,7 @@ endpoint. Local duplicate handling is not a durable charging ledger.
 - [Invalid and unsupported AVP diagnostics](doc/invalid-avp-diagnostics.md)
 - [Cross-peer and mixed-profile duplicate acceptance](doc/cross-peer-duplicate-acceptance.md)
 - [Typed AVP length diagnostics](doc/length-avp-diagnostics.md)
+- [Bounded Redirect 3006 handling](doc/redirect-handling.md)
 - [Current remaining gaps](doc/remaining-gaps.md)
 - [Machine-readable progress and historical evidence](spec/README.md)
 - [AI authorship and review limits](AI_DISCLOSURE.md)

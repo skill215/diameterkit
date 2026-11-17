@@ -76,6 +76,11 @@ type ErrorAnswer struct {
 	Extra                       []avp.Raw
 	VendorSpecificApplicationID avp.Optional[VendorSpecificApplicationID]
 	RouteRecord                 []string
+	// Redirect fields are advisory data, never permission to dial or replay.
+	// ResultCode 3006 requires hosts; nonzero usage requires a cache time.
+	RedirectHost         []string
+	RedirectHostUsage    avp.Optional[uint32]
+	RedirectMaxCacheTime avp.Optional[uint32]
 }
 
 func (m *ErrorAnswer) CommandKey() CommandKey {

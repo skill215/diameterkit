@@ -42,7 +42,12 @@ batch 97 ([cardinality](excess-avp-diagnostics.md)), batch 98
 constants and Bundle fingerprints through generators v14–v17. Public signatures
 remain unchanged, but earlier recovery records cannot be imported under the new
 Bundle. The planned next core candidate is `v0.2.0-rc.1`, with no publication in
-this batch. Published core/adapter versions and their dependency pins stay intact.
+these diagnostic batches. Batch 101 [Redirect handling](redirect-handling.md) adds
+`avp.DiameterURI`, limit constants and three `pdu.ErrorAnswer` fields. Use keyed
+struct literals. Its shared error grammar advances operations `ops8` to `ops9`,
+changing Bundle fingerprints without changing generator v17 or generated files.
+Settle earlier recovery records with their original build; never relabel them.
+No new immutable version is published. Published core/adapter versions and their dependency pins stay intact.
 
 Use the pinned Go version, Python 3, Linux/amd64 with SCTP, and a C compiler for
 the race tool. For the recorded rc.2/rc.1 pair, run from publication checkout

@@ -133,7 +133,7 @@ func Compile(profiles ...Profile) (*Bundle, error) {
 		}
 		names[p.name] = true
 		for _, c := range p.commands {
-			identities = append(identities, fmt.Sprintf("ops8/%q/%q/%s/%d/%d/%t/%t/E=%t/C=%t/R=%t/N=%t/A=%t/X=%q", p.name, p.version, p.digest, c.Key.ApplicationID, c.Key.Code, c.Key.Request, c.Proxiable, c.Error != nil, c.Canonical != nil, c.TransportReplay, c.NoContext, c.CheckAnswer != nil, c.ContextName))
+			identities = append(identities, fmt.Sprintf("ops9/%q/%q/%s/%d/%d/%t/%t/E=%t/C=%t/R=%t/N=%t/A=%t/X=%q", p.name, p.version, p.digest, c.Key.ApplicationID, c.Key.Code, c.Key.Request, c.Proxiable, c.Error != nil, c.Canonical != nil, c.TransportReplay, c.NoContext, c.CheckAnswer != nil, c.ContextName))
 			if _, ok := b.commands[c.Key]; ok {
 				return nil, fmt.Errorf("%w: command %v", ErrDefinition, c.Key)
 			}

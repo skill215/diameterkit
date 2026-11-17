@@ -81,6 +81,9 @@ separate from this checkout acceptance.
 See the [batch 100 receipt](../spec/evidence/batch-100-length-diagnostics.json),
 [earlier 5004/5001 scope](invalid-avp-diagnostics.md) and
 [remaining gaps](remaining-gaps.md). Manual/domain, Proxy/VSAI internals,
-handshake-specific mappings, malformed-header 5014, Redirect 3006 and remaining
+handshake-specific mappings, malformed-header 5014 and remaining
 omission diagnostics are separate work. These tests establish no real-target
 interoperability or application recovery authorization.
+
+[Batch 101](redirect-handling.md) subsequently adds bounded advisory Redirect 3006
+and advances common operations to `ops9`; generator v17 remains unchanged.

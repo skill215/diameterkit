@@ -25,7 +25,7 @@ type ErrorOptions struct {
 }
 
 // NewErrorOperations binds the common E grammar to one normal answer identity.
-// Redirect 3006 remains explicitly unsupported until the DiameterURI subset lands.
+// Redirect 3006 is validated advisory data; these operations perform no routing.
 func NewErrorOperations(key pdu.CommandKey, options ErrorOptions) *schema.ErrorOperations {
 	groups := append(DiagnosticGroups(), options.DiagnosticGroups...)
 	options.DiagnosticGroups = nil
@@ -95,11 +95,15 @@ func NewErrorOperations(key pdu.CommandKey, options ErrorOptions) *schema.ErrorO
 	}
 }
 
-var errorKeys = []avp.Key{{Code: 263}, {Code: 264}, {Code: 296}, {Code: 268}, {Code: 278}, {Code: 281}, {Code: 294}, {Code: 279}, {Code: 297}, {Code: 284}, {Code: 277}, {Code: 260}, {Code: 282}}
+// MaxRedirectHosts is the selected E grammar's fixed host-list cap. A codec's
+// lower MaxRepeated, MaxAVPs, field/frame or runtime reply budget also applies.
+const MaxRedirectHosts = 256
+
+var errorKeys = [...]avp.Key{{Code: 263}, {Code: 264}, {Code: 296}, {Code: 268}, {Code: 278}, {Code: 281}, {Code: 294}, {Code: 279}, {Code: 297}, {Code: 284}, {Code: 277}, {Code: 260}, {Code: 282}, {Code: 292}, {Code: 261}, {Code: 262}}
 
 func validateError(m *pdu.ErrorAnswer, mode validation.Mode, options ErrorOptions) error {
-	if m.ResultCode == 3006 {
-		return validation.ErrUnsupported
+	if err := validateRedirect(m); err != nil {
+		return err
 	}
 	if !(m.ResultCode >= 3000 && m.ResultCode < 4000 || m.ResultCode >= 5000 && m.ResultCode < 6000) {
 		return validation.At(avp.Key{Code: 268}, validation.ErrField)
@@ -174,7 +178,7 @@ func validateError(m *pdu.ErrorAnswer, mode validation.Mode, options ErrorOption
 		if options.IgnoreVSAI && mode == validation.Receive && v.Key == (avp.Key{Code: 260}) {
 			continue
 		}
-		if err := ValidateExtra([]avp.Raw{v}, mode, errorKeys...); err != nil {
+		if err := ValidateExtra([]avp.Raw{v}, mode, errorKeys[:]...); err != nil {
 			return err
 		}
 	}
@@ -185,6 +189,41 @@ func validateError(m *pdu.ErrorAnswer, mode validation.Mode, options ErrorOption
 	}
 	return nil
 }
+
+func validateRedirect(m *pdu.ErrorAnswer) error {
+	if len(m.RedirectHost) > MaxRedirectHosts {
+		return validation.At(avp.Key{Code: 292}, wire.ErrLimit)
+	}
+	if m.ResultCode != 3006 {
+		for _, f := range []struct {
+			code    uint32
+			present bool
+		}{{292, len(m.RedirectHost) != 0}, {261, m.RedirectHostUsage.Present}, {262, m.RedirectMaxCacheTime.Present}} {
+			if f.present {
+				return validation.At(avp.Key{Code: f.code}, validation.ErrField)
+			}
+		}
+		return nil
+	}
+	if len(m.RedirectHost) == 0 {
+		return validation.At(avp.Key{Code: 292}, validation.ErrMissing)
+	}
+	for _, host := range m.RedirectHost {
+		if err := avp.DiameterURI(host); err != nil {
+			return validation.At(avp.Key{Code: 292}, err)
+		}
+	}
+	if m.RedirectHostUsage.Present {
+		if m.RedirectHostUsage.Value > 6 {
+			return validation.At(avp.Key{Code: 261}, validation.ErrField)
+		}
+		if m.RedirectHostUsage.Value != 0 && !m.RedirectMaxCacheTime.Present {
+			return validation.At(avp.Key{Code: 262}, validation.ErrMissing)
+		}
+	}
+	return nil
+}
+
 func encodeError(w *wire.Encoder, m *pdu.ErrorAnswer, groups []avp.Key) error {
 	if m.SessionID.Present {
 		w.String(avp.Key{Code: 263}, 0x40, m.SessionID.Value)
@@ -240,6 +279,18 @@ func encodeError(w *wire.Encoder, m *pdu.ErrorAnswer, groups []avp.Key) error {
 	for _, v := range m.RouteRecord {
 		w.String(avp.Key{Code: 282}, 0x40, v)
 	}
+	if len(m.RedirectHost) > MaxRedirectHosts || len(m.RedirectHost) > w.Limits().MaxRepeated {
+		return wire.ErrLimit
+	}
+	for _, host := range m.RedirectHost {
+		w.String(avp.Key{Code: 292}, 0x40, host)
+	}
+	if m.RedirectHostUsage.Present {
+		w.Uint32(avp.Key{Code: 261}, 0x40, m.RedirectHostUsage.Value)
+	}
+	if m.RedirectMaxCacheTime.Present {
+		w.Uint32(avp.Key{Code: 262}, 0x40, m.RedirectMaxCacheTime.Value)
+	}
 	return encodeExtra(w, m.Extra)
 }
 func decodeExperimental(d *wire.Decoder) (pdu.ExperimentalResult, error) {
@@ -280,7 +331,7 @@ func decodeExperimental(d *wire.Decoder) (pdu.ExperimentalResult, error) {
 }
 func decodeError(d *wire.Decoder, key pdu.CommandKey, groups []avp.Key, options ErrorOptions) (*pdu.ErrorAnswer, error) {
 	m := &pdu.ErrorAnswer{Command: key}
-	var seen [13]bool
+	var seen [len(errorKeys)]bool
 	for {
 		v, ok, err := d.Next()
 		if err != nil {
@@ -296,7 +347,7 @@ func decodeError(d *wire.Decoder, key pdu.CommandKey, groups []avp.Key, options 
 				break
 			}
 		}
-		if index >= 0 && v.Key.Code != 284 && v.Key.Code != 282 && !(options.IgnoreVSAI && v.Key.Code == 260) {
+		if index >= 0 && v.Key.Code != 284 && v.Key.Code != 282 && v.Key.Code != 292 && !(options.IgnoreVSAI && v.Key.Code == 260) {
 			if seen[index] {
 				return nil, validation.At(v.Key, validation.ErrDuplicate)
 			}
@@ -375,6 +426,26 @@ func decodeError(d *wire.Decoder, key pdu.CommandKey, groups []avp.Key, options 
 				return nil, wire.ErrLimit
 			}
 			m.RouteRecord = append(m.RouteRecord, string(v.Data))
+		case avp.Key{Code: 292}:
+			if len(m.RedirectHost) >= MaxRedirectHosts || len(m.RedirectHost) >= d.Limits().MaxRepeated {
+				return nil, wire.ErrLimit
+			}
+			if len(v.Data) > avp.MaxDiameterURIBytes {
+				return nil, validation.At(v.Key, avp.ErrValue)
+			}
+			host := string(v.Data)
+			if err = avp.DiameterURI(host); err != nil {
+				return nil, validation.At(v.Key, err)
+			}
+			m.RedirectHost = append(m.RedirectHost, host)
+		case avp.Key{Code: 261}:
+			var n uint32
+			n, err = wire.U32(v.Data)
+			m.RedirectHostUsage = avp.Some(n)
+		case avp.Key{Code: 262}:
+			var n uint32
+			n, err = wire.U32(v.Data)
+			m.RedirectMaxCacheTime = avp.Some(n)
 		default:
 			err = appendExtra(&m.Extra, v, d.Limits())
 		}
@@ -422,6 +493,16 @@ func cloneError(m *pdu.ErrorAnswer) *pdu.ErrorAnswer {
 	c.RouteRecord = append([]string(nil), m.RouteRecord...)
 	for i := range c.RouteRecord {
 		c.RouteRecord[i] = avp.CloneString(c.RouteRecord[i])
+	}
+	c.RedirectHost = append([]string(nil), m.RedirectHost...)
+	for i := range c.RedirectHost {
+		c.RedirectHost[i] = avp.CloneString(c.RedirectHost[i])
+	}
+	if !c.RedirectHostUsage.Present {
+		c.RedirectHostUsage = avp.Optional[uint32]{}
+	}
+	if !c.RedirectMaxCacheTime.Present {
+		c.RedirectMaxCacheTime = avp.Optional[uint32]{}
 	}
 	if c.FailedAVP.Present {
 		c.FailedAVP.Value = *CloneDiagnostic(&m.FailedAVP.Value)
