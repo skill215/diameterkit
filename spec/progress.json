@@ -3,8 +3,8 @@
   "baseline": "Draft 0.106",
   "normative_spec": "doc/diameterkit-specification.md",
   "batch": "Selected variable omission minima",
-  "status": "in_progress",
-  "status_meaning": "Batch105 selected variable minima passed locally; hosted checkout pending. All24 broader requirements remain partial.",
+  "status": "completed",
+  "status_meaning": "Batch105 selected variable minima passed locally; hosted seven-suite checkout passed. All24 broader requirements remain partial.",
   "date": "2026-11-17",
   "toolchain": "go1.26.10 linux/amd64",
   "release_status": "not_ready",
@@ -8100,6 +8100,25 @@
       "status": "passed",
       "sha256": "0cd23e67a7f73a740d0cffe95dc6a7b5648d512c4750ceddd55ae0a3261d54f2",
       "suite": "bench"
+    },
+    {
+      "name": "group-fuzz-recheck",
+      "command": [
+        "go",
+        "test",
+        "./internal/groupavp",
+        "-run=^$",
+        "-fuzz=^FuzzGroupQuote$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b105-hosted-recheck/group-fuzz-recheck.log",
+      "status": "passed",
+      "sha256": "74b6cca6e7a3c4f4a286d7719420181b3fdd35d5795757da45a30a7c05eb2fa2",
+      "suite": "hosted-recheck"
     }
   ],
   "source_snapshot": [
@@ -10085,7 +10104,7 @@
     },
     {
       "path": "spec/evidence/batch-105-variable-omissions.json",
-      "sha256": "9e06efb4c57919a97352948c5625c4db2d9c63b53717f12f72933351aaa33d21"
+      "sha256": "1a86d23036aa4b4c581474dd25b263524243bef1fc1861e3bb4794217741bd4a"
     },
     {
       "path": "spec/evidence/batch-58-sctp-u3.json",

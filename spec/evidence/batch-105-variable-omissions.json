@@ -1,7 +1,7 @@
 {
   "batch": 105,
   "date": "2026-11-17",
-  "status": "local_verified_hosted_pending",
+  "status": "completed_selected_slice",
   "scope": "Selected generated variable-length5005 diagnostics with explicit primitive minima.",
   "priority_selection": {
     "source": "spec/history/batch-104.json",
@@ -1585,6 +1585,25 @@
       "status": "passed",
       "sha256": "0cd23e67a7f73a740d0cffe95dc6a7b5648d512c4750ceddd55ae0a3261d54f2",
       "suite": "bench"
+    },
+    {
+      "name": "group-fuzz-recheck",
+      "command": [
+        "go",
+        "test",
+        "./internal/groupavp",
+        "-run=^$",
+        "-fuzz=^FuzzGroupQuote$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b105-hosted-recheck/group-fuzz-recheck.log",
+      "status": "passed",
+      "sha256": "74b6cca6e7a3c4f4a286d7719420181b3fdd35d5795757da45a30a7c05eb2fa2",
+      "suite": "hosted-recheck"
     }
   ],
   "coverage": {
@@ -3557,8 +3576,59 @@
     "migration": "Regenerate external bindings. Settle earlier recovery records under their original build; never relabel fingerprints. New immutable pair and cold-cache no-replace installation remain separate gates."
   },
   "hosted_ci": {
-    "status": "pending",
-    "scope": "Hosted checkout has not yet run for this batch."
+    "id": 44042126838,
+    "url": "https://github.com/skill215/diameterkit/actions/runs/44042126838",
+    "sha": "8456aa33ae27cd4ad401c5c5ae48d0fb93316cef",
+    "status": "completed",
+    "conclusion": "success",
+    "attempt": 2,
+    "created_at": "2026-11-17T07:53:02Z",
+    "updated_at": "2026-11-17T08:10:09Z",
+    "scope": "All seven checkout suites passed for the implementation SHA. Attempt2 reran only failed fuzz; attempt1 FuzzGroupQuote deadline failure and independent local recheck are retained in hosted_failure_review. No assertion, duration, toolchain or production-code changes.",
+    "jobs": [
+      {
+        "id": 133902953238,
+        "name": "checkout-fuzz",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 133902954458,
+        "name": "checkout-race",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 133902954967,
+        "name": "checkout-stress",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 133902999303,
+        "name": "checkout-bench",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 133903001008,
+        "name": "checkout-pure",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 133903004290,
+        "name": "checkout-cross",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 133903008031,
+        "name": "checkout-static",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
   },
   "source_sha256": {
     "README.md": "ff37b8979fa432bc3cf7a2067faff9d9d509e6b873ed7ea22dd912bf4a4aac08",
@@ -4227,5 +4297,24 @@
       ".cache/b105-bench/performance.json": "32d2a2aa424c0bb73202964cd5dba7bc4879baa8a5f56dc96631a7c174ddb7f2"
     },
     "environment_note": "Fuzz may overlap local acceptance; benchmarks run separately. These measurements do not establish production capacity."
+  },
+  "hosted_failure_review": {
+    "run_id": 44042126838,
+    "attempt": 1,
+    "job_id": 133898958930,
+    "job_url": "https://github.com/skill215/diameterkit/actions/runs/44042126838/job/133898958930",
+    "artifact_id": 14310470980,
+    "artifact_url": "https://github.com/skill215/diameterkit/actions/runs/44042126838/artifacts/14310470980",
+    "artifact_sha256": "8924e8ffeb7611f19166bf95dfa5404de54dbb883dd213d2d7623c3142b5fb4d",
+    "log": ".cache/b105-hosted-fuzz-group-constraint.log",
+    "log_sha256": "f4348a19a47887a50c9af1511f69908689637ea82ed481ba2e6f30cc7be3b48b",
+    "target": "FuzzGroupQuote",
+    "executions": 1780490,
+    "error": "context deadline exceeded",
+    "elapsed_seconds": 30.107,
+    "saved_regression_corpus": false,
+    "assessment": "Observed at the configured 30-second fuzz boundary without a property assertion failure or saved regression input. Root cause is not established; do not convert this failed attempt into a pass.",
+    "action": "Preserve the failed artifact, rerun only the failed hosted fuzz job at the identical code SHA, and independently rerun the same target locally. No production, assertion, duration or toolchain change.",
+    "log_excerpt": "fuzz: elapsed: 0s, gathering baseline coverage: 0/5 completed\nfuzz: elapsed: 0s, gathering baseline coverage: 5/5 completed, now fuzzing with 2 workers\nfuzz: elapsed: 3s, execs: 177496 (59162/sec), new interesting: 14 (total: 19)\nfuzz: elapsed: 6s, execs: 351607 (58023/sec), new interesting: 15 (total: 20)\nfuzz: elapsed: 9s, execs: 530643 (59692/sec), new interesting: 15 (total: 20)\nfuzz: elapsed: 12s, execs: 712068 (60470/sec), new interesting: 16 (total: 21)\nfuzz: elapsed: 15s, execs: 889951 (59291/sec), new interesting: 16 (total: 21)\nfuzz: elapsed: 18s, execs: 1064553 (58206/sec), new interesting: 16 (total: 21)\nfuzz: elapsed: 21s, execs: 1242312 (59240/sec), new interesting: 16 (total: 21)\nfuzz: elapsed: 24s, execs: 1424424 (60705/sec), new interesting: 16 (total: 21)\nfuzz: elapsed: 27s, execs: 1602897 (59506/sec), new interesting: 17 (total: 22)\nfuzz: elapsed: 30s, execs: 1780490 (59190/sec), new interesting: 18 (total: 23)\nfuzz: elapsed: 30s, execs: 1780490 (0/sec), new interesting: 18 (total: 23)\n--- FAIL: FuzzGroupQuote (30.10s)\n    context deadline exceeded\nFAIL\nexit status 1\nFAIL\tgithub.com/skill215/diameterkit/internal/groupavp\t30.107s\n"
   }
 }
