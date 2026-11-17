@@ -72,3 +72,7 @@ their original build. No immutable version is published by this batch.
 
 See [evidence](../spec/evidence/batch-104-minimum-groups.json),
 [version policy](version-install-policy.md) and [remaining gaps](remaining-gaps.md).
+
+Batch 105 adds separately selected [variable-field minimum diagnostics](variable-missing-diagnostics.md).
+Explicit variable children do not widen the whole-group grammar. See that guide
+for the current generator v21 fingerprint and migration boundary.

@@ -153,6 +153,13 @@ func rejectionEnvelope(src []byte, l wire.Limits) (pdu.Header, pdu.Envelope, err
 	return h, env, nil
 }
 func missingDiagnostic(cause error) ([]byte, bool) {
+	// A failed explicit proof must not fall back to the older untyped examples.
+	var explicit interface {
+		DiameterMissingAVPV1() (avp.Key, byte, int, error)
+	}
+	if errors.As(cause, &explicit) {
+		return nil, false
+	}
 	var field *validation.FieldError
 	if !errors.Is(cause, validation.ErrMissing) || !errors.As(cause, &field) || len(field.Path) != 1 {
 		return nil, false

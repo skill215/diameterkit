@@ -22,7 +22,7 @@ import (
 )
 
 const maxDefinition = 4 << 20
-const GeneratorVersion = "20"
+const GeneratorVersion = "21"
 
 type Definition struct {
 	Format   int       `json:"format"`
@@ -58,18 +58,19 @@ type Command struct {
 	IgnoreVSAI      bool    `json:"ignore_vsai,omitempty"`
 }
 type Field struct {
-	Name        string   `json:"name"`
-	Code        uint32   `json:"code"`
-	Vendor      uint32   `json:"vendor"`
-	Flags       byte     `json:"flags"`
-	Type        string   `json:"type"`
-	Min         int      `json:"min"`
-	Max         int      `json:"max"`
-	First       bool     `json:"first,omitempty"`
-	Envelope    string   `json:"envelope,omitempty"`
-	Values      []uint32 `json:"values,omitempty"`
-	Nonempty    bool     `json:"nonempty,omitempty"`
-	Correlation string   `json:"correlation,omitempty"`
+	DiagnosticMinimumBytes *int     `json:"diagnostic_minimum_bytes,omitempty"`
+	Name                   string   `json:"name"`
+	Code                   uint32   `json:"code"`
+	Vendor                 uint32   `json:"vendor"`
+	Flags                  byte     `json:"flags"`
+	Type                   string   `json:"type"`
+	Min                    int      `json:"min"`
+	Max                    int      `json:"max"`
+	First                  bool     `json:"first,omitempty"`
+	Envelope               string   `json:"envelope,omitempty"`
+	Values                 []uint32 `json:"values,omitempty"`
+	Nonempty               bool     `json:"nonempty,omitempty"`
+	Correlation            string   `json:"correlation,omitempty"`
 }
 
 // uniqueJSON validates duplicate keys before encoding/json can silently overwrite them.
@@ -155,7 +156,7 @@ func validate(d Definition) error {
 	if d.Format != 1 || !identifier(d.Package) || d.Profile == "" || d.Version == "" || len(d.Sources) == 0 || len(d.Commands) == 0 || len(d.Commands) > 64 || len(d.Groups) > 64 {
 		return fmt.Errorf("invalid definition header")
 	}
-	names := map[string]bool{"Profile": true, "DefinitionDigest": true, "Version": true, "profileDiagnosticGroups": true, "profileErrorUnsupported": true, "profileOmission": true, "profileMissing": true, "profileWithin": true, "profileExcess": true, "profileTooMany": true, "profileInvalid": true, "profileBadValue": true, "profileBadLength": true, "profileConstraint": true, "profileGroupOmission": true, "profileMissingGroup": true}
+	names := map[string]bool{"Profile": true, "DefinitionDigest": true, "Version": true, "profileDiagnosticGroups": true, "profileErrorUnsupported": true, "profileOmission": true, "profileMissing": true, "profileWithin": true, "profileExcess": true, "profileTooMany": true, "profileInvalid": true, "profileBadValue": true, "profileBadLength": true, "profileConstraint": true, "profileGroupOmission": true, "profileMissingGroup": true, "profileMissingVariable": true}
 	groups := map[string]Group{}
 	for _, g := range d.Groups {
 		if !exported(g.Name) || names[g.Name] {
@@ -188,6 +189,12 @@ func validate(d Definition) error {
 			}
 			if len(f.Values) > 0 && f.Type != "u32" || f.Nonempty && f.Type != "identity" && f.Type != "utf8" && f.Type != "octets" && f.Type != "tbcd" {
 				return fmt.Errorf("invalid constraint %s", f.Name)
+			}
+			if f.DiagnosticMinimumBytes != nil {
+				_, minimum, ok := variableMinimum(f)
+				if !ok || *f.DiagnosticMinimumBytes != minimum {
+					return fmt.Errorf("invalid diagnostic minimum for %s.%s", name, f.Name)
+				}
 			}
 			values := make(map[uint32]bool, len(f.Values))
 			for _, value := range f.Values {
@@ -471,12 +478,14 @@ func Generate(d Definition) ([]byte, error) {
 		w.p(`import "errors"`)
 		// Keep generated extensions consumable outside this module: the error
 		// carries versioned structural metadata, not an internal-package import.
-		w.p(`type profileOmission struct { key avp.Key; flags byte; width int; child error }
+		w.p(`type profileOmission struct { key avp.Key; flags byte; width int; wireType string; child error }
 func (*profileOmission) Error() string {return validation.ErrMissing.Error()}
 func (*profileOmission) Unwrap() error {return validation.ErrMissing}
 func (e *profileOmission) DiameterMissingAVPV1() (avp.Key,byte,int,error) {
  if e.child==nil {return e.key,e.flags,e.width,nil};return e.key,e.flags,e.width,e.child
 }
+func (e *profileOmission) DiameterMissingVariableV1() string {return e.wireType}
+func profileMissingVariable(key avp.Key,flags byte,width int,kind string) error {return validation.At(key,&profileOmission{key:key,flags:flags,width:width,wireType:kind})}
 func profileMissing(key avp.Key,flags byte,width int) error {
  if width!=4&&width!=8{return validation.At(key,validation.ErrMissing)}
  return validation.At(key,&profileOmission{key:key,flags:flags,width:width})
@@ -899,6 +908,11 @@ func (w *writer) decode(name string, fs []Field) {
 	w.p("default:if v.Flags&avp.MandatoryFlag!=0{return nil,profileBadValue(v,5001,validation.ErrUnsupported)};if len(m.Extra)>=d.Limits().MaxRepeated{return nil,wire.ErrLimit};m.Extra=append(m.Extra,avp.Raw{Key:v.Key,Flags:v.Flags,Data:v.Data})}}")
 	for i, f := range fs {
 		if f.Min > 0 {
+			if f.DiagnosticMinimumBytes != nil {
+				kind, width, _ := variableMinimum(f)
+				w.p("if seen[%d]==0{return nil,profileMissingVariable(%s,%d,%d,%q)}", i, key(f), f.Flags, width, kind)
+				continue
+			}
 			if f.Min == 1 && w.groups[f.Type].DiagnosticMinimum {
 				plan, err := minimumPlan(f, w.groups)
 				if err != nil {

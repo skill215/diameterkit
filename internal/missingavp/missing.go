@@ -5,7 +5,7 @@
 // SPDX-AI-Date: 2026-11-16
 
 // Package missingavp carries schema-known omissions through generated decoders.
-// Evidence contains keys and flags only; it never retains request bytes or values.
+// Evidence contains schema metadata; it never retains request bytes or values.
 package missingavp
 
 import (
@@ -23,7 +23,21 @@ type evidence interface {
 	DiameterMissingAVPV1() (avp.Key, byte, int, error)
 }
 
-// Quote returns the minimal ancestor chain and zero-filled fixed-width leaf.
+// Zero/one-byte leaves require an explicit wire-type proof. Legacy fixed-width
+// producers retain their existing convention and behavior.
+type variableEvidence interface{ DiameterMissingVariableV1() string }
+
+func variableWidth(kind string, width int) bool {
+	switch kind {
+	case "identity", "tbcd", "utf8-nonempty", "octets-nonempty":
+		return width == 1
+	case "utf8", "octets":
+		return width == 0
+	}
+	return false
+}
+
+// Quote returns a minimum ancestor chain and a proven zero-filled diagnostic.
 // The extra Failed-AVP wrapper consumes one depth and one AVP from the limits.
 // A modified public FieldError path cannot silently redirect private evidence.
 func Quote(err error, limits wire.Limits, maxBytes int) ([]byte, bool) {
@@ -46,6 +60,10 @@ func Quote(err error, limits wire.Limits, maxBytes int) ([]byte, bool) {
 	count, size := 0, 0
 	for p := proof; p != nil; {
 		key, flags, width, child := p.DiameterMissingAVPV1()
+		kind := ""
+		if typed, ok := p.(variableEvidence); ok {
+			kind = typed.DiameterMissingVariableV1()
+		}
 		if count >= len(field.Path) || count >= limits.MaxDepth || count+2 > limits.MaxAVPs || field.Path[count] != key || flags&0x1f != 0 || (key.VendorID != 0) != (flags&avp.VendorFlag != 0) {
 			return nil, false
 		}
@@ -56,15 +74,15 @@ func Quote(err error, limits wire.Limits, maxBytes int) ([]byte, bool) {
 			size += 4
 		}
 		if child == nil {
-			if width != 4 && width != 8 {
+			if kind != "" && !variableWidth(kind, width) || kind == "" && width != 4 && width != 8 {
 				return nil, false
 			}
-			size += width
+			size += (width + 3) &^ 3
 			break
 		}
 		var ok bool
 		p, ok = child.(evidence)
-		if !ok || width != 0 {
+		if !ok || width != 0 || kind != "" {
 			return nil, false
 		}
 	}
@@ -83,5 +101,8 @@ func Quote(err error, limits wire.Limits, maxBytes int) ([]byte, bool) {
 	for i := count - 2; i >= 0; i-- {
 		w.EndGroup(marks[i])
 	}
-	return out, w.Err() == nil
+	if w.Err() != nil {
+		return nil, false
+	}
+	return out, true
 }

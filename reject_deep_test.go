@@ -178,7 +178,7 @@ func TestRejectDeepMissingGenerated(t *testing.T) {
 
 func TestRejectDeepMissingFailsClosed(t *testing.T) {
 	eachNetwork(t, func(t *testing.T, tls bool) {
-		for _, kind := range []string{"default-policy", "duplicate-session", "bad-proxy", "reserved-parent", "variable-leaf"} {
+		for _, kind := range []string{"default-policy", "duplicate-session", "bad-proxy", "reserved-parent"} {
 			t.Run(kind, func(t *testing.T) {
 				cfg := rejectConfig(t)
 				if kind == "default-policy" {
@@ -189,9 +189,7 @@ func TestRejectDeepMissingFailsClosed(t *testing.T) {
 				req := inboundRequest(t, n, co, 9603)
 				req.Body.(*s6c.SRR).SupportedFeatures = []s6c.SupportedFeatures{{VendorID: 10415, FeatureListID: 1, FeatureList: 1}}
 				path := []missingSelector{{avp.Key{VendorID: 10415, Code: 628}, 0}, {avp.Key{VendorID: 10415, Code: 630}, 0}}
-				if kind == "variable-leaf" {
-					path = []missingSelector{{avp.Key{VendorID: 10415, Code: 3300}, 0}}
-				}
+
 				raw := missingRaw(t, co, req, path, false)
 				d := wire.NewDecoder(raw[20:], cfg.Limits)
 				for {

@@ -106,6 +106,15 @@ rules, slice versions, public Go shapes and ops9 stay unchanged. All eleven
 digests and Bundle fingerprints change. External regeneration and original-build
 recovery remain required; publication/cold-install acceptance stays separate.
 
+Batch 105 [variable-field minima](variable-missing-diagnostics.md) uses generator
+v21 and eleven explicit `diagnostic_minimum_bytes` declarations across five
+definitions. Exact primitive minima are validated; present values and contextual
+domain rules are unchanged. Public shapes and ops9 remain unchanged, while all
+eleven digests and Bundle fingerprints change again. Published core rc.2 and
+adapter rc.1 remain immutable; regenerate external bindings and retain earlier
+builds for recovery. The next immutable pair still needs independent cold-install
+acceptance.
+
 ## Publication order and CI
 
 Publish the reviewed immutable core first. Download and verify it, then update the

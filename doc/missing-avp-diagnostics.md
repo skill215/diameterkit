@@ -96,3 +96,7 @@ checkout fuzz suite. These checks do not establish real target interoperability.
 
 See [machine evidence](../spec/evidence/batch-96-missing-diagnostics.json) and
 [remaining requirements](../spec/progress.json).
+
+Batch 105 adds separately selected [variable-field minimum diagnostics](variable-missing-diagnostics.md).
+Explicit variable children do not widen the whole-group grammar. See that guide
+for the current generator v21 fingerprint and migration boundary.

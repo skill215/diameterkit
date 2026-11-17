@@ -22,7 +22,7 @@ pressure measurements into deployment capacity or mixed-transport claims.
 | Workload | Bound | Failure conditions |
 | --- | --- | --- |
 | FuzzDecode, FuzzDecodeAnswer, FuzzCanonical | 30s each, two workers, 5s minimization, 2m package timeout | Property failure, panic, timeout, no actual executions, nonzero exit |
-| Missing/excess/invalid/typed-length AVP quotes, DiameterURI, handwritten Proxy/VSAI, group constraints/minima, Sh-Data FuzzParse and SCTP mode selection | Same bounds; thirteen targets total | Same; seed-only tests are not fuzz execution |
+| Missing/excess/invalid/typed-length AVP quotes, DiameterURI, handwritten Proxy/VSAI, group constraints/minima, explicit variable minima, Sh-Data FuzzParse and SCTP mode selection | Same bounds; fourteen targets total | Same; seed-only tests are not fuzz execution |
 | Ro TCP pressure | Windows 1/8/16, 16 waves each, 20 repetitions per pure/race mode | Admission beyond limits, missing/duplicate outcome, resource retention, timeout |
 | Mixed Sh/S6c/SGd/Ro TCP pressure | Four classes on one connection, windows 1/4 per class, each application stalled in turn, eight waves, 20 repetitions per mode | Saturated class bypass, blocked healthy classes, wrong/duplicate result, resource retention, timeout |
 | SCTP pressure | Four connection pairs, 128 frames per pair, sizes 20/256/4096, 20 repetitions per mode | Corrupt frames, I/O failure, over 1MiB fixed buffer reserve, successful writes after Close |
