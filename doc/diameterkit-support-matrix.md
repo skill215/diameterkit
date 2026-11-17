@@ -60,7 +60,7 @@ add selected 5004/5001 mappings. [Typed-length diagnostics](length-avp-diagnosti
 URI validation without automatic routing. Other mappings remain partial.
 [Handwritten Proxy/VSAI diagnostics](manual-group-diagnostics.md) add selected
 leaf mappings and cross-package evidence. [Batch 103](group-constraint-diagnostics.md)
-adds VSAI conditional pairs and bounded Proxy omission examples. [Batch 104](minimum-group-diagnostics.md) adds selected whole-group minimum examples. [Batch 105](variable-missing-diagnostics.md) adds eleven explicit variable-field minima. Generator v21 and shared operations `ops9` change Bundle fingerprints; earlier recovery records require their original
+adds VSAI conditional pairs and bounded Proxy omission examples. [Batch 104](minimum-group-diagnostics.md) adds selected whole-group minimum examples. [Batch 105](variable-missing-diagnostics.md) adds eleven explicit variable-field minima. [Batch 106](variable-group-diagnostics.md) adds typed variable-child group minima with explicit rule audits. Generator v22 and shared operations `ops9` change Bundle fingerprints; earlier recovery records require their original
 build. The [current gap list](remaining-gaps.md) separates implementation,
 verification and external evidence from historical batch descriptions.
 

@@ -98,5 +98,9 @@ See [machine evidence](../spec/evidence/batch-96-missing-diagnostics.json) and
 [remaining requirements](../spec/progress.json).
 
 Batch 105 adds separately selected [variable-field minimum diagnostics](variable-missing-diagnostics.md).
-Explicit variable children do not widen the whole-group grammar. See that guide
+Field opt-ins alone do not widen the whole-group grammar. See that guide
 for the current generator v21 fingerprint and migration boundary.
+
+[Batch 106](variable-group-diagnostics.md) adds separately reviewed V2 whole-group
+plans with variable children. Fixed-only V1 consumption remains supported;
+unreviewed conditional and cardinality rules remain outside this mapping.

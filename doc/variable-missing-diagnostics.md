@@ -55,9 +55,9 @@ tests; Base coverage does not add a handshake-specific response policy.
 
 Selection belongs to a field in a particular definition. OFR's SC-Address opt-in
 does not enable TFR's same AVP. Bare errors and undeclared variable fields remain
-unsupported. Whole-group minimum trees remain restricted to their separately
-reviewed fixed-width grammar: a variable child opt-in does not implicitly enable
-its whole parent. Conditional and minimum-count-above-one omissions also remain
+unsupported. A variable child opt-in does not implicitly enable its whole parent.
+[Batch 106](variable-group-diagnostics.md) separately adds typed whole-group
+plans for three reviewed groups, with exact minimum and named-rule audit declarations. Conditional and minimum-count-above-one omissions also remain
 separate work.
 
 ## Reproduce and migrate

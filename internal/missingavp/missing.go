@@ -41,9 +41,13 @@ func variableWidth(kind string, width int) bool {
 // The extra Failed-AVP wrapper consumes one depth and one AVP from the limits.
 // A modified public FieldError path cannot silently redirect private evidence.
 func Quote(err error, limits wire.Limits, maxBytes int) ([]byte, bool) {
+	var typed groupEvidenceV2
+	if errors.As(err, &typed) {
+		return quoteGroup(err, typed, 2, limits, maxBytes)
+	}
 	var group groupEvidence
 	if errors.As(err, &group) {
-		return quoteGroup(err, group, limits, maxBytes)
+		return quoteGroup(err, group, 1, limits, maxBytes)
 	}
 	var field *validation.FieldError
 	var proof evidence

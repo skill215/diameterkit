@@ -42,7 +42,7 @@ count toward runtime limits. Quotes own their bytes and omit existing siblings.
 The complete answer must also fit encoder and runtime reservations.
 
 The generator rejects opted-in groups with empty minima, unreviewed child groups,
-captured Mandatory flags, variable-length required children or required counts
+captured Mandatory flags, undeclared variable-length required children or required counts
 greater than one. Optional children are excluded. Custom rules that impose extra
 presence conditions must not opt in. Bare sentinels and unreviewed groups do not
 gain inferred diagnostics. RequestMSCC and unsafe Proxy envelopes retain their
@@ -74,5 +74,9 @@ See [evidence](../spec/evidence/batch-104-minimum-groups.json),
 [version policy](version-install-policy.md) and [remaining gaps](remaining-gaps.md).
 
 Batch 105 adds separately selected [variable-field minimum diagnostics](variable-missing-diagnostics.md).
-Explicit variable children do not widen the whole-group grammar. See that guide
+Field opt-ins alone do not widen the whole-group grammar. See that guide
 for the current generator v21 fingerprint and migration boundary.
+
+[Batch 106](variable-group-diagnostics.md) adds separately reviewed V2 whole-group
+plans with variable children. Fixed-only V1 consumption remains supported;
+unreviewed conditional and cardinality rules remain outside this mapping.

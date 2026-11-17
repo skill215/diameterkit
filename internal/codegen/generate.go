@@ -22,7 +22,7 @@ import (
 )
 
 const maxDefinition = 4 << 20
-const GeneratorVersion = "21"
+const GeneratorVersion = "22"
 
 type Definition struct {
 	Format   int       `json:"format"`
@@ -34,11 +34,12 @@ type Definition struct {
 	Commands []Command `json:"commands"`
 }
 type Group struct {
-	DiagnosticMinimum bool    `json:"diagnostic_minimum,omitempty"`
-	CaptureMandatory  bool    `json:"capture_mandatory,omitempty"`
-	Name              string  `json:"name"`
-	Fields            []Field `json:"fields"`
-	Rule              string  `json:"rule,omitempty"`
+	DiagnosticMinimumRule string  `json:"diagnostic_minimum_rule,omitempty"`
+	DiagnosticMinimum     bool    `json:"diagnostic_minimum,omitempty"`
+	CaptureMandatory      bool    `json:"capture_mandatory,omitempty"`
+	Name                  string  `json:"name"`
+	Fields                []Field `json:"fields"`
+	Rule                  string  `json:"rule,omitempty"`
 }
 type Command struct {
 	ErrorRule       string  `json:"error_rule,omitempty"`
@@ -245,6 +246,9 @@ func validate(d Definition) error {
 		return nil
 	}
 	for _, g := range d.Groups {
+		if g.DiagnosticMinimumRule != "" && (!g.DiagnosticMinimum || g.Rule == "" || g.DiagnosticMinimumRule != g.Rule) {
+			return fmt.Errorf("invalid minimum rule audit for %s", g.Name)
+		}
 		if err := check(g.Name, g.Rule, g.Fields); err != nil {
 			return err
 		}
@@ -493,10 +497,10 @@ func profileMissing(key avp.Key,flags byte,width int) error {
 type profileGroupOmission struct {key avp.Key;flags byte;plan string;child error}
 func (*profileGroupOmission) Error()string{return validation.ErrMissing.Error()}
 func (*profileGroupOmission) Unwrap()error{return validation.ErrMissing}
-func(e *profileGroupOmission) DiameterMissingGroupV1()(avp.Key,byte,string,error){return e.key,e.flags,e.plan,e.child}
+func(e *profileGroupOmission) DiameterMissingGroupV2()(avp.Key,byte,string,error){return e.key,e.flags,e.plan,e.child}
 func profileMissingGroup(key avp.Key,flags byte,plan string)error{return validation.At(key,&profileGroupOmission{key:key,flags:flags,plan:plan})}
 func profileWithin(v wire.View,err error) error {
- var tree interface{error;DiameterMissingGroupV1()(avp.Key,byte,string,error)}
+ var tree interface{error;DiameterMissingGroupV2()(avp.Key,byte,string,error)}
  if errors.As(err,&tree){outer:=validation.At(v.Key,err).(*validation.FieldError);outer.Cause=&profileGroupOmission{key:v.Key,flags:v.Flags,child:tree};return outer}
 
  var group interface {error; DiameterGroupAVPV1() (avp.Key,byte,int,string,error)}

@@ -72,10 +72,10 @@ import("errors";"testing";"github.com/skill215/diameterkit/avp";"github.com/skil
 func TestExternalMinimum(t *testing.T){
  raw:=make([]byte,8);w:=wire.NewEncoder(raw,wire.DefaultLimits());w.Bytes(avp.Key{Code:900},64,nil)
  _,e:=decodeRequest(wire.NewDecoder(raw,wire.DefaultLimits()));var field *validation.FieldError
- var p interface{DiameterMissingGroupV1()(avp.Key,byte,string,error)}
+ var p interface{DiameterMissingGroupV2()(avp.Key,byte,string,error)}
  if !errors.Is(e,validation.ErrMissing)||!errors.As(e,&field)||!errors.As(e,&p)||len(field.Path)!=2||field.Path[1].Code!=413{t.Fatal(e)}
- key,flags,plan,child:=p.DiameterMissingGroupV1();if key.Code!=900||flags!=64||plan!=""||child==nil{t.Fatal("ancestor")}
- p=child.(interface{DiameterMissingGroupV1()(avp.Key,byte,string,error)});key,flags,plan,child=p.DiameterMissingGroupV1()
+ key,flags,plan,child:=p.DiameterMissingGroupV2();if key.Code!=900||flags!=64||plan!=""||child==nil{t.Fatal("ancestor")}
+ p=child.(interface{DiameterMissingGroupV2()(avp.Key,byte,string,error)});key,flags,plan,child=p.DiameterMissingGroupV2()
  if key.Code!=413||flags!=64||len(plan)!=60||child!=nil||plan[10]!=2||plan[22]!=2{t.Fatal("minimum plan")}
  if plan[2*12+9]!=8||plan[3*12+9]!=4||plan[4*12+9]!=4{t.Fatal("scalar widths")}
 }

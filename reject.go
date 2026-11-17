@@ -160,6 +160,15 @@ func missingDiagnostic(cause error) ([]byte, bool) {
 	if errors.As(cause, &explicit) {
 		return nil, false
 	}
+	var group1 interface {
+		DiameterMissingGroupV1() (avp.Key, byte, string, error)
+	}
+	var group2 interface {
+		DiameterMissingGroupV2() (avp.Key, byte, string, error)
+	}
+	if errors.As(cause, &group1) || errors.As(cause, &group2) {
+		return nil, false
+	}
 	var field *validation.FieldError
 	if !errors.Is(cause, validation.ErrMissing) || !errors.As(cause, &field) || len(field.Path) != 1 {
 		return nil, false

@@ -67,8 +67,9 @@ func TestVariableMinimumDefinition(t *testing.T) {
 	}
 	d = variableDefinition("utf8", false, 0)
 	d.Groups[0].DiagnosticMinimum = true
+	d.Groups[0].Fields[0].DiagnosticMinimumBytes = nil
 	if _, e := Generate(d); e == nil {
-		t.Fatal("broadened whole-group plan")
+		t.Fatal("inferred variable minimum in whole-group plan")
 	}
 }
 func TestVariableGeneratedExternal(t *testing.T) {

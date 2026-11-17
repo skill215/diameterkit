@@ -115,6 +115,14 @@ adapter rc.1 remain immutable; regenerate external bindings and retain earlier
 builds for recovery. The next immutable pair still needs independent cold-install
 acceptance.
 
+Batch 106 [groups with variable children](variable-group-diagnostics.md) uses
+generator v22 and typed V2 minimum plans for DCCA/SCAP1 SubscriptionID and combined
+Address. Exact variable minima and explicit named-rule audits are required;
+conditional presence and multiplicity rules remain unchanged. Public shapes and
+ops9 remain unchanged; all eleven digests and Bundle fingerprints change again.
+Existing immutable versions, original-build recovery and the separate next-pair
+publication/cold-install gates retain their previous meaning.
+
 ## Publication order and CI
 
 Publish the reviewed immutable core first. Download and verify it, then update the
