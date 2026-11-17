@@ -12,6 +12,11 @@ The runner writes `fuzz.json`, `pressure.json`, `performance.json`, command logs
 and a summary under `.cache/release-check/<suite>/`. CI uses the same commands.
 The libraries remain pure Go and introduce no persistence service.
 
+[Batch 99 duplicate acceptance](cross-peer-duplicate-acceptance.md) separately
+checks two-peer combined replay and four-profile volatile cache budgets on
+TCP/TLS. It runs in ordinary pure/race checkout tests; it does not expand these
+pressure measurements into deployment capacity or mixed-transport claims.
+
 ## Fixed work and stopping conditions
 
 | Workload | Bound | Failure conditions |

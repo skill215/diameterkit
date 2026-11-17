@@ -48,6 +48,10 @@ financial deduplication or full mixed-profile/cache coverage.
 
 ## Remaining gates
 
+[Batch 99 duplicate acceptance](cross-peer-duplicate-acceptance.md) covers the
+combined binding across two peers and four-profile shared/independent caches on
+TCP/TLS. It adds verification without changing production code or API fingerprints.
+
 The unreleased [missing-AVP extension](missing-avp-diagnostics.md) adds bounded
 5005 placeholders; [first-excess diagnostics](excess-avp-diagnostics.md) add
 generated 5009 instance copies. [Invalid/unsupported diagnostics](invalid-avp-diagnostics.md)

@@ -1,6 +1,6 @@
 # Current remaining gaps
 
-This is the current implementation overview for **batch 98, Draft 0.99**
+This is the current implementation overview for **batch 99, Draft 0.100**
 (2026-11-17). [Progress](../spec/progress.json) records actual check completion;
 the broad release status remains `not_ready`. The 24 SPEC IDs span implementation,
 verification and external acceptance; their `partial` labels are not a percentage
@@ -12,12 +12,13 @@ their historical meaning.
 | Area | Completed selected scope | Remaining work |
 | --- | --- | --- |
 | Error diagnostics | Five earlier Base omissions; generated fixed-width 5005; generated finite-maximum first-excess 5009; generated isolated-value 5004 and unknown-M 5001 | Manual/domain and length diagnostics, Redirect 3006, manual/handshake cardinality, and whole-group/variable/conditional/minimum-greater-than-one omissions |
-| Duplicate acceptance | Generic cross-peer tests and selected combined same-peer TCP/TLS cache/result/lifecycle tests | Combined cross-peer scenarios and mixed-profile cache budgets |
+| Duplicate acceptance | Generic and combined cross-peer TCP/TLS tests; four-profile identity, simultaneous arrivals and shared/independent slot/byte cache acceptance | Larger tenant and mixed-transport workloads, real-target deduplication domains and durable application behavior |
 | Load acceptance | Eight bounded fuzz targets, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads |
 | Publication | Reviewed API/generated output and dual-module checkout CI; immutable rc.2/rc.1 installation receipts | Publish and cold-install a new reviewed core/adapter pair after the generator fingerprint transitions; planned core candidate `v0.2.0-rc.1` |
 
-Next, prioritize combined cross-peer and mixed-profile duplicate/cache acceptance.
-For further diagnostics, distinguish typed length errors (5014) from manual domain
+The selected combined cross-peer and mixed-profile cache slice is now covered by
+[batch 99 acceptance](cross-peer-duplicate-acceptance.md). For the next diagnostic
+slice, distinguish typed length errors (5014) from manual domain
 constraints before adding mappings; existing 5004/5001 support covers generated
 instance evidence only. Redirect 3006 needs its own URI/required-field slice.
 Keep malformed/untrusted/resource-limit failures closed when no safe reply exists.
