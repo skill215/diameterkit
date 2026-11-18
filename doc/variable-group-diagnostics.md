@@ -60,13 +60,11 @@ produce their actual missing-child error; present values retain existing checks.
 
 ## Conditions that remain separate
 
-- combined still requires two ordered Subscription-ID instances. Its whole-group
-  omission remains unsupported, despite the independently reviewed DCCA binding.
-- SCAP1 still requires eleven ordered Service-Parameter-Info instances. No minimum
-  group example is synthesized for that cardinality rule.
-- SMS/MMS conditional fields, including a conditionally required Recipient-Address,
-  retain their existing rules. Missing an optional-on-wire group does not acquire
-  automatic whole-group evidence.
+- Batches 109 and 110 separately added [combined subscription and SCAP1 parameter
+  shortages](cardinality-diagnostics.md) through reviewed cardinality evidence.
+- Batch 111 separately adds [isolated conditional Recipient-Address omissions](conditional-recipient-diagnostics.md)
+  for combined SMS templates. Other conditional fields, simultaneous conditional
+  omissions and absent MMS/SMS groups remain outside these selected slices.
 - Unreviewed groups, unsafe envelopes and the default close policy remain closed.
 
 TCP/TLS tests cover all three selected cases through ordinary and emergency slots,

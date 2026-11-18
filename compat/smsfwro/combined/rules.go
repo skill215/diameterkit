@@ -109,7 +109,7 @@ func validateCCRSubset(m *CCR, mode validation.Mode) error {
 	// The structurally required template markers select constraints only. Field
 	// types and decoder operations are fixed for every branch of this profile.
 	if m.MultipleServicesIndicator.Present || m.UserEquipmentInfo.Present || m.CCRequestType != 4 {
-		err = validateSMSRequest(m)
+		err = validateSMSRequest(m, mode)
 	} else {
 		err = validateMoneyRequest(m)
 	}
@@ -118,7 +118,7 @@ func validateCCRSubset(m *CCR, mode validation.Mode) error {
 	}
 	return extras(m.Extra)
 }
-func validateSMSRequest(m *CCR) error {
+func validateSMSRequest(m *CCR, mode validation.Mode) error {
 	if !m.MultipleServicesIndicator.Present || m.MultipleServicesIndicator.Value != 1 || !m.UserEquipmentInfo.Present || m.ServiceIdentifier.Present || m.Timezone.Present || m.RefundInformation.Present {
 		return validation.ErrField
 	}
@@ -144,6 +144,9 @@ func validateSMSRequest(m *CCR) error {
 	}
 	mm := m.ServiceInformation.MMSInformation.Value
 	if !mm.RecipientAddress.Present || !mm.SubmissionTime.Present || !mm.Priority.Present || !mm.UserDataLength.Present || !mm.SMSKey.Present || !mm.StatusReportRequest.Present {
+		if mode == validation.Receive && !mm.RecipientAddress.Present && mm.SubmissionTime.Present && mm.Priority.Present && mm.UserDataLength.Present && mm.SMSKey.Present && mm.StatusReportRequest.Present {
+			return missingSMSRecipientAddress()
+		}
 		return vendorAt(877, validation.ErrMissing)
 	}
 	if m.EventTimestamp != mm.SubmissionTime.Value {

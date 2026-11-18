@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.111 — 2026-11-18, batch 110.** The [progress record](../spec/progress.json)
+**Draft 0.112 — 2026-11-18, batch 111.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -32,6 +32,12 @@ proper ordered subsets. Existing min/max11, type order and business-value rules
 remain unchanged. SCAP1 slice.3 changes its digest and dependent Bundle fingerprints;
 generatorv23/ops9 and public shapes remain unchanged. See
 [repeated-group diagnostics](cardinality-diagnostics.md).
+
+Batch 111 adds the selected combined SMS Recipient-Address omission through existing
+typed V2 minimum-group evidence. Receive-only, all other conditional MMS fields
+present; Build/Send and business constraints unchanged. Combined slice.7 changes
+its digest and dependent Bundle fingerprints; generatorv23/ops9 and public shapes
+remain unchanged. See [conditional Recipient-Address](conditional-recipient-diagnostics.md).
 
 <details>
 <summary>Historical scope and implementation summary (2026-11-10)</summary>

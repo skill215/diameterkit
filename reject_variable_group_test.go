@@ -177,7 +177,7 @@ func TestRejectMinimumVariableGroups(t *testing.T) {
 
 func TestRejectMinimumVariableBoundaries(t *testing.T) {
 	eachNetwork(t, func(t *testing.T, encrypted bool) {
-		for _, kind := range []string{"conditional-recipient", "unreviewed-sms", "default-policy"} {
+		for _, kind := range []string{"unreviewed-sms", "default-policy"} {
 			t.Run(kind, func(t *testing.T) {
 				cfg := combinedConfig(t)
 				cfg.Peers[0].InboundCommands[0].FailurePolicy = BaseErrorFailures
@@ -187,14 +187,9 @@ func TestRejectMinimumVariableBoundaries(t *testing.T) {
 				n, co := newInboundNode(t, cfg)
 				p, remote := networkConnectNode(t, n, co, encrypted)
 				template := "general"
-				if kind == "conditional-recipient" {
-					template = "initial"
-				}
 				req := combinedDuplicateRequest(t, n, co, template, 10610, 20610)
 				var path []missingSelector
 				switch kind {
-				case "conditional-recipient":
-					path = lengthPath(avp.Key{VendorID: 10415, Code: 873}, avp.Key{VendorID: 10415, Code: 877}, avp.Key{VendorID: 10415, Code: 1201})
 				case "unreviewed-sms":
 					path = lengthPath(avp.Key{VendorID: 10415, Code: 873}, avp.Key{VendorID: 10415, Code: 2000})
 				default:

@@ -1,7 +1,7 @@
 {
   "format": 1,
   "date": "2026-11-18",
-  "basis": "Batch110 scap1 eleven ordered service-parameter omission verified in selected scope. Generatorv23/ops9, current12-binding metadata check, pure Go/no persistence; all24 broader requirements remain partial.",
+  "basis": "Batch111 selected combined SMS conditional Recipient-Address omission verified. Existing V2 consumer/generatorv23/ops9, current12-binding metadata check, pure Go/no persistence; all24 broader requirements remain partial.",
   "release_status": "not_ready",
   "api_snapshot": "spec/release/public-api.json",
   "profiles": [
@@ -212,9 +212,9 @@
     {
       "binding": "combined",
       "profile": "smsfw-ro-five-template-wire-v1",
-      "version": "0.1.0-slice.6",
+      "version": "0.1.0-slice.7",
       "definition": "spec/combined.json",
-      "definition_sha256": "0b0552b4d916af52da8b612236198d6317c10d2957628bff325f0ca2cd06c5c7",
+      "definition_sha256": "5520a2dbba4d53e5b15ec3c575c7c05247acea66fa12a749a870a4b372c0767d",
       "requests": [
         {
           "name": "CCR",
@@ -380,10 +380,10 @@
         "SPEC-ERROR-01"
       ],
       "evidence": [
-        "spec/evidence/batch-110-cardinality.json",
+        "spec/evidence/batch-111-recipient-missing.json",
         "doc/remaining-gaps.md"
       ],
-      "remaining": "Other conditional/cardinality/unreviewed groups and domain/handshake/malformed-header diagnostic mappings."
+      "remaining": "Other SMS/MMS conditional fields, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings."
     },
     {
       "name": "Next immutable core/adapter release acceptance",
@@ -721,6 +721,21 @@
         "doc/cardinality-diagnostics.md"
       ],
       "remaining": "Other conditional/cardinality/unreviewed groups and domain/handshake/malformed-header diagnostic mappings.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence."
+    },
+    {
+      "name": "Combined SMS conditional Recipient-Address omission",
+      "status": "completed_selected_slice",
+      "requirement_refs": [
+        "SPEC-ERROR-01",
+        "SPEC-CODEC-01",
+        "SPEC-PROFILE-01",
+        "SPEC-BUDGET-01"
+      ],
+      "evidence": [
+        "spec/evidence/batch-111-recipient-missing.json",
+        "doc/conditional-recipient-diagnostics.md"
+      ],
+      "remaining": "Other SMS/MMS conditional fields, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence."
     }
   ],
   "current_gap_overview": "doc/remaining-gaps.md"
