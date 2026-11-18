@@ -32,6 +32,7 @@ have their own [release record](releases/v0.1.0-rc.md).
 - [Dual-module CI and local acceptance](release-checks.md)
 - [Support matrix consistency checks](support-matrix-checks.md)
 - [Bounded fuzz, stress and benchmark methodology](load-checks.md)
+- [Count-bounded fuzz and failure evidence](count-bounded-fuzz.md)
 - [Specification, progress and historical evidence](../spec/README.md)
 - [AI authorship and review limits](../AI_DISCLOSURE.md)
 

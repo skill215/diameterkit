@@ -67,7 +67,7 @@ conditional MMS field are exercised over both transports.
 ```sh
 CGO_ENABLED=0 go test . ./compat/smsfwro/combined ./internal/missingavp -run 'Test(RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable)' -count=20 -timeout=10m
 CGO_ENABLED=1 go test -race . ./compat/smsfwro/combined ./internal/missingavp -run 'Test(RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable)' -count=20 -timeout=10m
-CGO_ENABLED=0 go test ./internal/missingavp -run '^$' -fuzz '^FuzzMinimumVariableTree$' -fuzztime=30s -fuzzminimizetime=5s -parallel=2 -timeout=2m
+CGO_ENABLED=0 go test ./internal/missingavp -run '^$' -fuzz '^FuzzMinimumVariableTree$' -fuzztime=1000000x -fuzzminimizetime=5s -parallel=2 -timeout=2m
 python3 spec/tools/release_check.py --suite all
 ```
 

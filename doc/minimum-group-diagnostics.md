@@ -59,7 +59,7 @@ children. Negative controls and bounded fuzz exercise malformed plans and limits
 ```sh
 CGO_ENABLED=0 go test . ./base ./internal/missingavp ./internal/groupavp ./internal/excessavp ./internal/codegen -run 'Test(Minimum|RejectMinimum|Missing|RejectDeepMissing|Group|RejectGroup|Manual|RejectManual|Length|RejectLength|Invalid|RejectInvalid|ExternalGenerated|Generated|ProductionImport)' -count=20 -timeout=10m
 CGO_ENABLED=1 go test -race . ./base ./internal/missingavp ./internal/groupavp ./internal/excessavp ./internal/codegen -run 'Test(Minimum|RejectMinimum|Missing|RejectDeepMissing|Group|RejectGroup|Manual|RejectManual|Length|RejectLength|Invalid|RejectInvalid|ExternalGenerated|Generated|ProductionImport)' -count=20 -timeout=10m
-CGO_ENABLED=0 go test ./internal/missingavp -run '^$' -fuzz '^FuzzMinimumTree$' -fuzztime=30s -parallel=2 -timeout=2m
+CGO_ENABLED=0 go test ./internal/missingavp -run '^$' -fuzz '^FuzzMinimumTree$' -fuzztime=1000000x -parallel=2 -timeout=2m
 python3 spec/tools/release_check.py --suite all
 ```
 

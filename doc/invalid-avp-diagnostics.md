@@ -76,7 +76,7 @@ CGO_ENABLED=1 go test -race . ./internal/excessavp ./internal/codegen \
   -run 'Test(Invalid|RejectInvalid|ExternalGenerated|Generated|ProductionImport)' \
   -count=20 -timeout=5m
 CGO_ENABLED=0 go test ./internal/excessavp -run '^$' \
-  -fuzz FuzzInvalidQuote -fuzztime=30s -parallel=2 -timeout=2m
+  -fuzz FuzzInvalidQuote -fuzztime=1000000x -parallel=2 -timeout=2m
 python3 spec/tools/release_check.py --suite all
 ```
 

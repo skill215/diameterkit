@@ -74,7 +74,7 @@ retirement. These are local peer tests, not real-target redirect acceptance.
 ```sh
 CGO_ENABLED=0 go test . ./avp ./codec ./schema -run 'Test(Redirect|DiameterURI|ProductionImport)' -count=20 -timeout=5m
 CGO_ENABLED=1 go test -race . ./avp ./codec ./schema -run 'Test(Redirect|DiameterURI|ProductionImport)' -count=20 -timeout=5m
-CGO_ENABLED=0 go test ./avp -run '^$' -fuzz '^FuzzDiameterURI$' -fuzztime=30s -parallel=2 -timeout=2m
+CGO_ENABLED=0 go test ./avp -run '^$' -fuzz '^FuzzDiameterURI$' -fuzztime=1000000x -parallel=2 -timeout=2m
 python3 spec/tools/release_check.py --suite all
 ```
 

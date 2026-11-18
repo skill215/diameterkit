@@ -69,7 +69,7 @@ decoders and bounded copying; batch 102 added the eleventh target. Batch 103 add
 ```sh
 CGO_ENABLED=0 go test . ./base ./internal/excessavp ./internal/codegen -run 'Test(Manual|RejectManual|Length|RejectLength|Invalid|RejectInvalid|ExternalGenerated|Generated|ProductionImport)' -count=20 -timeout=5m
 CGO_ENABLED=1 go test -race . ./base ./internal/excessavp ./internal/codegen -run 'Test(Manual|RejectManual|Length|RejectLength|Invalid|RejectInvalid|ExternalGenerated|Generated|ProductionImport)' -count=20 -timeout=5m
-CGO_ENABLED=0 go test ./base -run '^$' -fuzz '^FuzzManualDiagnostics$' -fuzztime=30s -parallel=2 -timeout=2m
+CGO_ENABLED=0 go test ./base -run '^$' -fuzz '^FuzzManualDiagnostics$' -fuzztime=1000000x -parallel=2 -timeout=2m
 python3 spec/tools/release_check.py --suite all
 ```
 

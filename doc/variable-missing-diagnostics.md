@@ -65,7 +65,7 @@ separate work.
 ```sh
 CGO_ENABLED=0 go test . ./base ./app/s6c ./app/ro/dcca ./internal/missingavp ./internal/groupavp ./internal/excessavp ./internal/codegen -run 'Test(Variable|RejectVariable|Minimum|RejectMinimum|Missing|RejectDeepMissing|Group|RejectGroup|Manual|RejectManual|Length|RejectLength|Invalid|RejectInvalid|ExternalGenerated|Generated|ProductionImport)' -count=20 -timeout=10m
 CGO_ENABLED=1 go test -race . ./base ./app/s6c ./app/ro/dcca ./internal/missingavp ./internal/groupavp ./internal/excessavp ./internal/codegen -run 'Test(Variable|RejectVariable|Minimum|RejectMinimum|Missing|RejectDeepMissing|Group|RejectGroup|Manual|RejectManual|Length|RejectLength|Invalid|RejectInvalid|ExternalGenerated|Generated|ProductionImport)' -count=20 -timeout=10m
-CGO_ENABLED=0 go test ./internal/missingavp -run '^$' -fuzz '^FuzzVariableMinimum$' -fuzztime=30s -parallel=2 -timeout=2m
+CGO_ENABLED=0 go test ./internal/missingavp -run '^$' -fuzz '^FuzzVariableMinimum$' -fuzztime=1000000x -parallel=2 -timeout=2m
 python3 spec/tools/release_check.py --suite all
 ```
 

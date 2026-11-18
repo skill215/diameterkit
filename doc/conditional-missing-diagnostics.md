@@ -42,7 +42,7 @@ and retirement. `CloseOnFailure` still closes without an automatic reply.
 ```sh
 CGO_ENABLED=0 go test . ./app/s6c ./internal/missingavp -run 'Test(Conditional|RejectConditional)' -count=20
 CGO_ENABLED=1 go test -race . ./app/s6c ./internal/missingavp -run 'Test(Conditional|RejectConditional)' -count=20
-CGO_ENABLED=0 go test ./internal/missingavp -run '^$' -fuzz '^FuzzConditionalMinimum$' -fuzztime=30s -parallel=2 -timeout=2m
+CGO_ENABLED=0 go test ./internal/missingavp -run '^$' -fuzz '^FuzzConditionalMinimum$' -fuzztime=1000000x -parallel=2 -timeout=2m
 python3 spec/tools/release_check.py --suite all
 ```
 

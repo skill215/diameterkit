@@ -53,7 +53,7 @@ and eight present-invalid-value network cases preserve their close behavior.
 ```sh
 CGO_ENABLED=0 go test . ./compat/smsfwro/combined ./internal/missingavp -run 'Test(ActionMissing|RejectActionMissing|MMSGroupMissing|RejectMMSGroupMissing|OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)' -count=20 -timeout=10m
 CGO_ENABLED=1 go test -race . ./compat/smsfwro/combined ./internal/missingavp -run 'Test(ActionMissing|RejectActionMissing|MMSGroupMissing|RejectMMSGroupMissing|OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)' -count=20 -timeout=10m
-CGO_ENABLED=0 go test ./internal/missingavp -run '^$' -fuzz '^FuzzMissingQuote$' -fuzztime=30s -fuzzminimizetime=5s -parallel=2 -timeout=2m
+CGO_ENABLED=0 go test ./internal/missingavp -run '^$' -fuzz '^FuzzMissingQuote$' -fuzztime=1000000x -fuzzminimizetime=5s -parallel=2 -timeout=2m
 python3 spec/tools/release_check.py --suite all
 ```
 

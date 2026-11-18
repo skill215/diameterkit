@@ -60,7 +60,7 @@ valid follow-up and retirement are verified.
 ```sh
 CGO_ENABLED=0 go test . ./compat/smsfwro/combined ./internal/missingavp -run 'Test(SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)' -count=20 -timeout=10m
 CGO_ENABLED=1 go test -race . ./compat/smsfwro/combined ./internal/missingavp -run 'Test(SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)' -count=20 -timeout=10m
-CGO_ENABLED=0 go test ./internal/missingavp -run '^$' -fuzz '^FuzzVariableMinimum$' -fuzztime=30s -fuzzminimizetime=5s -parallel=2 -timeout=2m
+CGO_ENABLED=0 go test ./internal/missingavp -run '^$' -fuzz '^FuzzVariableMinimum$' -fuzztime=1000000x -fuzzminimizetime=5s -parallel=2 -timeout=2m
 python3 spec/tools/release_check.py --suite all
 ```
 

@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.117 — 2026-11-18, batch 114.** The [progress record](../spec/progress.json)
+**Draft 0.118 — 2026-11-18, batch 117.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1295,3 +1295,17 @@ Combined slice.12 changes definition fingerprints; generator v23/ops9, public
 shapes and pure-Go/no-persistence boundaries remain unchanged. See the
 [English guide](conditional-action-diagnostics.md) and [progress](../spec/progress.json).
 Broader requirements remain partial.
+
+
+## Batch 117: count-bounded fuzz acceptance (2026-11-18)
+
+The checkout gate now requires 1,000,000 executions for each of the existing
+seventeen fuzz targets, with two workers and the existing hard timeouts.
+Nonzero exits, incomplete work, assertion failures and timeouts remain failures;
+partial receipts retain logs, hashes and copied corpus inputs. Negative controls
+also exercise an actual Go counterexample and replay. This is a stopping-policy
+mitigation for the historical timed exits, not a proven upstream root-cause fix
+or an equivalent-coverage claim. Go library sources, public API, profile slices,
+generator v23/ops9, fingerprints and published tags are unchanged.
+See the [English guide](count-bounded-fuzz.md) and [progress](../spec/progress.json).
+Pure Go/no persistence and all broader partial requirements remain unchanged.

@@ -8,6 +8,7 @@ import platform
 import re
 import statistics
 import shutil
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[2]
 FUZZ_TARGETS = [
@@ -112,28 +113,79 @@ def mixed_pressure_samples(raw):
     return records
 
 
-def run(checks, suite):
-    if suite in ("all", "fuzz"):
-        fuzz = []
-        for label, module, package, target in FUZZ_TARGETS:
+FUZZ_EXECUTIONS = 1_000_000
+
+
+def fuzz_measurements(raw):
+    """Require the count budget and actual fuzzing; never reinterpret failures."""
+    counts = re.findall(r"^fuzz: elapsed: .*?, execs:\s*(\d+)\b", raw, re.M)
+    if (not counts or int(counts[-1]) != FUZZ_EXECUTIONS or
+            not re.search(r"^PASS\s*$", raw, re.M) or
+            not re.search(r"^ok\s+", raw, re.M) or
+            "now fuzzing with 2 workers" not in raw or
+            re.search(r"^(?:--- FAIL:|FAIL(?:\s|$)|panic:|fatal error:)", raw, re.M) or
+            "context deadline exceeded" in raw):
+        raise RuntimeError("incomplete or failed count-bounded fuzz output")
+    return {"executions": int(counts[-1])}
+
+
+def preserve_corpus(checks, label, module, package, target):
+    corpus = ROOT / module / package / "testdata/fuzz" / target
+    artifacts = []
+    for entry in sorted(corpus.glob("*")):
+        if entry.is_file():
+            destination = checks.output / "fuzz-corpus" / label
+            destination.mkdir(parents=True, exist_ok=True)
+            copied = destination / entry.name
+            shutil.copyfile(entry, copied)
+            artifacts.append({"path": copied.relative_to(checks.output).as_posix(),
+                              "sha256": hashlib.sha256(copied.read_bytes()).hexdigest()})
+    return artifacts
+
+
+def run_fuzz(checks):
+    reports = []
+    receipt = checks.output / "fuzz.json"
+    receipt.write_text("[]\n", encoding="utf-8")
+    for label, module, package, target in FUZZ_TARGETS:
+        record = {"target": target, "status": "failed", "budget_kind": "executions",
+                  "requested_executions": FUZZ_EXECUTIONS, "workers": 2,
+                  "minimization_seconds": 5, "timeout_seconds": 120}
+        phase = "process"
+        try:
             try:
                 raw = checks.run("fuzz-" + label,
-                    ["go", "test", package, "-run=^$", "-fuzz=^" + target + "$", "-fuzztime=30s", "-fuzzminimizetime=5s", "-parallel=2", "-timeout=2m"],
-                    ROOT / module, ENV)
+                    ["go", "test", package, "-run=^$", "-fuzz=^" + target + "$",
+                     f"-fuzztime={FUZZ_EXECUTIONS}x", "-fuzzminimizetime=5s",
+                     "-parallel=2", "-timeout=2m"], ROOT / module, ENV)
             finally:
-                # Preserve minimized failures for CI artifacts even when the
-                # command raises. Never erase a checked-in regression corpus.
-                corpus = ROOT / module / package / "testdata/fuzz" / target
-                for entry in corpus.glob("*"):
-                    if entry.is_file():
-                        destination = checks.output / "fuzz-corpus" / label
-                        destination.mkdir(parents=True, exist_ok=True)
-                        shutil.copyfile(entry, destination / entry.name)
-            executions = re.findall(r"execs:\s*(\d+)", raw)
-            if not executions or int(executions[-1]) == 0 or "PASS" not in raw:
-                raise RuntimeError("no actual fuzz executions: " + target)
-            fuzz.append({"target": target, "seconds": 30, "workers": 2, "executions": int(executions[-1])})
-        (checks.output / "fuzz.json").write_text(json.dumps(fuzz, indent=2) + "\n")
+                # Capture newly minimized failures even when the Go command
+                # exits nonzero or the outer process timeout fires.
+                phase = "corpus"
+                record["corpus"] = preserve_corpus(checks, label, module, package, target)
+                phase = "process"
+            phase = "output"
+            record.update(fuzz_measurements(raw))
+            record["status"] = "passed"
+        except (RuntimeError, OSError, subprocess.SubprocessError) as error:
+            record["error"] = str(error)
+            record["failure_kind"] = checks.steps[-1].get("failure_kind", phase)
+            checks.steps[-1]["status"] = "failed"
+            raise
+        finally:
+            step = checks.steps[-1]
+            record["log"] = step["log"]
+            if "sha256" in step:
+                record["sha256"] = step["sha256"]
+            reports.append(record)
+            # Partial receipts must retain the failed target, never an old
+            # complete success list. No automatic retry or failure suppression.
+            receipt.write_text(json.dumps(reports, indent=2) + "\n", encoding="utf-8")
+
+
+def run(checks, suite):
+    if suite in ("all", "fuzz"):
+        run_fuzz(checks)
     if suite in ("all", "stress"):
         metrics = {"scope": "fixed loopback workload; logical reservations are not RSS; VmHWM includes the entire test process", "runs": {}, "mixed_runs": {}}
         for mode in ("pure", "race"):

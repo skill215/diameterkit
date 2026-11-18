@@ -48,7 +48,7 @@ rule. Synthetic external-module tests exercise the actual generated decoder.
 ```sh
 CGO_ENABLED=0 go test . ./internal/cardinalityavp ./internal/codegen -run 'Test(Cardinality|RejectCardinality)' -count=20
 CGO_ENABLED=1 go test -race . ./internal/cardinalityavp ./internal/codegen -run 'Test(Cardinality|RejectCardinality)' -count=20
-CGO_ENABLED=0 go test ./internal/cardinalityavp -run '^$' -fuzz '^FuzzCardinalityQuote$' -fuzztime=30s -fuzzminimizetime=5s -parallel=2 -timeout=2m
+CGO_ENABLED=0 go test ./internal/cardinalityavp -run '^$' -fuzz '^FuzzCardinalityQuote$' -fuzztime=1000000x -fuzzminimizetime=5s -parallel=2 -timeout=2m
 python3 spec/tools/release_check.py --suite all
 ```
 

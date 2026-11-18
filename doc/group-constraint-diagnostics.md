@@ -65,7 +65,7 @@ VSAI as opaque retain that behavior.
 ```sh
 CGO_ENABLED=0 go test . ./base ./internal/groupavp ./internal/excessavp ./internal/codegen -run 'Test(Group|RejectGroup|Manual|RejectManual|Length|RejectLength|Invalid|RejectInvalid|ExternalGenerated|Generated|ProductionImport)' -count=20 -timeout=5m
 CGO_ENABLED=1 go test -race . ./base ./internal/groupavp ./internal/excessavp ./internal/codegen -run 'Test(Group|RejectGroup|Manual|RejectManual|Length|RejectLength|Invalid|RejectInvalid|ExternalGenerated|Generated|ProductionImport)' -count=20 -timeout=5m
-CGO_ENABLED=0 go test ./internal/groupavp -run '^$' -fuzz '^FuzzGroupQuote$' -fuzztime=30s -parallel=2 -timeout=2m
+CGO_ENABLED=0 go test ./internal/groupavp -run '^$' -fuzz '^FuzzGroupQuote$' -fuzztime=1000000x -parallel=2 -timeout=2m
 python3 spec/tools/release_check.py --suite all
 ```
 

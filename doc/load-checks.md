@@ -21,7 +21,7 @@ pressure measurements into deployment capacity or mixed-transport claims.
 
 | Workload | Bound | Failure conditions |
 | --- | --- | --- |
-| FuzzDecode, FuzzDecodeAnswer, FuzzCanonical | 30s each, two workers, 5s minimization, 2m package timeout | Property failure, panic, timeout, no actual executions, nonzero exit |
+| FuzzDecode, FuzzDecodeAnswer, FuzzCanonical | 1,000,000 executions each, two workers, 5s minimization, 2m package timeout | Property failure, panic, timeout, incomplete/excess work, nonzero exit |
 | Missing/excess/invalid/typed-length AVP quotes, DiameterURI, handwritten Proxy/VSAI, group constraints/minima, explicit variable field/group and selected conditional/repeated-group minima, Sh-Data FuzzParse and SCTP mode selection | Same bounds; seventeen targets total | Same; seed-only tests are not fuzz execution |
 | Ro TCP pressure | Windows 1/8/16, 16 waves each, 20 repetitions per pure/race mode | Admission beyond limits, missing/duplicate outcome, resource retention, timeout |
 | Mixed Sh/S6c/SGd/Ro TCP pressure | Four classes on one connection, windows 1/4 per class, each application stalled in turn, eight waves, 20 repetitions per mode | Saturated class bypass, blocked healthy classes, wrong/duplicate result, resource retention, timeout |
@@ -36,7 +36,9 @@ with 256MiB class/port limits. These numbers are reservations, not preallocated 
 SCTP uses eight transports and 512 frames per repetition. Tests require real kernel
 sockets. Existing cancellation, reuse and other regressions remain in full tests.
 
-Fuzz mutations and execution counts vary with the seed/cache state. A separate
+Fuzz mutations and runtime vary with seed/cache state; successful runs require
+exactly 1,000,000 executions per target. See the [counted gate policy](count-bounded-fuzz.md)
+for the historical timed-exit mitigation, retained failure receipts and negative controls. A separate
 GOCACHE can exercise a cold start but also changes build costs. On failure the
 minimized `testdata/fuzz/<Target>/<hash>` is copied into the artifact's `fuzz-corpus/`.
 Checked-in regression inputs are never deleted. Replay with

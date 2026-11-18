@@ -67,7 +67,7 @@ class Checks:
         self.output, self.env = output, env
         self.steps = []
 
-    def run(self, name, command, cwd=ROOT, extra=None, tests=False):
+    def run(self, name, command, cwd=ROOT, extra=None, tests=False, timeout=900):
         print("RUN " + name, flush=True)
         env = self.env.copy()
         env.update(extra or {})
@@ -75,12 +75,21 @@ class Checks:
         step = {"name": name, "command": [str(c) for c in command],
                 "cwd": str(cwd), "log": log.name, "status": "failed"}
         self.steps.append(step)
-        with log.open("w", encoding="utf-8") as out:
-            result = subprocess.run(command, cwd=cwd, env=env, stdout=out,
-                                    stderr=subprocess.STDOUT, text=True, timeout=900)
-        step["sha256"] = digest(log)
+        try:
+            with log.open("w", encoding="utf-8") as out:
+                result = subprocess.run(command, cwd=cwd, env=env, stdout=out,
+                                        stderr=subprocess.STDOUT, text=True, timeout=timeout)
+        except subprocess.TimeoutExpired:
+            step["failure_kind"] = "process_timeout"
+            raise
+        finally:
+            # Timeout is a failure too: retain and hash whatever was written.
+            if log.exists():
+                step["sha256"] = digest(log)
+        step["returncode"] = result.returncode
         raw = log.read_text(encoding="utf-8")
         if result.returncode:
+            step["failure_kind"] = "command_exit"
             raise RuntimeError(f"{name} exited {result.returncode}; see {log}")
         if tests:
             step.update(test_counts(raw))

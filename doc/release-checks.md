@@ -25,13 +25,14 @@ python3 spec/tools/release_check.py --suite bench
 | pure | Both modules' tests with CGO=0, count=1 and no skipped native SCTP tests |
 | race | Both modules' tests with race instrumentation; production libraries remain cgo-independent |
 | cross | CGO=0 builds for linux/arm64, linux/386 and windows/amd64; compilation only |
-| fuzz | Seventeen targets, 30 seconds and two workers per target |
+| fuzz | Seventeen targets, 1,000,000 executions and two workers per target; 2m package timeout |
 | stress | Fixed TCP/SCTP workloads repeated 20 times in pure and race modes |
 | bench | Eight workloads, 200 iterations per sample, five samples |
 
 Results go to `.cache/release-check/<suite>/`; `--output` chooses another directory.
 Failures return nonzero with command logs and hashes. Missing SCTP support is a
-failure, not a skip. No-test packages do not count as skipped tests. Generated/API
+failure, not a skip. Fuzz requires exact work counts and retains partial failure
+receipts; see the [counted fuzz policy](count-bounded-fuzz.md). No-test packages do not count as skipped tests. Generated/API
 negative controls must reject drift without rewriting their input.
 
 The runner creates a temporary workspace containing both checkout modules. A
