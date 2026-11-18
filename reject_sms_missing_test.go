@@ -106,13 +106,14 @@ func TestSMSMissingPrecedence(t *testing.T) {
 		case "originator":
 			req = combinedDuplicateRequest(t, n, co, "iec", 11311, 21311)
 			raw = missingRaw(t, co, req, smsPath(2008), false)
+			want = smsMinimum(t, 2008)
 		}
 		_, cause := co.Decode(raw)
 		q, ok := missingavp.Quote(cause, n.cfg.Limits, 40)
 		if ok != (want != nil) || ok && !bytes.Equal(q, want) {
 			t.Fatal(kind, cause, q)
 		}
-		if kind == "originator" && !errors.Is(cause, validation.ErrUnsupported) {
+		if kind == "originator" && (!errors.Is(cause, validation.ErrUnsupported) || !errors.Is(cause, validation.ErrMissing)) {
 			t.Fatal(cause)
 		}
 	}

@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.114 — 2026-11-18, batch 113.** The [progress record](../spec/progress.json)
+**Draft 0.115 — 2026-11-18, batch 114.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -51,6 +51,12 @@ Existing first-failure ordering, multiple-omission close, Build/Send and busines
 constraints remain unchanged. Combined slice.9 changes its digest and Bundle
 fingerprints; generatorv23/ops9 and public shapes remain unchanged. See
 [conditional SMS fields](conditional-sms-diagnostics.md).
+
+Batch 114 adds an isolated IEC Originator-SCCP omission when OriginatorInterface
+is type1, retaining ErrUnsupported and adding ErrMissing only on Receive. Mixed
+wrong-interface failures, non-IEC, Build/Send and earlier checks remain unchanged.
+Combined slice.10 changes its digest and Bundle fingerprints; generatorv23/ops9
+and public shapes remain unchanged. See [IEC Originator-SCCP](conditional-originator-diagnostics.md).
 
 <details>
 <summary>Historical scope and implementation summary (2026-11-10)</summary>

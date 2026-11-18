@@ -166,6 +166,9 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 			return at(436, validation.ErrUnsupported)
 		}
 		if !s.OriginatorSCCPAddress.Present || s.OriginatorInterface.InterfaceType != 1 {
+			if mode == validation.Receive && !s.OriginatorSCCPAddress.Present && s.OriginatorInterface.InterfaceType == 1 {
+				return missingIECOriginator()
+			}
 			return vendorAt(2008, validation.ErrUnsupported)
 		}
 	} else {

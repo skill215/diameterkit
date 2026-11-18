@@ -72,3 +72,7 @@ The library stays pure Go with no persistence.
 
 See [remaining gaps](remaining-gaps.md), [MMS diagnostics](conditional-mms-diagnostics.md)
 and [the receipt](../spec/evidence/batch-113-sms-missing.json).
+
+[Batch 114](conditional-originator-diagnostics.md) separately adds isolated IEC
+Originator-SCCP absence with a valid existing interface condition. Wrong-interface
+and combined mixed failures remain unsupported without a missing example.
