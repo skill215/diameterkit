@@ -1,7 +1,7 @@
 {
   "batch": 114,
   "date": "2026-11-18",
-  "status": "local_verified_hosted_pending",
+  "status": "completed_selected_slice",
   "scope": "Combined isolated IEC Originator-SCCP omission",
   "checks": [
     {
@@ -762,6 +762,63 @@
       "test_subtest_seed_passes": 114,
       "test_skips": 0,
       "suite": "race"
+    },
+    {
+      "name": "cardinality-1",
+      "command": [
+        "go",
+        "test",
+        "./internal/cardinalityavp",
+        "-run=^$",
+        "-fuzz=^FuzzCardinalityQuote$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b114-cardinality-review/cardinality-1.log",
+      "status": "passed",
+      "sha256": "cdadc57dd20b82bef89039c0258cacfffd1f0202697b4f7ba0a4c4ac72f399ee",
+      "suite": "cardinality-review"
+    },
+    {
+      "name": "cardinality-2",
+      "command": [
+        "go",
+        "test",
+        "./internal/cardinalityavp",
+        "-run=^$",
+        "-fuzz=^FuzzCardinalityQuote$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b114-cardinality-review/cardinality-2.log",
+      "status": "passed",
+      "sha256": "d3a800565ce597e248c3ca705a74c2751efa9efcaf584f79b8bbf85a4a9749b9",
+      "suite": "cardinality-review"
+    },
+    {
+      "name": "cardinality-3",
+      "command": [
+        "go",
+        "test",
+        "./internal/cardinalityavp",
+        "-run=^$",
+        "-fuzz=^FuzzCardinalityQuote$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b114-cardinality-review/cardinality-3.log",
+      "status": "passed",
+      "sha256": "f708464daceb802c6e41948c6cc7bfa7dac5aa5b73271186dfe959697c693167",
+      "suite": "cardinality-review"
     }
   ],
   "coverage": {
@@ -2262,7 +2319,81 @@
     "migration": "Keep original builds for earlier recovery records. Never relabel fingerprints or published tags; immutable new-version installation remains separate."
   },
   "hosted_ci": {
-    "status": "pending"
+    "id": 44241184222,
+    "url": "https://github.com/skill215/diameterkit/actions/runs/44241184222",
+    "sha": "77a2d466610f97289ca3121b7d2930729606a303",
+    "status": "completed",
+    "conclusion": "success",
+    "attempt": 2,
+    "created_at": "2026-11-18T05:00:27Z",
+    "updated_at": "2026-11-18T05:19:45Z",
+    "scope": "Seven-suite checkout for batch114 implementation; failed fuzz job retried on unchanged source; initial failure retained separately.",
+    "hosted_fuzz_target_count": 17,
+    "jobs": [
+      {
+        "id": 134593036653,
+        "name": "checkout-fuzz",
+        "url": "https://github.com/skill215/diameterkit/actions/runs/44241184222/job/134593036653",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-18T05:10:28Z",
+        "completed_at": "2026-11-18T05:19:44Z"
+      },
+      {
+        "id": 134593038034,
+        "name": "checkout-stress",
+        "url": "https://github.com/skill215/diameterkit/actions/runs/44241184222/job/134593038034",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-18T05:00:31Z",
+        "completed_at": "2026-11-18T05:01:32Z"
+      },
+      {
+        "id": 134593038536,
+        "name": "checkout-static",
+        "url": "https://github.com/skill215/diameterkit/actions/runs/44241184222/job/134593038536",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-18T05:00:31Z",
+        "completed_at": "2026-11-18T05:00:59Z"
+      },
+      {
+        "id": 134593039110,
+        "name": "checkout-bench",
+        "url": "https://github.com/skill215/diameterkit/actions/runs/44241184222/job/134593039110",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-18T05:00:31Z",
+        "completed_at": "2026-11-18T05:00:57Z"
+      },
+      {
+        "id": 134593078097,
+        "name": "checkout-race",
+        "url": "https://github.com/skill215/diameterkit/actions/runs/44241184222/job/134593078097",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-18T05:00:31Z",
+        "completed_at": "2026-11-18T05:02:23Z"
+      },
+      {
+        "id": 134593083138,
+        "name": "checkout-cross",
+        "url": "https://github.com/skill215/diameterkit/actions/runs/44241184222/job/134593083138",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-18T05:00:31Z",
+        "completed_at": "2026-11-18T05:01:17Z"
+      },
+      {
+        "id": 134593093382,
+        "name": "checkout-pure",
+        "url": "https://github.com/skill215/diameterkit/actions/runs/44241184222/job/134593093382",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-18T05:00:31Z",
+        "completed_at": "2026-11-18T05:02:10Z"
+      }
+    ]
   },
   "targeted_fuzz": {
     "target": "FuzzVariableMinimum",
@@ -2303,5 +2434,33 @@
     "CGO_ENABLED=1 go test -race . ./compat/smsfwro/combined ./internal/missingavp -run 'Test(OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)' -count=20 -timeout=10m",
     "CGO_ENABLED=0 go test ./internal/missingavp -run '^$' -fuzz '^FuzzVariableMinimum$' -fuzztime=30s -fuzzminimizetime=5s -parallel=2 -timeout=2m",
     "python3 spec/tools/release_check.py --suite all"
-  ]
+  ],
+  "initial_hosted_failure": {
+    "run_id": 44241184222,
+    "attempt": 1,
+    "job_id": 134589219222,
+    "url": "https://github.com/skill215/diameterkit/actions/runs/44241184222/attempts/1",
+    "conclusion": "failure",
+    "failed_target": "FuzzCardinalityQuote",
+    "command": [
+      "go",
+      "test",
+      "./internal/cardinalityavp",
+      "-run=^$",
+      "-fuzz=^FuzzCardinalityQuote$",
+      "-fuzztime=30s",
+      "-fuzzminimizetime=5s",
+      "-parallel=2",
+      "-timeout=2m"
+    ],
+    "observed": "Target completed 2236632 executions then returned context deadline exceeded at the 30-second fuzz deadline. No assertion failure or saved failing input was reported. Root cause is not established by this log.",
+    "log": ".cache/b114-cardinality-review/hosted-fuzz-cardinality-minimum.log",
+    "sha256": "09d379295def75d5a0080e9ce357555e569740a1af1d09b623f163b151bb7ba0",
+    "log_text": "fuzz: elapsed: 0s, gathering baseline coverage: 0/3 completed\nfuzz: elapsed: 0s, gathering baseline coverage: 3/3 completed, now fuzzing with 2 workers\nfuzz: elapsed: 3s, execs: 217373 (72441/sec), new interesting: 6 (total: 9)\nfuzz: elapsed: 6s, execs: 441201 (74609/sec), new interesting: 7 (total: 10)\nfuzz: elapsed: 9s, execs: 668623 (75804/sec), new interesting: 7 (total: 10)\nfuzz: elapsed: 12s, execs: 891382 (74254/sec), new interesting: 7 (total: 10)\nfuzz: elapsed: 15s, execs: 1118633 (75748/sec), new interesting: 7 (total: 10)\nfuzz: elapsed: 18s, execs: 1339108 (73499/sec), new interesting: 7 (total: 10)\nfuzz: elapsed: 21s, execs: 1561754 (74217/sec), new interesting: 7 (total: 10)\nfuzz: elapsed: 24s, execs: 1784408 (74224/sec), new interesting: 11 (total: 14)\nfuzz: elapsed: 27s, execs: 2011479 (75674/sec), new interesting: 12 (total: 15)\nfuzz: elapsed: 30s, execs: 2236632 (75062/sec), new interesting: 13 (total: 16)\nfuzz: elapsed: 30s, execs: 2236632 (0/sec), new interesting: 13 (total: 16)\n--- FAIL: FuzzCardinalityQuote (30.07s)\n    context deadline exceeded\nFAIL\nexit status 1\nFAIL\tgithub.com/skill215/diameterkit/internal/cardinalityavp\t30.072s\n",
+    "artifact": {
+      "id": 14400451155,
+      "sha256": "874151deed9cd656310da1ed42a47085ca07d87a39de90ba3a09b033d48570cc"
+    },
+    "follow_up": "Three local runs with identical target arguments; retry only the failed hosted job on the same source commit. No production, fuzz target, duration or assertion changes."
+  }
 }

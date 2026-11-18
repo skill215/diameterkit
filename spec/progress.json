@@ -3,8 +3,8 @@
   "baseline": "Draft 0.115",
   "normative_spec": "doc/diameterkit-specification.md",
   "batch": "Combined isolated IEC Originator-SCCP omission",
-  "status": "in_progress",
-  "status_meaning": "Batch114 local selected/full acceptance passed; hosted checkout pending. All24 broader requirements remain partial.",
+  "status": "completed",
+  "status_meaning": "Batch114 local selected/full acceptance passed; hosted seven-suite checkout passed. All24 broader requirements remain partial.",
   "date": "2026-11-18",
   "toolchain": "go1.26.10 linux/amd64",
   "release_status": "not_ready",
@@ -520,7 +520,8 @@
     "Batch111 Combined SMS conditional Recipient-Address omission: 222 selected test/subtest passes x20 per pure/race mode; full core5647/adapter114, no skips; targeted existing V2-tree fuzz 992264 executions. Receive-only isolated conditional omission, static64-byte ancestor tree and exact envelopes/resources. Combined slice.7; generatorv23/ops9, public shapes and pure-Go/no-persistence boundary unchanged.",
     "Batch112 Combined SMS isolated MMS field omissions: 442 selected test/subtest passes x20 per pure/race mode; full core5782/adapter114, no skips; targeted existing variable-minimum fuzz 1211408 executions. Receive-only isolated conditional omission, static36/40-byte ancestor chains and exact envelopes/resources. Combined slice.8; generatorv23/ops9, public shapes and pure-Go/no-persistence boundary unchanged.",
     "Batch113 Combined isolated common SMS and termination field omissions: 612 selected test/subtest passes x20 per pure/race mode; full core5952/adapter114, no skips; targeted existing variable-minimum fuzz 1375673 executions. Receive-only isolated conditional omission, static36/40-byte ancestor chains and exact envelopes/resources. Combined slice.9; generatorv23/ops9, public shapes and pure-Go/no-persistence boundary unchanged.",
-    "Batch114 Combined isolated IEC Originator-SCCP omission: 719 selected test/subtest passes x20 per pure/race mode; full core6059/adapter114, no skips; targeted existing variable-minimum fuzz 1251698 executions. Receive-only isolated conditional omission, static36-byte ancestor chain and exact envelopes/resources. Combined slice.10; generatorv23/ops9, public shapes and pure-Go/no-persistence boundary unchanged."
+    "Batch114 Combined isolated IEC Originator-SCCP omission: 719 selected test/subtest passes x20 per pure/race mode; full core6059/adapter114, no skips; targeted existing variable-minimum fuzz 1251698 executions. Receive-only isolated conditional omission, static36-byte ancestor chain and exact envelopes/resources. Combined slice.10; generatorv23/ops9, public shapes and pure-Go/no-persistence boundary unchanged.",
+    "Hosted attempt1 failed at the FuzzCardinalityQuote 30-second deadline without an input/assertion failure. The original log is retained in the receipt, with three identical-argument local checks and the same-source hosted retry outcome; runtime code and acceptance parameters were unchanged."
   ],
   "requirements": [
     {
@@ -7372,6 +7373,63 @@
       "test_subtest_seed_passes": 114,
       "test_skips": 0,
       "suite": "race"
+    },
+    {
+      "name": "cardinality-1",
+      "command": [
+        "go",
+        "test",
+        "./internal/cardinalityavp",
+        "-run=^$",
+        "-fuzz=^FuzzCardinalityQuote$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b114-cardinality-review/cardinality-1.log",
+      "status": "passed",
+      "sha256": "cdadc57dd20b82bef89039c0258cacfffd1f0202697b4f7ba0a4c4ac72f399ee",
+      "suite": "cardinality-review"
+    },
+    {
+      "name": "cardinality-2",
+      "command": [
+        "go",
+        "test",
+        "./internal/cardinalityavp",
+        "-run=^$",
+        "-fuzz=^FuzzCardinalityQuote$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b114-cardinality-review/cardinality-2.log",
+      "status": "passed",
+      "sha256": "d3a800565ce597e248c3ca705a74c2751efa9efcaf584f79b8bbf85a4a9749b9",
+      "suite": "cardinality-review"
+    },
+    {
+      "name": "cardinality-3",
+      "command": [
+        "go",
+        "test",
+        "./internal/cardinalityavp",
+        "-run=^$",
+        "-fuzz=^FuzzCardinalityQuote$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b114-cardinality-review/cardinality-3.log",
+      "status": "passed",
+      "sha256": "f708464daceb802c6e41948c6cc7bfa7dac5aa5b73271186dfe959697c693167",
+      "suite": "cardinality-review"
     }
   ],
   "source_snapshot": [
@@ -9537,7 +9595,7 @@
     },
     {
       "path": "spec/evidence/batch-114-originator-missing.json",
-      "sha256": "bff4632cd5dd18b18e750a804d01726bf45c445715b73ddaab92392cb4c1a8dc"
+      "sha256": "40723ba3de56bcb4389c069fdf2e79192152b5a96c74884c6ceddc32ae5989fa"
     },
     {
       "path": "spec/evidence/batch-58-sctp-u3.json",
