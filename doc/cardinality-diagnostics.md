@@ -58,5 +58,34 @@ and operations v9 remain unchanged. Regenerate bindings and retain original
 builds for old recovery records. Existing published tags remain immutable.
 The library stays pure Go and introduces no persistence.
 
-SCAP1's eleven ordered service parameters and other conditional/domain/handshake
-diagnostics remain separate at this batch.
+## SCAP1 ordered parameters
+
+Batch 110 adds bounded 5005 diagnostics for the fixed SCAP1 event dialect's
+eleven Service-Parameter-Info groups. The existing minimum and maximum remain
+eleven, with ordered Parameter-Type values
+`0, 1, 5, 8, 14, 16, 17, 18, 2, 3, 13`.
+
+At the existing minimum failure, an explicit receive-only callback accepts only
+a strict ordered subsequence of these types with valid children. The consumer
+independently checks the original Vendor193 groups and observed count.
+Duplicate, unknown, negative or reordered types cannot prove a missing-instance
+diagnostic. Present empty groups retain their missing-child errors; excess groups
+retain 5009. Complete requests still undergo all existing fixed-value and
+cross-parameter checks. Build/send validation is unchanged.
+
+Each absent group contributes 40 bytes: a Vendor193 group with a zero-filled
+four-byte Parameter-Type and a present empty Parameter-Value. All eleven absent
+groups produce 440 bytes. This minimum example neither identifies a missing role
+nor supplies a valid business value. Output limits include the outer Failed-AVP
+container; input and complete-answer budgets apply separately.
+
+All 2047 proper ordered subsets are checked offline. TCP/TLS covers no groups,
+only the first group, missing the first group and missing the last group, each
+with ordinary and emergency slots. Tests check exact diagnostics, envelopes,
+held resources, non-delivery, follow-up, retirement and default-close behavior.
+The same bounded fuzz target covers both named rules.
+
+SCAP1 advances to `0.1.0-slice.3`; its definition digest and dependent Bundle
+fingerprints change. Generator v23, operations v9 and public signatures/layouts
+remain unchanged. Earlier recovery records require their original build.
+Other conditional, cardinality, domain and handshake diagnostics remain separate.

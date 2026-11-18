@@ -120,6 +120,7 @@ func TestCardinalityRefusal(t *testing.T) {
 }
 func FuzzCardinalityQuote(f *testing.F) {
 	f.Add([]byte{}, int8(0), uint16(56), false)
+	f.Add([]byte{}, int8(0), uint16(440), true)
 	f.Add([]byte{0}, int8(1), uint16(55), true)
 	f.Fuzz(func(t *testing.T, raw []byte, count int8, budget uint16, other bool) {
 		if len(raw) > 8192 {

@@ -1,6 +1,6 @@
 # Current remaining gaps
 
-This is the current implementation overview for **batch 109, Draft 0.110**
+This is the current implementation overview for **batch 110, Draft 0.111**
 (2026-11-18). [Progress](../spec/progress.json) records actual check completion;
 the broad release status remains `not_ready`. The 24 SPEC IDs span implementation,
 verification and external acceptance; their `partial` labels are not a percentage
@@ -16,7 +16,7 @@ boundaries below remain unchanged.
 
 | Area | Completed selected scope | Remaining work |
 | --- | --- | --- |
-| Error diagnostics | Selected Base and generated fixed/variable-field 5005; reviewed whole-group minima, including three groups with variable children; first-excess 5009; isolated-value 5004, unknown-M 5001 and typed-length 5014; bounded Redirect 3006; selected Proxy/VSAI leaf, condition and omission diagnostics; selected SRR conditional SM-RP-SMEA omission; combined two-subscription shortage | Other conditional/cardinality and unreviewed group omissions, domain/handshake mappings and malformed-header length diagnostics |
+| Error diagnostics | Selected Base and generated fixed/variable-field 5005; reviewed whole-group minima, including three groups with variable children; first-excess 5009; isolated-value 5004, unknown-M 5001 and typed-length 5014; bounded Redirect 3006; selected Proxy/VSAI leaf, condition and omission diagnostics; selected SRR conditional SM-RP-SMEA omission; combined two-subscription shortage and SCAP1 ordered-parameter shortage | Other conditional/cardinality and unreviewed group omissions, domain/handshake mappings and malformed-header length diagnostics |
 | Duplicate acceptance | Generic and combined cross-peer TCP/TLS tests; four-profile identity, simultaneous arrivals and shared/independent slot/byte cache acceptance | Larger tenant and mixed-transport workloads, real-target deduplication domains and durable application behavior |
 | Load acceptance | Seventeen bounded fuzz targets, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads |
 | Publication | Reviewed API/generated output and dual-module checkout CI; immutable rc.2/rc.1 installation receipts | Publish and cold-install a new reviewed core/adapter pair after the generator fingerprint transitions; planned core candidate `v0.2.0-rc.1` |
@@ -33,8 +33,9 @@ adds eleven explicit variable-field minima. [Batch 106](variable-group-diagnosti
 adds typed whole-group plans for three reviewed groups with variable children.
 [Batch 108](conditional-missing-diagnostics.md) adds receive-only evidence for the
 SRR flag-conditioned SM-RP-SMEA omission and its three-byte minimum. [Batch 109](cardinality-diagnostics.md) adds combined two-subscription shortage
-proofs and bounded examples. SCAP1 ordered-parameter shortages and other conditional,
-cardinality, domain, handshake and malformed-header mappings remain separate;
+proofs and bounded examples. Batch 110 adds SCAP1 ordered-parameter shortages,
+including all 2047 proper ordered subsets. Other conditional, cardinality, domain,
+handshake and malformed-header mappings remain separate;
 do not infer them from bare sentinels.
 Keep malformed/untrusted/resource-limit failures closed when no safe reply exists.
 

@@ -27,6 +27,8 @@ type rule struct {
 
 func selected(name string) (rule, bool) {
 	switch name {
+	case "scap1-parameters-v1":
+		return rule{avp.Key{Code: 607, VendorID: 193}, avp.Key{Code: 608, VendorID: 193}, avp.Key{Code: 609, VendorID: 193}, 192, []uint32{0, 1, 5, 8, 14, 16, 17, 18, 2, 3, 13}}, true
 	case "combined-subscriptions-v1":
 		return rule{avp.Key{Code: 443}, avp.Key{Code: 450}, avp.Key{Code: 444}, 64, []uint32{0, 1}}, true
 	}

@@ -18,7 +18,7 @@ or the [machine support matrix](../spec/release/support-matrix.json).
 | smsfwro | `0.1.0-slice.6` | CCR 4/272 | Named legacy IEC/ECUR binding; private answer/token and actual target acceptance remain separate. |
 | legacy420 | `0.1.0-slice.6` | CCR 4/272 | Explicit legacy420 debit/balance/refund; private1292 is not standard2022. |
 | combined | `0.1.0-slice.6` | CCR 4/272 | Explicit five-template 4/272 binding; mixed2018 wire form requires target agreement. |
-| scap1 | `0.1.0-slice.2` | ACR 0/271 | Named 0/271 accounting with Vendor193/Acct19302; private ACA/recovery not established. |
+| scap1 | `0.1.0-slice.3` | ACR 0/271 | Named 0/271 accounting with Vendor193/Acct19302; private ACA/recovery not established. |
 | sgdalert | `legacy-sgd-alert-v1.1` | ALR 16777313/8388648 | Delegated legacy SGd alert, not standard SGd ALR or implicit replay authorization. |
 
 There are 11 generated definitions and one delegated profile. Overlapping command

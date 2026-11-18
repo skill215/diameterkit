@@ -167,8 +167,8 @@ func profileTooMany(v wire.View, maximum int) error {
 	return validation.At(v.Key, &profileExcess{key: v.Key, flags: v.Flags, offset: v.Offset, maximum: maximum})
 }
 
-const Version = "0.1.0-slice.2"
-const DefinitionDigest = "cdb286bdf31bbbedda5ab23c6d505bde6a3dd9c216f393abbf02c6ff6a731562"
+const Version = "0.1.0-slice.3"
+const DefinitionDigest = "683e266b1eccf855c89300a9b4c1e414493b16d6acb9065149fb619a5dd70a7c"
 
 func profileErrorUnsupported() []avp.Key {
 	return []avp.Key{
@@ -1276,6 +1276,11 @@ func decodeACR(d *wire.Decoder) (*ACR, error) {
 	}
 	if seen[10] < 1 {
 		return nil, profileMissing(avp.Key{VendorID: 193, Code: 610}, 192, 4)
+	}
+	if seen[11] < 11 {
+		if err := diagnoseACRParameters(m); err != nil {
+			return nil, err
+		}
 	}
 	if seen[11] < 11 {
 		return nil, profileMissing(avp.Key{VendorID: 193, Code: 607}, 192, -1)

@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.110 — 2026-11-18, batch 109.** The [progress record](../spec/progress.json)
+**Draft 0.111 — 2026-11-18, batch 110.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -26,6 +26,12 @@ Batch 109 adds combined two-subscription shortage evidence, independently checke
 bounded examples and explicit generatorv23 receive-only minimum callbacks. Existing
 wire/cardinality rules and public shapes remain unchanged; eleven digests and
 Bundle fingerprints change. See [repeated-group diagnostics](cardinality-diagnostics.md).
+
+Batch 110 adds bounded SCAP1 ordered-parameter shortage diagnostics for all 2047
+proper ordered subsets. Existing min/max11, type order and business-value rules
+remain unchanged. SCAP1 slice.3 changes its digest and dependent Bundle fingerprints;
+generatorv23/ops9 and public shapes remain unchanged. See
+[repeated-group diagnostics](cardinality-diagnostics.md).
 
 <details>
 <summary>Historical scope and implementation summary (2026-11-10)</summary>

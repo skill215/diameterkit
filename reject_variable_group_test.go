@@ -16,7 +16,6 @@ import (
 	"github.com/skill215/diameterkit/internal/missingavp"
 	"github.com/skill215/diameterkit/pdu"
 	"github.com/skill215/diameterkit/validation"
-	"github.com/skill215/diameterkit/wire"
 	"testing"
 )
 
@@ -178,49 +177,30 @@ func TestRejectMinimumVariableGroups(t *testing.T) {
 
 func TestRejectMinimumVariableBoundaries(t *testing.T) {
 	eachNetwork(t, func(t *testing.T, encrypted bool) {
-		for _, kind := range []string{"service-parameters", "conditional-recipient", "unreviewed-sms", "default-policy"} {
+		for _, kind := range []string{"conditional-recipient", "unreviewed-sms", "default-policy"} {
 			t.Run(kind, func(t *testing.T) {
 				cfg := combinedConfig(t)
-				if kind == "service-parameters" {
-					cfg = scapRuntimeConfig(t)
-				}
 				cfg.Peers[0].InboundCommands[0].FailurePolicy = BaseErrorFailures
 				if kind == "default-policy" {
 					cfg.Peers[0].InboundCommands[0].FailurePolicy = CloseOnFailure
 				}
 				n, co := newInboundNode(t, cfg)
 				p, remote := networkConnectNode(t, n, co, encrypted)
-				var req pdu.Message
+				template := "general"
+				if kind == "conditional-recipient" {
+					template = "initial"
+				}
+				req := combinedDuplicateRequest(t, n, co, template, 10610, 20610)
 				var path []missingSelector
-				if kind == "service-parameters" {
-					var e error
-					req, e = co.CompleteRequest(scapBody(t), pdu.RequestEnvelope{OriginHost: gmscOrigin.Host, OriginRealm: gmscOrigin.Realm, DestinationHost: n.cfg.Origin.Host, DestinationRealm: n.cfg.Origin.Realm, HopByHop: 10610, EndToEnd: 20610})
-					if e != nil {
-						t.Fatal(e)
-					}
-					path = lengthPath(avp.Key{VendorID: 193, Code: 607})
-				} else {
-					template := "general"
-					if kind == "conditional-recipient" {
-						template = "initial"
-					}
-					req = combinedDuplicateRequest(t, n, co, template, 10610, 20610)
-					switch kind {
-					case "subscription-cardinality":
-						path = lengthPath(avp.Key{Code: 443})
-					case "conditional-recipient":
-						path = lengthPath(avp.Key{VendorID: 10415, Code: 873}, avp.Key{VendorID: 10415, Code: 877}, avp.Key{VendorID: 10415, Code: 1201})
-					case "unreviewed-sms":
-						path = lengthPath(avp.Key{VendorID: 10415, Code: 873}, avp.Key{VendorID: 10415, Code: 2000})
-					default:
-						path, _ = minimumVariableExample(t, "address")
-					}
+				switch kind {
+				case "conditional-recipient":
+					path = lengthPath(avp.Key{VendorID: 10415, Code: 873}, avp.Key{VendorID: 10415, Code: 877}, avp.Key{VendorID: 10415, Code: 1201})
+				case "unreviewed-sms":
+					path = lengthPath(avp.Key{VendorID: 10415, Code: 873}, avp.Key{VendorID: 10415, Code: 2000})
+				default:
+					path, _ = minimumVariableExample(t, "address")
 				}
 				raw := missingRaw(t, co, req, path, false)
-				if kind == "subscription-cardinality" {
-					raw = append(raw[:20], omitSelected(t, raw[20:], path, false)...)
-					wire.Put24(raw[1:4], uint32(len(raw)))
-				}
 				_, cause := co.Decode(raw)
 				if !errors.Is(cause, validation.ErrMissing) {
 					t.Fatal(kind, cause)

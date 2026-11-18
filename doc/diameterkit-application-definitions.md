@@ -21,7 +21,7 @@ contracts. Sh-Data XML is an explicit AVP payload layer, not the definition form
 - **smsfwro**: [`spec/smsfwro.json`](../spec/smsfwro.json), profile `smsfw-ro-iec-template-v1`, slice `0.1.0-slice.6`.
 - **legacy420**: [`spec/legacy420.json`](../spec/legacy420.json), profile `smsfw-ro-legacy420-v1`, slice `0.1.0-slice.6`.
 - **combined**: [`spec/combined.json`](../spec/combined.json), profile `smsfw-ro-five-template-wire-v1`, slice `0.1.0-slice.6`.
-- **scap1**: [`spec/scap1.json`](../spec/scap1.json), profile `smsfw-scap1-event-v1`, slice `0.1.0-slice.2`.
+- **scap1**: [`spec/scap1.json`](../spec/scap1.json), profile `smsfw-scap1-event-v1`, slice `0.1.0-slice.3`.
 - **sgdalert**: [`compat/sgdalert/profile.go`](../compat/sgdalert/profile.go), profile `legacy-sgd-alert-v1`, slice `legacy-sgd-alert-v1.1`.
 
 The [support matrix](diameterkit-support-matrix.md) lists application/command IDs
