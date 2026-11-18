@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.120 — 2026-11-18, batch 119.** The [progress record](../spec/progress.json)
+**Draft 0.121 — 2026-11-18, batch 120.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1342,4 +1342,20 @@ cover budgets, ownership, exact envelopes, no delivery and retirement.
 Combined slice.14 changes its digest and dependent Bundle fingerprints; public
 shapes, generator v23/ops9 and pure-Go/no-persistence remain unchanged.
 See the [English guide](conditional-interface-values.md) and
+[progress](../spec/progress.json). Broader requirements remain partial.
+
+## Batch 120: INITIAL/TERMINATION interface values (2026-11-18)
+
+Two existing combined ECUR Receive branches now supply static named5004 proof:
+Originator Interface-Type not3 with Destination type2, or Destination type not2
+with Originator type3, only with Requested-Action and Originator-SCCP absent.
+ErrUnsupported remains with additive ErrField and precise Vendor10415 paths
+873/2000/(2009 or2002)/2006. The consumer scans both siblings with shared source
+counts and quotes three minimal headers plus the original selected Integer32
+leaf (52 bytes). Build/Send, mixed conditions, other templates and validation
+ordering remain unchanged. TCP/TLS ordinary/emergency/default tests verify
+budgets, exact envelopes, ownership, non-delivery and retirement.
+Combined slice.15 changes its digest and dependent Bundle fingerprints; public
+shapes, generator v23/ops9 and pure-Go/no-persistence remain unchanged.
+See the [English guide](ecur-interface-values.md) and
 [progress](../spec/progress.json). Broader requirements remain partial.

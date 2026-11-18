@@ -188,6 +188,14 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 			return at(436, validation.ErrUnsupported)
 		}
 		if s.OriginatorSCCPAddress.Present || s.DestinationInterface.InterfaceType != 2 || s.OriginatorInterface.InterfaceType != 3 {
+			if mode == validation.Receive && !s.OriginatorSCCPAddress.Present {
+				if s.DestinationInterface.InterfaceType == 2 && s.OriginatorInterface.InterfaceType != 3 {
+					return invalidECURInterface(true)
+				}
+				if s.OriginatorInterface.InterfaceType == 3 && s.DestinationInterface.InterfaceType != 2 {
+					return invalidECURInterface(false)
+				}
+			}
 			return vendorAt(2008, validation.ErrUnsupported)
 		}
 	}

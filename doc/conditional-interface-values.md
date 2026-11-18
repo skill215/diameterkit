@@ -24,8 +24,10 @@ The selected failure retains `ErrUnsupported` and adds `ErrField`.
 Its Receive `FieldError.Path` now identifies Vendor 10415
 `873 / 2000 / 2009 / 2006` (Service-Information / SMS-Information /
 Originator-Interface / Interface-Type). Build and Send retain their previous
-unsupported classification and single-key 2008 path. INITIAL, TERMINATION,
-money templates, other interface fields and mixed conditions are unchanged.
+unsupported classification and single-key 2008 path. Batch 119 left INITIAL,
+TERMINATION and money templates unchanged. [Batch 120](ecur-interface-values.md)
+adds the two isolated INITIAL/TERMINATION interface-value branches. Other fields
+and mixed conditions retain their earlier boundaries.
 
 Earlier sequence, subscription, SMS/MMS, timestamp and Requested-Action failures
 keep their precedence. A later unit failure does not replace this earlier

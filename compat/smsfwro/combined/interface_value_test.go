@@ -26,7 +26,7 @@ func TestInterfaceValueModes(t *testing.T) {
 						s.OriginatorSCCPAddress = avp.Optional[[]byte]{Present: present, Value: []byte{}}
 						e := validateCCRSubset(m, mode)
 						var proof interface{ DiameterInterfaceValueV1() string }
-						want := kind == "iec" && present && value != 1 && mode == validation.Receive
+						want := (kind == "iec" && present && value != 1 || (kind == "initial" || kind == "term") && !present && value != 3) && mode == validation.Receive
 						if errors.As(e, &proof) != want {
 							t.Fatal(e)
 						}
@@ -44,7 +44,11 @@ func TestInterfaceValueModes(t *testing.T) {
 								}
 							}
 							*m = CCR{}
-							if proof.DiameterInterfaceValueV1() != "combined-iec-originator-interface-v1" {
+							name := "combined-iec-originator-interface-v1"
+							if kind != "iec" {
+								name = "combined-ecur-originator-interface-v1"
+							}
+							if proof.DiameterInterfaceValueV1() != name {
 								t.Fatal("borrowed state")
 							}
 						} else if kind == "iec" && present && value != 1 {

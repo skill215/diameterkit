@@ -22,6 +22,11 @@ type interfaceEvidence interface{ DiameterInterfaceValueV1() string }
 // Scan an entire containing AVP area, requiring one instance of each selected
 // key. Child decoders share the source counter; unrelated payload stays opaque.
 func interfaceFields(d *wire.Decoder, keys ...avp.Key) ([5]wire.View, bool) {
+	return interfaceFieldsAbsent(d, avp.Key{}, keys...)
+}
+
+// An optional forbidden key is checked in the same bounded scan.
+func interfaceFieldsAbsent(d *wire.Decoder, forbidden avp.Key, keys ...avp.Key) ([5]wire.View, bool) {
 	var values [5]wire.View
 	var seen [5]bool
 	if len(keys) == 0 || len(keys) > len(values) {
@@ -34,6 +39,9 @@ func interfaceFields(d *wire.Decoder, keys ...avp.Key) ([5]wire.View, bool) {
 		}
 		if !ok {
 			break
+		}
+		if forbidden.Code != 0 && v.Key == forbidden {
+			return values, false
 		}
 		for i, key := range keys {
 			if v.Key == key {
@@ -53,6 +61,10 @@ func interfaceFields(d *wire.Decoder, keys ...avp.Key) ([5]wire.View, bool) {
 	return values, true
 }
 func quoteInterface(src []byte, cause error, proof interfaceEvidence, limits wire.Limits, maxBytes int) ([]byte, uint32, bool) {
+	switch proof.DiameterInterfaceValueV1() {
+	case "combined-ecur-originator-interface-v1", "combined-ecur-destination-interface-v1":
+		return quoteECURInterface(src, cause, proof, limits, maxBytes)
+	}
 	var field *validation.FieldError
 	if limits.Validate() != nil || len(src) > limits.MaxFrameBytes-20 || maxBytes < 52 ||
 		limits.MaxFieldBytes < 52 || limits.MaxFrameBytes < 80 || limits.MaxAVPs < 5 || limits.MaxDepth < 4 ||

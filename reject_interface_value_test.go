@@ -48,7 +48,7 @@ func TestInterfaceValueWireMatrix(t *testing.T) {
 					}
 					_, cause := co.Decode(raw)
 					q, code, ok := excessavp.QuoteInvalid(raw[20:], cause, n.cfg.Limits, 52)
-					proof := kind == "iec" && present && value != 1
+					proof := kind == "iec" && present && value != 1 || (kind == "initial" || kind == "term") && value != 3
 					if ok != proof || ok && (code != 5004 || !bytes.Equal(q, interfaceValueQuote(t, value))) {
 						t.Fatal(cause, code, q)
 					}
@@ -175,7 +175,7 @@ func TestInterfaceValuePrecedence(t *testing.T) {
 }
 func TestRejectInterfaceValueClosed(t *testing.T) {
 	eachNetwork(t, func(t *testing.T, encrypted bool) {
-		for _, kind := range []string{"default", "mixed", "nonIEC"} {
+		for _, kind := range []string{"default", "mixed", "ecur-action-present"} {
 			for _, value := range []int32{-1, 2} {
 				t.Run(fmt.Sprintf("%s/%d", kind, value), func(t *testing.T) {
 					cfg := combinedConfig(t)
@@ -186,7 +186,7 @@ func TestRejectInterfaceValueClosed(t *testing.T) {
 					n, co := newInboundNode(t, cfg)
 					p, remote := networkConnectNode(t, n, co, encrypted)
 					template := "iec"
-					if kind == "nonIEC" {
+					if kind == "ecur-action-present" {
 						template = "initial"
 					}
 					req := combinedDuplicateRequest(t, n, co, template, 11912, 21912)
@@ -195,6 +195,10 @@ func TestRejectInterfaceValueClosed(t *testing.T) {
 					raw, _ := invalidRaw(t, co, req, originatorInterfacePath(), data[:], avp.Key{})
 					if kind == "mixed" {
 						raw = smsOmit(t, raw, 2008)
+					}
+					if kind == "ecur-action-present" {
+						raw = append(raw, invalidPart(t, avp.Key{Code: 436}, 64, []byte{0, 0, 0, 0})...)
+						wire.Put24(raw[1:4], uint32(len(raw)))
 					}
 					sendRejectRaw(t, remote, raw)
 					waitFor(t, func() bool { return !p.Info().Ready })
