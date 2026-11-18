@@ -15,6 +15,7 @@ import (
 	"github.com/skill215/diameterkit/avp"
 	"github.com/skill215/diameterkit/base"
 	"github.com/skill215/diameterkit/internal/budget"
+	"github.com/skill215/diameterkit/internal/cardinalityavp"
 	"github.com/skill215/diameterkit/internal/codecengine"
 	"github.com/skill215/diameterkit/internal/excessavp"
 	"github.com/skill215/diameterkit/internal/groupavp"
@@ -153,6 +154,9 @@ func rejectionEnvelope(src []byte, l wire.Limits) (pdu.Header, pdu.Envelope, err
 	return h, env, nil
 }
 func missingDiagnostic(cause error) ([]byte, bool) {
+	if cardinalityavp.HasEvidence(cause) {
+		return nil, false
+	}
 	// A failed explicit proof must not fall back to the older untyped examples.
 	var explicit interface {
 		DiameterMissingAVPV1() (avp.Key, byte, int, error)
@@ -243,6 +247,15 @@ func (n *Node) rejectFrame(raw []byte, maxBytes int, reason rejectReason, cause 
 	case rejectApplication:
 		code = 3007
 	case rejectDecode:
+		if cardinalityavp.HasEvidence(cause) {
+			var ok bool
+			diagnostic, ok = cardinalityavp.Quote(raw[20:], cause, n.cfg.Limits, maxBytes)
+			if !ok {
+				return nil, ErrUnsupported
+			}
+			code = 5005
+			break
+		}
 		var ok bool
 		if diagnostic, code, ok = groupavp.Quote(raw[20:], cause, n.cfg.Limits, maxBytes); ok {
 			break

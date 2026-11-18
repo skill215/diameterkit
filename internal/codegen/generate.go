@@ -22,7 +22,7 @@ import (
 )
 
 const maxDefinition = 4 << 20
-const GeneratorVersion = "22"
+const GeneratorVersion = "23"
 
 type Definition struct {
 	Format   int       `json:"format"`
@@ -59,6 +59,7 @@ type Command struct {
 	IgnoreVSAI      bool    `json:"ignore_vsai,omitempty"`
 }
 type Field struct {
+	DiagnosticMissingRule  string   `json:"diagnostic_missing_rule,omitempty"`
 	DiagnosticMinimumBytes *int     `json:"diagnostic_minimum_bytes,omitempty"`
 	Name                   string   `json:"name"`
 	Code                   uint32   `json:"code"`
@@ -197,6 +198,12 @@ func validate(d Definition) error {
 					return fmt.Errorf("invalid diagnostic minimum for %s.%s", name, f.Name)
 				}
 			}
+			if f.DiagnosticMissingRule != "" {
+				_, grouped := groups[f.Type]
+				if !identifier(f.DiagnosticMissingRule) || !grouped || f.Min < 1 || f.Max < 2 || f.DiagnosticMinimumBytes != nil || groups[f.Type].DiagnosticMinimum {
+					return fmt.Errorf("invalid missing diagnostic rule for %s.%s", name, f.Name)
+				}
+			}
 			values := make(map[uint32]bool, len(f.Values))
 			for _, value := range f.Values {
 				if values[value] {
@@ -246,6 +253,11 @@ func validate(d Definition) error {
 		return nil
 	}
 	for _, g := range d.Groups {
+		for _, f := range g.Fields {
+			if f.DiagnosticMissingRule != "" {
+				return fmt.Errorf("missing diagnostic rule requires a top-level request field")
+			}
+		}
 		if g.DiagnosticMinimumRule != "" && (!g.DiagnosticMinimum || g.Rule == "" || g.DiagnosticMinimumRule != g.Rule) {
 			return fmt.Errorf("invalid minimum rule audit for %s", g.Name)
 		}
@@ -255,6 +267,11 @@ func validate(d Definition) error {
 	}
 	keys := map[string]bool{}
 	for _, c := range d.Commands {
+		for _, f := range c.Fields {
+			if f.DiagnosticMissingRule != "" && (!c.Request || c.Rule == "" || f.DiagnosticMissingRule == c.Rule) {
+				return fmt.Errorf("missing diagnostic rule requires a separate request rule callback")
+			}
+		}
 		if c.ErrorRule != "" && (c.Request || !c.ErrorAnswer || !identifier(c.ErrorRule)) {
 			return fmt.Errorf("invalid E answer rule")
 		}
@@ -355,6 +372,11 @@ func validate(d Definition) error {
 	for _, c := range d.Commands {
 		if (c.ContextRule == "") != (c.ContextName == "") || c.ContextRule != "" && (!identifier(c.ContextRule) || !identifier(c.ContextName) || c.NoContext || symbols[c.ContextRule]) {
 			return fmt.Errorf("invalid context contract")
+		}
+		for _, f := range c.Fields {
+			if f.DiagnosticMissingRule != "" && symbols[f.DiagnosticMissingRule] {
+				return fmt.Errorf("missing rule collides with generated symbol")
+			}
 		}
 		if symbols[c.Rule] || symbols[c.AnswerRule] || symbols[c.ErrorRule] || c.AnswerRule != "" && c.AnswerRule == c.Rule {
 			return fmt.Errorf("rule collides with generated symbol")
@@ -912,6 +934,9 @@ func (w *writer) decode(name string, fs []Field) {
 	w.p("default:if v.Flags&avp.MandatoryFlag!=0{return nil,profileBadValue(v,5001,validation.ErrUnsupported)};if len(m.Extra)>=d.Limits().MaxRepeated{return nil,wire.ErrLimit};m.Extra=append(m.Extra,avp.Raw{Key:v.Key,Flags:v.Flags,Data:v.Data})}}")
 	for i, f := range fs {
 		if f.Min > 0 {
+			if f.DiagnosticMissingRule != "" {
+				w.p("if seen[%d]<%d{if err:=%s(m);err!=nil{return nil,err}}", i, f.Min, f.DiagnosticMissingRule)
+			}
 			if f.DiagnosticMinimumBytes != nil {
 				kind, width, _ := variableMinimum(f)
 				w.p("if seen[%d]==0{return nil,profileMissingVariable(%s,%d,%d,%q)}", i, key(f), f.Flags, width, kind)

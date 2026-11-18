@@ -25,7 +25,7 @@ python3 spec/tools/release_check.py --suite bench
 | pure | Both modules' tests with CGO=0, count=1 and no skipped native SCTP tests |
 | race | Both modules' tests with race instrumentation; production libraries remain cgo-independent |
 | cross | CGO=0 builds for linux/arm64, linux/386 and windows/amd64; compilation only |
-| fuzz | Sixteen targets, 30 seconds and two workers per target |
+| fuzz | Seventeen targets, 30 seconds and two workers per target |
 | stress | Fixed TCP/SCTP workloads repeated 20 times in pure and race modes |
 | bench | Eight workloads, 200 iterations per sample, five samples |
 

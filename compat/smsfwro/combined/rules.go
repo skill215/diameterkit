@@ -93,11 +93,16 @@ func validateCostInformationSubset(m *CostInformation, _ validation.Mode) error 
 func selectedSequence(kind, number uint32) bool {
 	return (kind == 1 || kind == 4) && number == 0 || kind == 3 && number == 1
 }
-func validateCCRSubset(m *CCR, _ validation.Mode) error {
+func validateCCRSubset(m *CCR, mode validation.Mode) error {
 	if !selectedSequence(m.CCRequestType, m.CCRequestNumber) {
 		return at(416, validation.ErrUnsupported)
 	}
 	if len(m.SubscriptionID) != 2 || m.SubscriptionID[0].SubscriptionIDType != 0 || m.SubscriptionID[1].SubscriptionIDType != 1 {
+		if mode == validation.Receive {
+			if err := diagnoseCCRSubscriptions(m); err != nil {
+				return err
+			}
+		}
 		return at(443, validation.ErrUnsupported)
 	}
 	var err error

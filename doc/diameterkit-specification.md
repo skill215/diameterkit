@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.109 — 2026-11-18, batch 108.** The [progress record](../spec/progress.json)
+**Draft 0.110 — 2026-11-18, batch 109.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -21,6 +21,11 @@ SM-RP-SMEA omission, with a bounded three-byte diagnostic minimum. See
 [conditional S6c omissions](conditional-missing-diagnostics.md). S6c slice.23 changes
 its digest and dependent Bundle fingerprints; generatorv22/ops9 and public shapes
 remain unchanged. Other conditional/cardinality rules require separate review.
+
+Batch 109 adds combined two-subscription shortage evidence, independently checked
+bounded examples and explicit generatorv23 receive-only minimum callbacks. Existing
+wire/cardinality rules and public shapes remain unchanged; eleven digests and
+Bundle fingerprints change. See [repeated-group diagnostics](cardinality-diagnostics.md).
 
 <details>
 <summary>Historical scope and implementation summary (2026-11-10)</summary>

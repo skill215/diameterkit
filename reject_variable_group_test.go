@@ -178,7 +178,7 @@ func TestRejectMinimumVariableGroups(t *testing.T) {
 
 func TestRejectMinimumVariableBoundaries(t *testing.T) {
 	eachNetwork(t, func(t *testing.T, encrypted bool) {
-		for _, kind := range []string{"subscription-cardinality", "service-parameters", "conditional-recipient", "unreviewed-sms", "default-policy"} {
+		for _, kind := range []string{"service-parameters", "conditional-recipient", "unreviewed-sms", "default-policy"} {
 			t.Run(kind, func(t *testing.T) {
 				cfg := combinedConfig(t)
 				if kind == "service-parameters" {

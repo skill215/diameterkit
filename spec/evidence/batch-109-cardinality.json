@@ -1,0 +1,1219 @@
+{
+  "batch": 109,
+  "date": "2026-11-18",
+  "status": "local_verified_hosted_pending",
+  "scope": "Combined two-subscription omission",
+  "checks": [
+    {
+      "name": "cardinality-diagnostics",
+      "command": [
+        "go",
+        "test",
+        ".",
+        "./compat/smsfwro/combined",
+        "./compat/scap1",
+        "./internal/cardinalityavp",
+        "./internal/codegen",
+        "-run=Test(Cardinality|RejectCardinality|ExternalCardinality)",
+        "-count=1",
+        "-json",
+        "-timeout=10m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-initial/cardinality-diagnostics.log",
+      "status": "passed",
+      "sha256": "e4240fe5de116ba196d69cce0ccf94f62b874edff78724c41dc88e924239e2e7",
+      "test_subtest_seed_passes": 76,
+      "test_skips": 0,
+      "suite": "initial"
+    },
+    {
+      "name": "cardinality-diagnostics",
+      "command": [
+        "go",
+        "test",
+        ".",
+        "./compat/smsfwro/combined",
+        "./compat/scap1",
+        "./internal/cardinalityavp",
+        "./internal/codegen",
+        "-run=Test(Cardinality|RejectCardinality)",
+        "-count=20",
+        "-json",
+        "-timeout=10m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-repeat-pure/cardinality-diagnostics.log",
+      "status": "passed",
+      "sha256": "ebbce909bca814e8f7c4275f47142b2369d486a4f221af19f7280dcfd302dcaf",
+      "test_subtest_seed_passes": 1500,
+      "test_skips": 0,
+      "suite": "repeat-pure"
+    },
+    {
+      "name": "cardinality-diagnostics",
+      "command": [
+        "go",
+        "test",
+        ".",
+        "./compat/smsfwro/combined",
+        "./compat/scap1",
+        "./internal/cardinalityavp",
+        "./internal/codegen",
+        "-run=Test(Cardinality|RejectCardinality)",
+        "-count=20",
+        "-json",
+        "-timeout=10m",
+        "-race"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-repeat-race/cardinality-diagnostics.log",
+      "status": "passed",
+      "sha256": "c53f93651ba48f9e1715fff1dd710c7156db1a6bbf9e6024611d74082becfecb",
+      "test_subtest_seed_passes": 1500,
+      "test_skips": 0,
+      "suite": "repeat-race"
+    },
+    {
+      "name": "cardinality-fuzz",
+      "command": [
+        "go",
+        "test",
+        "./internal/cardinalityavp",
+        "-run=^$",
+        "-fuzz=^FuzzCardinalityQuote$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-target-fuzz/cardinality-fuzz.log",
+      "status": "passed",
+      "sha256": "3b4d55e2ecc044f717046193a34ae71221b323d478cdf39020bde3081b163cff",
+      "suite": "target-fuzz"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
+      "suite": "static"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b109-static/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
+      "suite": "static"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-18c80_km",
+      "log": ".cache/b109-static/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-18c80_km",
+      "log": ".cache/b109-static/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b109-static/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
+      "suite": "static"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b109-static/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "ai-disclosure",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/check_ai_headers.py"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/ai-disclosure.log",
+      "status": "passed",
+      "sha256": "e44f167bfd6440bda14767dc1389bb32aee8f3db6fd5c75b5d4c314d72e69cb6",
+      "suite": "static"
+    },
+    {
+      "name": "tooling-tests",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "spec/tools",
+        "-p",
+        "test_release*.py",
+        "-v"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/tooling-tests.log",
+      "status": "passed",
+      "sha256": "addff9d985abe56fe368f9621e8d5c92d735cc0092aba48cb562d0f3ea9b280e",
+      "suite": "static"
+    },
+    {
+      "name": "support-matrix",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/check_support_matrix.py"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/support-matrix.log",
+      "status": "passed",
+      "sha256": "699c2a840bdff32563bba5792dbf610949e134ec7a22a293f90a00d105bf5fd5",
+      "suite": "static"
+    },
+    {
+      "name": "support-matrix-negative-control",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/check_support_matrix.py",
+        "--matrix",
+        "/tmp/diameterkit-ci-18c80_km/stale-matrix.json"
+      ],
+      "status": "passed",
+      "expected_failure": true,
+      "log": ".cache/b109-static/support-matrix-negative-control.log",
+      "sha256": "54d4a061f91b75bb4b453fd1599aa43d52d9951ee896a9f6b809ecd3c90ae4e2",
+      "suite": "static"
+    },
+    {
+      "name": "generator-build",
+      "command": [
+        "go",
+        "build",
+        "-o",
+        "/tmp/diameterkit-ci-18c80_km/diameter-schema",
+        "./cmd/diameter-schema"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/generator-build.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-base",
+      "command": [
+        "/tmp/diameterkit-ci-18c80_km/diameter-schema",
+        "-in",
+        "spec/base.json",
+        "-out",
+        "base/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/generated-base.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-sh",
+      "command": [
+        "/tmp/diameterkit-ci-18c80_km/diameter-schema",
+        "-in",
+        "spec/sh.json",
+        "-out",
+        "app/sh/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/generated-sh.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-s6c",
+      "command": [
+        "/tmp/diameterkit-ci-18c80_km/diameter-schema",
+        "-in",
+        "spec/s6c.json",
+        "-out",
+        "app/s6c/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/generated-s6c.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-sgd",
+      "command": [
+        "/tmp/diameterkit-ci-18c80_km/diameter-schema",
+        "-in",
+        "spec/sgd.json",
+        "-out",
+        "app/sgd/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/generated-sgd.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-ro",
+      "command": [
+        "/tmp/diameterkit-ci-18c80_km/diameter-schema",
+        "-in",
+        "spec/ro.json",
+        "-out",
+        "app/ro/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/generated-ro.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-roabort",
+      "command": [
+        "/tmp/diameterkit-ci-18c80_km/diameter-schema",
+        "-in",
+        "spec/roabort.json",
+        "-out",
+        "app/ro/abort/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/generated-roabort.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-dcca",
+      "command": [
+        "/tmp/diameterkit-ci-18c80_km/diameter-schema",
+        "-in",
+        "spec/dcca.json",
+        "-out",
+        "app/ro/dcca/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/generated-dcca.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-smsfwro",
+      "command": [
+        "/tmp/diameterkit-ci-18c80_km/diameter-schema",
+        "-in",
+        "spec/smsfwro.json",
+        "-out",
+        "compat/smsfwro/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/generated-smsfwro.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-legacy420",
+      "command": [
+        "/tmp/diameterkit-ci-18c80_km/diameter-schema",
+        "-in",
+        "spec/legacy420.json",
+        "-out",
+        "compat/smsfwro/legacy420/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/generated-legacy420.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-combined",
+      "command": [
+        "/tmp/diameterkit-ci-18c80_km/diameter-schema",
+        "-in",
+        "spec/combined.json",
+        "-out",
+        "compat/smsfwro/combined/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/generated-combined.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-scap1",
+      "command": [
+        "/tmp/diameterkit-ci-18c80_km/diameter-schema",
+        "-in",
+        "spec/scap1.json",
+        "-out",
+        "compat/scap1/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/generated-scap1.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "generated-negative-control",
+      "command": [
+        "/tmp/diameterkit-ci-18c80_km/diameter-schema",
+        "-in",
+        "/home/skill/workspace/git/diameterkit/spec/base.json",
+        "-out",
+        "/tmp/diameterkit-ci-18c80_km/stale.go",
+        "-check"
+      ],
+      "status": "passed",
+      "expected_failure": true,
+      "log": ".cache/b109-static/generated-negative-control.log",
+      "sha256": "07a41d9dcdf30442f1217646b62dc6470cdce121c0eb4d9fedc50f3f142263ef",
+      "suite": "static"
+    },
+    {
+      "name": "generator-determinism",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-json",
+        "./internal/codegen",
+        "-run",
+        "^TestGeneratedFilesCurrentAndDeterministic$"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/generator-determinism.log",
+      "status": "passed",
+      "sha256": "74094b768cb32cc0eedc1802401d366178abf84e93823bef0ccea39bfe5ecd58",
+      "test_subtest_seed_passes": 1,
+      "test_skips": 0,
+      "suite": "static"
+    },
+    {
+      "name": "api-snapshot",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/public_api_snapshot.py",
+        "--check",
+        "--workspace",
+        "/tmp/diameterkit-ci-18c80_km/go.work"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/api-snapshot.log",
+      "status": "passed",
+      "sha256": "1debc4cbb0d2bd5220fa0bdc632c40e3439560db79b82355c4d4a3c68d13dfcb",
+      "suite": "static"
+    },
+    {
+      "name": "api-negative-control",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/public_api_snapshot.py",
+        "--check",
+        "--output",
+        "/tmp/diameterkit-ci-18c80_km/stale-api.json",
+        "--workspace",
+        "/tmp/diameterkit-ci-18c80_km/go.work"
+      ],
+      "status": "passed",
+      "expected_failure": true,
+      "log": ".cache/b109-static/api-negative-control.log",
+      "sha256": "64fa65d5163692d7809a4935279b295a5c3033511bfb5244d3fa97ce72c44f4c",
+      "suite": "static"
+    },
+    {
+      "name": "core-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-static/core-vet.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "adapter-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b109-static/adapter-vet.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "static"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-pure/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
+      "suite": "pure"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b109-pure/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
+      "suite": "pure"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-xodonkhk",
+      "log": ".cache/b109-pure/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "pure"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-xodonkhk",
+      "log": ".cache/b109-pure/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "pure"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b109-pure/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
+      "suite": "pure"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b109-pure/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "pure"
+    },
+    {
+      "name": "core-pure",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-pure/core-pure.log",
+      "status": "passed",
+      "sha256": "cc66203f2c0c62c663fe6ef2fe52f1b51903cff4535b4ab251bba3b312735b5e",
+      "test_subtest_seed_passes": 5537,
+      "test_skips": 0,
+      "suite": "pure"
+    },
+    {
+      "name": "adapter-pure",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b109-pure/adapter-pure.log",
+      "status": "passed",
+      "sha256": "872274927b3a3e45b2ef9f3076b7c6f433854af1bae72a98417f856d19915b19",
+      "test_subtest_seed_passes": 114,
+      "test_skips": 0,
+      "suite": "pure"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-race/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
+      "suite": "race"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b109-race/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
+      "suite": "race"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-2k0ybena",
+      "log": ".cache/b109-race/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "race"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-2k0ybena",
+      "log": ".cache/b109-race/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "race"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b109-race/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
+      "suite": "race"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b109-race/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "suite": "race"
+    },
+    {
+      "name": "core-race",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "-race",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b109-race/core-race.log",
+      "status": "passed",
+      "sha256": "51d7069ee055d012e4d909984f93baac9f5f6db6c2310fc9382b4cc6ee1d3ffd",
+      "test_subtest_seed_passes": 5537,
+      "test_skips": 0,
+      "suite": "race"
+    },
+    {
+      "name": "adapter-race",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "-race",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b109-race/adapter-race.log",
+      "status": "passed",
+      "sha256": "0bbdf055535a28551e4b8d3fb053d6538a7e8d424db2f78a5fe983ae0dd92eb2",
+      "test_subtest_seed_passes": 114,
+      "test_skips": 0,
+      "suite": "race"
+    }
+  ],
+  "coverage": {
+    "selected_passes_per_run": 75,
+    "repetitions_per_mode": 20,
+    "pass_inventory": {
+      "repeat-pure": {
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityCombined": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/budget": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/field": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/frame": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/avps": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/depth": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/repeated": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/path": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/rule": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/count": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/negative": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/bare": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/trailing": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/nul": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/truncated": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/valid": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/optional": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/singleton": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/unbounded": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/primitive": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/identifier": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/same-rule": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/no-rule": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/answer": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/nested": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/symbol": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/minimum-plan": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TCP/mask-0/emergency-false": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TCP/mask-0/emergency-true": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TCP/mask-1/emergency-false": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TCP/mask-1/emergency-true": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TCP/mask-2/emergency-false": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TCP/mask-2/emergency-true": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TCP": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TLS/mask-0/emergency-false": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TLS/mask-0/emergency-true": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TLS/mask-1/emergency-false": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TLS/mask-1/emergency-true": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TLS/mask-2/emergency-false": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TLS/mask-2/emergency-true": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TLS": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries/unknown-type": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries/duplicate-type": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries/wrong-order": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries/empty-group": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries/excess": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries/bare": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries/send-one": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries/send-zero": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombinedDefault/TCP": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombinedDefault/TLS": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombinedDefault": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/initial/0": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/initial/1": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/initial/2": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/term/0": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/term/1": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/term/2": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/iec/0": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/iec/1": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/iec/2": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/general/0": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/general/1": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/general/2": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/balance/0": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/balance/1": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/balance/2": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/refund/0": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/refund/1": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/refund/2": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates": 20
+      },
+      "repeat-race": {
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityCombined": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/budget": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/field": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/frame": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/avps": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/depth": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/repeated": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/path": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/rule": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/count": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/negative": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/bare": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/trailing": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/nul": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal/truncated": 20,
+        "github.com/skill215/diameterkit/internal/cardinalityavp/TestCardinalityRefusal": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TCP/mask-0/emergency-false": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/valid": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/optional": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/singleton": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/unbounded": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/primitive": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/identifier": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/same-rule": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/no-rule": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/answer": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/nested": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/symbol": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition/minimum-plan": 20,
+        "github.com/skill215/diameterkit/internal/codegen/TestCardinalityMissingRuleDefinition": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TCP/mask-0/emergency-true": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TCP/mask-1/emergency-false": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TCP/mask-1/emergency-true": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TCP/mask-2/emergency-false": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TCP/mask-2/emergency-true": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TCP": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TLS/mask-0/emergency-false": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TLS/mask-0/emergency-true": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TLS/mask-1/emergency-false": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TLS/mask-1/emergency-true": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TLS/mask-2/emergency-false": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TLS/mask-2/emergency-true": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined/TLS": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombined": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries/unknown-type": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries/duplicate-type": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries/wrong-order": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries/empty-group": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries/excess": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries/bare": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries/send-one": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries/send-zero": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedDecodeBoundaries": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombinedDefault/TCP": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombinedDefault/TLS": 20,
+        "github.com/skill215/diameterkit/TestRejectCardinalityCombinedDefault": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/initial/0": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/initial/1": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/initial/2": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/term/0": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/term/1": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/term/2": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/iec/0": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/iec/1": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/iec/2": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/general/0": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/general/1": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/general/2": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/balance/0": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/balance/1": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/balance/2": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/refund/0": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/refund/1": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates/refund/2": 20,
+        "github.com/skill215/diameterkit/TestCardinalityCombinedTemplates": 20
+      }
+    },
+    "hosted_fuzz_targets": 17,
+    "network_positive_cases": 12,
+    "default_close_cases": 2,
+    "offline_template_omission_cases": 18,
+    "external_generated_callback": true
+  },
+  "assertions": [
+    "Existing structural/cardinality/value constraints remain unchanged; explicit missing callbacks cannot bypass validation when returning nil.",
+    "Private proof carries only rule identity and observed count. Consumer independently reparses original groups, child uniqueness/widths, discriminator subsequence and count.",
+    "Absent instances produce zero-filled minimum groups, never subscriber values or inferred discriminator/business content. Invalid/unreviewed/altered evidence cannot downgrade to older diagnostics.",
+    "Input and output byte/count/depth/repetition/field/frame limits are checked. Ordinary/emergency TCP/TLS covers exact bytes/envelopes, no invalid delivery, held charges, follow-up and retirement; default-close remains.",
+    "Public shapes and ops9 remain unchanged. Generatorv23 reviewed callback opt-in changes fingerprints. Production dependency DAG permits only explicit parser dependencies; pure Go and no persistence remain."
+  ],
+  "api_review": {
+    "classification": "Public signatures/layouts unchanged; reviewed Version/DefinitionDigest constants and dependent Bundle fingerprints change.",
+    "generator_version": 23,
+    "operations_version": 9,
+    "review": [
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit",
+        "source_changes": [
+          "reject.go"
+        ],
+        "documentation_change": "none"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/app/ro",
+        "source_changes": [
+          "app/ro/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/app/ro/abort",
+        "source_changes": [
+          "app/ro/abort/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/app/ro/dcca",
+        "source_changes": [
+          "app/ro/dcca/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/app/s6c",
+        "source_changes": [
+          "app/s6c/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/app/sgd",
+        "source_changes": [
+          "app/sgd/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/app/sh",
+        "source_changes": [
+          "app/sh/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/base",
+        "source_changes": [
+          "base/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/compat/scap1",
+        "source_changes": [
+          "compat/scap1/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/compat/smsfwro",
+        "source_changes": [
+          "compat/smsfwro/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/compat/smsfwro/combined",
+        "source_changes": [
+          "compat/smsfwro/combined/cardinality.go",
+          "compat/smsfwro/combined/rules.go",
+          "compat/smsfwro/combined/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/compat/smsfwro/legacy420",
+        "source_changes": [
+          "compat/smsfwro/legacy420/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit",
+        "source_changes": [
+          "reject.go"
+        ],
+        "documentation_change": "none"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/app/ro",
+        "source_changes": [
+          "app/ro/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/app/ro/abort",
+        "source_changes": [
+          "app/ro/abort/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/app/ro/dcca",
+        "source_changes": [
+          "app/ro/dcca/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/app/s6c",
+        "source_changes": [
+          "app/s6c/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/app/sgd",
+        "source_changes": [
+          "app/sgd/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/app/sh",
+        "source_changes": [
+          "app/sh/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/base",
+        "source_changes": [
+          "base/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/compat/scap1",
+        "source_changes": [
+          "compat/scap1/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/compat/smsfwro",
+        "source_changes": [
+          "compat/smsfwro/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/compat/smsfwro/combined",
+        "source_changes": [
+          "compat/smsfwro/combined/cardinality.go",
+          "compat/smsfwro/combined/rules.go",
+          "compat/smsfwro/combined/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/compat/smsfwro/legacy420",
+        "source_changes": [
+          "compat/smsfwro/legacy420/zz_generated_messages.go"
+        ],
+        "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
+      }
+    ],
+    "version_choice": "Combined slice.6; planned core v0.2.0-rc.1 unchanged.",
+    "migration": "Retain original builds for earlier recovery records. Never relabel fingerprints or published tags; immutable new-version installation remains separate."
+  },
+  "hosted_ci": {
+    "status": "pending"
+  },
+  "targeted_fuzz": {
+    "executions": 1474059,
+    "seconds": 30,
+    "workers": 2,
+    "minimization": "5s",
+    "package_timeout": "2m",
+    "log": ".cache/b109-target-fuzz/cardinality-fuzz.log",
+    "sha256": "3b4d55e2ecc044f717046193a34ae71221b323d478cdf39020bde3081b163cff"
+  },
+  "source_sha256": {
+    "app/ro/abort/zz_generated_messages.go": "77e224ba7a18d0b354b775d67ba4250938f8ec224db261e941ba478ce001f1f1",
+    "app/ro/dcca/zz_generated_messages.go": "248b6b60f4d08733e30488c4059a252f34f2dcb83a6e52063efbd8be5b5d2f88",
+    "app/ro/zz_generated_messages.go": "16a33aba73df40c9f8356c6254fe7a497751286df2557f3dc97908f2bc69fff3",
+    "app/s6c/zz_generated_messages.go": "bac87cf0fe61d21ffa0a8821fb2d46fad70f1e4e967eb54c989588dc46b69254",
+    "app/sgd/zz_generated_messages.go": "3ae167cf64e4b4a73be324cc7bdbaabf33a2e1ec72230ee874a3c227e1971d71",
+    "app/sh/zz_generated_messages.go": "d6779d0d943f4546e04e12c874d233a326aff90df97458b5c8bf445e11266896",
+    "architecture_test.go": "9e4da9aabc4d196c0c2a5266c9a00c50125c6bc49198f619ccb4fb4b08906819",
+    "base/zz_generated_messages.go": "ec9a68b52e732cd357371e3487903f9412fbc1c2cc195844091aa2d52ef5a985",
+    "compat/scap1/zz_generated_messages.go": "dd6883806945d33f90799347fc959dd93876dcdaf6a86c82aae080359acca41e",
+    "compat/smsfwro/combined/cardinality.go": "f9e2abb47341842162f12bd501594fbe043fceec5cfdbf3fd9c19ec2a5373282",
+    "compat/smsfwro/combined/rules.go": "49233aac561f6573f769660ef9d8bf456f194ba8f4cee51308136037ecbe02a0",
+    "compat/smsfwro/combined/zz_generated_messages.go": "e4597b84a61613e3eaa0cc8aa1a4ab7205440525de21bf131c04e7c0d2c41b43",
+    "compat/smsfwro/legacy420/zz_generated_messages.go": "e78de5792dea69282af1abb2d1849b688c96892ccf84659a8cd9fba0084f2101",
+    "compat/smsfwro/zz_generated_messages.go": "bcf84c86ffef3297c16d42f472e4ae5c878dbbc3b13173d5b9362063b9a4aed7",
+    "doc/README.md": "18095ce7823f475ef1e86c4497217b28978cf7120581bbc81c2436d486ebb981",
+    "doc/cardinality-diagnostics.md": "57b4d0a53f1a295c5fd56dbb08911ebc3329005af3b27697d63142054c42e546",
+    "doc/diameterkit-application-definitions.md": "9b4d6c622d094e77b037f9cbd175acdda9648b3a192ee0a7d4d17a6494b3d5dc",
+    "doc/diameterkit-specification.md": "c1d18932333b716628623d0b2a4f8813992d63de998656141f663fb30758d1e4",
+    "doc/diameterkit-support-matrix.md": "19f04a89cca1b0fe93e24cc020a153846795f89a3e7f61cdd9063170c81697e1",
+    "doc/load-checks.md": "5987d22cfdaa926f80ff0c2cb45f25a18a68728ad0e42c4a7ae2184ec49b0eae",
+    "doc/release-checks.md": "c5ea91a2134ec77d0c27afc34102b1a7095a25b32453c5daacde911c59512d6f",
+    "doc/remaining-gaps.md": "c1cf2189b16cc65f2f0f86f06acf73f958fde3348fda91e941df4e833903eade",
+    "internal/cardinalityavp/quote.go": "80e012cdb83ca06601fadf4c37754b3ff72cf279f7df3645ad5707ff2361fe1c",
+    "internal/cardinalityavp/quote_test.go": "6d817d97a38b9cc128f5ba2699900be3988115439a6760119d7b7a6b48ae3c17",
+    "internal/codegen/cardinality_test.go": "df1c4d85dffc4250dd316b3ce5bd47c89944d4c32cc72c8b7bf005479f6703c2",
+    "internal/codegen/generate.go": "58ba42e99f927bff8c7fd9fd3f9c6ec04b8c606bc4e251a5653a29ea910491a8",
+    "reject.go": "56cc2dcca876d760492ca61576944fe86ceae29464236771f9d82838f2ea275e",
+    "reject_cardinality_test.go": "3c1ba0270d969824d3684319f0b575b47a9d798b1a962b0d11f76f051d86d8fd",
+    "reject_variable_group_test.go": "f5ed49ce59ab0827415f356f5b2a029ed3708695ab0850253cbab06790d25843",
+    "spec/combined.json": "0b0552b4d916af52da8b612236198d6317c10d2957628bff325f0ca2cd06c5c7",
+    "spec/history/batch-108.json": "ec2f0862680c3426ba4d43e810966b9fd3c8339a838f2d9c010f004f1b83cc31",
+    "spec/release/public-api.json": "4910daac7cea7182fba50def3e7c34e1ee2e350d2b515943eb7ac58f5c34d67b",
+    "spec/release/support-matrix.json": "f987a37a46f952505c426246aac931e54a75801defbed4402d51e41b42735716",
+    "spec/tools/load_checks.py": "cb499f4452ec1603a5dcf6fdeb17c189b883154837de8af3e9b58ff72659b1fa"
+  },
+  "remaining": [
+    "SCAP1 eleven ordered service-parameter shortages with explicit rule evidence.",
+    "Other conditional/cardinality/unreviewed groups and domain/handshake/malformed-header diagnostic mappings.",
+    "New immutable core/adapter publication and cold GOWORK=off/no-replace installation.",
+    "Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence."
+  ],
+  "reproduce": [
+    "CGO_ENABLED=0 go test . ./internal/cardinalityavp ./internal/codegen -run 'Test(Cardinality|RejectCardinality)' -count=20",
+    "CGO_ENABLED=1 go test -race . ./internal/cardinalityavp ./internal/codegen -run 'Test(Cardinality|RejectCardinality)' -count=20",
+    "CGO_ENABLED=0 go test ./internal/cardinalityavp -run '^$' -fuzz '^FuzzCardinalityQuote$' -fuzztime=30s -fuzzminimizetime=5s -parallel=2 -timeout=2m",
+    "python3 spec/tools/release_check.py --suite all"
+  ],
+  "initial_corrections": {
+    "fixture": "Excess insertion moved after the second valid group; default-close policy explicitly configured.",
+    "architecture": "Added reviewed internal/cardinalityavp -> avp/validation/wire and root -> internal/cardinalityavp edges; no blanket whitelist or assertion removal.",
+    "logs": {
+      ".cache/b109-initial-fixture-failure/cardinality-diagnostics.log": "49ccfb56b1ddcf51ec94400084e914727bbb8cb3eba2c12d5c7a1da97fc35470",
+      ".cache/b109-pure-boundary-failure/core-pure.log": "cd2cb65dbd6e669c2ae0aec1a9ea206b6c3e73257799bbeb6842136756b79272",
+      ".cache/b109-race-boundary-failure/core-race.log": "dae880eb667c7df3c925862116e5748baee8ef380f5502b1af1909f547366cbf"
+    }
+  }
+}
