@@ -2,7 +2,7 @@
   "format": 1,
   "package": "combined",
   "profile": "smsfw-ro-five-template-wire-v1",
-  "version": "0.1.0-slice.10",
+  "version": "0.1.0-slice.11",
   "sources": [
     "Actual sms-fw five CCR templates, AvpsTemplate/AvpImpl/dia-message sources and frozen batch41-44 source projections. spec/batch-47.md defines explicit combined deployment boundary; not standard Ro.",
     "One static App4/272 schema. Vendor0 CCR/456/437/420 remains Grouped money and413 is separate. 10415/873/2000/2018 always owned opaque wire octets: general builder supplies exact RFC Address bytes00017f000001; IEC/ECUR builders supply unchanged SMSC STRING bytes; refund omits. Rules validate template presence/value relations, never select a decoder by action, length or content. No implicit text/address conversion.",
@@ -15,7 +15,8 @@
     "Batch111: receive-only bounded Recipient-Address minimum under the existing SMS MMS condition, with all other conditional MMS fields present. Reuses reviewed Address Int32/zero-octet V2 metadata; no wire cardinality or business-value changes; Build/Send retain their original error.",
     "Batch112: isolated receive-only SMS MMS omissions for SubmissionTime, Priority, UserDataLength, SMSKey and StatusReportRequest. Exact existing four-byte scalar or zero-octet minima; all other conditional MMS fields present. Multiple omissions, wire rules, business values and Build/Send behavior remain unchanged.",
     "Batch113: receive-only isolated common SMS condition fields2018/2010/2017/2011/2015 and TERMINATION fields2014/2012. Existing four-byte scalar or zero-octet minima, no parsing of2018 opaque bytes. Multiple omissions within a condition, earlier-failure ordering, wire rules and Build/Send remain unchanged.",
-    "Batch114: IEC Receive-only Originator-SCCP omission when the existing OriginatorInterface type1 condition is satisfied. Explicit zero-octet minimum and original ErrUnsupported classification retained with ErrMissing. Wrong interface, simultaneous mixed failures, nonIEC, Build/Send, wire grammar and earlier validation order remain unchanged."
+    "Batch114: IEC Receive-only Originator-SCCP omission when the existing OriginatorInterface type1 condition is satisfied. Explicit zero-octet minimum and original ErrUnsupported classification retained with ErrMissing. Wrong interface, simultaneous mixed failures, nonIEC, Build/Send, wire grammar and earlier validation order remain unchanged.",
+    "Batch115: Receive-only whole MMS-Information omission for INITIAL, TERMINATION and IEC SMS templates at the existing condition. Explicit V2 minimum with the structural Originator-Address, all six conditional children and both address subgroups; zero scalar and zero-octet minima are diagnostic sizes, not inferred business values. Build/Send, money templates, present incomplete groups and validation order remain unchanged."
   ],
   "groups": [
     {

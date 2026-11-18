@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.115 — 2026-11-18, batch 114.** The [progress record](../spec/progress.json)
+**Draft 0.116 — 2026-11-18, batch 114.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1274,3 +1274,13 @@ Batch104 minimum-group diagnostics: generatorv20 compiles explicit minimum child
 Batch105 variable-field minima: generatorv21 validates eleven explicit zero/one-byte minimum declarations across five definitions. Bounded5005 type/path evidence, external propagation and ordinary/emergency TCP/TLS are verified. See the [English guide](variable-missing-diagnostics.md) and [receipt](../spec/evidence/batch-105-variable-omissions.json). Existing wire rules/slices, public shapes and ops9 stay unchanged; eleven digests and Bundle fingerprints change. Regenerate external bindings and retain original builds for recovery. Variable children inside whole-group minima and other conditional/cardinality/domain/handshake mappings remain separate. README and historical benchmark are unchanged. No immutable version published; pure Go/no persistence remain. Current progress is Draft0.106.
 
 Batch106 variable-child group minima: generatorv22 compiles typed V2 minimum trees for three reviewed groups with explicit variable children and named-rule audits. Bounded5005 construction, legacy fixed-only V1 compatibility, external propagation and ordinary/emergency TCP/TLS are verified. See the [English guide](variable-group-diagnostics.md) and [receipt](../spec/evidence/batch-106-variable-groups.json). Existing wire rules/slices, public shapes and ops9 stay unchanged; eleven digests and Bundle fingerprints change. Regenerate bindings and retain original builds for recovery. Conditional presence, minimum-count rules and unreviewed groups remain separate; audit markers cannot prove Go rule semantics. README and historical benchmark unchanged. No immutable version published; pure Go/no persistence remain. Current progress is Draft0.107.
+
+## Batch 115: conditional whole MMS omission (2026-11-18)
+
+The selected SMS Receive whole-group branch now supplies a 180-byte V2 example,
+including structural Originator-Address and six conditional MMS children. The
+existing consumer enforces 14 AVPs/depth 4 including Failed-AVP and complete
+answer limits separately. Combined slice.11 changes definition fingerprints;
+public shapes, generator v23/ops9 and pure-Go/no-persistence boundaries remain.
+See [the English guide](conditional-mms-group-diagnostics.md) and
+[actual acceptance progress](../spec/progress.json). Broader requirements remain partial.

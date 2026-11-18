@@ -34,3 +34,5 @@ have their own [release record](releases/v0.1.0-rc.md).
 - [Bounded fuzz, stress and benchmark methodology](load-checks.md)
 - [Specification, progress and historical evidence](../spec/README.md)
 - [AI authorship and review limits](../AI_DISCLOSURE.md)
+
+[Conditional whole MMS omission](conditional-mms-group-diagnostics.md) documents the bounded SMS-template group minimum.

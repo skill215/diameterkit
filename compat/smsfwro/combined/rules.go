@@ -147,6 +147,9 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 		return vendorAt(2018, validation.ErrField)
 	}
 	if !m.ServiceInformation.MMSInformation.Present {
+		if mode == validation.Receive {
+			return missingSMSMMSGroup()
+		}
 		return vendorAt(877, validation.ErrMissing)
 	}
 	mm := m.ServiceInformation.MMSInformation.Value

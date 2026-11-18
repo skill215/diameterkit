@@ -65,3 +65,6 @@ See [remaining gaps](remaining-gaps.md) and [the receipt](../spec/evidence/batch
 
 [Batch 113](conditional-sms-diagnostics.md) separately adds common SMS and
 termination-only isolated omissions, preserving the existing first-failure order.
+
+[Batch 115](conditional-mms-group-diagnostics.md) adds the SMS-template whole MMS
+omission. Present incomplete groups keep their previously reviewed boundaries.
