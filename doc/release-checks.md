@@ -21,11 +21,11 @@ python3 spec/tools/release_check.py --suite bench
 
 | Suite | Acceptance |
 | --- | --- |
-| static | Tool negative controls, 11 generated outputs and determinism, Linux/Windows public API snapshots, both modules' vet, AI header checks |
+| static | Tool and support-matrix negative controls, all12 binding metadata, 11 generated outputs and determinism, Linux/Windows public API snapshots, both modules' vet, AI header checks |
 | pure | Both modules' tests with CGO=0, count=1 and no skipped native SCTP tests |
 | race | Both modules' tests with race instrumentation; production libraries remain cgo-independent |
 | cross | CGO=0 builds for linux/arm64, linux/386 and windows/amd64; compilation only |
-| fuzz | Thirteen targets, 30 seconds and two workers per target |
+| fuzz | Sixteen targets, 30 seconds and two workers per target |
 | stress | Fixed TCP/SCTP workloads repeated 20 times in pure and race modes |
 | bench | Eight workloads, 200 iterations per sample, five samples |
 
@@ -38,7 +38,7 @@ The runner creates a temporary workspace containing both checkout modules. A
 version-specific core replacement explicitly selects the current source; it does
 not represent an installable dependency. The graph must contain exactly the two
 checkout modules and pinned SCTP upstream, with no upstream replacement. Temporary
-workspace files are removed; module manifests, sums and the API baseline are protected.
+workspace files are removed; module manifests, sums, the API baseline and the support matrix are protected.
 
 CI has seven Ubuntu jobs, read-only repository permissions, pinned Action commits,
 a 20-minute limit per suite and 14-day success/failure artifacts. A new run on the

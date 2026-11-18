@@ -2,7 +2,7 @@
 // SPDX-AI-Model: Unrecorded; see AI_DISCLOSURE.md
 // SPDX-AI-Provider: OpenAI
 // SPDX-AI-Scope: Library code generated and revised with Codex under maintainer direction.
-// SPDX-AI-Date: 2026-11-16
+// SPDX-AI-Date: 2026-11-18
 
 // Package s6c contains bounded SMS routing, reporting and alert codec slices.
 // Each command has its own selected result and field branches.
@@ -88,6 +88,9 @@ func validateSRRSubset(m *SRR, mode validation.Mode) error {
 		return validation.At(smsKey(3310), validation.ErrUnsupported)
 	}
 	if m.SRRFlags.Present && m.SRRFlags.Value&1 != 0 && !m.SMRPSMEA.Present {
+		if mode == validation.Receive {
+			return validation.At(smsKey(3309), &srrSMEAMissing{flags: m.SRRFlags.Value})
+		}
 		return validation.At(smsKey(3309), validation.ErrMissing)
 	}
 	if m.SMRPSMEA.Present {

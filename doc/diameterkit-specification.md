@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.108 — 2026-11-18, batch 107.** The [progress record](../spec/progress.json)
+**Draft 0.109 — 2026-11-18, batch 108.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -15,6 +15,12 @@ Batch 107 repairs eight stale current support-matrix definition hashes and adds
 a check-only gate for all twelve bindings, identities, versions, request metadata
 and counts. See [support matrix checks](support-matrix-checks.md). Historical
 receipts, Go APIs, fingerprints and published tags retain their original meaning.
+
+Batch 108 adds receive-only named evidence for the selected SRR flag-conditioned
+SM-RP-SMEA omission, with a bounded three-byte diagnostic minimum. See
+[conditional S6c omissions](conditional-missing-diagnostics.md). S6c slice.23 changes
+its digest and dependent Bundle fingerprints; generatorv22/ops9 and public shapes
+remain unchanged. Other conditional/cardinality rules require separate review.
 
 <details>
 <summary>Historical scope and implementation summary (2026-11-10)</summary>

@@ -2,10 +2,11 @@
 // SPDX-AI-Model: GPT-6
 // SPDX-AI-Provider: OpenAI
 // SPDX-AI-Scope: Bounded missing-AVP decode evidence and diagnostic construction.
-// SPDX-AI-Date: 2026-11-16
+// SPDX-AI-Date: 2026-11-18
 
 // Package missingavp carries schema-known omissions through generated decoders.
-// Evidence contains schema metadata; it never retains request bytes or values.
+// Evidence contains schema metadata and selected scalar condition facts, never
+// borrowed request buffers or subscriber values.
 package missingavp
 
 import (
@@ -77,8 +78,12 @@ func Quote(err error, limits wire.Limits, maxBytes int) ([]byte, bool) {
 		if key.VendorID != 0 {
 			size += 4
 		}
+		conditional, conditioned := p.(conditionalEvidence)
+		if conditioned && (child != nil || count != 1 || kind != "" || !conditionalMinimum(conditional, key, flags, width)) {
+			return nil, false
+		}
 		if child == nil {
-			if kind != "" && !variableWidth(kind, width) || kind == "" && width != 4 && width != 8 {
+			if !conditioned && (kind != "" && !variableWidth(kind, width) || kind == "" && width != 4 && width != 8) {
 				return nil, false
 			}
 			size += (width + 3) &^ 3

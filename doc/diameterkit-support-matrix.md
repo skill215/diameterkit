@@ -10,7 +10,7 @@ or the [machine support matrix](../spec/release/support-matrix.json).
 | --- | --- | --- | --- |
 | base | `0.1.0-slice.8` | CER 0/257, DWR 0/280, DPR 0/282 | Selected control/envelope rules; not a general proxy or redirect engine. |
 | sh | `0.1.0-slice.11` | UDR 16777217/306, PUR 16777217/307, SNR 16777217/308, PNR 16777217/309 | Ref11/12/24/25 payload helpers; no full XSD, HSS database or subscription service. |
-| s6c | `0.1.0-slice.22` | SRR 16777312/8388647, RDR 16777312/8388649, ALR 16777312/8388648 | Ordinary and named IMS/T4/Router slices; explicit purpose/role evidence; no delivery or SBI client. |
+| s6c | `0.1.0-slice.23` | SRR 16777312/8388647, RDR 16777312/8388649, ALR 16777312/8388648 | Ordinary and named IMS/T4/Router slices; explicit purpose/role evidence; no delivery or SBI client. |
 | sgd | `0.1.0-slice.15` | OFR 16777313/8388645, TFR 16777313/8388646 | Selected MO/MT and named extensions; TPDU opaque; no automatic forwarding/retry service. |
 | ro | `0.1.0-slice.6` | CCR 4/272 | SMS IEC debit and no-UPDATE ECUR; no general standard SMS refund/balance sender. |
 | dcca | `0.1.0-slice.1` | CCR 4/272 | Independent single-service EVENT debit/balance/refund; not full RFC8506 or SMS semantics. |

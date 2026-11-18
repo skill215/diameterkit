@@ -1,6 +1,6 @@
 # Current remaining gaps
 
-This is the current implementation overview for **batch 107, Draft 0.108**
+This is the current implementation overview for **batch 108, Draft 0.109**
 (2026-11-18). [Progress](../spec/progress.json) records actual check completion;
 the broad release status remains `not_ready`. The 24 SPEC IDs span implementation,
 verification and external acceptance; their `partial` labels are not a percentage
@@ -16,9 +16,9 @@ boundaries below remain unchanged.
 
 | Area | Completed selected scope | Remaining work |
 | --- | --- | --- |
-| Error diagnostics | Selected Base and generated fixed/variable-field 5005; reviewed whole-group minima, including three groups with variable children; first-excess 5009; isolated-value 5004, unknown-M 5001 and typed-length 5014; bounded Redirect 3006; selected Proxy/VSAI leaf, condition and omission diagnostics | Other conditional/cardinality and unreviewed group omissions, domain/handshake mappings and malformed-header length diagnostics |
+| Error diagnostics | Selected Base and generated fixed/variable-field 5005; reviewed whole-group minima, including three groups with variable children; first-excess 5009; isolated-value 5004, unknown-M 5001 and typed-length 5014; bounded Redirect 3006; selected Proxy/VSAI leaf, condition and omission diagnostics; selected SRR conditional SM-RP-SMEA omission | Other conditional/cardinality and unreviewed group omissions, domain/handshake mappings and malformed-header length diagnostics |
 | Duplicate acceptance | Generic and combined cross-peer TCP/TLS tests; four-profile identity, simultaneous arrivals and shared/independent slot/byte cache acceptance | Larger tenant and mixed-transport workloads, real-target deduplication domains and durable application behavior |
-| Load acceptance | Fifteen bounded fuzz targets, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads |
+| Load acceptance | Sixteen bounded fuzz targets, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads |
 | Publication | Reviewed API/generated output and dual-module checkout CI; immutable rc.2/rc.1 installation receipts | Publish and cold-install a new reviewed core/adapter pair after the generator fingerprint transitions; planned core candidate `v0.2.0-rc.1` |
 
 The selected combined cross-peer and mixed-profile cache slice is now covered by
@@ -31,7 +31,8 @@ pairs and minimum Proxy omission examples. [Batch 104](minimum-group-diagnostics
 adds explicitly reviewed whole-group minima. [Batch 105](variable-missing-diagnostics.md)
 adds eleven explicit variable-field minima. [Batch 106](variable-group-diagnostics.md)
 adds typed whole-group plans for three reviewed groups with variable children.
-Next, prioritize selected conditional missing fields with explicit rule evidence. Other conditional,
+[Batch 108](conditional-missing-diagnostics.md) adds receive-only evidence for the
+SRR flag-conditioned SM-RP-SMEA omission and its three-byte minimum. Other conditional,
 cardinality, domain, handshake and malformed-header mappings remain separate;
 do not infer them from bare sentinels.
 Keep malformed/untrusted/resource-limit failures closed when no safe reply exists.

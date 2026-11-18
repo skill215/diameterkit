@@ -13,7 +13,7 @@ contracts. Sh-Data XML is an explicit AVP payload layer, not the definition form
 
 - **base**: [`spec/base.json`](../spec/base.json), profile `base-rfc6733-controls-slice-v1`, slice `0.1.0-slice.8`.
 - **sh**: [`spec/sh.json`](../spec/sh.json), profile `sh-29.329-sms-opaque-slice-v1`, slice `0.1.0-slice.11`.
-- **s6c**: [`spec/s6c.json`](../spec/s6c.json), profile `s6c-29.338-ordinary-mme-slice-v1`, slice `0.1.0-slice.22`.
+- **s6c**: [`spec/s6c.json`](../spec/s6c.json), profile `s6c-29.338-ordinary-mme-slice-v1`, slice `0.1.0-slice.23`.
 - **sgd**: [`spec/sgd.json`](../spec/sgd.json), profile `sgd-gdd-29.338-ordinary-slice-v1`, slice `0.1.0-slice.15`.
 - **ro**: [`spec/ro.json`](../spec/ro.json), profile `ro-32.299-sms-iec-slice-v1`, slice `0.1.0-slice.6`.
 - **dcca**: [`spec/dcca.json`](../spec/dcca.json), profile `dcca-rfc4006-single-event-v1`, slice `0.1.0-slice.1`.

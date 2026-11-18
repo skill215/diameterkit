@@ -22,6 +22,7 @@ FUZZ_TARGETS = [
     ("manual-diagnostic", ".", "./base", "FuzzManualDiagnostics"),
     ("group-constraint", ".", "./internal/groupavp", "FuzzGroupQuote"),
     ("variable-minimum", ".", "./internal/missingavp", "FuzzVariableMinimum"),
+    ("conditional-minimum", ".", "./internal/missingavp", "FuzzConditionalMinimum"),
     ("variable-group-minimum", ".", "./internal/missingavp", "FuzzMinimumVariableTree"),
     ("minimum-group", ".", "./internal/missingavp", "FuzzMinimumTree"),
     ("shdata", ".", "./app/sh/shdata", "FuzzParse"),
