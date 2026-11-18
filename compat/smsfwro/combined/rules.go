@@ -144,8 +144,10 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 	}
 	mm := m.ServiceInformation.MMSInformation.Value
 	if !mm.RecipientAddress.Present || !mm.SubmissionTime.Present || !mm.Priority.Present || !mm.UserDataLength.Present || !mm.SMSKey.Present || !mm.StatusReportRequest.Present {
-		if mode == validation.Receive && !mm.RecipientAddress.Present && mm.SubmissionTime.Present && mm.Priority.Present && mm.UserDataLength.Present && mm.SMSKey.Present && mm.StatusReportRequest.Present {
-			return missingSMSRecipientAddress()
+		if mode == validation.Receive {
+			if err := missingSMSMMSField(&mm); err != nil {
+				return err
+			}
 		}
 		return vendorAt(877, validation.ErrMissing)
 	}

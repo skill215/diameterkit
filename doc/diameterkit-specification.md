@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.112 — 2026-11-18, batch 111.** The [progress record](../spec/progress.json)
+**Draft 0.113 — 2026-11-18, batch 112.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -38,6 +38,13 @@ typed V2 minimum-group evidence. Receive-only, all other conditional MMS fields
 present; Build/Send and business constraints unchanged. Combined slice.7 changes
 its digest and dependent Bundle fingerprints; generatorv23/ops9 and public shapes
 remain unchanged. See [conditional Recipient-Address](conditional-recipient-diagnostics.md).
+
+Batch 112 adds five isolated combined SMS MMS field omissions through existing
+fixed-width and explicit zero-octet evidence. All63 nonempty absence combinations
+per template are checked; simultaneous omissions and whole MMS absence remain
+separate. Combined slice.8 changes its digest and Bundle fingerprints, with
+generatorv23/ops9, public shapes and Build/Send unchanged. See
+[conditional MMS fields](conditional-mms-diagnostics.md).
 
 <details>
 <summary>Historical scope and implementation summary (2026-11-10)</summary>

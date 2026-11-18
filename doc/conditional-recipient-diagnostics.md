@@ -79,3 +79,6 @@ The library stays pure Go and introduces no persistence.
 
 See [remaining gaps](remaining-gaps.md), [typed minimum groups](variable-group-diagnostics.md)
 and [the batch receipt](../spec/evidence/batch-111-recipient-missing.json).
+
+[Batch 112](conditional-mms-diagnostics.md) adds the other five isolated MMS field
+omissions. The Recipient-Address path and multiple-omission boundary above remain.

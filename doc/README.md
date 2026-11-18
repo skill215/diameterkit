@@ -18,7 +18,7 @@ have their own [release record](releases/v0.1.0-rc.md).
 
 | Topic | Guides |
 | --- | --- |
-| Missing fields | [Fixed-width 5005](missing-avp-diagnostics.md), [minimum Grouped examples](minimum-group-diagnostics.md), [variable-field minima](variable-missing-diagnostics.md), [groups with variable children](variable-group-diagnostics.md), [conditional S6c omissions](conditional-missing-diagnostics.md), [repeated-group omissions](cardinality-diagnostics.md), [conditional Recipient-Address](conditional-recipient-diagnostics.md) |
+| Missing fields | [Fixed-width 5005](missing-avp-diagnostics.md), [minimum Grouped examples](minimum-group-diagnostics.md), [variable-field minima](variable-missing-diagnostics.md), [groups with variable children](variable-group-diagnostics.md), [conditional S6c omissions](conditional-missing-diagnostics.md), [repeated-group omissions](cardinality-diagnostics.md), [conditional Recipient-Address](conditional-recipient-diagnostics.md), [conditional MMS fields](conditional-mms-diagnostics.md) |
 | Invalid fields | [First-excess 5009](excess-avp-diagnostics.md), [5004/5001](invalid-avp-diagnostics.md), [typed-length 5014](length-avp-diagnostics.md) |
 | Common groups | [Handwritten Proxy/VSAI](manual-group-diagnostics.md), [VSAI conditions and Proxy omissions](group-constraint-diagnostics.md) |
 | Redirects | [Bounded 3006 and URI validation](redirect-handling.md) |
