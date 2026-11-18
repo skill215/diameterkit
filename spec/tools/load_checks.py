@@ -114,19 +114,23 @@ def mixed_pressure_samples(raw):
 
 
 FUZZ_EXECUTIONS = 1_000_000
+# Go1.26.10 minimizeBytes checks shouldStop before a byte's 32 printable
+# candidates, not between them. Each of two workers can finish up to31 extra
+# calls. Keep a finite reviewed allowance, not an arbitrary percentage.
+FUZZ_MAX_EXECUTIONS = FUZZ_EXECUTIONS + 2 * 31
 
 
 def fuzz_measurements(raw):
     """Require the count budget and actual fuzzing; never reinterpret failures."""
     counts = re.findall(r"^fuzz: elapsed: .*?, execs:\s*(\d+)\b", raw, re.M)
-    if (not counts or int(counts[-1]) != FUZZ_EXECUTIONS or
+    if (not counts or not FUZZ_EXECUTIONS <= int(counts[-1]) <= FUZZ_MAX_EXECUTIONS or
             not re.search(r"^PASS\s*$", raw, re.M) or
             not re.search(r"^ok\s+", raw, re.M) or
             "now fuzzing with 2 workers" not in raw or
             re.search(r"^(?:--- FAIL:|FAIL(?:\s|$)|panic:|fatal error:)", raw, re.M) or
             "context deadline exceeded" in raw):
         raise RuntimeError("incomplete or failed count-bounded fuzz output")
-    return {"executions": int(counts[-1])}
+    return {"executions": int(counts[-1]), "execution_overrun": int(counts[-1]) - FUZZ_EXECUTIONS}
 
 
 def preserve_corpus(checks, label, module, package, target):
@@ -149,7 +153,7 @@ def run_fuzz(checks):
     receipt.write_text("[]\n", encoding="utf-8")
     for label, module, package, target in FUZZ_TARGETS:
         record = {"target": target, "status": "failed", "budget_kind": "executions",
-                  "requested_executions": FUZZ_EXECUTIONS, "workers": 2,
+                  "requested_executions": FUZZ_EXECUTIONS, "max_executions": FUZZ_MAX_EXECUTIONS, "workers": 2,
                   "minimization_seconds": 5, "timeout_seconds": 120}
         phase = "process"
         try:

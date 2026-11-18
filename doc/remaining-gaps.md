@@ -18,7 +18,7 @@ boundaries below remain unchanged.
 | --- | --- | --- |
 | Error diagnostics | Selected Base and generated fixed/variable-field 5005; reviewed whole-group minima, including three groups with variable children; first-excess 5009; isolated-value 5004, unknown-M 5001 and typed-length 5014; bounded Redirect 3006; selected Proxy/VSAI leaf, condition and omission diagnostics; selected SRR conditional SM-RP-SMEA omission; combined two-subscription shortage and SCAP1 ordered-parameter shortage; isolated conditional combined Recipient-Address, five MMS fields, five common SMS fields, two termination fields isolated IEC Originator-SCCP omission conditional whole MMS-Information omission and EVENT Requested-Action omission; selected IEC/money EVENT action-value 5004 | Other conditional/cardinality and unreviewed group omissions, domain/handshake mappings and malformed-header length diagnostics |
 | Duplicate acceptance | Generic and combined cross-peer TCP/TLS tests; four-profile identity, simultaneous arrivals and shared/independent slot/byte cache acceptance | Larger tenant and mixed-transport workloads, real-target deduplication domains and durable application behavior |
-| Load acceptance | Seventeen count-bounded fuzz targets with exact work and retained failure receipts, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads |
+| Load acceptance | Seventeen count-bounded fuzz targets with bounded observed work and retained failure receipts, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads |
 | Publication | Reviewed API/generated output and dual-module checkout CI; immutable rc.2/rc.1 installation receipts | Publish and cold-install a new reviewed core/adapter pair after the generator fingerprint transitions; planned core candidate `v0.2.0-rc.1` |
 
 The selected combined cross-peer and mixed-profile cache slice is now covered by
@@ -94,3 +94,7 @@ executions per target and preserves partial receipts, timeout logs and failure
 corpora. The original timed failures in batches 114 and 116 remain recorded;
 their upstream root cause is unproven. Counted acceptance avoids selecting that
 timed-stop path without suppressing failures or claiming equivalent coverage.
+
+Batch 118 corrects the counted gate's exact-equality assumption using the pinned
+Go minimization bound: up to31 additional calls per worker,62 for two workers.
+The original hosted failure remains recorded; nonzero exits are never waived.

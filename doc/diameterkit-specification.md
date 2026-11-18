@@ -1323,3 +1323,8 @@ Combined slice.13 changes its digest and dependent Bundle fingerprints; public
 signatures/layouts, generator v23/ops9 and pure-Go/no-persistence remain.
 See the [English guide](conditional-action-values.md) and
 [progress](../spec/progress.json). Broader requirements remain partial.
+
+Batch118 hosted acceptance also exposed a successful1,000,019-execution Go run
+rejected by the prior exact-count parser. The corrected gate records actual
+counts in1,000,000–1,000,062, using the pinned two-worker minimization bound;
+nonzero exits and all hard timeouts remain failures. Original failure retained.

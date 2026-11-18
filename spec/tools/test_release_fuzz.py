@@ -35,15 +35,30 @@ class ScriptChecks(gate.Checks):
 class FuzzGateTests(unittest.TestCase):
     def test_requires_complete_count_and_real_fuzz_markers(self):
         good = completed()
-        self.assertEqual(load.fuzz_measurements(good), {"executions": 1_000_000})
+        self.assertEqual(load.fuzz_measurements(good), {"executions": 1_000_000, "execution_overrun": 0})
         bad = ["PASS\n", good.replace("1000000", "999999"),
-               good.replace("1000000", "1000001"),
+               good.replace("1000000", "1000063"),
                good.replace("now fuzzing with 2 workers", "seed-only"),
                good.replace("PASS", "NOT PASS"), good.replace("ok  ", "no  "),
                good+"--- FAIL: FuzzExample\n", good+"panic: bad\n",
                good+"context deadline exceeded\n"]
         for raw in bad:
             with self.subTest(raw=raw), self.assertRaises(RuntimeError):
+                load.fuzz_measurements(raw)
+
+    def test_reviewed_minimization_overrun_and_original_hosted_log(self):
+        # A toolchain update requires a fresh review of the minimizer bound.
+        self.assertEqual((load.ROOT / ".go-version").read_text().strip(), "1.26.10")
+        for count in (1_000_001, 1_000_019, load.FUZZ_MAX_EXECUTIONS):
+            self.assertEqual(load.fuzz_measurements(completed().replace("1000000", str(count))),
+                             {"executions": count, "execution_overrun": count-1_000_000})
+        raw = (Path(__file__).parent / "testdata/fuzz-count-overrun.txt").read_text()
+        self.assertEqual(load.fuzz_measurements(raw),
+                         {"executions": 1_000_019, "execution_overrun": 19})
+        for raw in (completed().replace("1000000", "1000063"),
+                    completed().replace("1000000", "999999"),
+                    raw+"context deadline exceeded\n"):
+            with self.assertRaises(RuntimeError):
                 load.fuzz_measurements(raw)
 
     def test_partial_receipt_preserves_failure_and_corpus_without_retry(self):

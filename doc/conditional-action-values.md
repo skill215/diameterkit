@@ -80,7 +80,9 @@ raw-wire value mapping; byte ownership and exact/below budgets; malformed and
 ambiguous proof/source controls; first-failure order; and TCP/TLS ordinary and
 emergency replies, envelope preservation, non-delivery and resource retirement.
 The existing `FuzzInvalidQuote` gains action seeds and assertions without
-removing its earlier checks or changing the seventeen-target counted gate.
+removing its earlier checks. The seventeen-target counted gate retains its
+requested work and timeouts; a separately documented [count correction](count-bounded-fuzz.md#batch-118-count-correction)
+accepts only the pinned Go minimization overrun of at most62 calls per target.
 
 ```sh
 CGO_ENABLED=0 go test . ./compat/smsfwro/combined ./internal/excessavp -run 'Test(ActionValue|RejectActionValue|ActionMissing|RejectActionMissing|OriginatorMissing|RejectOriginatorMissing)' -count=20 -timeout=10m

@@ -9,7 +9,9 @@ SPDX-AI-Date: 2026-11-18
 # Count-bounded fuzz acceptance
 
 Batch 117 makes the default checkout fuzz gate run **1,000,000 executions per
-target** across the same seventeen targets. Every target must finish successfully;
+target** across the same seventeen targets. Batch 118 corrects the original
+exact-count assumption: successful observed counts must be between 1,000,000
+and 1,000,062 inclusive, with the actual overrun recorded. Every target must finish successfully;
 any assertion, panic, nonzero exit, timeout or incomplete receipt fails the suite.
 There is no automatic retry and no conversion of deadline failures into success.
 
@@ -38,16 +40,18 @@ counts do not prove exhaustive coverage or deterministic input sequences.
 | Setting | Current gate |
 | --- | --- |
 | Targets | The existing seventeen entries in `FUZZ_TARGETS` |
-| Work | `-fuzztime=1000000x` per target; 17,000,000 total |
+| Requested work | `-fuzztime=1000000x` per target; 17,000,000 total |
+| Accepted observed count | 1,000,000–1,000,062 per target; actual counts recorded |
 | Concurrency | Two workers and `GOMAXPROCS=2` |
 | Minimization | Five seconds |
 | Go package timeout | Two minutes per target |
 | Outer command timeout | Fifteen minutes, including command/build overhead |
 | Hosted suite timeout | Twenty minutes |
 
-The runner requires an exact final execution count, the two-worker fuzz marker,
+The runner requires a final execution count within that finite range, the two-worker fuzz marker,
 and successful Go test markers, in addition to exit code zero. Seed-only output,
-too little or too much work, and failure text cannot satisfy the gate.
+less than the requested work, more than the reviewed maximum, and failure text
+cannot satisfy the gate.
 
 `fuzz.json` is initialized for each invocation and updated after every target.
 A failed target remains in the partial receipt with its log hash and failure
@@ -88,3 +92,23 @@ published tags change. The libraries remain pure Go with no persistence service.
 New immutable publication, deployment-specific long soaks and real-peer/private
 compatibility acceptance remain separate. Diagnosis of arbitrary timed Go fuzz
 exits also remains an external tooling follow-up.
+
+
+## Batch 118 count correction
+
+The first batch 118 hosted DiameterURI run exited zero with PASS after
+1,000,019 executions. The original exact-count parser rejected it; the original
+failed suite and log remain in the [batch 118 receipt](../spec/evidence/batch-118-action-values.json).
+
+In pinned Go 1.26.10, `src/internal/fuzz/minimize.go` checks the stop predicate
+before each byte's printable-candidate loop, then may attempt all 32 candidates
+without another check. A worker can therefore exceed its allocated limit by
+up to 31 calls in that loop. With two workers the reviewed allowance is 62.
+This finite bound is tied to the inspected toolchain and worker policy; review it
+when either changes. It is not a generic percentage tolerance or a waiver for
+nonzero exits. The parser now accepts the observed count range and records the
+actual overrun; 999,999 and 1,000,063 are failures.
+
+The original hosted log is a regression fixture. Controls also cover both
+accepted boundaries and still reject failure text, incomplete work and nonzero
+exits. The fixture is measured tool output, not authored protocol data.
