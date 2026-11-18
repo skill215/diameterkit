@@ -131,7 +131,7 @@ def execute(suite, output):
     checks = Checks(output, env)
     summary = {"format": 1, "suite": suite, "status": "failed", "scope": "current checkout; not installed release", "steps": checks.steps}
     protected = [ROOT / "go.mod", ROOT / "adapters/sctp/go.mod", ROOT / "adapters/sctp/go.sum",
-                 ROOT / "spec/release/public-api.json"]
+                 ROOT / "spec/release/public-api.json", ROOT / "spec/release/support-matrix.json"]
     before = {str(p): digest(p) for p in protected}
     try:
         version = (ROOT / ".go-version").read_text().strip()
@@ -159,6 +159,16 @@ def execute(suite, output):
             if suite in ("all", "static"):
                 checks.run("ai-disclosure", [sys.executable, "spec/tools/check_ai_headers.py"])
                 checks.run("tooling-tests", [sys.executable, "-m", "unittest", "discover", "-s", "spec/tools", "-p", "test_release*.py", "-v"])
+                checks.run("support-matrix", [sys.executable, "spec/tools/check_support_matrix.py"])
+                stale_matrix = temp / "stale-matrix.json"
+                baseline_matrix = json.loads((ROOT / "spec/release/support-matrix.json").read_text())
+                baseline_matrix["profiles"][0]["definition_sha256"] = "0" * 64
+                stale_matrix.write_text(json.dumps(baseline_matrix))
+                matrix_digest = digest(stale_matrix)
+                checks.reject("support-matrix-negative-control", [sys.executable, "spec/tools/check_support_matrix.py",
+                              "--matrix", str(stale_matrix)], "definition_sha256 differs")
+                if digest(stale_matrix) != matrix_digest:
+                    raise RuntimeError("support matrix check rewrote its baseline")
                 check_generated(checks, temp)
                 checks.run("generator-determinism", ["go", "test", "-count=1", "-json", "./internal/codegen", "-run", "^TestGeneratedFilesCurrentAndDeterministic$"], tests=True)
                 checks.run("api-snapshot", [sys.executable, "spec/tools/public_api_snapshot.py", "--check", "--workspace", str(temp / "go.work")])

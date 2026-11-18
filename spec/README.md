@@ -19,6 +19,7 @@ Start with the English [support matrix](../doc/diameterkit-support-matrix.md),
 - [public API](release/public-api.json): reviewed documentation/source snapshot,
   not automatic semantic compatibility certification.
 - [support matrix](release/support-matrix.json): explicit profile/platform scope.
+- [support matrix checks](../doc/support-matrix-checks.md): executable current-definition consistency gate.
 - [version policy](release/version-policy.json): independent module/API rules.
 - [performance baseline](release/performance-baseline.json): measured samples and
   environment; no inferred production throughput claim.

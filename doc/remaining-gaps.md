@@ -1,13 +1,18 @@
 # Current remaining gaps
 
-This is the current implementation overview for **batch 106, Draft 0.107**
-(2026-11-17). [Progress](../spec/progress.json) records actual check completion;
+This is the current implementation overview for **batch 107, Draft 0.108**
+(2026-11-18). [Progress](../spec/progress.json) records actual check completion;
 the broad release status remains `not_ready`. The 24 SPEC IDs span implementation,
 verification and external acceptance; their `partial` labels are not a percentage
 of unfinished code. Dated specification sections and frozen batch records retain
 their historical meaning.
 
 ## Next local work
+
+Batch 107 repairs eight stale support-matrix definition hashes and adds
+[executable consistency checks](support-matrix-checks.md) for all twelve bindings.
+This closes a release-record integrity gap; protocol and external acceptance
+boundaries below remain unchanged.
 
 | Area | Completed selected scope | Remaining work |
 | --- | --- | --- |

@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.107 — 2026-11-17, batch 106.** The [progress record](../spec/progress.json)
+**Draft 0.108 — 2026-11-18, batch 107.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -10,6 +10,11 @@ The first-release scope includes Sh, S6c, SGd/Gdd, Ro/DCCA, the selected sms-fw
 templates, SCAP1 and RO-06 recovery. Pure Go, library-only and no persistence
 boundaries remain unchanged. Dated implementation sections below are historical
 evidence; their old missing-work statements do not override later verified batches.
+
+Batch 107 repairs eight stale current support-matrix definition hashes and adds
+a check-only gate for all twelve bindings, identities, versions, request metadata
+and counts. See [support matrix checks](support-matrix-checks.md). Historical
+receipts, Go APIs, fingerprints and published tags retain their original meaning.
 
 <details>
 <summary>Historical scope and implementation summary (2026-11-10)</summary>
