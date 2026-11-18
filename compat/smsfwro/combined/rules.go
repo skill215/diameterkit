@@ -169,6 +169,9 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 			if mode == validation.Receive && !m.RequestedAction.Present {
 				return missingRequestedAction()
 			}
+			if mode == validation.Receive && m.RequestedAction.Present {
+				return invalidRequestedAction("combined-iec-event-v1")
+			}
 			return at(436, validation.ErrUnsupported)
 		}
 		if !s.OriginatorSCCPAddress.Present || s.OriginatorInterface.InterfaceType != 1 {
@@ -217,6 +220,9 @@ func validateMoneyRequest(m *CCR, mode validation.Mode) error {
 	if !m.RequestedAction.Present || m.RequestedAction.Value > 2 {
 		if mode == validation.Receive && !m.RequestedAction.Present {
 			return missingRequestedAction()
+		}
+		if mode == validation.Receive && m.RequestedAction.Present {
+			return invalidRequestedAction("combined-money-event-v1")
 		}
 		return at(436, validation.ErrUnsupported)
 	}

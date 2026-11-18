@@ -100,7 +100,10 @@ func FuzzInvalidQuote(f *testing.F) {
 	f.Add(raw, uint16(12), uint32(5004), uint16(1024))
 	f.Add(raw, uint16(24), uint32(5001), uint16(12))
 	f.Add([]byte{1}, uint16(0), ^uint32(0), uint16(1))
+	f.Add(actionFixture(false), uint16(0), uint32(5004), uint16(12))
+	f.Add(actionFixture(true), uint16(0), uint32(5004), uint16(12))
 	f.Fuzz(func(t *testing.T, raw []byte, offset uint16, code uint32, budget uint16) {
+		fuzzActionValue(t, raw, budget)
 		l := wire.DefaultLimits()
 		l.MaxFrameBytes = 4096
 		l.MaxFieldBytes = 2048

@@ -59,7 +59,7 @@ func TestActionMissingWireMatrix(t *testing.T) {
 					if proof && !errors.Is(cause, validation.ErrUnsupported) {
 						t.Fatal(cause)
 					}
-					if !valid && !proof {
+					if !valid && !proof && !(present && event && (kind == "iec" && value != 0 || value > 2)) {
 						if _, e := n.rejectFrame(raw, 4096, rejectDecode, cause); !errors.Is(e, ErrUnsupported) {
 							t.Fatal("present value acquired reply", e)
 						}
@@ -192,9 +192,7 @@ func TestRejectActionMissingClosed(t *testing.T) {
 				t.Run(fmt.Sprintf("%s/invalid-%t", kind, invalid), func(t *testing.T) {
 					cfg := combinedConfig(t)
 					cfg.Peers[0].InboundCommands[0].FailurePolicy = CloseOnFailure
-					if invalid {
-						cfg.Peers[0].InboundCommands[0].FailurePolicy = BaseErrorFailures
-					}
+
 					n, co := newInboundNode(t, cfg)
 					p, remote := networkConnectNode(t, n, co, encrypted)
 					req := combinedDuplicateRequest(t, n, co, kind, 11614, 21614)

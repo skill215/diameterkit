@@ -101,7 +101,7 @@ func TestOriginatorMissingPrecedence(t *testing.T) {
 		}
 	}
 }
-func TestRejectOriginatorMissingMixedClosed(t *testing.T) {
+func TestRejectOriginatorMissingMixedConditions(t *testing.T) {
 	eachNetwork(t, func(t *testing.T, encrypted bool) {
 		for _, kind := range []string{"interface-only", "both", "action"} {
 			t.Run(kind, func(t *testing.T) {
@@ -114,11 +114,22 @@ func TestRejectOriginatorMissingMixedClosed(t *testing.T) {
 				if kind == "action" {
 					path = lengthPath(avp.Key{Code: 436})
 				}
-				raw, _ := invalidRaw(t, co, req, path, []byte{0, 0, 0, 2}, avp.Key{})
+				raw, want := invalidRaw(t, co, req, path, []byte{0, 0, 0, 2}, avp.Key{})
 				if kind != "interface-only" {
 					raw = smsOmit(t, raw, 2008)
 				}
 				sendRejectRaw(t, remote, raw)
+				// Action validation precedes the missing Originator condition.
+				// Batch118 maps only that earlier selected value failure.
+				if kind == "action" {
+					answer := readReject(t, remote, req.Header, 5004)
+					if !answer.FailedAVP.Present || !bytes.Equal(answer.FailedAVP.Value.Data, want) {
+						t.Fatal("first failure")
+					}
+					noDuplicateDelivery(t, p)
+					closeDuplicateNode(t, n)
+					return
+				}
 				waitFor(t, func() bool { return !p.Info().Ready })
 				if b, e := readAdapter(ctxTest(t), remote); e == nil {
 					t.Fatalf("ambiguous failure replied %x", b)

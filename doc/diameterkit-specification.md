@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.118 — 2026-11-18, batch 117.** The [progress record](../spec/progress.json)
+**Draft 0.119 — 2026-11-18, batch 118.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1309,3 +1309,17 @@ or an equivalent-coverage claim. Go library sources, public API, profile slices,
 generator v23/ops9, fingerprints and published tags are unchanged.
 See the [English guide](count-bounded-fuzz.md) and [progress](../spec/progress.json).
 Pure Go/no persistence and all broader partial requirements remain unchanged.
+
+
+## Batch 118: conditional EVENT action values (2026-11-18)
+
+Existing combined IEC and money EVENT invalid-action Receive branches now
+provide static named evidence for bounded 5004 replies. The consumer verifies
+unique top-level selectors, range, original UInt32 instance and budgets.
+ErrUnsupported remains observable; ErrField is added only for these Receive
+branches. Missing actions, Build/Send, INITIAL/TERMINATION forbidden presence,
+other relation errors and validation ordering retain their boundaries.
+Combined slice.13 changes its digest and dependent Bundle fingerprints; public
+signatures/layouts, generator v23/ops9 and pure-Go/no-persistence remain.
+See the [English guide](conditional-action-values.md) and
+[progress](../spec/progress.json). Broader requirements remain partial.

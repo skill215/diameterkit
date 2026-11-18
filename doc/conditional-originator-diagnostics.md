@@ -39,11 +39,14 @@ three; complete-answer envelope and byte budgets apply separately. Changed paths
 cannot fall back to older untyped examples. BaseErrorFailures remains opt-in;
 the default policy still closes.
 
-Acceptance includes a 60-case direct mode matrix (IEC and non-IEC), a 12-case
+Batch 114 acceptance included a 60-case direct mode matrix (IEC and non-IEC), a 12-case
 wire matrix, invalid/empty values and earlier-failure precedence. Four positive
 TCP/TLS ordinary/emergency cases verify exact diagnostic and Session/Proxy data,
 no invalid delivery, held resources, valid follow-up and retirement. Two default
-close and six mixed/earlier-unsupported network cases retain the close boundary.
+close and six mixed/earlier-unsupported network cases recorded the original
+close boundary. [Batch 118](conditional-action-values.md) now diagnoses the two
+earlier-action cases with 5004; wrong-interface cases still close and the
+Originator omission rule itself is unchanged.
 
 ```sh
 CGO_ENABLED=0 go test . ./compat/smsfwro/combined ./internal/missingavp -run 'Test(OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)' -count=20 -timeout=10m
@@ -52,7 +55,7 @@ CGO_ENABLED=0 go test ./internal/missingavp -run '^$' -fuzz '^FuzzVariableMinimu
 python3 spec/tools/release_check.py --suite all
 ```
 
-Combined advances to `0.1.0-slice.10`; its definition digest and dependent Bundle
+Batch 114 advanced combined to `0.1.0-slice.10`; its definition digest and dependent Bundle
 fingerprints change. Public signatures/layouts, generator v23 and operations v9
 remain unchanged. Keep original builds for earlier recovery records. Published
 tags remain immutable, and new publication/cold installation are separate gates.

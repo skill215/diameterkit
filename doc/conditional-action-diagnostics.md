@@ -15,8 +15,8 @@ field; they previously shared an unsupported failure with present invalid values
 | Input at the existing condition | Receive behavior |
 | --- | --- |
 | IEC or money EVENT, Requested-Action absent | 5005 evidence; both ErrMissing and ErrUnsupported |
-| IEC, present value other than 0 | Existing unsupported failure |
-| Money EVENT, present value greater than 2 | Existing unsupported failure |
+| IEC, present value other than 0 | [Selected 5004 in batch 118](conditional-action-values.md); ErrUnsupported retained |
+| Money EVENT, present value greater than 2 | [Selected 5004 in batch 118](conditional-action-values.md); ErrUnsupported retained |
 | Money EVENT, present value 0, 1 or 2 | Existing operation-specific checks |
 | INITIAL or TERMINATION | Existing absence/forbidden-presence rules |
 
@@ -43,12 +43,14 @@ IEC SMS/MMS and timestamp checks still precede its action check; the money
 action check remains before its later template checks. An action omission can
 therefore be the first reported fault even if a later condition is also invalid.
 
-Acceptance includes 180 direct combinations across six templates, five values,
+Batch 116 acceptance included 180 direct combinations across six templates, five values,
 presence and Build/Send/Receive; a 60-case wire matrix; 32 exact/below-limit/path
 checks; and 27 earlier/later-failure cases. Sixteen positive TCP/TLS ordinary/
 emergency cases check exact diagnostic and Session/Proxy data, no invalid
 delivery, held charges, follow-up requests and retirement. Eight default-close
-and eight present-invalid-value network cases preserve their close behavior.
+and eight present-invalid-value network cases recorded the then-current close
+behavior. Batch 118 replaces the selected present-value expectation with 5004;
+default-policy failures still close.
 
 ```sh
 CGO_ENABLED=0 go test . ./compat/smsfwro/combined ./internal/missingavp -run 'Test(ActionMissing|RejectActionMissing|MMSGroupMissing|RejectMMSGroupMissing|OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)' -count=20 -timeout=10m
@@ -57,7 +59,7 @@ CGO_ENABLED=0 go test ./internal/missingavp -run '^$' -fuzz '^FuzzMissingQuote$'
 python3 spec/tools/release_check.py --suite all
 ```
 
-Combined advances to `0.1.0-slice.12`; definition digests and dependent Bundle
+Batch 116 advanced combined to `0.1.0-slice.12`; definition digests and dependent Bundle
 fingerprints change. Public signatures/layouts, generator v23 and operations v9
 remain unchanged. Earlier recovery records need their original build. Published
 tags remain immutable; new publication and cold installation are separate gates.

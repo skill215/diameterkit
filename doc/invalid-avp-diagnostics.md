@@ -90,3 +90,8 @@ parents. [Batch 103](group-constraint-diagnostics.md) adds conditional VSAI pair
 and bounded Proxy omission minima. Unsafe Proxy envelopes still close; other
 conditional and variable omissions remain separate. Generator v19 changes
 generated digests and Bundle fingerprints.
+
+[Batch 118](conditional-action-values.md) adds two explicitly named combined
+EVENT action-value conditions. It rechecks unique top-level selectors and quotes
+the original UInt32 action; bare manual or other cross-field errors remain
+unmapped. The existing invalid-value fuzz target now covers this consumer too.
