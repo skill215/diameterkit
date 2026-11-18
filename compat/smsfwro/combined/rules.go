@@ -111,7 +111,7 @@ func validateCCRSubset(m *CCR, mode validation.Mode) error {
 	if m.MultipleServicesIndicator.Present || m.UserEquipmentInfo.Present || m.CCRequestType != 4 {
 		err = validateSMSRequest(m, mode)
 	} else {
-		err = validateMoneyRequest(m)
+		err = validateMoneyRequest(m, mode)
 	}
 	if err != nil {
 		return err
@@ -166,6 +166,9 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 	}
 	if m.CCRequestType == 4 {
 		if !m.RequestedAction.Present || m.RequestedAction.Value != 0 {
+			if mode == validation.Receive && !m.RequestedAction.Present {
+				return missingRequestedAction()
+			}
 			return at(436, validation.ErrUnsupported)
 		}
 		if !s.OriginatorSCCPAddress.Present || s.OriginatorInterface.InterfaceType != 1 {
@@ -210,8 +213,11 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 	}
 	return nil
 }
-func validateMoneyRequest(m *CCR) error {
+func validateMoneyRequest(m *CCR, mode validation.Mode) error {
 	if !m.RequestedAction.Present || m.RequestedAction.Value > 2 {
+		if mode == validation.Receive && !m.RequestedAction.Present {
+			return missingRequestedAction()
+		}
 		return at(436, validation.ErrUnsupported)
 	}
 	s := m.ServiceInformation.SMSInformation

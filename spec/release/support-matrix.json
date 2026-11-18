@@ -1,7 +1,7 @@
 {
   "format": 1,
   "date": "2026-11-18",
-  "basis": "Batch115 selected conditional whole MMS omission verified. Existing fixed/variable consumers/generatorv23/ops9, current12-binding metadata check, pure Go/no persistence; all24 broader requirements remain partial.",
+  "basis": "Batch116 selected EVENT Requested-Action omission verified. Existing fixed/variable consumers/generatorv23/ops9, current12-binding metadata check, pure Go/no persistence; all24 broader requirements remain partial.",
   "release_status": "not_ready",
   "api_snapshot": "spec/release/public-api.json",
   "profiles": [
@@ -212,9 +212,9 @@
     {
       "binding": "combined",
       "profile": "smsfw-ro-five-template-wire-v1",
-      "version": "0.1.0-slice.11",
+      "version": "0.1.0-slice.12",
       "definition": "spec/combined.json",
-      "definition_sha256": "8384ed2f6b1f67611232ac84400247e25f6de8fdc01bf74e503b4a8746e1c32a",
+      "definition_sha256": "8020f1e4fd22de1b8e9956c7b0c2b50e52b376f14d0f29295b5d5bc7ee74d2c3",
       "requests": [
         {
           "name": "CCR",
@@ -380,10 +380,10 @@
         "SPEC-ERROR-01"
       ],
       "evidence": [
-        "spec/evidence/batch-115-mms-group-missing.json",
+        "spec/evidence/batch-116-action-missing.json",
         "doc/remaining-gaps.md"
       ],
-      "remaining": "Wrong-interface/mixed-value diagnostics, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings."
+      "remaining": "Wrong-interface and present-value diagnostics, other mixed presence/value conditions, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings."
     },
     {
       "name": "Next immutable core/adapter release acceptance",
@@ -796,6 +796,21 @@
         "doc/conditional-mms-group-diagnostics.md"
       ],
       "remaining": "Wrong-interface/mixed-value diagnostics, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence."
+    },
+    {
+      "name": "Combined conditional EVENT Requested-Action omission",
+      "status": "completed_selected_slice",
+      "requirement_refs": [
+        "SPEC-ERROR-01",
+        "SPEC-CODEC-01",
+        "SPEC-PROFILE-01",
+        "SPEC-BUDGET-01"
+      ],
+      "evidence": [
+        "spec/evidence/batch-116-action-missing.json",
+        "doc/conditional-action-diagnostics.md"
+      ],
+      "remaining": "Wrong-interface and present-value diagnostics, other mixed presence/value conditions, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence.; Investigate intermittent timed Go fuzz deadline exits observed in batches114 and116; preserve original failures and repeated-run evidence."
     }
   ],
   "current_gap_overview": "doc/remaining-gaps.md"

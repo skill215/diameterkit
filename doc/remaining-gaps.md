@@ -1,6 +1,6 @@
 # Current remaining gaps
 
-This is the current implementation overview for **batch 115, Draft 0.116**
+This is the current implementation overview for **batch 116, Draft 0.117**
 (2026-11-18). [Progress](../spec/progress.json) records actual check completion;
 the broad release status remains `not_ready`. The 24 SPEC IDs span implementation,
 verification and external acceptance; their `partial` labels are not a percentage
@@ -16,9 +16,9 @@ boundaries below remain unchanged.
 
 | Area | Completed selected scope | Remaining work |
 | --- | --- | --- |
-| Error diagnostics | Selected Base and generated fixed/variable-field 5005; reviewed whole-group minima, including three groups with variable children; first-excess 5009; isolated-value 5004, unknown-M 5001 and typed-length 5014; bounded Redirect 3006; selected Proxy/VSAI leaf, condition and omission diagnostics; selected SRR conditional SM-RP-SMEA omission; combined two-subscription shortage and SCAP1 ordered-parameter shortage; isolated conditional combined Recipient-Address, five MMS fields, five common SMS fields, two termination fields isolated IEC Originator-SCCP omission and conditional whole MMS-Information omission | Other conditional/cardinality and unreviewed group omissions, domain/handshake mappings and malformed-header length diagnostics |
+| Error diagnostics | Selected Base and generated fixed/variable-field 5005; reviewed whole-group minima, including three groups with variable children; first-excess 5009; isolated-value 5004, unknown-M 5001 and typed-length 5014; bounded Redirect 3006; selected Proxy/VSAI leaf, condition and omission diagnostics; selected SRR conditional SM-RP-SMEA omission; combined two-subscription shortage and SCAP1 ordered-parameter shortage; isolated conditional combined Recipient-Address, five MMS fields, five common SMS fields, two termination fields isolated IEC Originator-SCCP omission conditional whole MMS-Information omission and EVENT Requested-Action omission | Other conditional/cardinality and unreviewed group omissions, domain/handshake mappings and malformed-header length diagnostics |
 | Duplicate acceptance | Generic and combined cross-peer TCP/TLS tests; four-profile identity, simultaneous arrivals and shared/independent slot/byte cache acceptance | Larger tenant and mixed-transport workloads, real-target deduplication domains and durable application behavior |
-| Load acceptance | Seventeen bounded fuzz targets, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads |
+| Load acceptance | Seventeen bounded fuzz targets, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads; investigate intermittent timed fuzz deadline exits |
 | Publication | Reviewed API/generated output and dual-module checkout CI; immutable rc.2/rc.1 installation receipts | Publish and cold-install a new reviewed core/adapter pair after the generator fingerprint transitions; planned core candidate `v0.2.0-rc.1` |
 
 The selected combined cross-peer and mixed-profile cache slice is now covered by
@@ -45,6 +45,9 @@ only when the existing interface condition is satisfied, retaining ErrUnsupporte
 [Batch 115](conditional-mms-group-diagnostics.md) adds the whole MMS-Information
 minimum for SMS templates, including structural Originator-Address and all six
 conditional children.
+[Batch 116](conditional-action-diagnostics.md) adds absent Requested-Action in
+IEC and money EVENT paths, retaining the prior unsupported classification and
+present-value behavior.
 Other conditional, cardinality, domain,
 handshake and malformed-header mappings remain separate;
 do not infer them from bare sentinels.
@@ -83,3 +86,8 @@ See the [version policy](version-install-policy.md),
 [5005 guide](missing-avp-diagnostics.md), [5009 guide](excess-avp-diagnostics.md),
 [5004/5001 guide](invalid-avp-diagnostics.md), [5014 guide](length-avp-diagnostics.md),
 [Redirect guide](redirect-handling.md) and [manual-group guide](manual-group-diagnostics.md).
+
+Batch 116 retains an initial timed fuzz deadline failure separately from its
+unchanged-argument follow-up runs. Together with batch 114, this leaves a tooling
+reliability follow-up; the logs do not establish an input-triggered protocol fault.
+See the [batch 116 receipt](../spec/evidence/batch-116-action-missing.json).

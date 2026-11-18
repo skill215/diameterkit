@@ -12,7 +12,7 @@ contracts. Sh-Data XML is an explicit AVP payload layer, not the definition form
 ## Definition entry points
 
 - **base**: [`spec/base.json`](../spec/base.json), profile `base-rfc6733-controls-slice-v1`, slice `0.1.0-slice.8`.
-- **sh**: [`spec/sh.json`](../spec/sh.json), profile `sh-29.329-sms-opaque-slice-v1`, slice `0.1.0-slice.11`.
+- **sh**: [`spec/sh.json`](../spec/sh.json), profile `sh-29.329-sms-opaque-slice-v1`, slice `0.1.0-slice.12`.
 - **s6c**: [`spec/s6c.json`](../spec/s6c.json), profile `s6c-29.338-ordinary-mme-slice-v1`, slice `0.1.0-slice.23`.
 - **sgd**: [`spec/sgd.json`](../spec/sgd.json), profile `sgd-gdd-29.338-ordinary-slice-v1`, slice `0.1.0-slice.15`.
 - **ro**: [`spec/ro.json`](../spec/ro.json), profile `ro-32.299-sms-iec-slice-v1`, slice `0.1.0-slice.6`.
@@ -20,7 +20,7 @@ contracts. Sh-Data XML is an explicit AVP payload layer, not the definition form
 - **roabort**: [`spec/roabort.json`](../spec/roabort.json), profile `ro-rfc6733-abort-slice-v1`, slice `0.1.0-slice.1`.
 - **smsfwro**: [`spec/smsfwro.json`](../spec/smsfwro.json), profile `smsfw-ro-iec-template-v1`, slice `0.1.0-slice.6`.
 - **legacy420**: [`spec/legacy420.json`](../spec/legacy420.json), profile `smsfw-ro-legacy420-v1`, slice `0.1.0-slice.6`.
-- **combined**: [`spec/combined.json`](../spec/combined.json), profile `smsfw-ro-five-template-wire-v1`, slice `0.1.0-slice.11`.
+- **combined**: [`spec/combined.json`](../spec/combined.json), profile `smsfw-ro-five-template-wire-v1`, slice `0.1.0-slice.12`.
 - **scap1**: [`spec/scap1.json`](../spec/scap1.json), profile `smsfw-scap1-event-v1`, slice `0.1.0-slice.3`.
 - **sgdalert**: [`compat/sgdalert/profile.go`](../compat/sgdalert/profile.go), profile `legacy-sgd-alert-v1`, slice `legacy-sgd-alert-v1.1`.
 

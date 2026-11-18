@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.116 — 2026-11-18, batch 114.** The [progress record](../spec/progress.json)
+**Draft 0.117 — 2026-11-18, batch 114.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1284,3 +1284,14 @@ answer limits separately. Combined slice.11 changes definition fingerprints;
 public shapes, generator v23/ops9 and pure-Go/no-persistence boundaries remain.
 See [the English guide](conditional-mms-group-diagnostics.md) and
 [actual acceptance progress](../spec/progress.json). Broader requirements remain partial.
+
+## Batch 116: EVENT Requested-Action omission (2026-11-18)
+
+Existing IEC and money-template Receive conditions now provide a 12-byte
+Requested-Action minimum while retaining ErrUnsupported and adding ErrMissing.
+The example does not infer an operation. Build/Send, present invalid values,
+non-EVENT requests and earlier validation order retain their behavior.
+Combined slice.12 changes definition fingerprints; generator v23/ops9, public
+shapes and pure-Go/no-persistence boundaries remain unchanged. See the
+[English guide](conditional-action-diagnostics.md) and [progress](../spec/progress.json).
+Broader requirements remain partial.

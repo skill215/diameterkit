@@ -36,3 +36,5 @@ have their own [release record](releases/v0.1.0-rc.md).
 - [AI authorship and review limits](../AI_DISCLOSURE.md)
 
 [Conditional whole MMS omission](conditional-mms-group-diagnostics.md) documents the bounded SMS-template group minimum.
+
+[EVENT Requested-Action omission](conditional-action-diagnostics.md) covers bounded missing-action diagnostics and operation-selection boundaries.

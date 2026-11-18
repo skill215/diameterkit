@@ -1,10 +1,10 @@
 {
   "format": 1,
-  "baseline": "Draft 0.116",
+  "baseline": "Draft 0.117",
   "normative_spec": "doc/diameterkit-specification.md",
-  "batch": "Combined conditional whole MMS-Information omission",
-  "status": "completed",
-  "status_meaning": "Batch115 local selected/full acceptance passed; hosted seven-suite checkout passed. All24 broader requirements remain partial.",
+  "batch": "Combined conditional EVENT Requested-Action omission",
+  "status": "in_progress",
+  "status_meaning": "Batch116 local selected/full acceptance passed; hosted checkout pending. All24 broader requirements remain partial.",
   "date": "2026-11-18",
   "toolchain": "go1.26.10 linux/amd64",
   "release_status": "not_ready",
@@ -522,7 +522,8 @@
     "Batch113 Combined isolated common SMS and termination field omissions: 612 selected test/subtest passes x20 per pure/race mode; full core5952/adapter114, no skips; targeted existing variable-minimum fuzz 1375673 executions. Receive-only isolated conditional omission, static36/40-byte ancestor chains and exact envelopes/resources. Combined slice.9; generatorv23/ops9, public shapes and pure-Go/no-persistence boundary unchanged.",
     "Batch114 Combined isolated IEC Originator-SCCP omission: 719 selected test/subtest passes x20 per pure/race mode; full core6059/adapter114, no skips; targeted existing variable-minimum fuzz 1251698 executions. Receive-only isolated conditional omission, static36-byte ancestor chain and exact envelopes/resources. Combined slice.10; generatorv23/ops9, public shapes and pure-Go/no-persistence boundary unchanged.",
     "Hosted attempt1 failed at the FuzzCardinalityQuote 30-second deadline without an input/assertion failure. The original log is retained in the receipt, with three identical-argument local checks and the same-source hosted retry outcome; runtime code and acceptance parameters were unchanged.",
-    "Batch115 Combined conditional whole MMS-Information omission: 830 selected test/subtest passes x20 per pure/race mode; full core6170/adapter114, no skips; targeted existing variable-minimum fuzz 1060875 executions. Receive-only whole MMS omission, static180-byte minimum tree and exact envelopes/resources. Combined slice.11; generatorv23/ops9, public shapes and pure-Go/no-persistence boundary unchanged."
+    "Batch115 Combined conditional whole MMS-Information omission: 830 selected test/subtest passes x20 per pure/race mode; full core6170/adapter114, no skips; targeted existing variable-minimum fuzz 1060875 executions. Receive-only whole MMS omission, static180-byte minimum tree and exact envelopes/resources. Combined slice.11; generatorv23/ops9, public shapes and pure-Go/no-persistence boundary unchanged.",
+    "Batch116 Combined conditional EVENT Requested-Action omission: 1171 selected test/subtest passes x20 per pure/race mode; full core6511/adapter114, no skips; targeted existing missing-proof fuzz 1116677 executions. Receive-only EVENT Requested-Action omission, static12-byte UInt32 minimum and exact envelopes/resources. Combined slice.12; generatorv23/ops9, public shapes and pure-Go/no-persistence boundary unchanged."
   ],
   "requirements": [
     {
@@ -1672,9 +1673,11 @@
         "spec/evidence/batch-114-originator-missing.json",
         "doc/conditional-originator-diagnostics.md",
         "spec/evidence/batch-115-mms-group-missing.json",
-        "doc/conditional-mms-group-diagnostics.md"
+        "doc/conditional-mms-group-diagnostics.md",
+        "spec/evidence/batch-116-action-missing.json",
+        "doc/conditional-action-diagnostics.md"
       ],
-      "remaining": "Batch115 selected conditional whole MMS diagnostic verified; Other requirement scope and external/release evidence remain partial."
+      "remaining": "Batch116 selected EVENT Requested-Action diagnostic verified; Other requirement scope and external/release evidence remain partial."
     },
     {
       "id": "SPEC-PROFILE-02",
@@ -2515,9 +2518,11 @@
         "spec/evidence/batch-114-originator-missing.json",
         "doc/conditional-originator-diagnostics.md",
         "spec/evidence/batch-115-mms-group-missing.json",
-        "doc/conditional-mms-group-diagnostics.md"
+        "doc/conditional-mms-group-diagnostics.md",
+        "spec/evidence/batch-116-action-missing.json",
+        "doc/conditional-action-diagnostics.md"
       ],
-      "remaining": "Batch115 selected conditional whole MMS diagnostic verified; Other requirement scope and external/release evidence remain partial."
+      "remaining": "Batch116 selected EVENT Requested-Action diagnostic verified; Other requirement scope and external/release evidence remain partial."
     },
     {
       "id": "SPEC-OWN-01",
@@ -3410,9 +3415,11 @@
         "spec/evidence/batch-114-originator-missing.json",
         "doc/conditional-originator-diagnostics.md",
         "spec/evidence/batch-115-mms-group-missing.json",
-        "doc/conditional-mms-group-diagnostics.md"
+        "doc/conditional-mms-group-diagnostics.md",
+        "spec/evidence/batch-116-action-missing.json",
+        "doc/conditional-action-diagnostics.md"
       ],
-      "remaining": "Batch115 selected conditional whole MMS diagnostic verified; Wrong-interface/mixed-value diagnostics, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings."
+      "remaining": "Batch116 selected EVENT Requested-Action diagnostic verified; Wrong-interface and present-value diagnostics, other mixed presence/value conditions, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings."
     },
     {
       "id": "SPEC-APP-01",
@@ -5877,7 +5884,7 @@
     {
       "id": "SPEC-BUDGET-01",
       "status": "partial",
-      "remaining": "Batch115 selected conditional whole MMS diagnostic verified; Other requirement scope and external/release evidence remain partial.",
+      "remaining": "Batch116 selected EVENT Requested-Action diagnostic verified; Other requirement scope and external/release evidence remain partial.",
       "evidence": [
         "internal/budget/budget_test.go",
         "node.go",
@@ -6313,7 +6320,9 @@
         "spec/evidence/batch-114-originator-missing.json",
         "doc/conditional-originator-diagnostics.md",
         "spec/evidence/batch-115-mms-group-missing.json",
-        "doc/conditional-mms-group-diagnostics.md"
+        "doc/conditional-mms-group-diagnostics.md",
+        "spec/evidence/batch-116-action-missing.json",
+        "doc/conditional-action-diagnostics.md"
       ],
       "batch89_evidence": "spec/evidence/batch-89-combined-cross-target.json",
       "batch90_evidence": "spec/evidence/batch-90-binding-recovery-consumption.json",
@@ -6625,87 +6634,125 @@
   ],
   "checks": [
     {
-      "name": "mms-group-diagnostics",
+      "name": "action-diagnostics",
       "command": [
         "go",
         "test",
         ".",
         "./compat/smsfwro/combined",
         "./internal/missingavp",
-        "-run=Test(MMSGroupMissing|RejectMMSGroupMissing|OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)",
+        "-run=Test(ActionMissing|RejectActionMissing|MMSGroupMissing|RejectMMSGroupMissing|OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)",
         "-count=1",
         "-json",
         "-timeout=10m"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-initial/mms-group-diagnostics.log",
+      "log": ".cache/b116-initial/action-diagnostics.log",
       "status": "passed",
-      "sha256": "8eff26e904c1edec12d81913ca2b599423cd1b9346001a68e03949c3c165fbd9",
-      "test_subtest_seed_passes": 830,
+      "sha256": "995bd00789fca1808608822f08e732a6bc78b08d8d2ee8a300504a42011bdc50",
+      "test_subtest_seed_passes": 1171,
       "test_skips": 0,
       "suite": "initial"
     },
     {
-      "name": "mms-group-diagnostics",
+      "name": "action-diagnostics",
       "command": [
         "go",
         "test",
         ".",
         "./compat/smsfwro/combined",
         "./internal/missingavp",
-        "-run=Test(MMSGroupMissing|RejectMMSGroupMissing|OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)",
+        "-run=Test(ActionMissing|RejectActionMissing|MMSGroupMissing|RejectMMSGroupMissing|OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)",
         "-count=20",
         "-json",
         "-timeout=10m"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-repeat-pure/mms-group-diagnostics.log",
+      "log": ".cache/b116-repeat-pure/action-diagnostics.log",
       "status": "passed",
-      "sha256": "d490190862e71378d148c77830b57de31d9a2f3aa3ef304804e74eda2758497a",
-      "test_subtest_seed_passes": 16600,
+      "sha256": "4fdd1749ebfb22505e3cc7e2767f875bdbf1f1295fea8ff0b85967294bdb421b",
+      "test_subtest_seed_passes": 23420,
       "test_skips": 0,
       "suite": "repeat-pure"
     },
     {
-      "name": "mms-group-diagnostics",
+      "name": "action-diagnostics",
       "command": [
         "go",
         "test",
         ".",
         "./compat/smsfwro/combined",
         "./internal/missingavp",
-        "-run=Test(MMSGroupMissing|RejectMMSGroupMissing|OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)",
+        "-run=Test(ActionMissing|RejectActionMissing|MMSGroupMissing|RejectMMSGroupMissing|OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)",
         "-count=20",
         "-json",
         "-timeout=10m",
         "-race"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-repeat-race/mms-group-diagnostics.log",
+      "log": ".cache/b116-repeat-race/action-diagnostics.log",
       "status": "passed",
-      "sha256": "5d9ce4ac0cba10bdcc443cdd409108e31e836465442a39ab1948ab3c54399147",
-      "test_subtest_seed_passes": 16600,
+      "sha256": "0e1cfd757036191aa27c65bf7487436822b8312b781ae6d566580376a5889d7a",
+      "test_subtest_seed_passes": 23420,
       "test_skips": 0,
       "suite": "repeat-race"
     },
     {
-      "name": "mms-group-fuzz",
+      "name": "missing-proof-1",
       "command": [
         "go",
         "test",
         "./internal/missingavp",
         "-run=^$",
-        "-fuzz=^FuzzMinimumVariableTree$",
+        "-fuzz=^FuzzMissingQuote$",
         "-fuzztime=30s",
         "-fuzzminimizetime=5s",
         "-parallel=2",
         "-timeout=2m"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-target-fuzz/mms-group-fuzz.log",
+      "log": ".cache/b116-fuzz-review/missing-proof-1.log",
       "status": "passed",
-      "sha256": "49c4a33c5f05774b5cf3e9d0b80dfa6cb220edfe91be442f0cb202670ca01d46",
-      "suite": "target-fuzz"
+      "sha256": "603c02de34b287598429c29358a13fe810105e0bd391ae73d6478aec06614265",
+      "suite": "fuzz-review"
+    },
+    {
+      "name": "missing-proof-2",
+      "command": [
+        "go",
+        "test",
+        "./internal/missingavp",
+        "-run=^$",
+        "-fuzz=^FuzzMissingQuote$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b116-fuzz-review/missing-proof-2.log",
+      "status": "passed",
+      "sha256": "b6f455c4594baf339dbe3d8dce489218547229fc632b6faabfb441c0bff8332e",
+      "suite": "fuzz-review"
+    },
+    {
+      "name": "missing-proof-3",
+      "command": [
+        "go",
+        "test",
+        "./internal/missingavp",
+        "-run=^$",
+        "-fuzz=^FuzzMissingQuote$",
+        "-fuzztime=30s",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b116-fuzz-review/missing-proof-3.log",
+      "status": "passed",
+      "sha256": "31eaffa5810aa95602262bb6107f7d1895a4cda86f533cffe14873c2142616e1",
+      "suite": "fuzz-review"
     },
     {
       "name": "toolchain",
@@ -6717,7 +6764,7 @@
         "GOHOSTARCH"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/toolchain.log",
+      "log": ".cache/b116-static/toolchain.log",
       "status": "passed",
       "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
       "suite": "static"
@@ -6731,7 +6778,7 @@
         "-json"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b115-static/adapter-manifest.log",
+      "log": ".cache/b116-static/adapter-manifest.log",
       "status": "passed",
       "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
       "suite": "static"
@@ -6745,8 +6792,8 @@
         "/home/skill/workspace/git/diameterkit",
         "/home/skill/workspace/git/diameterkit/adapters/sctp"
       ],
-      "cwd": "/tmp/diameterkit-ci-nyn0nmg5",
-      "log": ".cache/b115-static/workspace.log",
+      "cwd": "/tmp/diameterkit-ci-g_97momq",
+      "log": ".cache/b116-static/workspace.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -6759,8 +6806,8 @@
         "edit",
         "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
       ],
-      "cwd": "/tmp/diameterkit-ci-nyn0nmg5",
-      "log": ".cache/b115-static/checkout-binding.log",
+      "cwd": "/tmp/diameterkit-ci-g_97momq",
+      "log": ".cache/b116-static/checkout-binding.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -6775,7 +6822,7 @@
         "all"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b115-static/module-graph.log",
+      "log": ".cache/b116-static/module-graph.log",
       "status": "passed",
       "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
       "suite": "static"
@@ -6789,7 +6836,7 @@
         "github.com/skill215/sctp@v0.8.0"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b115-static/dependency-download.log",
+      "log": ".cache/b116-static/dependency-download.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -6801,9 +6848,9 @@
         "spec/tools/check_ai_headers.py"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/ai-disclosure.log",
+      "log": ".cache/b116-static/ai-disclosure.log",
       "status": "passed",
-      "sha256": "288fe127090e020ad48f80ac2eef00fdeb6b7d88460d7043f333431f7dcba600",
+      "sha256": "6e446f7abd6ac5cd4cf31824151d0f31c03ab938ec2f38cc3c1f0b057736d373",
       "suite": "static"
     },
     {
@@ -6820,9 +6867,9 @@
         "-v"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/tooling-tests.log",
+      "log": ".cache/b116-static/tooling-tests.log",
       "status": "passed",
-      "sha256": "ea1f227cbfb0508c6a719c65f05576f369c0627d9e874f8d3191d5e1838cc1ad",
+      "sha256": "1174eb09f7c192c2e346ab264c5452ec50dfb8ba5f5b1513af00f979a6ff7539",
       "suite": "static"
     },
     {
@@ -6832,7 +6879,7 @@
         "spec/tools/check_support_matrix.py"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/support-matrix.log",
+      "log": ".cache/b116-static/support-matrix.log",
       "status": "passed",
       "sha256": "699c2a840bdff32563bba5792dbf610949e134ec7a22a293f90a00d105bf5fd5",
       "suite": "static"
@@ -6843,11 +6890,11 @@
         "/usr/bin/python3",
         "spec/tools/check_support_matrix.py",
         "--matrix",
-        "/tmp/diameterkit-ci-nyn0nmg5/stale-matrix.json"
+        "/tmp/diameterkit-ci-g_97momq/stale-matrix.json"
       ],
       "status": "passed",
       "expected_failure": true,
-      "log": ".cache/b115-static/support-matrix-negative-control.log",
+      "log": ".cache/b116-static/support-matrix-negative-control.log",
       "sha256": "54d4a061f91b75bb4b453fd1599aa43d52d9951ee896a9f6b809ecd3c90ae4e2",
       "suite": "static"
     },
@@ -6857,11 +6904,11 @@
         "go",
         "build",
         "-o",
-        "/tmp/diameterkit-ci-nyn0nmg5/diameter-schema",
+        "/tmp/diameterkit-ci-g_97momq/diameter-schema",
         "./cmd/diameter-schema"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/generator-build.log",
+      "log": ".cache/b116-static/generator-build.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -6869,7 +6916,7 @@
     {
       "name": "generated-base",
       "command": [
-        "/tmp/diameterkit-ci-nyn0nmg5/diameter-schema",
+        "/tmp/diameterkit-ci-g_97momq/diameter-schema",
         "-in",
         "spec/base.json",
         "-out",
@@ -6877,7 +6924,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/generated-base.log",
+      "log": ".cache/b116-static/generated-base.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -6885,7 +6932,7 @@
     {
       "name": "generated-sh",
       "command": [
-        "/tmp/diameterkit-ci-nyn0nmg5/diameter-schema",
+        "/tmp/diameterkit-ci-g_97momq/diameter-schema",
         "-in",
         "spec/sh.json",
         "-out",
@@ -6893,7 +6940,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/generated-sh.log",
+      "log": ".cache/b116-static/generated-sh.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -6901,7 +6948,7 @@
     {
       "name": "generated-s6c",
       "command": [
-        "/tmp/diameterkit-ci-nyn0nmg5/diameter-schema",
+        "/tmp/diameterkit-ci-g_97momq/diameter-schema",
         "-in",
         "spec/s6c.json",
         "-out",
@@ -6909,7 +6956,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/generated-s6c.log",
+      "log": ".cache/b116-static/generated-s6c.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -6917,7 +6964,7 @@
     {
       "name": "generated-sgd",
       "command": [
-        "/tmp/diameterkit-ci-nyn0nmg5/diameter-schema",
+        "/tmp/diameterkit-ci-g_97momq/diameter-schema",
         "-in",
         "spec/sgd.json",
         "-out",
@@ -6925,7 +6972,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/generated-sgd.log",
+      "log": ".cache/b116-static/generated-sgd.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -6933,7 +6980,7 @@
     {
       "name": "generated-ro",
       "command": [
-        "/tmp/diameterkit-ci-nyn0nmg5/diameter-schema",
+        "/tmp/diameterkit-ci-g_97momq/diameter-schema",
         "-in",
         "spec/ro.json",
         "-out",
@@ -6941,7 +6988,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/generated-ro.log",
+      "log": ".cache/b116-static/generated-ro.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -6949,7 +6996,7 @@
     {
       "name": "generated-roabort",
       "command": [
-        "/tmp/diameterkit-ci-nyn0nmg5/diameter-schema",
+        "/tmp/diameterkit-ci-g_97momq/diameter-schema",
         "-in",
         "spec/roabort.json",
         "-out",
@@ -6957,7 +7004,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/generated-roabort.log",
+      "log": ".cache/b116-static/generated-roabort.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -6965,7 +7012,7 @@
     {
       "name": "generated-dcca",
       "command": [
-        "/tmp/diameterkit-ci-nyn0nmg5/diameter-schema",
+        "/tmp/diameterkit-ci-g_97momq/diameter-schema",
         "-in",
         "spec/dcca.json",
         "-out",
@@ -6973,7 +7020,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/generated-dcca.log",
+      "log": ".cache/b116-static/generated-dcca.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -6981,7 +7028,7 @@
     {
       "name": "generated-smsfwro",
       "command": [
-        "/tmp/diameterkit-ci-nyn0nmg5/diameter-schema",
+        "/tmp/diameterkit-ci-g_97momq/diameter-schema",
         "-in",
         "spec/smsfwro.json",
         "-out",
@@ -6989,7 +7036,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/generated-smsfwro.log",
+      "log": ".cache/b116-static/generated-smsfwro.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -6997,7 +7044,7 @@
     {
       "name": "generated-legacy420",
       "command": [
-        "/tmp/diameterkit-ci-nyn0nmg5/diameter-schema",
+        "/tmp/diameterkit-ci-g_97momq/diameter-schema",
         "-in",
         "spec/legacy420.json",
         "-out",
@@ -7005,7 +7052,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/generated-legacy420.log",
+      "log": ".cache/b116-static/generated-legacy420.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -7013,7 +7060,7 @@
     {
       "name": "generated-combined",
       "command": [
-        "/tmp/diameterkit-ci-nyn0nmg5/diameter-schema",
+        "/tmp/diameterkit-ci-g_97momq/diameter-schema",
         "-in",
         "spec/combined.json",
         "-out",
@@ -7021,7 +7068,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/generated-combined.log",
+      "log": ".cache/b116-static/generated-combined.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -7029,7 +7076,7 @@
     {
       "name": "generated-scap1",
       "command": [
-        "/tmp/diameterkit-ci-nyn0nmg5/diameter-schema",
+        "/tmp/diameterkit-ci-g_97momq/diameter-schema",
         "-in",
         "spec/scap1.json",
         "-out",
@@ -7037,7 +7084,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/generated-scap1.log",
+      "log": ".cache/b116-static/generated-scap1.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -7045,17 +7092,17 @@
     {
       "name": "generated-negative-control",
       "command": [
-        "/tmp/diameterkit-ci-nyn0nmg5/diameter-schema",
+        "/tmp/diameterkit-ci-g_97momq/diameter-schema",
         "-in",
         "/home/skill/workspace/git/diameterkit/spec/base.json",
         "-out",
-        "/tmp/diameterkit-ci-nyn0nmg5/stale.go",
+        "/tmp/diameterkit-ci-g_97momq/stale.go",
         "-check"
       ],
       "status": "passed",
       "expected_failure": true,
-      "log": ".cache/b115-static/generated-negative-control.log",
-      "sha256": "a780635503cfdc004d130b3d47cb99404ae53c015766d827d84078a643a7023d",
+      "log": ".cache/b116-static/generated-negative-control.log",
+      "sha256": "6b63a1c4dba1c49deaa08b853a6124ec2465b972ca7a3cde1851a04a458f82cd",
       "suite": "static"
     },
     {
@@ -7070,9 +7117,9 @@
         "^TestGeneratedFilesCurrentAndDeterministic$"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/generator-determinism.log",
+      "log": ".cache/b116-static/generator-determinism.log",
       "status": "passed",
-      "sha256": "b0a8f2ec5a7d25b2679f3c2ea4e1514617dd1601602c1ad7f28af2bc74823997",
+      "sha256": "767136953bc3a9b3fc09c1bee9dba2db7c5c83f58b0bf46f97176e07c572b1dd",
       "test_subtest_seed_passes": 1,
       "test_skips": 0,
       "suite": "static"
@@ -7084,10 +7131,10 @@
         "spec/tools/public_api_snapshot.py",
         "--check",
         "--workspace",
-        "/tmp/diameterkit-ci-nyn0nmg5/go.work"
+        "/tmp/diameterkit-ci-g_97momq/go.work"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/api-snapshot.log",
+      "log": ".cache/b116-static/api-snapshot.log",
       "status": "passed",
       "sha256": "1debc4cbb0d2bd5220fa0bdc632c40e3439560db79b82355c4d4a3c68d13dfcb",
       "suite": "static"
@@ -7099,13 +7146,13 @@
         "spec/tools/public_api_snapshot.py",
         "--check",
         "--output",
-        "/tmp/diameterkit-ci-nyn0nmg5/stale-api.json",
+        "/tmp/diameterkit-ci-g_97momq/stale-api.json",
         "--workspace",
-        "/tmp/diameterkit-ci-nyn0nmg5/go.work"
+        "/tmp/diameterkit-ci-g_97momq/go.work"
       ],
       "status": "passed",
       "expected_failure": true,
-      "log": ".cache/b115-static/api-negative-control.log",
+      "log": ".cache/b116-static/api-negative-control.log",
       "sha256": "64fa65d5163692d7809a4935279b295a5c3033511bfb5244d3fa97ce72c44f4c",
       "suite": "static"
     },
@@ -7117,7 +7164,7 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-static/core-vet.log",
+      "log": ".cache/b116-static/core-vet.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -7130,7 +7177,7 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b115-static/adapter-vet.log",
+      "log": ".cache/b116-static/adapter-vet.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "static"
@@ -7145,7 +7192,7 @@
         "GOHOSTARCH"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-pure/toolchain.log",
+      "log": ".cache/b116-pure/toolchain.log",
       "status": "passed",
       "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
       "suite": "pure"
@@ -7159,7 +7206,7 @@
         "-json"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b115-pure/adapter-manifest.log",
+      "log": ".cache/b116-pure/adapter-manifest.log",
       "status": "passed",
       "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
       "suite": "pure"
@@ -7173,8 +7220,8 @@
         "/home/skill/workspace/git/diameterkit",
         "/home/skill/workspace/git/diameterkit/adapters/sctp"
       ],
-      "cwd": "/tmp/diameterkit-ci-cb08ka5r",
-      "log": ".cache/b115-pure/workspace.log",
+      "cwd": "/tmp/diameterkit-ci-mnf390vc",
+      "log": ".cache/b116-pure/workspace.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "pure"
@@ -7187,8 +7234,8 @@
         "edit",
         "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
       ],
-      "cwd": "/tmp/diameterkit-ci-cb08ka5r",
-      "log": ".cache/b115-pure/checkout-binding.log",
+      "cwd": "/tmp/diameterkit-ci-mnf390vc",
+      "log": ".cache/b116-pure/checkout-binding.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "pure"
@@ -7203,7 +7250,7 @@
         "all"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b115-pure/module-graph.log",
+      "log": ".cache/b116-pure/module-graph.log",
       "status": "passed",
       "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
       "suite": "pure"
@@ -7217,7 +7264,7 @@
         "github.com/skill215/sctp@v0.8.0"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b115-pure/dependency-download.log",
+      "log": ".cache/b116-pure/dependency-download.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "pure"
@@ -7233,10 +7280,10 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-pure/core-pure.log",
+      "log": ".cache/b116-pure/core-pure.log",
       "status": "passed",
-      "sha256": "39b542c2c96e18f693d73ed0a2f90a7fdcd48fd321e05a7d02ba598d2ccda086",
-      "test_subtest_seed_passes": 6170,
+      "sha256": "e1f14f1da3fc3c943e45bf1940bb7d4c13ae6dac6163bbff4b3a5d75f653f296",
+      "test_subtest_seed_passes": 6511,
       "test_skips": 0,
       "suite": "pure"
     },
@@ -7251,9 +7298,9 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b115-pure/adapter-pure.log",
+      "log": ".cache/b116-pure/adapter-pure.log",
       "status": "passed",
-      "sha256": "2a49949efd68e611f97e3e526e52fe71ff627ce55a93e7cf95cb43629fbf647a",
+      "sha256": "f87ae3bc90825ec9df009a9d41ac976525a339c78a82ac5252affdc5e5ab8fea",
       "test_subtest_seed_passes": 114,
       "test_skips": 0,
       "suite": "pure"
@@ -7268,7 +7315,7 @@
         "GOHOSTARCH"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-race/toolchain.log",
+      "log": ".cache/b116-race/toolchain.log",
       "status": "passed",
       "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
       "suite": "race"
@@ -7282,7 +7329,7 @@
         "-json"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b115-race/adapter-manifest.log",
+      "log": ".cache/b116-race/adapter-manifest.log",
       "status": "passed",
       "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
       "suite": "race"
@@ -7296,8 +7343,8 @@
         "/home/skill/workspace/git/diameterkit",
         "/home/skill/workspace/git/diameterkit/adapters/sctp"
       ],
-      "cwd": "/tmp/diameterkit-ci-3t5pxaw7",
-      "log": ".cache/b115-race/workspace.log",
+      "cwd": "/tmp/diameterkit-ci-f_6t1sqv",
+      "log": ".cache/b116-race/workspace.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "race"
@@ -7310,8 +7357,8 @@
         "edit",
         "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
       ],
-      "cwd": "/tmp/diameterkit-ci-3t5pxaw7",
-      "log": ".cache/b115-race/checkout-binding.log",
+      "cwd": "/tmp/diameterkit-ci-f_6t1sqv",
+      "log": ".cache/b116-race/checkout-binding.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "race"
@@ -7326,7 +7373,7 @@
         "all"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b115-race/module-graph.log",
+      "log": ".cache/b116-race/module-graph.log",
       "status": "passed",
       "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
       "suite": "race"
@@ -7340,7 +7387,7 @@
         "github.com/skill215/sctp@v0.8.0"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b115-race/dependency-download.log",
+      "log": ".cache/b116-race/dependency-download.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "suite": "race"
@@ -7357,10 +7404,10 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b115-race/core-race.log",
+      "log": ".cache/b116-race/core-race.log",
       "status": "passed",
-      "sha256": "8e6a61f3398646928feedcf4f48dc7ede47639e7e21438bdc42360fe4cfd7a5d",
-      "test_subtest_seed_passes": 6170,
+      "sha256": "ed5e07a68ab71c2017f891bcc4200b431f39b6eb06cd32485cfc8c34233aeec9",
+      "test_subtest_seed_passes": 6511,
       "test_skips": 0,
       "suite": "race"
     },
@@ -7376,9 +7423,9 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b115-race/adapter-race.log",
+      "log": ".cache/b116-race/adapter-race.log",
       "status": "passed",
-      "sha256": "aa990cb0a4dfd993471439cf1e80e702927c4d5d4b5024f44aaa831af781619e",
+      "sha256": "265a08d7b44749cf20ac821e52da1ff6af9a0443dac78ceec87b97b17db030f5",
       "test_subtest_seed_passes": 114,
       "test_skips": 0,
       "suite": "race"
@@ -7974,6 +8021,14 @@
       "sha256": "c1fb1b859115f76a5a94336cd0afd4c93a25a7b6c3b15930d3464d5c05851ca2"
     },
     {
+      "path": "compat/smsfwro/combined/action_missing.go",
+      "sha256": "c2c82964c35881e335de3c0489a357e6304a2769335a6f2cadcd527ecf45890a"
+    },
+    {
+      "path": "compat/smsfwro/combined/action_missing_test.go",
+      "sha256": "34756cd7217d27302a7295c44ce4bee079930b3efcb68638b3bebf02235d57b5"
+    },
+    {
       "path": "compat/smsfwro/combined/builders.go",
       "sha256": "1d3082600f8eabf66ac9046170cf6866df7eb336bf3a4d37d078556b70f0f885"
     },
@@ -8019,7 +8074,7 @@
     },
     {
       "path": "compat/smsfwro/combined/rules.go",
-      "sha256": "20b955745a8e1c2d1082ca7296acd4e65e378b13c8890ebf24f10f507660b143"
+      "sha256": "e9897fa75c320aecb8014d7503bad2ecd74a9cae6255a56fa89ed681a3b604ac"
     },
     {
       "path": "compat/smsfwro/combined/sms_missing.go",
@@ -8031,7 +8086,7 @@
     },
     {
       "path": "compat/smsfwro/combined/zz_generated_messages.go",
-      "sha256": "69c7a990d03392fad64e778ed57e2e155a3ab4861a2d7266c82f1ff3a1ec92fc"
+      "sha256": "a301729b7b41314994f0411e0f2b9bcddc195c56de1e1b55b0ef5a49548156af"
     },
     {
       "path": "compat/smsfwro/ecur.go",
@@ -8083,7 +8138,7 @@
     },
     {
       "path": "doc/README.md",
-      "sha256": "346cba06cdfd7abb76c7030581cf9b7f1f113e9b65d058959fa194e631955e37"
+      "sha256": "a827040b955af940f42fc382c1327d53310f0e4e8ab83970915e9bb0a7f02bb6"
     },
     {
       "path": "doc/cardinality-diagnostics.md",
@@ -8092,6 +8147,10 @@
     {
       "path": "doc/combined-duplicate-acceptance.md",
       "sha256": "1785be3e527afa4ae6e02a9559fcc5633766f971ca2891608fe51ab9daa80d93"
+    },
+    {
+      "path": "doc/conditional-action-diagnostics.md",
+      "sha256": "b11947315816d456bb71e7bbafa716ee1527d20af2f7d876162cfe4ddaca86ed"
     },
     {
       "path": "doc/conditional-missing-diagnostics.md",
@@ -8127,7 +8186,7 @@
     },
     {
       "path": "doc/diameterkit-application-definitions.md",
-      "sha256": "cbc445765fc1a8af92a15b943a42b26d09b3d6a2414a0b9dc7a9de1926180738"
+      "sha256": "8ff162a108a4b1fbeabb131383f7107f23f2bcec0d038d52674347d93dd5331d"
     },
     {
       "path": "doc/diameterkit-architecture.md",
@@ -8175,7 +8234,7 @@
     },
     {
       "path": "doc/diameterkit-specification.md",
-      "sha256": "2c16fadbfe285b43007f2fe858873731dcb20b199bdb8ecf51196d5d318c1128"
+      "sha256": "229892bd4c4d39badcb89eea667f75d1f3bacedc6b16b57e19e8d20694269871"
     },
     {
       "path": "doc/diameterkit-state-consistency.md",
@@ -8183,7 +8242,7 @@
     },
     {
       "path": "doc/diameterkit-support-matrix.md",
-      "sha256": "981eee3b6df52aeb6b51e4f10c388b892d1f08d70adc69da6b7f1972fcffc442"
+      "sha256": "52e0138fe1b324a6ccbfde1d75da202a8f8808d93c118e63fa3d1edf2e435823"
     },
     {
       "path": "doc/diameterkit-usage-coverage.md",
@@ -8235,7 +8294,7 @@
     },
     {
       "path": "doc/remaining-gaps.md",
-      "sha256": "60cc3acef11db5093f6ed1e26dd724258593135c7c6a064bc0df496dbf64fa4e"
+      "sha256": "332b6334a314a1cdc493239783cf818fdee7d30ea4b4b5403ee6c743ec9329f6"
     },
     {
       "path": "doc/ro-recovery-handoff.md",
@@ -9118,6 +9177,10 @@
       "sha256": "56cc2dcca876d760492ca61576944fe86ceae29464236771f9d82838f2ea275e"
     },
     {
+      "path": "reject_action_missing_test.go",
+      "sha256": "2ec0e569cd775ff5035c5292e2c33251ad952ef79b0159680a9f6e5beeb99d70"
+    },
+    {
       "path": "reject_cardinality_test.go",
       "sha256": "3c1ba0270d969824d3684319f0b575b47a9d798b1a962b0d11f76f051d86d8fd"
     },
@@ -9499,7 +9562,7 @@
     },
     {
       "path": "spec/combined.json",
-      "sha256": "8384ed2f6b1f67611232ac84400247e25f6de8fdc01bf74e503b4a8746e1c32a"
+      "sha256": "8020f1e4fd22de1b8e9956c7b0c2b50e52b376f14d0f29295b5d5bc7ee74d2c3"
     },
     {
       "path": "spec/dcca.json",
@@ -9568,6 +9631,10 @@
     {
       "path": "spec/evidence/batch-115-mms-group-missing.json",
       "sha256": "f9940aec3d7131c3125c0b19c004619fd672e45a8b7adf1b0509ad3f83207dc9"
+    },
+    {
+      "path": "spec/evidence/batch-116-action-missing.json",
+      "sha256": "0873fe70b0ecacbec587abbd0d99bbb74f05d71204d5ac64142c10e930444121"
     },
     {
       "path": "spec/evidence/batch-58-sctp-u3.json",
@@ -9924,6 +9991,10 @@
     {
       "path": "spec/history/batch-114.json",
       "sha256": "90fb96ba0aec8ec95ba6c9113d86391cea77075d4b0b68cf3dcd6c4f3bb6add7"
+    },
+    {
+      "path": "spec/history/batch-115.json",
+      "sha256": "5bd5e3484a08b481cb172fbf83cd72a2b46147a824dd6928606134ed7c02ba24"
     },
     {
       "path": "spec/history/batch-86.json",
@@ -10335,7 +10406,7 @@
     },
     {
       "path": "spec/release/public-api.json",
-      "sha256": "319096cae7e13537f7189f60a1bdb2a30eb017ec68435f92e962070e80d51432"
+      "sha256": "6b18f9f6fd48e0436cfccbd1629b9956d779b3d39fb35ae60ce0205251162da1"
     },
     {
       "path": "spec/release/published-modules.json",
@@ -10343,7 +10414,7 @@
     },
     {
       "path": "spec/release/support-matrix.json",
-      "sha256": "34062e474d262060447d535b4c713a4cd571ea828efafb46418fa2fb961c3508"
+      "sha256": "682345d819910e8d8307db88ae62d2177477ed2e441588aceab6e220f8649d79"
     },
     {
       "path": "spec/release/version-policy.json",
@@ -10543,9 +10614,10 @@
     }
   ],
   "next_batch": [
-    "Wrong-interface/mixed-value diagnostics, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings.",
+    "Wrong-interface and present-value diagnostics, other mixed presence/value conditions, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings.",
     "New immutable core/adapter publication and cold GOWORK=off/no-replace installation.",
-    "Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence."
+    "Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence.",
+    "Investigate intermittent timed Go fuzz deadline exits observed in batches114 and116; preserve original failures and repeated-run evidence."
   ],
   "deferred_from_this_batch": [
     "Complete four-application semantics/fields/contexts and full public release acceptance remain Partial/Planned; v1 includesRo andsmsfw migration, not a replacement-ready claim.",
@@ -10595,7 +10667,8 @@
     "Batch112 closes only the selected isolated conditional MMS field omissions; Other SMS conditions, simultaneous MMS omissions and unreviewed whole groups; domain/handshake/malformed-header mappings.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence.",
     "Batch113 closes only the selected common SMS and termination field omissions; Mixed Originator-SCCP/interface conditions, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence.",
     "Batch114 closes only the selected isolated IEC Originator-SCCP omission; Wrong-interface/mixed-value diagnostics, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence.",
-    "Batch115 closes only the selected conditional whole MMS omission; Wrong-interface/mixed-value diagnostics, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence."
+    "Batch115 closes only the selected conditional whole MMS omission; Wrong-interface/mixed-value diagnostics, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence.",
+    "Batch116 closes only the selected EVENT Requested-Action omission; Wrong-interface and present-value diagnostics, other mixed presence/value conditions, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence.; Investigate intermittent timed Go fuzz deadline exits observed in batches114 and116; preserve original failures and repeated-run evidence."
   ],
   "history": [
     "spec/history/batch-01.json",
@@ -10712,9 +10785,10 @@
     "spec/history/batch-111.json",
     "spec/history/batch-112.json",
     "spec/history/batch-113.json",
-    "spec/history/batch-114.json"
+    "spec/history/batch-114.json",
+    "spec/history/batch-115.json"
   ],
-  "batch_contract": "spec/local/batches/batch-115.md",
+  "batch_contract": "spec/local/batches/batch-116.md",
   "prior_interop_evidence": [
     "interop/evidence/2026-11-06-base-s6c.json",
     "interop/evidence/2026-11-06-envelope.json",
@@ -10793,7 +10867,7 @@
     "report": "doc/diameterkit-support-matrix.md",
     "evidence": "spec/evidence/batch-86-public-surface.json",
     "runtime_tests_run": true,
-    "resolution_batch": 115,
+    "resolution_batch": 116,
     "resolved_findings": [
       "DRA Relay-only capability negotiation",
       "Per-request destination binding on one DRA Peer:bounded configured targets only",
@@ -10844,16 +10918,17 @@
       "Batch112 Combined SMS isolated MMS field omissions completed in selected scope.",
       "Batch113 Combined isolated common SMS and termination field omissions completed in selected scope.",
       "Batch114 Combined isolated IEC Originator-SCCP omission completed in selected scope.",
-      "Batch115 Combined conditional whole MMS-Information omission completed in selected scope."
+      "Batch115 Combined conditional whole MMS-Information omission completed in selected scope.",
+      "Batch116 Combined conditional EVENT Requested-Action omission completed in selected scope."
     ],
-    "resolution_evidence": "spec/evidence/batch-115-mms-group-missing.json",
-    "prior_resolution_evidence": "spec/evidence/batch-114-originator-missing.json",
+    "resolution_evidence": "spec/evidence/batch-116-action-missing.json",
+    "prior_resolution_evidence": "spec/evidence/batch-115-mms-group-missing.json",
     "production_sources_changed": true,
     "original_scan": {
       "evidence": "spec/reviews/2026-11-09-global-progress.json",
       "implementation_batch": 67
     },
-    "implementation_batch": 115,
+    "implementation_batch": 116,
     "open_findings": [
       {
         "name": "发布级自动验收",
@@ -10884,10 +10959,10 @@
           "SPEC-ERROR-01"
         ],
         "evidence": [
-          "spec/evidence/batch-115-mms-group-missing.json",
+          "spec/evidence/batch-116-action-missing.json",
           "doc/remaining-gaps.md"
         ],
-        "remaining": "Wrong-interface/mixed-value diagnostics, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings."
+        "remaining": "Wrong-interface and present-value diagnostics, other mixed presence/value conditions, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings."
       },
       {
         "name": "Next immutable core/adapter release acceptance",
@@ -11242,19 +11317,34 @@
           "doc/conditional-mms-group-diagnostics.md"
         ],
         "remaining": "Wrong-interface/mixed-value diagnostics, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence."
+      },
+      {
+        "name": "Combined conditional EVENT Requested-Action omission",
+        "status": "completed_selected_slice",
+        "requirement_refs": [
+          "SPEC-ERROR-01",
+          "SPEC-CODEC-01",
+          "SPEC-PROFILE-01",
+          "SPEC-BUDGET-01"
+        ],
+        "evidence": [
+          "spec/evidence/batch-116-action-missing.json",
+          "doc/conditional-action-diagnostics.md"
+        ],
+        "remaining": "Wrong-interface and present-value diagnostics, other mixed presence/value conditions, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence.; Investigate intermittent timed Go fuzz deadline exits observed in batches114 and116; preserve original failures and repeated-run evidence."
       }
     ],
-    "production_change_scope": "Combined conditional whole MMS-Information omission",
+    "production_change_scope": "Combined conditional EVENT Requested-Action omission",
     "runtime_test_scope": "Selected20x pure/race and full dual-module pure/race; hosted outcome recorded separately."
   },
   "public_api_evidence": "spec/evidence/batch-87-s6c-helpers.json",
   "local_notes_update": {
     "status": "completed",
-    "scope": "Batch115 Markdown stays ignored; English guides and JSON evidence maintained.",
+    "scope": "Batch116 Markdown stays ignored; English guides and JSON evidence maintained.",
     "directory": "spec/local/batches/",
     "publish": false,
-    "count": 114,
-    "range": "batch-02.md through batch-115.md; no batch-01.md existed",
+    "count": 115,
+    "range": "batch-02.md through batch-116.md; no batch-01.md existed",
     "ignore_rule": "/spec/local/batches/",
     "public_record_policy": "Current public Markdown links use retained history/evidence JSON. Frozen JSON and source provenance retain original paths/hashes; current relocation map resolves local notes.",
     "prior_patch_ignore_rules_removed": true,
@@ -11692,9 +11782,10 @@
       "spec/local/batches/batch-112.md",
       "spec/local/batches/batch-113.md",
       "spec/local/batches/batch-114.md",
-      "spec/local/batches/batch-115.md"
+      "spec/local/batches/batch-115.md",
+      "spec/local/batches/batch-116.md"
     ],
-    "latest_batch": 115
+    "latest_batch": 116
   },
   "release_installation": {
     "status": "passed",
@@ -11716,7 +11807,7 @@
         "target": "linux/amd64",
         "package": "github.com/skill215/diameterkit/compat/smsfwro/combined",
         "source_changes": [
-          "compat/smsfwro/combined/mms_group_missing.go",
+          "compat/smsfwro/combined/action_missing.go",
           "compat/smsfwro/combined/rules.go",
           "compat/smsfwro/combined/zz_generated_messages.go"
         ],
@@ -11726,14 +11817,14 @@
         "target": "windows/amd64",
         "package": "github.com/skill215/diameterkit/compat/smsfwro/combined",
         "source_changes": [
-          "compat/smsfwro/combined/mms_group_missing.go",
+          "compat/smsfwro/combined/action_missing.go",
           "compat/smsfwro/combined/rules.go",
           "compat/smsfwro/combined/zz_generated_messages.go"
         ],
         "documentation_change": "Reviewed generator banner, Version and DefinitionDigest constants only"
       }
     ],
-    "version_choice": "Combined slice.11; planned core v0.2.0-rc.1 unchanged.",
+    "version_choice": "Combined slice.12; planned core v0.2.0-rc.1 unchanged.",
     "migration": "Keep original builds for earlier recovery records. Never relabel fingerprints or published tags; immutable new-version installation remains separate."
   },
   "current_gap_overview": "doc/remaining-gaps.md"
