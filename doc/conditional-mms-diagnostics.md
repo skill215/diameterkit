@@ -62,3 +62,6 @@ tags remain immutable; a new release and cold installation remain separate.
 The library stays pure Go and introduces no persistence.
 
 See [remaining gaps](remaining-gaps.md) and [the receipt](../spec/evidence/batch-112-mms-missing.json).
+
+[Batch 113](conditional-sms-diagnostics.md) separately adds common SMS and
+termination-only isolated omissions, preserving the existing first-failure order.

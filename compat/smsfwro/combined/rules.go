@@ -131,6 +131,13 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 		return vendorAt(2000, validation.ErrUnsupported)
 	}
 	if !s.ClientAddressWire.Present || !s.RecipientSCCPAddress.Present || !s.SMSCAddress.Present || !s.ReplyPathRequested.Present || !s.SMUserDataHeader.Present {
+		if mode == validation.Receive {
+			fields := [...]smsOmissionField{{s.ClientAddressWire.Present, 2018}, {s.RecipientSCCPAddress.Present, 2010}, {s.SMSCAddress.Present, 2017}, {s.ReplyPathRequested.Present, 2011}, {s.SMUserDataHeader.Present, 2015}}
+			if err := missingSMSCondition(fields[:]); err != nil {
+				return err
+			}
+		}
+
 		return vendorAt(2000, validation.ErrMissing)
 	}
 	if e := cstring(s.ClientAddressWire.Value); e != nil {
@@ -174,6 +181,13 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 			return at(456, validation.ErrUnsupported)
 		}
 		if !s.SMStatus.Present || !s.DischargeTime.Present {
+			if mode == validation.Receive {
+				fields := [...]smsOmissionField{{s.SMStatus.Present, 2014}, {s.DischargeTime.Present, 2012}}
+				if err := missingSMSCondition(fields[:]); err != nil {
+					return err
+				}
+			}
+
 			return vendorAt(2000, validation.ErrMissing)
 		}
 	} else {

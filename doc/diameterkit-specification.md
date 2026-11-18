@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.113 — 2026-11-18, batch 112.** The [progress record](../spec/progress.json)
+**Draft 0.114 — 2026-11-18, batch 113.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -45,6 +45,12 @@ per template are checked; simultaneous omissions and whole MMS absence remain
 separate. Combined slice.8 changes its digest and Bundle fingerprints, with
 generatorv23/ops9, public shapes and Build/Send unchanged. See
 [conditional MMS fields](conditional-mms-diagnostics.md).
+
+Batch 113 adds five common SMS and two TERMINATION-only isolated omissions.
+Existing first-failure ordering, multiple-omission close, Build/Send and business
+constraints remain unchanged. Combined slice.9 changes its digest and Bundle
+fingerprints; generatorv23/ops9 and public shapes remain unchanged. See
+[conditional SMS fields](conditional-sms-diagnostics.md).
 
 <details>
 <summary>Historical scope and implementation summary (2026-11-10)</summary>

@@ -165,8 +165,8 @@ func TestMMSMissingValueBoundaries(t *testing.T) {
 	raw := missingRaw(t, co, req, lengthPath(avp.Key{VendorID: 10415, Code: 873}, avp.Key{VendorID: 10415, Code: 2000}, avp.Key{VendorID: 10415, Code: 2018}), false)
 	raw = recipientOmit(t, raw, 1202)
 	_, cause := co.Decode(raw)
-	if _, ok := missingavp.Quote(cause, n.cfg.Limits, 40); ok {
-		t.Fatal("earlier SMS failure lost precedence")
+	if q, ok := missingavp.Quote(cause, n.cfg.Limits, 40); !ok || !bytes.Equal(q, smsMinimum(t, 2018)) {
+		t.Fatal("earlier SMS failure lost precedence", cause, q)
 	}
 }
 func TestRejectMMSMissingDefault(t *testing.T) {

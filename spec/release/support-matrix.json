@@ -1,7 +1,7 @@
 {
   "format": 1,
   "date": "2026-11-18",
-  "basis": "Batch112 selected combined SMS isolated MMS field omissions verified. Existing fixed/variable consumers/generatorv23/ops9, current12-binding metadata check, pure Go/no persistence; all24 broader requirements remain partial.",
+  "basis": "Batch113 selected combined common SMS and termination omissions verified. Existing fixed/variable consumers/generatorv23/ops9, current12-binding metadata check, pure Go/no persistence; all24 broader requirements remain partial.",
   "release_status": "not_ready",
   "api_snapshot": "spec/release/public-api.json",
   "profiles": [
@@ -212,9 +212,9 @@
     {
       "binding": "combined",
       "profile": "smsfw-ro-five-template-wire-v1",
-      "version": "0.1.0-slice.8",
+      "version": "0.1.0-slice.9",
       "definition": "spec/combined.json",
-      "definition_sha256": "02cf27185bdd31feac0636ceef04a3bed7a7d65cbed1dc2e4132dff2ee775671",
+      "definition_sha256": "bae918c7a330e3ae9ea55a8766a8532c5116fdc0b8e9805c47877969b8277317",
       "requests": [
         {
           "name": "CCR",
@@ -380,10 +380,10 @@
         "SPEC-ERROR-01"
       ],
       "evidence": [
-        "spec/evidence/batch-112-mms-missing.json",
+        "spec/evidence/batch-113-sms-missing.json",
         "doc/remaining-gaps.md"
       ],
-      "remaining": "Other SMS conditions, simultaneous MMS omissions and unreviewed whole groups; domain/handshake/malformed-header mappings."
+      "remaining": "Mixed Originator-SCCP/interface conditions, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings."
     },
     {
       "name": "Next immutable core/adapter release acceptance",
@@ -751,6 +751,21 @@
         "doc/conditional-mms-diagnostics.md"
       ],
       "remaining": "Other SMS conditions, simultaneous MMS omissions and unreviewed whole groups; domain/handshake/malformed-header mappings.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence."
+    },
+    {
+      "name": "Combined isolated common SMS and termination field omissions",
+      "status": "completed_selected_slice",
+      "requirement_refs": [
+        "SPEC-ERROR-01",
+        "SPEC-CODEC-01",
+        "SPEC-PROFILE-01",
+        "SPEC-BUDGET-01"
+      ],
+      "evidence": [
+        "spec/evidence/batch-113-sms-missing.json",
+        "doc/conditional-sms-diagnostics.md"
+      ],
+      "remaining": "Mixed Originator-SCCP/interface conditions, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence."
     }
   ],
   "current_gap_overview": "doc/remaining-gaps.md"
