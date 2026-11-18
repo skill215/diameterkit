@@ -16,7 +16,7 @@ address or an OriginatorInterface type other than 1.
 | --- | --- |
 | Address absent, interface type 1 | Typed missing example; both ErrMissing and ErrUnsupported |
 | Address present, interface type 1 | Existing value and later request checks |
-| Address present, interface type other than 1 | Existing unsupported failure; no missing example |
+| Address present, interface type other than 1 | Batch 119 exact-instance 5004; ErrField and ErrUnsupported; no missing example |
 | Address absent, interface type other than 1 | Existing unsupported failure; no missing example |
 
 The selected branch runs only after existing sequence, subscriptions, SMS/MMS,
@@ -45,8 +45,9 @@ TCP/TLS ordinary/emergency cases verify exact diagnostic and Session/Proxy data,
 no invalid delivery, held resources, valid follow-up and retirement. Two default
 close and six mixed/earlier-unsupported network cases recorded the original
 close boundary. [Batch 118](conditional-action-values.md) now diagnoses the two
-earlier-action cases with 5004; wrong-interface cases still close and the
-Originator omission rule itself is unchanged.
+earlier-action cases with 5004. [Batch 119](conditional-interface-values.md) adds
+5004 for the isolated wrong-interface case with an address present. Mixed absent
+address/wrong-interface cases still close; the omission rule itself is unchanged.
 
 ```sh
 CGO_ENABLED=0 go test . ./compat/smsfwro/combined ./internal/missingavp -run 'Test(OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)' -count=20 -timeout=10m
@@ -61,7 +62,7 @@ remain unchanged. Keep original builds for earlier recovery records. Published
 tags remain immutable, and new publication/cold installation are separate gates.
 The library stays pure Go with no persistence.
 
-Wrong-interface diagnostics, simultaneous conditional omissions and unreviewed
+Other interface-value diagnostics, simultaneous conditional omissions and unreviewed
 whole groups remain separate. See [remaining gaps](remaining-gaps.md),
 [SMS conditions](conditional-sms-diagnostics.md) and
 [the receipt](../spec/evidence/batch-114-originator-missing.json).

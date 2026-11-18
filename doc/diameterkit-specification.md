@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.119 — 2026-11-18, batch 118.** The [progress record](../spec/progress.json)
+**Draft 0.120 — 2026-11-18, batch 119.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1328,3 +1328,18 @@ Batch118 hosted acceptance also exposed a successful1,000,019-execution Go run
 rejected by the prior exact-count parser. The corrected gate records actual
 counts in1,000,000–1,000,062, using the pinned two-worker minimization bound;
 nonzero exits and all hard timeouts remain failures. Original failure retained.
+
+## Batch 119: isolated IEC Originator-Interface values (2026-11-18)
+
+The existing combined IEC Receive condition now supplies static named proof
+when the address is present and Interface-Type is not 1. ErrUnsupported remains;
+ErrField and the precise Vendor10415 path873/2000/2009/2006 identify the invalid
+leaf. The bounded consumer verifies unique selectors and ancestors using shared
+source counts, then quotes three minimal headers plus the original Integer32
+leaf (52 bytes). Build/Send paths, other templates, mixed conditions and earlier
+failure ordering are unchanged. TCP/TLS ordinary/emergency and negative controls
+cover budgets, ownership, exact envelopes, no delivery and retirement.
+Combined slice.14 changes its digest and dependent Bundle fingerprints; public
+shapes, generator v23/ops9 and pure-Go/no-persistence remain unchanged.
+See the [English guide](conditional-interface-values.md) and
+[progress](../spec/progress.json). Broader requirements remain partial.

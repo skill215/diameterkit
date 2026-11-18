@@ -44,7 +44,7 @@ func TestOriginatorMissingWireMatrix(t *testing.T) {
 				if ok != proof || ok && !bytes.Equal(q, smsMinimum(t, 2008)) {
 					t.Fatal(q, cause)
 				}
-				if !valid && !proof {
+				if !valid && !proof && !present {
 					if _, e := n.rejectFrame(raw, 4096, rejectDecode, cause); !errors.Is(e, ErrUnsupported) {
 						t.Fatal(e)
 					}
@@ -120,8 +120,11 @@ func TestRejectOriginatorMissingMixedConditions(t *testing.T) {
 				}
 				sendRejectRaw(t, remote, raw)
 				// Action validation precedes the missing Originator condition.
-				// Batch118 maps only that earlier selected value failure.
-				if kind == "action" {
+				// Batch118 maps the earlier action; batch119 maps isolated interface values.
+				if kind == "interface-only" {
+					want = interfaceValueQuote(t, 2)
+				}
+				if kind == "action" || kind == "interface-only" {
 					answer := readReject(t, remote, req.Header, 5004)
 					if !answer.FailedAVP.Present || !bytes.Equal(answer.FailedAVP.Value.Data, want) {
 						t.Fatal("first failure")

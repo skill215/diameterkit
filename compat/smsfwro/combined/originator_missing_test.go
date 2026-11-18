@@ -38,7 +38,7 @@ func TestOriginatorMissingModes(t *testing.T) {
 					if ok != proof || ok && len(q) != 36 {
 						t.Fatal(e, q)
 					}
-					if !valid && !proof {
+					if !valid && !proof && !(mode == validation.Receive && present && typ != 1) {
 						var f *validation.FieldError
 						if !errors.As(e, &f) || len(f.Path) != 1 || f.Path[0].Code != 2008 {
 							t.Fatal("old path", e)
