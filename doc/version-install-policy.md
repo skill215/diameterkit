@@ -46,7 +46,7 @@ intent, worker fencing and reconciliation stay outside the library.
 ## Required publication order
 
 The [RC checklist](release-candidate-checklist.md) defines all required gates and
-the separate full-release completion conditions for the24 SPEC IDs.
+the separate full-release completion conditions for the 24 SPEC IDs.
 
 1. Review the release scope and migration record; run exact-candidate checkout CI.
 2. Publish the immutable core tag and verify its authenticated public download,
@@ -77,7 +77,7 @@ python3 spec/tools/release_install.py \
 The gate never publishes or edits module manifests. It rejects branch/latest,
 pseudo/offline versions, unsupported v1 inputs, malformed versions and reused
 output directories. Failed downloads are failures, not skips. A retry after a
-publication-availability change starts fresh and preserves the earlier failure.
+publication-availability or network correction starts fresh and preserves the earlier failure.
 
 Core-only and core+adapter consumers each start outside the checkout with empty
 private GOMODCACHE, GOCACHE and GOPATH. Inherited workspace/private-proxy/checksum

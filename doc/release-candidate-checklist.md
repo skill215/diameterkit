@@ -11,13 +11,13 @@ SPDX-AI-Date: 2026-11-19
 This candidate ships the verified v0 subset. It does not complete the full
 first-release/v1 scope. The [machine checklist](../spec/release/v0.2.0-rc.1.json)
 and [release receipt](releases/v0.2.0-rc.1.md) carry current gate status.
-All24 broad SPEC requirements keep their separate full-release assessment.
+All 24 broad SPEC requirements keep their separate full-release assessment.
 
 ## Required for this RC
 
 | Gate | Completion condition |
 | --- | --- |
-| RC-SCOPE | Freeze selected support, exclusions, external evidence and all24 completion conditions. |
+| RC-SCOPE | Freeze selected support, exclusions, external evidence and all 24 completion conditions. |
 | RC-API | Review changes since core rc.2 and retain exact Linux/Windows API snapshot; no Go source change in this release batch. |
 | RC-CORE-CI | Seven checkout suites pass for the exact commit selected for the core tag. |
 | RC-CORE-PUBLISH | Publish immutable core tag, verify remote commit, authenticated download and independent core-only cold consumer. |
@@ -32,7 +32,7 @@ Publish core first, verify its real download, then change the adapter requiremen
 and real checksums. Publish the adapter only from its reviewed checkout.
 Neither local checkout replacements nor an old pair's receipts pass the new
 installation gate. Never move/reuse an existing tag. Each failed attempt keeps
-its evidence; an availability retry starts a new empty consumer.
+its evidence; an availability or network retry starts a new empty consumer.
 
 The two modules use independent tags and both select v0.2.0-rc.1 here. The
 adapter version reflects its new exact-core dependency contract; this batch
@@ -46,7 +46,7 @@ including Redirect fields and Bundle fingerprints, require the v0 minor step.
 - DRA/relay product, MAP/SIP/TPDU engine, charging/accounting service, business retry scheduler or library persistence.
 - Persistent exactly-once, unapproved recovery, automatic cross-target authorization or universal six-template replacement.
 - Native SCTP on Windows/386; arm64 cross-build evidence is not native runtime acceptance; SCTP DTLS is not enabled.
-- Ordinary no-IMSI success SRA, unreviewed Realm/time-equality construction and restricted standard SMS failure/sequence or experimental5011 generation branches.
+- Ordinary no-IMSI success SRA, unreviewed Realm/time-equality construction and restricted standard SMS failure/sequence or experimental 5011 generation branches.
 - Automatic diagnostic mapping for unreviewed ambiguous/mixed conditions; safe-close/unsupported boundaries remain.
 - Production throughput/latency/capacity, long-soak, multi-tenant fairness or mixed-transport guarantees from finite tests.
 
@@ -59,7 +59,7 @@ the library.
 
 | Evidence | Owner | Required material |
 | --- | --- | --- |
-| EXT-TEMPLATE | Template/target maintainer | Original six-template inputs/outputs and deployed versions; PSP/private ACA/1292 mappings and420/2018 acceptance; Independent SCAP1 recovery authorization |
+| EXT-TEMPLATE | Template/target maintainer | Original six-template inputs/outputs and deployed versions; PSP/private ACA/1292 mappings and 420/2018 acceptance; Independent SCAP1 recovery authorization |
 | EXT-RECOVERY | Target and application operators | Deduplication keys/content/domain/retention; ECUR continuity and DRA/terminal roles; Durable intent, old-worker fencing and unknown-result reconciliation |
 | EXT-LOAD | Deployment acceptance owner | Declared duration/saturation/tenant/transport workloads and thresholds; Native target capacity/security/shutdown evidence |
 | EXT-PROTOCOL | Protocol/compatibility reviewer | Direct normative or named compatibility evidence for restricted result/identity/Realm/time combinations |
@@ -76,14 +76,14 @@ storage or business feature.
 | --- | --- | --- | --- |
 | SPEC-SCOPE-01 | Build both modules with CGO_ENABLED=0; disclose the exact profile/platform inventory and v0 support limits. | Approve the complete first-release A/B scope inventory and demonstrate every included capability; make a separate stable-v1 compatibility decision. | Project maintainer; target owners for claimed native platforms. |
 | SPEC-SCOPE-02 | Public consumers keep subscriber, charging, retry authority and durable state outside the library; no persistence dependency is introduced. | Trace every first-release workflow to explicit library/application responsibility and exercise the corresponding public API without moving durable state into the library. | Application owners provide durable intent, fencing and reconciliation evidence; no library database is required. |
-| SPEC-PROFILE-01 | All12 reviewed binding identities, fixed wire types and definition hashes match the support matrix; reject conflicting bindings. | Resolve every required first-release field/type conflict through explicit definitions or named compatibility bindings, backed by source/target evidence and negative controls. | Original six-template source/version and target wire samples for disputed private fields. |
+| SPEC-PROFILE-01 | All 12 reviewed binding identities, fixed wire types and definition hashes match the support matrix; reject conflicting bindings. | Resolve every required first-release field/type conflict through explicit definitions or named compatibility bindings, backed by source/target evidence and negative controls. | Original six-template source/version and target wire samples for disputed private fields. |
 | SPEC-PROFILE-02 | Publish command, result, field and platform limits separately from Application-ID advertisement; verify independent public consumers. | Map the full first-release usage inventory to supported profiles and enforce every declaration/advertisement boundary with executable acceptance. | Target capability advertisements and configured endpoint roles where those claims are included. |
-| SPEC-GEN-01 | Reproduce all11 generated files offline, reject drift and preserve the reviewed generator23/ops9/profile version ledger. | Cover all definitions required by the declared first-release inventory and audit handwritten-rule changes against explicit version/migration decisions; do not treat DefinitionDigest as a whole-source signature. | No external evidence for the existing generation mechanism; additional private definitions need authoritative inputs. |
+| SPEC-GEN-01 | Reproduce all 11 generated files offline, reject drift and preserve the reviewed generator 23 / ops 9/profile version ledger. | Cover all definitions required by the declared first-release inventory and audit handwritten-rule changes against explicit version/migration decisions; do not treat DefinitionDigest as a whole-source signature. | No external evidence for the existing generation mechanism; additional private definitions need authoritative inputs. |
 | SPEC-CODEC-01 | Pass owned codec, malformed input, canonicalization and bounded fuzz tests for the declared slices, including exact diagnostic instances. | Complete the codec/vector/negative-case inventory for every required first-release field and binding, including authoritative private layouts. | Canonical target captures for private or disputed wire layouts. |
 | SPEC-OWN-01 | Pass buffer mutation, snapshot, handoff, duplicate-arrival envelope and Close/Wait resource retirement tests in pure/race modes. | Provide a requirement-to-test inventory covering ownership and lifetime at every first-release public message, transport handoff and recovery boundary. | Application integration evidence for external buffer/worker ownership; library must not own application storage. |
 | SPEC-VALID-01 | Keep framing/type/presence checks separate from domain and explicit Sh XML interpretation; reject unsupported cases. | Resolve and verify all validation rules within the declared first-release scope, while retaining explicitly excluded full-XSD/internationalization behavior. | Authoritative rules or named compatibility evidence for disputed Realm, timing and private relations. |
 | SPEC-RESULT-01 | Public S6c/Ro consumers distinguish command, service, experimental and business outcomes; selected failure mappings remain bounded. | Complete result interpretation and paired request/answer tests for every first-release operation and required private result mapping. | PSP/private ACA/1292 and target result semantics; protocol success alone is insufficient. |
-| SPEC-ERROR-01 | Selected5001/5004/5005/5009/5014/3006 diagnostics pass bounds and original-instance tests; unreviewed failures retain safe close/unsupported behavior. | Enumerate each remaining promised condition/value/cardinality/group/domain/handshake/header mapping and either verify a bounded unambiguous diagnostic or record a justified safe-close classification. | Direct protocol or named target evidence where error attribution is ambiguous; do not guess repairs. |
+| SPEC-ERROR-01 | Selected 5001/5004/5005/5009/5014/3006 diagnostics pass bounds and original-instance tests; unreviewed failures retain safe close/unsupported behavior. | Enumerate each remaining promised condition/value/cardinality/group/domain/handshake/header mapping and either verify a bounded unambiguous diagnostic or record a justified safe-close classification. | Direct protocol or named target evidence where error attribution is ambiguous; do not guess repairs. |
 | SPEC-APP-01 | Installed public consumers exercise selected Sh/S6c/SGd/Ro, S6c helpers and named recovery bindings without library persistence. | Cover the declared first-release A/B application calls, six-template operations, required outcomes and recovery entry points through public API acceptance. | Original complete template inputs/outputs, deployment versions and target application mappings. |
 | SPEC-BIND-01 | Use explicit fixed bindings and reject wrong-binding imports or ungranted targets; preserve independent advertised applications. | Validate all first-release DRA/terminal roles, compatibility binding selections and target protection conditions against deployment fixtures. | DRA versus ultimate HSS/MME/OCS roles and target recovery permissions. |
 | SPEC-EXCHANGE-01 | Verify correlation, deadlines, cancel/late-answer races, one completion and single-attempt default through public consumers. | Complete first-release flow/paired-message and fault-injection coverage across all claimed roles/transports; demonstrate actual deployment interoperation. | Named target request/answer traces and end-to-end fault scenarios. |

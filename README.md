@@ -3,7 +3,7 @@ SPDX-AI-Disclosure: ai-generated
 SPDX-AI-Model: GPT-6
 SPDX-AI-Provider: OpenAI
 SPDX-AI-Scope: README structure and user-facing introduction revised under maintainer direction.
-SPDX-AI-Date: 2026-11-17
+SPDX-AI-Date: 2026-11-19
 -->
 
 # diameterkit
