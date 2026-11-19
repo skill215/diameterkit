@@ -1,6 +1,6 @@
 # Current remaining gaps
 
-This is the current implementation overview for **batch 122, Draft 0.123**
+This is the current implementation overview for **batch 123, Draft 0.124**
 (2026-11-19). [Progress](../spec/progress.json) records actual check completion;
 the broad release status remains `not_ready`. The 24 SPEC IDs span implementation,
 verification and external acceptance; their `partial` labels are not a percentage
@@ -12,7 +12,7 @@ their historical meaning.
 [The RC checklist](release-candidate-checklist.md) separates required publication
 gates from unsupported and external-evidence claims, with explicit completion
 conditions for all 24 SPEC requirements. Batch 121 verified the published pair through ordered publication and cold installation.
-Batch 122 adds unpublished SMS value diagnostics; the earlier RC receipt does not
+Batches 122 and 123 add unpublished SMS and unit value diagnostics; the earlier RC receipt does not
 certify the newer checkout. A future release needs fresh publication/install evidence.
 The broad not_ready status refers to the full first-release scope, not a failed
 checkout or a requirement to complete every diagnostic before a v0 candidate.
@@ -24,7 +24,7 @@ boundaries below remain unchanged.
 
 | Area | Completed selected scope | Remaining work |
 | --- | --- | --- |
-| Error diagnostics | Selected Base and generated fixed/variable-field 5005; reviewed whole-group minima, including three groups with variable children; first-excess 5009; isolated-value 5004, unknown-M 5001 and typed-length 5014; bounded Redirect 3006; selected Proxy/VSAI leaf, condition and omission diagnostics; selected SRR conditional SM-RP-SMEA omission; combined two-subscription shortage and SCAP1 ordered-parameter shortage; isolated conditional combined Recipient-Address, five MMS fields, five common SMS fields, two termination fields isolated IEC Originator-SCCP omission conditional whole MMS-Information omission and EVENT Requested-Action omission; selected IEC/money EVENT action-value 5004; isolated IEC and INITIAL/TERMINATION interface-type 5004; isolated SMS-Node and SM-Message-Type 5004 | Other conditional/cardinality and unreviewed group omissions, domain/handshake mappings and malformed-header length diagnostics |
+| Error diagnostics | Selected Base and generated fixed/variable-field 5005; reviewed whole-group minima, including three groups with variable children; first-excess 5009; isolated-value 5004, unknown-M 5001 and typed-length 5014; bounded Redirect 3006; selected Proxy/VSAI leaf, condition and omission diagnostics; selected SRR conditional SM-RP-SMEA omission; combined two-subscription shortage and SCAP1 ordered-parameter shortage; isolated conditional combined Recipient-Address, five MMS fields, five common SMS fields, two termination fields isolated IEC Originator-SCCP omission conditional whole MMS-Information omission and EVENT Requested-Action omission; selected IEC/money EVENT action-value 5004; isolated IEC and INITIAL/TERMINATION interface-type 5004; isolated SMS-Node and SM-Message-Type 5004; isolated Reporting-Reason and CC-Service-Specific-Units 5004 | Other conditional/cardinality and unreviewed group omissions, domain/handshake mappings and malformed-header length diagnostics |
 | Duplicate acceptance | Generic and combined cross-peer TCP/TLS tests; four-profile identity, simultaneous arrivals and shared/independent slot/byte cache acceptance | Larger tenant and mixed-transport workloads, real-target deduplication domains and durable application behavior |
 | Load acceptance | Seventeen count-bounded fuzz targets with bounded observed work and retained failure receipts, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads |
 | Publication | Reviewed API/generated output and exact dual-module checkout CI; core/adapter v0.2.0-rc.1 published and cold-installed locally and on hosted CI | Full-first-release scope and external acceptance; future versions need their own publication receipts |
@@ -66,6 +66,9 @@ originator and destination interface-value branches, checking the valid
 counterpart with shared source counts. [Batch 122](conditional-sms-values.md) adds isolated SMS-Node and SM-Message-Type
 value diagnostics for the three SMS templates. Simultaneous bad values, money
 relations and other conditions retain their separate boundaries.
+[Batch 123](conditional-unit-values.md) adds isolated TERMINATION Reporting-Reason
+and IEC/INITIAL requested-unit value diagnostics. Mixed presence/value failures
+and validation order remain unchanged.
 Other conditional, cardinality, domain,
 handshake and malformed-header mappings remain separate;
 do not infer them from bare sentinels.

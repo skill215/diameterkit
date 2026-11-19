@@ -1,7 +1,7 @@
 {
   "format": 1,
   "date": "2026-11-19",
-  "basis": "Batch122 isolated combined SMS-Node / SM-Message-Type value diagnostics. Combined slice.16, generator23/ops9 and public shapes unchanged. Current development is ahead of the frozen rc.1 publication.",
+  "basis": "Batch123 isolated combined Reporting-Reason / CC-Service-Specific-Units value diagnostics. Combined slice.17, generator23/ops9 and public shapes unchanged. Current development is ahead of the frozen rc.1 publication.",
   "release_status": "not_ready",
   "api_snapshot": "spec/release/public-api.json",
   "profiles": [
@@ -212,9 +212,9 @@
     {
       "binding": "combined",
       "profile": "smsfw-ro-five-template-wire-v1",
-      "version": "0.1.0-slice.16",
+      "version": "0.1.0-slice.17",
       "definition": "spec/combined.json",
-      "definition_sha256": "2960b42ced27070cb03186044a8e43322f0b693397da236f428b55c4f01c1137",
+      "definition_sha256": "416928914773df393a913c6af27d26441a6fa9892bb61b68bc091da040d25f5f",
       "requests": [
         {
           "name": "CCR",
@@ -388,10 +388,10 @@
         "SPEC-ERROR-01"
       ],
       "evidence": [
-        "spec/evidence/batch-122-sms-values.json",
-        "doc/conditional-sms-values.md"
+        "spec/evidence/batch-123-unit-values.json",
+        "doc/conditional-unit-values.md"
       ],
-      "remaining": "Next deterministic candidates: isolated TERMINATION Reporting-Reason !=2 with otherwise valid unit presence; IEC/INITIAL CC-Service-Specific-Units !=1 with both money fields absent. Preserve mixed failures and ordering. Other isolated conditional/value relations, simultaneous bad values, mixed omissions and unreviewed group/cardinality/domain/handshake/header mappings. Prioritize existing deterministic rules with bounded exact-instance attribution; retain safe close otherwise."
+      "remaining": "Other isolated conditional/value relations, simultaneous bad values, mixed omissions and unreviewed group/cardinality/domain/handshake/header mappings. Prioritize existing deterministic rules with bounded exact-instance attribution; retain safe close otherwise. The two unit-value candidates identified in Batch122 are now covered within their selected presence boundaries."
     }
   ],
   "completed": [
@@ -895,6 +895,21 @@
         "doc/conditional-sms-values.md"
       ],
       "remaining": "Next deterministic candidates: isolated TERMINATION Reporting-Reason !=2 with otherwise valid unit presence; IEC/INITIAL CC-Service-Specific-Units !=1 with both money fields absent. Preserve mixed failures and ordering. Other isolated conditional/value relations, simultaneous bad values, mixed omissions and unreviewed group/cardinality/domain/handshake/header mappings. Prioritize existing deterministic rules with bounded exact-instance attribution; retain safe close otherwise."
+    },
+    {
+      "name": "Combined isolated Reporting-Reason and CC-Service-Specific-Units value diagnostics",
+      "status": "completed_selected_slice",
+      "requirement_refs": [
+        "SPEC-ERROR-01",
+        "SPEC-CODEC-01",
+        "SPEC-PROFILE-01",
+        "SPEC-BUDGET-01"
+      ],
+      "evidence": [
+        "spec/evidence/batch-123-unit-values.json",
+        "doc/conditional-unit-values.md"
+      ],
+      "remaining": "Other isolated conditional/value relations, simultaneous bad values, mixed omissions and unreviewed group/cardinality/domain/handshake/header mappings. Prioritize existing deterministic rules with bounded exact-instance attribution; retain safe close otherwise. The two unit-value candidates identified in Batch122 are now covered within their selected presence boundaries."
     }
   ],
   "current_gap_overview": "doc/remaining-gaps.md",

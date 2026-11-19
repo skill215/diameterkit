@@ -114,7 +114,12 @@ func FuzzInvalidQuote(f *testing.F) {
 			f.Add(smsFixture(kind, node, -1), uint16(0), uint32(5004), uint16(40))
 		}
 	}
+	for _, kind := range []uint32{1, 3, 4} {
+		f.Add(unitFixture(kind, 0), uint16(0), uint32(5004), uint16(32))
+	}
 	f.Fuzz(func(t *testing.T, raw []byte, offset uint16, code uint32, budget uint16) {
+		fuzzUnitValue(t, raw, budget, false)
+		fuzzUnitValue(t, raw, budget, true)
 		fuzzSMSValue(t, raw, budget, false)
 		fuzzSMSValue(t, raw, budget, true)
 		fuzzInterfaceValue(t, raw, budget)

@@ -209,6 +209,9 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 	}
 	if m.CCRequestType == 3 {
 		if u.RequestedServiceUnit.Present || !u.UsedServiceUnit.Present || !u.ReportingReason.Present || u.ReportingReason.Value != 2 {
+			if mode == validation.Receive && !u.RequestedServiceUnit.Present && u.UsedServiceUnit.Present && u.ReportingReason.Present {
+				return invalidUnitValue(true)
+			}
 			return at(456, validation.ErrUnsupported)
 		}
 		if !s.SMStatus.Present || !s.DischargeTime.Present {
@@ -227,6 +230,9 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 		}
 		r := u.RequestedServiceUnit.Value
 		if r.Money.Present || r.StandardMoney.Present || r.CCServiceSpecificUnits != 1 {
+			if mode == validation.Receive && !r.Money.Present && !r.StandardMoney.Present {
+				return invalidUnitValue(false)
+			}
 			return at(437, validation.ErrUnsupported)
 		}
 		if s.SMStatus.Present || s.DischargeTime.Present {

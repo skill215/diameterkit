@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.123 — 2026-11-19, batch 122.** The [progress record](../spec/progress.json)
+**Draft 0.124 — 2026-11-19, batch 123.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1384,3 +1384,18 @@ public shapes, generator v23/ops9, pure Go and no persistence remain unchanged.
 All 24 full-release completion conditions remain separate. Published rc.1
 receipts describe their frozen commits; this development change needs a future
 candidate's publication/install gates. See [the guide](conditional-sms-values.md).
+
+## Batch 123: isolated SMS unit values (2026-11-19)
+
+Combined TERMINATION Reporting-Reason !=2 and IEC/INITIAL requested
+CC-Service-Specific-Units !=1 now provide bounded 5004 evidence when their
+existing presence conditions are otherwise satisfied. Receive retains
+ErrUnsupported and adds ErrField with paths 456/10415:872 or 456/437/417.
+Original-instance quotes occupy 24 or 32 bytes; unique ancestors, required and
+forbidden counterparts, exact widths and shared source budgets are checked.
+Build/Send, money templates, mixed failures and validation order retain their
+boundaries. Combined slice.17 changes its digest and Bundle fingerprints;
+public shapes, generator v23/ops9, pure Go and no persistence remain unchanged.
+All 24 full-release completion conditions remain separate. Published rc.1
+receipts describe frozen commits; development needs a future candidate's
+publication/install gates. See [the guide](conditional-unit-values.md).
