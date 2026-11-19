@@ -129,7 +129,14 @@ func FuzzInvalidQuote(f *testing.F) {
 	for _, action := range []uint32{0, 1, 2} {
 		f.Add(moneyNodeFixture(action, -1), uint16(0), uint32(5004), uint16(40))
 	}
+	for _, action := range []uint32{0, 2} {
+		for _, zone := range []bool{false, true} {
+			f.Add(moneyParameterFixture(action, zone, -1), uint16(0), uint32(5004), uint16(16))
+		}
+	}
 	f.Fuzz(func(t *testing.T, raw []byte, offset uint16, code uint32, budget uint16) {
+		fuzzMoneyParameter(t, raw, budget, false)
+		fuzzMoneyParameter(t, raw, budget, true)
 		fuzzMoneyNode(t, raw, budget)
 		fuzzAddressValue(t, raw, budget, 886)
 		fuzzAddressValue(t, raw, budget, 1201)

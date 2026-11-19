@@ -1,6 +1,6 @@
 # Current remaining gaps
 
-This is the current implementation overview for **batch 127, Draft 0.128**
+This is the current implementation overview for **batch 128, Draft 0.129**
 (2026-11-19). [Progress](../spec/progress.json) records actual check completion;
 the broad release status remains `not_ready`. The 24 SPEC IDs span implementation,
 verification and external acceptance; their `partial` labels are not a percentage
@@ -12,7 +12,7 @@ their historical meaning.
 [The RC checklist](release-candidate-checklist.md) separates required publication
 gates from unsupported and external-evidence claims, with explicit completion
 conditions for all 24 SPEC requirements. Batch 121 verified the published pair through ordered publication and cold installation.
-Batches 122 through 127 add unpublished SMS, unit, indicator, equipment-type, address-type and money SMS-Node diagnostics; the earlier RC receipt does not
+Batches 122 through 128 add unpublished conditional/value diagnostics, including money SMS-Node and Service-Identifier/Timezone; the earlier RC receipt does not
 certify the newer checkout. A future release needs fresh publication/install evidence.
 The broad not_ready status refers to the full first-release scope, not a failed
 checkout or a requirement to complete every diagnostic before a v0 candidate.
@@ -24,7 +24,7 @@ boundaries below remain unchanged.
 
 | Area | Completed selected scope | Remaining work |
 | --- | --- | --- |
-| Error diagnostics | Selected Base and generated fixed/variable-field 5005; reviewed whole-group minima, including three groups with variable children; first-excess 5009; isolated-value 5004, unknown-M 5001 and typed-length 5014; bounded Redirect 3006; selected Proxy/VSAI leaf, condition and omission diagnostics; selected SRR conditional SM-RP-SMEA omission; combined two-subscription shortage and SCAP1 ordered-parameter shortage; isolated conditional combined Recipient-Address, five MMS fields, five common SMS fields, two termination fields isolated IEC Originator-SCCP omission conditional whole MMS-Information omission and EVENT Requested-Action omission; selected IEC/money EVENT action-value 5004; isolated IEC and INITIAL/TERMINATION interface-type 5004; isolated SMS-Node and SM-Message-Type 5004; isolated Reporting-Reason and CC-Service-Specific-Units 5004; isolated Multiple-Services-Indicator 5004; isolated User-Equipment-Info-Type 5004; isolated Address-Type 5004; isolated money SMS-Node 5004 | Other conditional/cardinality and unreviewed group omissions, domain/handshake mappings and malformed-header length diagnostics |
+| Error diagnostics | Selected Base and generated fixed/variable-field 5005; reviewed whole-group minima, including three groups with variable children; first-excess 5009; isolated-value 5004, unknown-M 5001 and typed-length 5014; bounded Redirect 3006; selected Proxy/VSAI leaf, condition and omission diagnostics; selected SRR conditional SM-RP-SMEA omission; combined two-subscription shortage and SCAP1 ordered-parameter shortage; isolated conditional combined Recipient-Address, five MMS fields, five common SMS fields, two termination fields isolated IEC Originator-SCCP omission conditional whole MMS-Information omission and EVENT Requested-Action omission; selected IEC/money EVENT action-value 5004; isolated IEC and INITIAL/TERMINATION interface-type 5004; isolated SMS-Node and SM-Message-Type 5004; isolated Reporting-Reason and CC-Service-Specific-Units 5004; isolated Multiple-Services-Indicator 5004; isolated User-Equipment-Info-Type 5004; isolated Address-Type 5004; isolated money SMS-Node 5004; isolated Service-Identifier/Timezone 5004 | Other conditional/cardinality and unreviewed group omissions, domain/handshake mappings and malformed-header length diagnostics |
 | Duplicate acceptance | Generic and combined cross-peer TCP/TLS tests; four-profile identity, simultaneous arrivals and shared/independent slot/byte cache acceptance | Larger tenant and mixed-transport workloads, real-target deduplication domains and durable application behavior |
 | Load acceptance | Seventeen count-bounded fuzz targets with bounded observed work and retained failure receipts, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads |
 | Publication | Reviewed API/generated output and exact dual-module checkout CI; core/adapter v0.2.0-rc.1 published and cold-installed locally and on hosted CI | Full-first-release scope and external acceptance; future versions need their own publication receipts |
@@ -82,6 +82,10 @@ group children, preserving mixed errors and cross-group/wire validation order.
 [Batch 127](conditional-money-node-values.md) adds isolated money SMS-Node value
 diagnostics when all seven forbidden SMS fields are absent. Earlier action/unit
 conditions, mixed errors and later money conditions retain their order.
+[Batch 128](conditional-money-parameter-values.md) adds isolated Service-Identifier
+and Timezone value diagnostics for general/balance requests. Both-bad values and
+mixed presence conditions keep bare ErrField; earlier rules and later client/MMS
+checks retain their order.
 Other conditional, cardinality, domain,
 handshake and malformed-header mappings remain separate;
 do not infer them from bare sentinels.

@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.128 — 2026-11-19, batch 127.** The [progress record](../spec/progress.json)
+**Draft 0.129 — 2026-11-19, batch 128.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1457,3 +1457,19 @@ changes its digest and Bundle fingerprints; public shapes, generator23/ops9,
 pure Go and no persistence remain unchanged. Local one-target fuzz and hosted
 seventeen-target acceptance remain separate receipts. All24 full-release
 conditions remain partial; development is unpublished. See [the guide](conditional-money-node-values.md).
+
+## Batch 128: isolated Service-Identifier/Timezone values (2026-11-19)
+
+Combined general/balance requests provide bounded Receive 5004 evidence for
+Service-Identifier !=1 or Timezone !=0 only when the other value and all same-
+condition presence constraints are satisfied. ErrField remains, with precise
+439 or10425:23 paths; Build/Send and mixed failures retain bare ErrField.
+Original12/16-byte quotes copy only the selected numeric AVP. Complete shared-
+budget scans verify family/sequence/action, unit/money presence, exact selected
+and counterpart values, SMS node/forbidden fields and client/MMS presence.
+Structural/group and earlier root errors retain priority; later client bytes
+and MMS exclusions are not pulled forward. Combined slice.22 changes its digest
+and Bundle fingerprints; public shapes, generator23/ops9, pure Go and no
+persistence remain unchanged. Local one-target fuzz and hosted seventeen-target
+acceptance remain separate. All24 full-release conditions stay partial;
+development remains unpublished. See [the guide](conditional-money-parameter-values.md).

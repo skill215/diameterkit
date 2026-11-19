@@ -278,6 +278,14 @@ func validateMoneyRequest(m *CCR, mode validation.Mode) error {
 		}
 	} else {
 		if r.Money.Present || !r.StandardMoney.Present || m.RefundInformation.Present || !m.ServiceIdentifier.Present || m.ServiceIdentifier.Value != 1 || !m.Timezone.Present || m.Timezone.Value != 0 || !s.ClientAddressWire.Present || !m.ServiceInformation.MMSInformation.Present {
+			if mode == validation.Receive && !r.Money.Present && r.StandardMoney.Present && !m.RefundInformation.Present && m.ServiceIdentifier.Present && m.Timezone.Present && s.ClientAddressWire.Present && m.ServiceInformation.MMSInformation.Present {
+				if m.ServiceIdentifier.Value != 1 && m.Timezone.Value == 0 {
+					return invalidMoneyParameter(false)
+				}
+				if m.ServiceIdentifier.Value == 1 && m.Timezone.Value != 0 {
+					return invalidMoneyParameter(true)
+				}
+			}
 			return validation.ErrField
 		}
 		if !bytes.Equal(s.ClientAddressWire.Value, []byte{0, 1, 127, 0, 0, 1}) {
