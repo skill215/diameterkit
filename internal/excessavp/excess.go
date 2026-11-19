@@ -73,6 +73,10 @@ func (n invalidNode) DiameterExcessAVPV1() (avp.Key, byte, int, int, error) {
 // typed-length failure from generated or handwritten decoders. Bare sentinels,
 // unsupported domain rules, framing and resource errors supply no proof.
 func QuoteInvalid(src []byte, cause error, limits wire.Limits, maxBytes int) ([]byte, uint32, bool) {
+	var equipment equipmentEvidence
+	if errors.As(cause, &equipment) {
+		return quoteEquipmentValue(src, cause, equipment, limits, maxBytes)
+	}
 	var indicator indicatorEvidence
 	if errors.As(cause, &indicator) {
 		return quoteIndicatorValue(src, cause, indicator, limits, maxBytes)

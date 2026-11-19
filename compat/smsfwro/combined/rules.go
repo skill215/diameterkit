@@ -34,8 +34,11 @@ func validateSubscriptionIDSubset(m *SubscriptionID, _ validation.Mode) error {
 	}
 	return extras(m.Extra)
 }
-func validateUserEquipmentInfoSubset(m *UserEquipmentInfo, _ validation.Mode) error {
+func validateUserEquipmentInfoSubset(m *UserEquipmentInfo, mode validation.Mode) error {
 	if m.UserEquipmentInfoType != 0 {
+		if mode == validation.Receive && cstring(m.UserEquipmentInfoValue) == nil && len(m.Extra) == 0 {
+			return at(459, equipmentTypeValue{})
+		}
 		return at(459, validation.ErrUnsupported)
 	}
 	if e := cstring(m.UserEquipmentInfoValue); e != nil {

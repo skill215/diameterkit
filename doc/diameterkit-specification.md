@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.125 — 2026-11-19, batch 124.** The [progress record](../spec/progress.json)
+**Draft 0.126 — 2026-11-19, batch 125.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1413,3 +1413,17 @@ Combined slice.18 changes the digest and Bundle fingerprints; public shapes,
 generator23/ops9, pure Go and no persistence remain unchanged. All24 full-release
 completion conditions remain separate; development changes remain unpublished.
 See [the guide](conditional-indicator-values.md).
+
+## Batch 125: isolated equipment-type values (2026-11-19)
+
+Combined User-Equipment-Info-Type !=0 now provides bounded Receive5004 evidence
+only with NUL-free Value and no extra group children. ErrUnsupported remains;
+ErrField is additive and the exact458/459 path is retained. A complete shared-
+budget scan checks unique parent/children, flags, width and counterpart bytes;
+the owned20-byte quote copies only the original Type under a minimal header.
+Build/Send, mixed group failures and structural wire-order/root-rule precedence
+remain unchanged. Combined slice.19 changes its digest and Bundle fingerprints;
+public shapes, generator23/ops9, pure Go and no persistence remain unchanged.
+Local affected-target fuzz and complete hosted17-target acceptance are separate
+receipts. All24 full-release conditions remain partial and development remains
+unpublished. See [the guide](conditional-equipment-values.md).
