@@ -19,9 +19,9 @@ SGd/Gdd, and Ro** procedures, built-in TCP/TLS, and an optional Linux SCTP adapt
 [Install](#install) · [Try it](#try-it) · [Examples](#examples) ·
 [Documentation](#documentation) · [Benchmarks](#benchmarks)
 
-> **Development preview.** This checkout targets core and SCTP adapter
-> `v0.2.0-rc.1`. See the [release record](doc/releases/v0.2.0-rc.1.md) for
-> publication and independent installation status, and the [RC checklist](doc/release-candidate-checklist.md) for scope limits.
+> **Development preview.** Published core and SCTP adapter: `v0.2.0-rc.1`.
+> Independent cold installation is verified. See the [release record](doc/releases/v0.2.0-rc.1.md)
+> and [RC scope checklist](doc/release-candidate-checklist.md); this is not stable-v1.
 
 ## Why diameterkit
 

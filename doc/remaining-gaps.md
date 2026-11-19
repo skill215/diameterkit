@@ -11,8 +11,9 @@ their historical meaning.
 
 [The RC checklist](release-candidate-checklist.md) separates required publication
 gates from unsupported and external-evidence claims, with explicit completion
-conditions for all24 SPEC requirements. This batch freezes the verified subset
-and proceeds core-first, adapter-second, then independent cold installation.
+conditions for all 24 SPEC requirements. This batch verifies the selected pair
+through core-first and adapter-second
+publication, followed by independent local and hosted cold installation.
 The broad not_ready status refers to the full first-release scope, not a failed
 checkout or a requirement to complete every diagnostic before a v0 candidate.
 
@@ -26,7 +27,7 @@ boundaries below remain unchanged.
 | Error diagnostics | Selected Base and generated fixed/variable-field 5005; reviewed whole-group minima, including three groups with variable children; first-excess 5009; isolated-value 5004, unknown-M 5001 and typed-length 5014; bounded Redirect 3006; selected Proxy/VSAI leaf, condition and omission diagnostics; selected SRR conditional SM-RP-SMEA omission; combined two-subscription shortage and SCAP1 ordered-parameter shortage; isolated conditional combined Recipient-Address, five MMS fields, five common SMS fields, two termination fields isolated IEC Originator-SCCP omission conditional whole MMS-Information omission and EVENT Requested-Action omission; selected IEC/money EVENT action-value 5004; isolated IEC and INITIAL/TERMINATION interface-type 5004 | Other conditional/cardinality and unreviewed group omissions, domain/handshake mappings and malformed-header length diagnostics |
 | Duplicate acceptance | Generic and combined cross-peer TCP/TLS tests; four-profile identity, simultaneous arrivals and shared/independent slot/byte cache acceptance | Larger tenant and mixed-transport workloads, real-target deduplication domains and durable application behavior |
 | Load acceptance | Seventeen count-bounded fuzz targets with bounded observed work and retained failure receipts, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads |
-| Publication | Reviewed API/generated output and dual-module checkout CI; immutable rc.2/rc.1 installation receipts | Publish and cold-install a new reviewed core/adapter pair after the generator fingerprint transitions; planned core candidate `v0.2.0-rc.1` |
+| Publication | Reviewed API/generated output and exact dual-module checkout CI; core/adapter v0.2.0-rc.1 published and cold-installed locally and on hosted CI | Full-first-release scope and external acceptance; future versions need their own publication receipts |
 
 The selected combined cross-peer and mixed-profile cache slice is now covered by
 [batch 99 acceptance](cross-peer-duplicate-acceptance.md). The [batch 100 extension](length-avp-diagnostics.md) now covers selected generated
