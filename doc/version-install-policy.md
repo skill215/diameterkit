@@ -61,6 +61,14 @@ Core and adapter tags may point to different commits. Never amend the core tag
 to incorporate later adapter/docs changes. Checkout workspaces cannot stand in
 for published installation evidence.
 
+## Reproducing a published pair
+
+The current checkout may advance its API/profile fingerprints after publication.
+For the verified v0.2.0-rc.1 pair, use release-record commit
+`6897bebc71e6ebd291b0b15573567a17b56a8259` before running its install gate.
+Batch 122 changes are unpublished; the next planned pair is v0.2.0-rc.2 and
+requires its own immutable publication and cold-install evidence.
+
 ## Independent cold installation
 
 Use the pinned Go toolchain, Python3, Linux/amd64 with SCTP and a compiler for the

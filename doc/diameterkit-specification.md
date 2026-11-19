@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.122 — 2026-11-19, batch 121.** The [progress record](../spec/progress.json)
+**Draft 0.123 — 2026-11-19, batch 122.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1370,3 +1370,17 @@ download, then pin/publish adapter v0.2.0-rc.1 and run local/hosted independent
 cold consumers. See [the release record](releases/v0.2.0-rc.1.md) for actual
 completion. This batch changes no Go implementation, protocol slices or API
 snapshot. Pure Go/no persistence and all previously restricted branches remain.
+
+## Batch 122: isolated SMS template values (2026-11-19)
+
+Existing combined SMS constraints now provide bounded 5004 evidence only when
+SMS-Node or SM-Message-Type is nonzero and its counterpart is zero. Receive
+retains ErrUnsupported with additive ErrField and exact Vendor 10415 paths
+873/2000/(2016 or 2007). The consumer verifies unique selected and counterpart
+instances with shared source counts and quotes the original leaf in 40 bytes.
+Build/Send, money templates, mixed failures and validation order retain their
+boundaries. Combined slice.16 changes its digest and Bundle fingerprints;
+public shapes, generator v23/ops9, pure Go and no persistence remain unchanged.
+All 24 full-release completion conditions remain separate. Published rc.1
+receipts describe their frozen commits; this development change needs a future
+candidate's publication/install gates. See [the guide](conditional-sms-values.md).

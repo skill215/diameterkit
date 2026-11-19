@@ -128,6 +128,14 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 	s := m.ServiceInformation.SMSInformation
 	u := m.MultipleServicesCreditControl
 	if s.SMSNode != 0 || s.SMMessageType != 0 {
+		if mode == validation.Receive {
+			if s.SMSNode != 0 && s.SMMessageType == 0 {
+				return invalidSMSValue(true)
+			}
+			if s.SMMessageType != 0 && s.SMSNode == 0 {
+				return invalidSMSValue(false)
+			}
+		}
 		return vendorAt(2000, validation.ErrUnsupported)
 	}
 	if !s.ClientAddressWire.Present || !s.RecipientSCCPAddress.Present || !s.SMSCAddress.Present || !s.ReplyPathRequested.Present || !s.SMUserDataHeader.Present {
