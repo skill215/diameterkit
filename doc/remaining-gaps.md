@@ -1,13 +1,20 @@
 # Current remaining gaps
 
-This is the current implementation overview for **batch 120, Draft 0.121**
-(2026-11-18). [Progress](../spec/progress.json) records actual check completion;
+This is the current implementation overview for **batch 121, Draft 0.122**
+(2026-11-19). [Progress](../spec/progress.json) records actual check completion;
 the broad release status remains `not_ready`. The 24 SPEC IDs span implementation,
 verification and external acceptance; their `partial` labels are not a percentage
 of unfinished code. Dated specification sections and frozen batch records retain
 their historical meaning.
 
-## Next local work
+## Current RC and full-release work
+
+[The RC checklist](release-candidate-checklist.md) separates required publication
+gates from unsupported and external-evidence claims, with explicit completion
+conditions for all24 SPEC requirements. This batch freezes the verified subset
+and proceeds core-first, adapter-second, then independent cold installation.
+The broad not_ready status refers to the full first-release scope, not a failed
+checkout or a requirement to complete every diagnostic before a v0 candidate.
 
 Batch 107 repairs eight stale support-matrix definition hashes and adds
 [executable consistency checks](support-matrix-checks.md) for all twelve bindings.

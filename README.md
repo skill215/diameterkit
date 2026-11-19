@@ -19,9 +19,9 @@ SGd/Gdd, and Ro** procedures, built-in TCP/TLS, and an optional Linux SCTP adapt
 [Install](#install) · [Try it](#try-it) · [Examples](#examples) ·
 [Documentation](#documentation) · [Benchmarks](#benchmarks)
 
-> **Development preview.** Published candidates: core `v0.1.0-rc.2`, SCTP adapter
-> `v0.1.0-rc.1`. The `main` branch includes newer, unreleased changes.
-> See [release status](doc/releases/v0.1.0-rc.md) and [current scope](doc/remaining-gaps.md).
+> **Development preview.** This checkout targets core and SCTP adapter
+> `v0.2.0-rc.1`. See the [release record](doc/releases/v0.2.0-rc.1.md) for
+> publication and independent installation status, and the [RC checklist](doc/release-candidate-checklist.md) for scope limits.
 
 ## Why diameterkit
 
@@ -42,7 +42,7 @@ Install the **core**. It contains the protocol types, codecs, Node/Peer runtime,
 application helpers, and TCP/TLS transports. The root Go package is `diameter`.
 
 ```sh
-go get github.com/skill215/diameterkit@v0.1.0-rc.2
+go get github.com/skill215/diameterkit@v0.2.0-rc.1
 ```
 
 ### SCTP
@@ -51,7 +51,7 @@ Add the **SCTP adapter** only when your peer uses SCTP. It connects SCTP sockets
 to the same core runtime and requires a supported Linux kernel.
 
 ```sh
-go get github.com/skill215/diameterkit/adapters/sctp@v0.1.0-rc.1
+go get github.com/skill215/diameterkit/adapters/sctp@v0.2.0-rc.1
 ```
 
 The adapter depends on the core and `github.com/skill215/sctp`; Go resolves both
@@ -112,7 +112,7 @@ before adding cancellation, reconnection, or recovery.
 ## Documentation
 
 - **Learn:** [documentation index](doc/README.md), [protocol support](doc/diameterkit-support-matrix.md), [runtime basics](doc/runtime-basics.md).
-- **Ship:** [version and installation policy](doc/version-install-policy.md), [release status](doc/releases/v0.1.0-rc.md), [remaining gaps](doc/remaining-gaps.md).
+- **Ship:** [version and installation policy](doc/version-install-policy.md), [release status](doc/releases/v0.2.0-rc.1.md), [remaining gaps](doc/remaining-gaps.md).
 - **Contribute:** [CI and local checks](doc/release-checks.md), [measurement methodology](doc/load-checks.md), [specification and evidence](spec/README.md).
 
 Licensed under [Apache-2.0](LICENSE). OpenAI Codex generated and revised this

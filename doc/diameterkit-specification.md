@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.121 — 2026-11-18, batch 120.** The [progress record](../spec/progress.json)
+**Draft 0.122 — 2026-11-19, batch 121.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1359,3 +1359,14 @@ Combined slice.15 changes its digest and dependent Bundle fingerprints; public
 shapes, generator v23/ops9 and pure-Go/no-persistence remain unchanged.
 See the [English guide](ecur-interface-values.md) and
 [progress](../spec/progress.json). Broader requirements remain partial.
+
+## Batch 121: scoped RC publication and completion criteria (2026-11-19)
+
+The [RC checklist](release-candidate-checklist.md) defines mandatory candidate
+gates, explicit exclusions, external evidence owners and concrete completion
+conditions for all24 existing SPEC IDs. Candidate acceptance is distinct from
+full-first-release completion. Publish core v0.2.0-rc.1 first, verify its genuine
+download, then pin/publish adapter v0.2.0-rc.1 and run local/hosted independent
+cold consumers. See [the release record](releases/v0.2.0-rc.1.md) for actual
+completion. This batch changes no Go implementation, protocol slices or API
+snapshot. Pure Go/no persistence and all previously restricted branches remain.

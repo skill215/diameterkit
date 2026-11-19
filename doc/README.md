@@ -2,7 +2,7 @@
 
 Start with the [project README](../README.md) for installation and runnable examples.
 The guides below describe the current development checkout. Published candidates
-have their own [release record](releases/v0.1.0-rc.md).
+have their own [release record](releases/v0.2.0-rc.1.md).
 
 ## Build an integration
 
@@ -26,8 +26,10 @@ have their own [release record](releases/v0.1.0-rc.md).
 
 ## Release and contribute
 
+- [RC gates and all24 SPEC completion conditions](release-candidate-checklist.md)
+
 - [Version/API policy and immutable installation](version-install-policy.md)
-- [Published candidate record](releases/v0.1.0-rc.md)
+- [Published candidate record](releases/v0.2.0-rc.1.md)
 - [Current remaining gaps](remaining-gaps.md)
 - [Dual-module CI and local acceptance](release-checks.md)
 - [Support matrix consistency checks](support-matrix-checks.md)

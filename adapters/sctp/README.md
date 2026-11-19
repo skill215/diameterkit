@@ -170,12 +170,12 @@ contracts remain in [batch 65](../../spec/history/batch-65.json).
 
 ## Installation and development
 
-The independent adapter candidate is `v0.1.0-rc.1`, targeting core
-`v0.1.0-rc.2` and upstream SCTP `v0.8.0`. Consult the
-[publication record](../../doc/releases/v0.1.0-rc.md) for actual availability.
+The independent adapter candidate is `v0.2.0-rc.1`, targeting core
+`v0.2.0-rc.1` and upstream SCTP `v0.8.0`. Consult the
+[publication record](../../doc/releases/v0.2.0-rc.1.md) for actual availability.
 
 ```sh
-go get github.com/skill215/diameterkit/adapters/sctp@v0.1.0-rc.1
+go get github.com/skill215/diameterkit/adapters/sctp@v0.2.0-rc.1
 GOWORK=off CGO_ENABLED=0 go -C adapters/sctp test -mod=readonly ./...
 GOWORK=off go -C adapters/sctp test -mod=readonly -race ./...
 ```

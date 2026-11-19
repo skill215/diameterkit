@@ -9,8 +9,9 @@ Start with the English [support matrix](../doc/diameterkit-support-matrix.md),
 [current remaining gaps](../doc/remaining-gaps.md),
 [definition guide](../doc/diameterkit-application-definitions.md),
 [version policy](../doc/version-install-policy.md) and
-[publication record](../doc/releases/v0.1.0-rc.md).
+[publication record](../doc/releases/v0.2.0-rc.1.md).
 
+- [RC checklist](release/v0.2.0-rc.1.json): required gates, explicit exclusions, external evidence and per-SPEC completion conditions.
 - [progress.json](progress.json): current batch status, 24 requirements, source
   hashes, checks and remaining gates. A completed bounded batch is not complete v1.
 - [history](history): frozen previous progress records; historical paths, language

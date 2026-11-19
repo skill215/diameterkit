@@ -1,0 +1,447 @@
+{
+  "format": 1,
+  "date": "2026-11-19",
+  "candidate": "v0.2.0-rc.1",
+  "status": "publication_in_progress",
+  "full_release_status": "not_ready",
+  "core_version": "v0.2.0-rc.1",
+  "adapter_version": "v0.2.0-rc.1",
+  "baseline_commit": "2974a7cbf1ce542dd53a9d86f3c3efda2e0bc1a4",
+  "scope": "Verified v0 development subset; not stable-v1 or full protocol/target certification.",
+  "api_snapshot_sha256": "bf7531888d211a6a193561fc52ffb83647c00fee294e84b0d4de5af946ef7719",
+  "generator_version": 23,
+  "operations_version": 9,
+  "profiles": [
+    {
+      "binding": "base",
+      "profile": "base-rfc6733-controls-slice-v1",
+      "version": "0.1.0-slice.8",
+      "definition": "spec/base.json",
+      "definition_sha256": "0de0013f1d3e9ebf300e0cf533b7bf67488bd32f927cca4c9bb2e4b0ae4c3854"
+    },
+    {
+      "binding": "sh",
+      "profile": "sh-29.329-sms-opaque-slice-v1",
+      "version": "0.1.0-slice.11",
+      "definition": "spec/sh.json",
+      "definition_sha256": "88df238299ecb1d92e2229f77cb96d8645f2b107e1b52273d79869d665ad1260"
+    },
+    {
+      "binding": "s6c",
+      "profile": "s6c-29.338-ordinary-mme-slice-v1",
+      "version": "0.1.0-slice.23",
+      "definition": "spec/s6c.json",
+      "definition_sha256": "306ff532d96ac801e821ea9b8e1a76b5e60cb98b6716926ab5a992b708513ecb"
+    },
+    {
+      "binding": "sgd",
+      "profile": "sgd-gdd-29.338-ordinary-slice-v1",
+      "version": "0.1.0-slice.15",
+      "definition": "spec/sgd.json",
+      "definition_sha256": "2036de84c504e98477d0ce6ad60254907fd0dd6cf5bf7f6c9af1b83e046551e1"
+    },
+    {
+      "binding": "ro",
+      "profile": "ro-32.299-sms-iec-slice-v1",
+      "version": "0.1.0-slice.6",
+      "definition": "spec/ro.json",
+      "definition_sha256": "0241a058f35d31d4522cf0e6cf330b834c74f0d149e2161d21f0b4982c273030"
+    },
+    {
+      "binding": "dcca",
+      "profile": "dcca-rfc4006-single-event-v1",
+      "version": "0.1.0-slice.1",
+      "definition": "spec/dcca.json",
+      "definition_sha256": "3f812995f253b059a60e6259d2aaad8ac1bd5755e955e7fa456423854753ce97"
+    },
+    {
+      "binding": "roabort",
+      "profile": "ro-rfc6733-abort-slice-v1",
+      "version": "0.1.0-slice.1",
+      "definition": "spec/roabort.json",
+      "definition_sha256": "8fa506af2b2d3e66ffe06e0bf78743bcb64d0e0104f67110f52c1216d89da5b6"
+    },
+    {
+      "binding": "smsfwro",
+      "profile": "smsfw-ro-iec-template-v1",
+      "version": "0.1.0-slice.6",
+      "definition": "spec/smsfwro.json",
+      "definition_sha256": "b4d360dbad1b0dcb2c7511be95c280f3dc85a1fdc860dc087f2177ca4dbfc403"
+    },
+    {
+      "binding": "legacy420",
+      "profile": "smsfw-ro-legacy420-v1",
+      "version": "0.1.0-slice.6",
+      "definition": "spec/legacy420.json",
+      "definition_sha256": "f60ec142ae9d015a2512424183ff826c2c123931dd2e18aa3666b0264fc636c4"
+    },
+    {
+      "binding": "combined",
+      "profile": "smsfw-ro-five-template-wire-v1",
+      "version": "0.1.0-slice.15",
+      "definition": "spec/combined.json",
+      "definition_sha256": "68b758717a4f4ba4b4127c80a26e099e4de50cc3cff01dde48d64e8c418a9adf"
+    },
+    {
+      "binding": "scap1",
+      "profile": "smsfw-scap1-event-v1",
+      "version": "0.1.0-slice.3",
+      "definition": "spec/scap1.json",
+      "definition_sha256": "6906daabcd492c9082c8c7ee0a94001d3c16e7e790a93113f1649d00c80104dc"
+    },
+    {
+      "binding": "sgdalert",
+      "profile": "legacy-sgd-alert-v1",
+      "version": "legacy-sgd-alert-v1.1",
+      "definition": "compat/sgdalert/profile.go",
+      "definition_sha256": "c1fb1b859115f76a5a94336cd0afd4c93a25a7b6c3b15930d3464d5c05851ca2"
+    }
+  ],
+  "required_gates": [
+    {
+      "id": "RC-SCOPE",
+      "completion_condition": "Freeze selected support, exclusions, external evidence and all24 completion conditions.",
+      "status": "passed",
+      "evidence": [
+        "spec/evidence/batch-121-rc-publication.json"
+      ]
+    },
+    {
+      "id": "RC-API",
+      "completion_condition": "Review changes since core rc.2 and retain exact Linux/Windows API snapshot; no Go source change in this release batch.",
+      "status": "passed",
+      "evidence": [
+        "spec/evidence/batch-121-rc-publication.json"
+      ]
+    },
+    {
+      "id": "RC-CORE-CI",
+      "completion_condition": "Seven checkout suites pass for the exact commit selected for the core tag.",
+      "status": "pending",
+      "evidence": [
+        "spec/evidence/batch-121-rc-publication.json"
+      ]
+    },
+    {
+      "id": "RC-CORE-PUBLISH",
+      "completion_condition": "Publish immutable core tag, verify remote commit, authenticated download and independent core-only cold consumer.",
+      "status": "pending",
+      "evidence": [
+        "spec/evidence/batch-121-rc-publication.json"
+      ]
+    },
+    {
+      "id": "RC-ADAPTER-PIN",
+      "completion_condition": "Pin adapter to the already published core; generate real sums and pass GOWORK=off installed-core pure/race/vet/API checks.",
+      "status": "pending",
+      "evidence": [
+        "spec/evidence/batch-121-rc-publication.json"
+      ]
+    },
+    {
+      "id": "RC-ADAPTER-CI",
+      "completion_condition": "Seven checkout suites pass for the exact commit selected for the adapter tag.",
+      "status": "pending",
+      "evidence": [
+        "spec/evidence/batch-121-rc-publication.json"
+      ]
+    },
+    {
+      "id": "RC-ADAPTER-PUBLISH",
+      "completion_condition": "Publish the separate immutable adapter tag and verify its commit.",
+      "status": "pending",
+      "evidence": [
+        "spec/evidence/batch-121-rc-publication.json"
+      ]
+    },
+    {
+      "id": "RC-COLD-LOCAL",
+      "completion_condition": "Both independently empty-cache consumers pass exact graph/API/source/checksum/pure/race/native checks without replace.",
+      "status": "pending",
+      "evidence": [
+        "spec/evidence/batch-121-rc-publication.json"
+      ]
+    },
+    {
+      "id": "RC-COLD-HOSTED",
+      "completion_condition": "Published-install workflow passes for the exact new core/adapter pair with artifact validation.",
+      "status": "pending",
+      "evidence": [
+        "spec/evidence/batch-121-rc-publication.json"
+      ]
+    },
+    {
+      "id": "RC-RECEIPTS",
+      "completion_condition": "Publish final commits/checksums/CI/install receipts and current English installation/migration guidance.",
+      "status": "pending",
+      "evidence": [
+        "spec/evidence/batch-121-rc-publication.json"
+      ]
+    }
+  ],
+  "explicitly_unsupported": [
+    "Full SCUR/PRICE_ENQUIRY, S6a, full standalone RFC8506 behavior and unselected deep protocol subsets.",
+    "Full Sh XSD/data model and internationalization; transparent User-Data is not semantic support.",
+    "DRA/relay product, MAP/SIP/TPDU engine, charging/accounting service, business retry scheduler or library persistence.",
+    "Persistent exactly-once, unapproved recovery, automatic cross-target authorization or universal six-template replacement.",
+    "Native SCTP on Windows/386; arm64 cross-build evidence is not native runtime acceptance; SCTP DTLS is not enabled.",
+    "Ordinary no-IMSI success SRA, unreviewed Realm/time-equality construction and restricted standard SMS failure/sequence or experimental5011 generation branches.",
+    "Automatic diagnostic mapping for unreviewed ambiguous/mixed conditions; safe-close/unsupported boundaries remain.",
+    "Production throughput/latency/capacity, long-soak, multi-tenant fairness or mixed-transport guarantees from finite tests."
+  ],
+  "external_evidence": [
+    {
+      "id": "EXT-TEMPLATE",
+      "owner": "Template/target maintainer",
+      "required": [
+        "Original six-template inputs/outputs and deployed versions",
+        "PSP/private ACA/1292 mappings and420/2018 acceptance",
+        "Independent SCAP1 recovery authorization"
+      ]
+    },
+    {
+      "id": "EXT-RECOVERY",
+      "owner": "Target and application operators",
+      "required": [
+        "Deduplication keys/content/domain/retention",
+        "ECUR continuity and DRA/terminal roles",
+        "Durable intent, old-worker fencing and unknown-result reconciliation"
+      ]
+    },
+    {
+      "id": "EXT-LOAD",
+      "owner": "Deployment acceptance owner",
+      "required": [
+        "Declared duration/saturation/tenant/transport workloads and thresholds",
+        "Native target capacity/security/shutdown evidence"
+      ]
+    },
+    {
+      "id": "EXT-PROTOCOL",
+      "owner": "Protocol/compatibility reviewer",
+      "required": [
+        "Direct normative or named compatibility evidence for restricted result/identity/Realm/time combinations"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "SPEC-SCOPE-01",
+      "rc_completion_condition": "Build both modules with CGO_ENABLED=0; disclose the exact profile/platform inventory and v0 support limits.",
+      "full_release_completion_condition": "Approve the complete first-release A/B scope inventory and demonstrate every included capability; make a separate stable-v1 compatibility decision.",
+      "external_evidence_or_owner": "Project maintainer; target owners for claimed native platforms.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-SCOPE-01"
+    },
+    {
+      "id": "SPEC-SCOPE-02",
+      "rc_completion_condition": "Public consumers keep subscriber, charging, retry authority and durable state outside the library; no persistence dependency is introduced.",
+      "full_release_completion_condition": "Trace every first-release workflow to explicit library/application responsibility and exercise the corresponding public API without moving durable state into the library.",
+      "external_evidence_or_owner": "Application owners provide durable intent, fencing and reconciliation evidence; no library database is required.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-SCOPE-02"
+    },
+    {
+      "id": "SPEC-PROFILE-01",
+      "rc_completion_condition": "All12 reviewed binding identities, fixed wire types and definition hashes match the support matrix; reject conflicting bindings.",
+      "full_release_completion_condition": "Resolve every required first-release field/type conflict through explicit definitions or named compatibility bindings, backed by source/target evidence and negative controls.",
+      "external_evidence_or_owner": "Original six-template source/version and target wire samples for disputed private fields.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-PROFILE-01"
+    },
+    {
+      "id": "SPEC-PROFILE-02",
+      "rc_completion_condition": "Publish command, result, field and platform limits separately from Application-ID advertisement; verify independent public consumers.",
+      "full_release_completion_condition": "Map the full first-release usage inventory to supported profiles and enforce every declaration/advertisement boundary with executable acceptance.",
+      "external_evidence_or_owner": "Target capability advertisements and configured endpoint roles where those claims are included.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-PROFILE-02"
+    },
+    {
+      "id": "SPEC-GEN-01",
+      "rc_completion_condition": "Reproduce all11 generated files offline, reject drift and preserve the reviewed generator23/ops9/profile version ledger.",
+      "full_release_completion_condition": "Cover all definitions required by the declared first-release inventory and audit handwritten-rule changes against explicit version/migration decisions; do not treat DefinitionDigest as a whole-source signature.",
+      "external_evidence_or_owner": "No external evidence for the existing generation mechanism; additional private definitions need authoritative inputs.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-GEN-01"
+    },
+    {
+      "id": "SPEC-CODEC-01",
+      "rc_completion_condition": "Pass owned codec, malformed input, canonicalization and bounded fuzz tests for the declared slices, including exact diagnostic instances.",
+      "full_release_completion_condition": "Complete the codec/vector/negative-case inventory for every required first-release field and binding, including authoritative private layouts.",
+      "external_evidence_or_owner": "Canonical target captures for private or disputed wire layouts.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-CODEC-01"
+    },
+    {
+      "id": "SPEC-OWN-01",
+      "rc_completion_condition": "Pass buffer mutation, snapshot, handoff, duplicate-arrival envelope and Close/Wait resource retirement tests in pure/race modes.",
+      "full_release_completion_condition": "Provide a requirement-to-test inventory covering ownership and lifetime at every first-release public message, transport handoff and recovery boundary.",
+      "external_evidence_or_owner": "Application integration evidence for external buffer/worker ownership; library must not own application storage.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-OWN-01"
+    },
+    {
+      "id": "SPEC-VALID-01",
+      "rc_completion_condition": "Keep framing/type/presence checks separate from domain and explicit Sh XML interpretation; reject unsupported cases.",
+      "full_release_completion_condition": "Resolve and verify all validation rules within the declared first-release scope, while retaining explicitly excluded full-XSD/internationalization behavior.",
+      "external_evidence_or_owner": "Authoritative rules or named compatibility evidence for disputed Realm, timing and private relations.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-VALID-01"
+    },
+    {
+      "id": "SPEC-RESULT-01",
+      "rc_completion_condition": "Public S6c/Ro consumers distinguish command, service, experimental and business outcomes; selected failure mappings remain bounded.",
+      "full_release_completion_condition": "Complete result interpretation and paired request/answer tests for every first-release operation and required private result mapping.",
+      "external_evidence_or_owner": "PSP/private ACA/1292 and target result semantics; protocol success alone is insufficient.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-RESULT-01"
+    },
+    {
+      "id": "SPEC-ERROR-01",
+      "rc_completion_condition": "Selected5001/5004/5005/5009/5014/3006 diagnostics pass bounds and original-instance tests; unreviewed failures retain safe close/unsupported behavior.",
+      "full_release_completion_condition": "Enumerate each remaining promised condition/value/cardinality/group/domain/handshake/header mapping and either verify a bounded unambiguous diagnostic or record a justified safe-close classification.",
+      "external_evidence_or_owner": "Direct protocol or named target evidence where error attribution is ambiguous; do not guess repairs.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-ERROR-01"
+    },
+    {
+      "id": "SPEC-APP-01",
+      "rc_completion_condition": "Installed public consumers exercise selected Sh/S6c/SGd/Ro, S6c helpers and named recovery bindings without library persistence.",
+      "full_release_completion_condition": "Cover the declared first-release A/B application calls, six-template operations, required outcomes and recovery entry points through public API acceptance.",
+      "external_evidence_or_owner": "Original complete template inputs/outputs, deployment versions and target application mappings.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-APP-01"
+    },
+    {
+      "id": "SPEC-BIND-01",
+      "rc_completion_condition": "Use explicit fixed bindings and reject wrong-binding imports or ungranted targets; preserve independent advertised applications.",
+      "full_release_completion_condition": "Validate all first-release DRA/terminal roles, compatibility binding selections and target protection conditions against deployment fixtures.",
+      "external_evidence_or_owner": "DRA versus ultimate HSS/MME/OCS roles and target recovery permissions.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-BIND-01"
+    },
+    {
+      "id": "SPEC-EXCHANGE-01",
+      "rc_completion_condition": "Verify correlation, deadlines, cancel/late-answer races, one completion and single-attempt default through public consumers.",
+      "full_release_completion_condition": "Complete first-release flow/paired-message and fault-injection coverage across all claimed roles/transports; demonstrate actual deployment interoperation.",
+      "external_evidence_or_owner": "Named target request/answer traces and end-to-end fault scenarios.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-EXCHANGE-01"
+    },
+    {
+      "id": "SPEC-REPLAY-01",
+      "rc_completion_condition": "Verify selected same-target/cross-target/import recovery with original identity, cumulative limits and explicit permission; no automatic durable retry.",
+      "full_release_completion_condition": "Close the required RO-06/template recovery matrix with target deduplication domains, retention and ECUR continuity plus application fencing/unknown-result drills.",
+      "external_evidence_or_owner": "Real deduplication keys/content/retention, session continuity, independent SCAP1 authorization and application durable history.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-REPLAY-01"
+    },
+    {
+      "id": "SPEC-EVIDENCE-01",
+      "rc_completion_condition": "Preserve write-stage uncertainty, final protocol result and one business notification; do not convert timeout or receipt into financial success.",
+      "full_release_completion_condition": "Exercise every first-release uncertain-send/cancel/late-answer/failure transition and document its application interpretation with corresponding evidence.",
+      "external_evidence_or_owner": "Target financial/delivery outcomes and application reconciliation records.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-EVIDENCE-01"
+    },
+    {
+      "id": "SPEC-INBOUND-01",
+      "rc_completion_condition": "Verify bounded receive/respond/reject, explicit result selection, Session/Proxy preservation and retirement without business session decisions.",
+      "full_release_completion_condition": "Cover every inbound first-release operation/result and authorization boundary through the public responder API and target role fixtures.",
+      "external_evidence_or_owner": "Application-owned session decisions and target authorization mappings.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-INBOUND-01"
+    },
+    {
+      "id": "SPEC-DUP-01",
+      "rc_completion_condition": "Pass combined cross-peer and four-profile identity/cache budget/expiry/conflict tests; preserve per-arrival envelopes.",
+      "full_release_completion_condition": "Complete declared tenant/transport duplicate workloads and verify real target deduplication boundaries, without promising persistent exactly-once semantics.",
+      "external_evidence_or_owner": "Target identity/retention domains and declared tenant workload distributions.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-DUP-01"
+    },
+    {
+      "id": "SPEC-PEER-01",
+      "rc_completion_condition": "Pass capability negotiation, watchdog, election, reconnect and named advertisement tests with no implicit replay.",
+      "full_release_completion_condition": "Close all first-release peer/role/platform interoperation scenarios, including target capability and failover behavior.",
+      "external_evidence_or_owner": "Real peer advertisements, DRA topology and configured failure/protection policies.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-PEER-01"
+    },
+    {
+      "id": "SPEC-CLOSE-01",
+      "rc_completion_condition": "Verify drain/close/wait, disconnected-primary handling and zero charged resources after retirement in pure/race tests.",
+      "full_release_completion_condition": "Demonstrate shutdown and worker handover under declared long-soak/failure workloads with no stale ownership or hidden charged resources.",
+      "external_evidence_or_owner": "Deployment shutdown, fencing and process handover acceptance.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-CLOSE-01"
+    },
+    {
+      "id": "SPEC-ID-01",
+      "rc_completion_condition": "Verify bounded ID exhaustion, active/quarantine intervals and explicit recovery-space import; reject conflicting imports.",
+      "full_release_completion_condition": "Demonstrate first-release deployment-wide uniqueness and startup isolation across workers/restarts using application-provided identity history.",
+      "external_evidence_or_owner": "Boot/worker allocation, historical ID intervals and traffic isolation; no library durable allocator.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-ID-01"
+    },
+    {
+      "id": "SPEC-BUDGET-01",
+      "rc_completion_condition": "Pass finite admission/cache/diagnostic limits, peak-resource checks and isolation stress; distinguish logical bytes, heap and RSS.",
+      "full_release_completion_condition": "Declare load duration, saturation levels, tenant mixes and mixed transports, then meet explicit resource/fairness/latency thresholds with reproducible measurements.",
+      "external_evidence_or_owner": "Deployment workload and capacity targets; finite benchmarks are not production sizing.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-BUDGET-01"
+    },
+    {
+      "id": "SPEC-TRANSPORT-01",
+      "rc_completion_condition": "Pass native Linux/amd64 TCP/TLS/SCTP pure/race and pressure tests; separate cross-build evidence and unsupported stubs.",
+      "full_release_completion_condition": "Obtain native and target interoperation evidence for every first-release advertised platform/transport combination, with explicit unsupported failures elsewhere.",
+      "external_evidence_or_owner": "Native target platforms, kernel capabilities and real DRA/OCS/HSS paths.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-TRANSPORT-01"
+    },
+    {
+      "id": "SPEC-SECURITY-01",
+      "rc_completion_condition": "Verify frozen TLS policy, mTLS rejection/admission, no plaintext fallback and bounded malformed-input/resource handling.",
+      "full_release_completion_condition": "Complete the first-release security/resource acceptance matrix for certificate ownership/callbacks, Diameter identity mapping, tenant isolation and configured trust boundaries.",
+      "external_evidence_or_owner": "Deployment certificates, identity authorization and security workload/threat assumptions.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-SECURITY-01"
+    },
+    {
+      "id": "SPEC-RELEASE-01",
+      "rc_completion_condition": "Pass exact-candidate checkout CI, immutable core-first/adapter-second publication, independent local and hosted cold consumers, and publish truthful receipts.",
+      "full_release_completion_condition": "Approve full-first-release scope/support policy, close required implementation and external gates, and record native/load/security/migration acceptance before any v1 claim.",
+      "external_evidence_or_owner": "Target and application acceptance for claims included in the full-first-release scope.",
+      "rc_status": "pending_release_gates",
+      "full_release_status": "partial",
+      "evidence_ref": "spec/progress.json#SPEC-RELEASE-01"
+    }
+  ],
+  "publications": {},
+  "evidence": "spec/evidence/batch-121-rc-publication.json"
+}

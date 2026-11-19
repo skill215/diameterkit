@@ -1,11 +1,11 @@
 {
   "format": 1,
-  "baseline": "Draft 0.121",
+  "baseline": "Draft 0.122",
   "normative_spec": "doc/diameterkit-specification.md",
-  "batch": "Combined isolated INITIAL/TERMINATION interface value diagnostics",
-  "status": "completed",
-  "status_meaning": "Batch120 local selected/full acceptance passed; hosted seven-suite checkout passed. All24 broader requirements remain partial.",
-  "date": "2026-11-18",
+  "batch": "Scoped RC checklist, immutable core/adapter publication and cold installation",
+  "status": "in_progress",
+  "status_meaning": "Batch121 is advancing the scoped v0.2.0-rc.1 release gates. Full-first-release requirements remain separately partial.",
+  "date": "2026-11-19",
   "toolchain": "go1.26.10 linux/amd64",
   "release_status": "not_ready",
   "module": "github.com/skill215/diameterkit",
@@ -528,7 +528,8 @@
     "Batch118 selected EVENT action-value5004: IEC nonzero and money greater-than2 Receive values, retained ErrUnsupported plus ErrField. Static proof and exact bounded12-byte original quote, first-failure order preserved.1496 selected passes x20 in pure/race; full core6838/adapter114 with no skips; seventeen fuzz targets x1000000 executions. Combined slice.13; public shapes, generator23/ops9 and pure-Go/no-persistence unchanged.",
     "Batch118 acceptance correction: retain initial hosted zero-exit/PASS URI run at1000019 and its parser failure. Require observed count1000000 through1000062 using inspected pinned-Go32-candidate minimization loop and two workers; record actual overrun. Under-budget/over-bound/nonzero/error/timeout still fail. Added original-log regression and pinned-toolchain review guard; no automatic retry.",
     "Batch119 isolated IEC present-address/wrong-interface5004: retained ErrUnsupported plus ErrField and precise873/2000/2009/2006 Receive path. Static proof and bounded52-byte original quote; shared source counters, first-failure order, Build/Send and mixed-condition boundaries preserved.1892 selected passes x20 pure/race; full core7236/adapter114, no skips; seventeen counted fuzz targets. Combined slice.14; public shapes, generator23/ops9 and pure-Go/no-persistence unchanged.",
-    "Batch120 isolated INITIAL/TERMINATION interface-value5004: originator not3 with destination2, or destination not2 with originator3, and no action/address. Retained ErrUnsupported plus ErrField and precise873/2000/(2009 or2002)/2006 Receive path. Static proof, bounded52-byte original quote, shared sibling source counters, first-failure order, Build/Send and mixed-condition boundaries preserved.3386 selected passes x20 pure/race; full core8734/adapter114, no skips; seventeen counted fuzz targets. Combined slice.15; public shapes, generator23/ops9 and pure-Go/no-persistence unchanged."
+    "Batch120 isolated INITIAL/TERMINATION interface-value5004: originator not3 with destination2, or destination not2 with originator3, and no action/address. Retained ErrUnsupported plus ErrField and precise873/2000/(2009 or2002)/2006 Receive path. Static proof, bounded52-byte original quote, shared sibling source counters, first-failure order, Build/Send and mixed-condition boundaries preserved.3386 selected passes x20 pure/race; full core8734/adapter114, no skips; seventeen counted fuzz targets. Combined slice.15; public shapes, generator23/ops9 and pure-Go/no-persistence unchanged.",
+    "Batch121 separates all24 SPEC RC/full/external exits, freezes the verified implementation, and prepares immutable core-first/adapter-second publication. No Go implementation/API/profile/persistence change."
   ],
   "requirements": [
     {
@@ -956,9 +957,18 @@
         "spec/tools/public_api_snapshot.py",
         "examples/contracts/contracts_test.go",
         "examples/contracts/README.md",
-        "spec/evidence/batch-94-mixed-pressure.json"
+        "spec/evidence/batch-94-mixed-pressure.json",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
       ],
-      "remaining": "Pure Go and no persistence preserved. The reviewed API covers 24 core packages and one adapter package on Linux/Windows; stub visibility is not native SCTP support. Stable-v1 and full protocol/target readiness remain open."
+      "remaining": "Approve the complete first-release A/B scope inventory and demonstrate every included capability; make a separate stable-v1 compatibility decision.",
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Build both modules with CGO_ENABLED=0; disclose the exact profile/platform inventory and v0 support limits.",
+        "full_release": "Approve the complete first-release A/B scope inventory and demonstrate every included capability; make a separate stable-v1 compatibility decision.",
+        "external_evidence_or_owner": "Project maintainer; target owners for claimed native platforms."
+      }
     },
     {
       "id": "SPEC-SCOPE-02",
@@ -1315,9 +1325,18 @@
         "doc/diameterkit-support-matrix.md",
         "spec/tools/public_api_snapshot.py",
         "examples/contracts/contracts_test.go",
-        "examples/contracts/README.md"
+        "examples/contracts/README.md",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
       ],
-      "remaining": "标准SMS token helper不授予退款；DCCA和私有绑定明确分开，恢复值/签名不证明历史或完整应用接线。S6c纯协议解释属于库UX-02，不得借应用业务边界删除。"
+      "remaining": "Trace every first-release workflow to explicit library/application responsibility and exercise the corresponding public API without moving durable state into the library.",
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Public consumers keep subscriber, charging, retry authority and durable state outside the library; no persistence dependency is introduced.",
+        "full_release": "Trace every first-release workflow to explicit library/application responsibility and exercise the corresponding public API without moving durable state into the library.",
+        "external_evidence_or_owner": "Application owners provide durable intent, fencing and reconciliation evidence; no library database is required."
+      }
     },
     {
       "id": "SPEC-PROFILE-01",
@@ -1668,7 +1687,6 @@
         "spec/evidence/batch-109-cardinality.json",
         "doc/cardinality-diagnostics.md",
         "spec/evidence/batch-110-cardinality.json",
-        "doc/cardinality-diagnostics.md",
         "spec/evidence/batch-111-recipient-missing.json",
         "doc/conditional-recipient-diagnostics.md",
         "spec/evidence/batch-112-mms-missing.json",
@@ -1686,9 +1704,18 @@
         "spec/evidence/batch-119-interface-values.json",
         "doc/conditional-interface-values.md",
         "spec/evidence/batch-120-ecur-interface-values.json",
-        "doc/ecur-interface-values.md"
+        "doc/ecur-interface-values.md",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
       ],
-      "remaining": "Batch120 isolated INITIAL/TERMINATION interface values verified; Other requirement scope and external/release evidence remain partial."
+      "remaining": "Resolve every required first-release field/type conflict through explicit definitions or named compatibility bindings, backed by source/target evidence and negative controls.",
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "All12 reviewed binding identities, fixed wire types and definition hashes match the support matrix; reject conflicting bindings.",
+        "full_release": "Resolve every required first-release field/type conflict through explicit definitions or named compatibility bindings, backed by source/target evidence and negative controls.",
+        "external_evidence_or_owner": "Original six-template source/version and target wire samples for disputed private fields."
+      }
     },
     {
       "id": "SPEC-PROFILE-02",
@@ -1936,9 +1963,18 @@
         "doc/diameterkit-support-matrix.md",
         "spec/tools/public_api_snapshot.py",
         "examples/contracts/contracts_test.go",
-        "examples/contracts/README.md"
+        "examples/contracts/README.md",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
       ],
-      "remaining": "支持矩阵分别列标准SMS、DCCA、五模板组合、SCAP1和委托旧SGd；GoDoc快照与编译/离线/运行时/目标接受证据分开，不宣称完整协议支持。"
+      "remaining": "Map the full first-release usage inventory to supported profiles and enforce every declaration/advertisement boundary with executable acceptance.",
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Publish command, result, field and platform limits separately from Application-ID advertisement; verify independent public consumers.",
+        "full_release": "Map the full first-release usage inventory to supported profiles and enforce every declaration/advertisement boundary with executable acceptance.",
+        "external_evidence_or_owner": "Target capability advertisements and configured endpoint roles where those claims are included."
+      }
     },
     {
       "id": "SPEC-GEN-01",
@@ -2186,9 +2222,18 @@
         "examples/sh/config.go",
         "examples/sh/main_test.go",
         "examples/sh/README.md",
-        "doc/diameterkit-application-definitions.md"
+        "doc/diameterkit-application-definitions.md",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
       ],
-      "remaining": "JSON→生成Go→Profile/Bundle及再生成/版本责任已说明；11定义生成一致性回归通过。DefinitionDigest不自动覆盖手写函数体，不作为全源签名。"
+      "remaining": "Cover all definitions required by the declared first-release inventory and audit handwritten-rule changes against explicit version/migration decisions; do not treat DefinitionDigest as a whole-source signature.",
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Reproduce all11 generated files offline, reject drift and preserve the reviewed generator23/ops9/profile version ledger.",
+        "full_release": "Cover all definitions required by the declared first-release inventory and audit handwritten-rule changes against explicit version/migration decisions; do not treat DefinitionDigest as a whole-source signature.",
+        "external_evidence_or_owner": "No external evidence for the existing generation mechanism; additional private definitions need authoritative inputs."
+      }
     },
     {
       "id": "SPEC-CODEC-01",
@@ -2519,7 +2564,6 @@
         "spec/evidence/batch-109-cardinality.json",
         "doc/cardinality-diagnostics.md",
         "spec/evidence/batch-110-cardinality.json",
-        "doc/cardinality-diagnostics.md",
         "spec/evidence/batch-111-recipient-missing.json",
         "doc/conditional-recipient-diagnostics.md",
         "spec/evidence/batch-112-mms-missing.json",
@@ -2537,9 +2581,18 @@
         "spec/evidence/batch-119-interface-values.json",
         "doc/conditional-interface-values.md",
         "spec/evidence/batch-120-ecur-interface-values.json",
-        "doc/ecur-interface-values.md"
+        "doc/ecur-interface-values.md",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
       ],
-      "remaining": "Batch120 isolated INITIAL/TERMINATION interface values verified; Other requirement scope and external/release evidence remain partial."
+      "remaining": "Complete the codec/vector/negative-case inventory for every required first-release field and binding, including authoritative private layouts.",
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Pass owned codec, malformed input, canonicalization and bounded fuzz tests for the declared slices, including exact diagnostic instances.",
+        "full_release": "Complete the codec/vector/negative-case inventory for every required first-release field and binding, including authoritative private layouts.",
+        "external_evidence_or_owner": "Canonical target captures for private or disputed wire layouts."
+      }
     },
     {
       "id": "SPEC-OWN-01",
@@ -2799,9 +2852,18 @@
         "doc/combined-duplicate-acceptance.md",
         "spec/evidence/batch-99-cross-profile-duplicates.json",
         "mixed_duplicate_test.go",
-        "doc/cross-peer-duplicate-acceptance.md"
+        "doc/cross-peer-duplicate-acceptance.md",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
       ],
-      "remaining": "Batch99 verifies per-arrival HBH/Proxy reconstruction across peers and profiles, one cache charge per logical work item and original result authority after conflicts/disconnection. Broader ownership/extension acceptance remains partial."
+      "remaining": "Provide a requirement-to-test inventory covering ownership and lifetime at every first-release public message, transport handoff and recovery boundary.",
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Pass buffer mutation, snapshot, handoff, duplicate-arrival envelope and Close/Wait resource retirement tests in pure/race modes.",
+        "full_release": "Provide a requirement-to-test inventory covering ownership and lifetime at every first-release public message, transport handoff and recovery boundary.",
+        "external_evidence_or_owner": "Application integration evidence for external buffer/worker ownership; library must not own application storage."
+      }
     },
     {
       "id": "SPEC-VALID-01",
@@ -3091,9 +3153,18 @@
         "examples/sh/config.go",
         "examples/sh/main_test.go",
         "examples/sh/README.md",
-        "doc/diameterkit-application-definitions.md"
+        "doc/diameterkit-application-definitions.md",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
       ],
-      "remaining": "Sh公开例验证wire完整性与显式XML解析/用途报告分离，XML无效不伪装成Diameter解码错误；全规范/XSD语义未宣称。"
+      "remaining": "Resolve and verify all validation rules within the declared first-release scope, while retaining explicitly excluded full-XSD/internationalization behavior.",
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Keep framing/type/presence checks separate from domain and explicit Sh XML interpretation; reject unsupported cases.",
+        "full_release": "Resolve and verify all validation rules within the declared first-release scope, while retaining explicitly excluded full-XSD/internationalization behavior.",
+        "external_evidence_or_owner": "Authoritative rules or named compatibility evidence for disputed Realm, timing and private relations."
+      }
     },
     {
       "id": "SPEC-RESULT-01",
@@ -3356,11 +3427,20 @@
         "spec/tools/public_api_snapshot.py",
         "examples/contracts/contracts_test.go",
         "examples/contracts/README.md",
-        "spec/evidence/batch-94-mixed-pressure.json"
+        "spec/evidence/batch-94-mixed-pressure.json",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
       ],
-      "remaining": "S6c NewSRR/InterpretSRA and client/s6c were completed in batch87. Mixed-load validation preserves selected Sh/S6c failure and SGd/Ro success results without treating protocol completion as business success. Unselected results, full private mappings and target semantics remain open.",
+      "remaining": "Complete result interpretation and paired request/answer tests for every first-release operation and required private result mapping.",
       "batch87_evidence": "spec/evidence/batch-87-s6c-helpers.json",
-      "batch88_evidence": "spec/evidence/batch-88-ro-recovery-consumption.json"
+      "batch88_evidence": "spec/evidence/batch-88-ro-recovery-consumption.json",
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Public S6c/Ro consumers distinguish command, service, experimental and business outcomes; selected failure mappings remain bounded.",
+        "full_release": "Complete result interpretation and paired request/answer tests for every first-release operation and required private result mapping.",
+        "external_evidence_or_owner": "PSP/private ACA/1292 and target result semantics; protocol success alone is insufficient."
+      }
     },
     {
       "id": "SPEC-ERROR-01",
@@ -3422,7 +3502,6 @@
         "spec/evidence/batch-109-cardinality.json",
         "doc/cardinality-diagnostics.md",
         "spec/evidence/batch-110-cardinality.json",
-        "doc/cardinality-diagnostics.md",
         "spec/evidence/batch-111-recipient-missing.json",
         "doc/conditional-recipient-diagnostics.md",
         "spec/evidence/batch-112-mms-missing.json",
@@ -3440,9 +3519,18 @@
         "spec/evidence/batch-119-interface-values.json",
         "doc/conditional-interface-values.md",
         "spec/evidence/batch-120-ecur-interface-values.json",
-        "doc/ecur-interface-values.md"
+        "doc/ecur-interface-values.md",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
       ],
-      "remaining": "Batch120 isolated INITIAL/TERMINATION interface values verified; Other present-value relations, mixed presence/value failures, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings. Batch120 closes only isolated INITIAL/TERMINATION originator/destination interface values."
+      "remaining": "Enumerate each remaining promised condition/value/cardinality/group/domain/handshake/header mapping and either verify a bounded unambiguous diagnostic or record a justified safe-close classification.",
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Selected5001/5004/5005/5009/5014/3006 diagnostics pass bounds and original-instance tests; unreviewed failures retain safe close/unsupported behavior.",
+        "full_release": "Enumerate each remaining promised condition/value/cardinality/group/domain/handshake/header mapping and either verify a bounded unambiguous diagnostic or record a justified safe-close classification.",
+        "external_evidence_or_owner": "Direct protocol or named target evidence where error attribution is ambiguous; do not guess repairs."
+      }
     },
     {
       "id": "SPEC-APP-01",
@@ -3793,18 +3881,27 @@
         "spec/tools/public_api_snapshot.py",
         "examples/contracts/contracts_test.go",
         "examples/contracts/README.md",
-        "spec/evidence/batch-90-binding-recovery-consumption.json"
+        "spec/evidence/batch-90-binding-recovery-consumption.json",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
       ],
-      "remaining": "第87批S6c UX-02、第88至90批所选Ro业务及具名绑定公开消费已完成；完整应用范围、未选结果/工作流、私有和目标证据仍按支持矩阵跟踪。",
+      "remaining": "Cover the declared first-release A/B application calls, six-template operations, required outcomes and recovery entry points through public API acceptance.",
       "batch87_evidence": "spec/evidence/batch-87-s6c-helpers.json",
       "batch88_evidence": "spec/evidence/batch-88-ro-recovery-consumption.json",
       "batch89_evidence": "spec/evidence/batch-89-combined-cross-target.json",
-      "batch90_evidence": "spec/evidence/batch-90-binding-recovery-consumption.json"
+      "batch90_evidence": "spec/evidence/batch-90-binding-recovery-consumption.json",
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Installed public consumers exercise selected Sh/S6c/SGd/Ro, S6c helpers and named recovery bindings without library persistence.",
+        "full_release": "Cover the declared first-release A/B application calls, six-template operations, required outcomes and recovery entry points through public API acceptance.",
+        "external_evidence_or_owner": "Original complete template inputs/outputs, deployment versions and target application mappings."
+      }
     },
     {
       "id": "SPEC-BIND-01",
       "status": "partial",
-      "remaining": "三个具名4/272绑定显式选择与跨Node绑定变化拒绝已验；合成目标授权不证明真实DRA/终端配置或会话连续性。",
+      "remaining": "Validate all first-release DRA/terminal roles, compatibility binding selections and target protection conditions against deployment fixtures.",
       "evidence": [
         "runtime_test.go",
         "config.go",
@@ -4065,14 +4162,23 @@
         "spec/evidence/batch-85-ro-abort-public-api.json",
         "examples/ro/abort.go",
         "examples/ro/abort_test.go",
-        "spec/evidence/batch-90-binding-recovery-consumption.json"
+        "spec/evidence/batch-90-binding-recovery-consumption.json",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
       ],
-      "batch90_evidence": "spec/evidence/batch-90-binding-recovery-consumption.json"
+      "batch90_evidence": "spec/evidence/batch-90-binding-recovery-consumption.json",
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Use explicit fixed bindings and reject wrong-binding imports or ungranted targets; preserve independent advertised applications.",
+        "full_release": "Validate all first-release DRA/terminal roles, compatibility binding selections and target protection conditions against deployment fixtures.",
+        "external_evidence_or_owner": "DRA versus ultimate HSS/MME/OCS roles and target recovery permissions."
+      }
     },
     {
       "id": "SPEC-EXCHANGE-01",
       "status": "partial",
-      "remaining": "Tx后保留协议Completion/显式Cancel、单次业务通知及原业务截止例证通过；完整应用和现场互通未完",
+      "remaining": "Complete first-release flow/paired-message and fault-injection coverage across all claimed roles/transports; demonstrate actual deployment interoperation.",
       "evidence": [
         "exchange.go",
         "completion.go",
@@ -4335,13 +4441,22 @@
         "spec/evidence/batch-68-dra.json",
         "request_targets.go",
         "dra_test.go",
-        "adapters/sctp/dra_linux_test.go"
-      ]
+        "adapters/sctp/dra_linux_test.go",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
+      ],
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Verify correlation, deadlines, cancel/late-answer races, one completion and single-attempt default through public consumers.",
+        "full_release": "Complete first-release flow/paired-message and fault-injection coverage across all claimed roles/transports; demonstrate actual deployment interoperation.",
+        "external_evidence_or_owner": "Named target request/answer traces and end-to-end fault scenarios."
+      }
     },
     {
       "id": "SPEC-REPLAY-01",
       "status": "partial",
-      "remaining": "标准Ro第88批同目标恢复，三个具名兼容绑定第89至90批错误/无答跨目标及关闭旧Node后导入已公开消费；不覆盖所有Profile或未知崩溃历史。DCCA/ASR/SCAP1不继承许可；真实去重、连续性、应用历史/故障演练仍待。",
+      "remaining": "Close the required RO-06/template recovery matrix with target deduplication domains, retention and ECUR continuity plus application fencing/unknown-result drills.",
       "evidence": [
         "route.go",
         "route_test.go",
@@ -4573,16 +4688,25 @@
         "spec/tools/public_api_snapshot.py",
         "examples/contracts/contracts_test.go",
         "examples/contracts/README.md",
-        "spec/evidence/batch-90-binding-recovery-consumption.json"
+        "spec/evidence/batch-90-binding-recovery-consumption.json",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
       ],
       "batch88_evidence": "spec/evidence/batch-88-ro-recovery-consumption.json",
       "batch89_evidence": "spec/evidence/batch-89-combined-cross-target.json",
-      "batch90_evidence": "spec/evidence/batch-90-binding-recovery-consumption.json"
+      "batch90_evidence": "spec/evidence/batch-90-binding-recovery-consumption.json",
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Verify selected same-target/cross-target/import recovery with original identity, cumulative limits and explicit permission; no automatic durable retry.",
+        "full_release": "Close the required RO-06/template recovery matrix with target deduplication domains, retention and ECUR continuity plus application fencing/unknown-result drills.",
+        "external_evidence_or_owner": "Real deduplication keys/content/retention, session continuity, independent SCAP1 authorization and application durable history."
+      }
     },
     {
       "id": "SPEC-EVIDENCE-01",
       "status": "partial",
-      "remaining": "公开调用验证取消与晚答一次完成、协议结果和业务含义分离；既有发送证据完整回归。不以本例证明全部不确定发送或目标财务行为。",
+      "remaining": "Exercise every first-release uncertain-send/cancel/late-answer/failure transition and document its application interpretation with corresponding evidence.",
       "evidence": [
         "result.go",
         "exchange.go",
@@ -4948,13 +5072,22 @@
         "examples/scap1/main_test.go",
         "examples/scap1/README.md",
         "spec/evidence/batch-107-support-matrix.json",
-        "doc/support-matrix-checks.md"
-      ]
+        "doc/support-matrix-checks.md",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
+      ],
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Preserve write-stage uncertainty, final protocol result and one business notification; do not convert timeout or receipt into financial success.",
+        "full_release": "Exercise every first-release uncertain-send/cancel/late-answer/failure transition and document its application interpretation with corresponding evidence.",
+        "external_evidence_or_owner": "Target financial/delivery outcomes and application reconciliation records."
+      }
     },
     {
       "id": "SPEC-INBOUND-01",
       "status": "partial",
-      "remaining": "公开ASR Respond拒绝无/未选结果、正常3004、计费字段和实验E；原Session/Proxy保持、远端Origin-State不回填，取消响应可重试且一次提交；无业务会话决策下沉。",
+      "remaining": "Cover every inbound first-release operation/result and authorization boundary through the public responder API and target role fixtures.",
       "evidence": [
         "inbound.go",
         "config.go",
@@ -5266,13 +5399,22 @@
         "spec/evidence/batch-85-ro-abort-example.json",
         "spec/evidence/batch-85-ro-abort-public-api.json",
         "examples/ro/abort.go",
-        "examples/ro/abort_test.go"
-      ]
+        "examples/ro/abort_test.go",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
+      ],
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Verify bounded receive/respond/reject, explicit result selection, Session/Proxy preservation and retirement without business session decisions.",
+        "full_release": "Cover every inbound first-release operation/result and authorization boundary through the public responder API and target role fixtures.",
+        "external_evidence_or_owner": "Application-owned session decisions and target authorization mappings."
+      }
     },
     {
       "id": "SPEC-DUP-01",
       "status": "partial",
-      "remaining": "Batch99 validates combined six-input/three-result cross-peer behavior and four-profile collision/concurrency/shared-independent cache budgets on TCP/TLS. Larger mixed-transport/tenant and real-target deduplication domains remain separate.",
+      "remaining": "Complete declared tenant/transport duplicate workloads and verify real target deduplication boundaries, without promising persistent exactly-once semantics.",
       "evidence": [
         "duplicate.go",
         "duplicate_test.go",
@@ -5492,13 +5634,22 @@
         "doc/combined-duplicate-acceptance.md",
         "spec/evidence/batch-99-cross-profile-duplicates.json",
         "mixed_duplicate_test.go",
-        "doc/cross-peer-duplicate-acceptance.md"
-      ]
+        "doc/cross-peer-duplicate-acceptance.md",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
+      ],
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Pass combined cross-peer and four-profile identity/cache budget/expiry/conflict tests; preserve per-arrival envelopes.",
+        "full_release": "Complete declared tenant/transport duplicate workloads and verify real target deduplication boundaries, without promising persistent exactly-once semantics.",
+        "external_evidence_or_owner": "Target identity/retention domains and declared tenant workload distributions."
+      }
     },
     {
       "id": "SPEC-PEER-01",
       "status": "partial",
-      "remaining": "SCAP1具名广告主动/被动TCP/TLS通过，严格默认不变；重连缺会计能力拒绝ACR、不自动重放；全量Peer/选举/关闭回归，目标部署证据另验。",
+      "remaining": "Close all first-release peer/role/platform interoperation scenarios, including target capability and failover behavior.",
       "evidence": [
         "peer.go",
         "timers.go",
@@ -5581,13 +5732,22 @@
         "spec/evidence/batch-78-scap1-advertisement.json",
         "scap1_advertisement.go",
         "scap1_advertisement_test.go",
-        "scap1_duplicate_test.go"
-      ]
+        "scap1_duplicate_test.go",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
+      ],
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Pass capability negotiation, watchdog, election, reconnect and named advertisement tests with no implicit replay.",
+        "full_release": "Close all first-release peer/role/platform interoperation scenarios, including target capability and failover behavior.",
+        "external_evidence_or_owner": "Real peer advertisements, DRA topology and configured failure/protection policies."
+      }
     },
     {
       "id": "SPEC-CLOSE-01",
       "status": "partial",
-      "remaining": "Batch99 validates disconnected-primary result reporting, surviving duplicate reply, cache expiry/re-admission and zero charged resources after Close/Wait. Conflict telemetry remains monotonic; deployment shutdown/long-soak acceptance remains separate.",
+      "remaining": "Demonstrate shutdown and worker handover under declared long-soak/failure workloads with no stale ownership or hidden charged resources.",
       "evidence": [
         "node.go",
         "completion.go",
@@ -5843,13 +6003,22 @@
         "doc/combined-duplicate-acceptance.md",
         "spec/evidence/batch-99-cross-profile-duplicates.json",
         "mixed_duplicate_test.go",
-        "doc/cross-peer-duplicate-acceptance.md"
-      ]
+        "doc/cross-peer-duplicate-acceptance.md",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
+      ],
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Verify drain/close/wait, disconnected-primary handling and zero charged resources after retirement in pure/race tests.",
+        "full_release": "Demonstrate shutdown and worker handover under declared long-soak/failure workloads with no stale ownership or hidden charged resources.",
+        "external_evidence_or_owner": "Deployment shutdown, fencing and process handover acceptance."
+      }
     },
     {
       "id": "SPEC-ID-01",
       "status": "partial",
-      "remaining": "导入当前普通已用区间、自定义active/quarantine及独立RecoverySpaces已验；未导入旧号/其他worker不可见，跨部署唯一性与启动流量隔离归部署验收",
+      "remaining": "Demonstrate first-release deployment-wide uniqueness and startup isolation across workers/restarts using application-provided identity history.",
       "evidence": [
         "node.go",
         "peer.go",
@@ -5901,13 +6070,22 @@
         "ro_targets_test.go",
         "spec/local/batches/batch-56.md",
         "ro_import.go",
-        "ro_import_test.go"
-      ]
+        "ro_import_test.go",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
+      ],
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Verify bounded ID exhaustion, active/quarantine intervals and explicit recovery-space import; reject conflicting imports.",
+        "full_release": "Demonstrate first-release deployment-wide uniqueness and startup isolation across workers/restarts using application-provided identity history.",
+        "external_evidence_or_owner": "Boot/worker allocation, historical ID intervals and traffic isolation; no library durable allocator."
+      }
     },
     {
       "id": "SPEC-BUDGET-01",
       "status": "partial",
-      "remaining": "Batch120 isolated INITIAL/TERMINATION interface values verified; Other requirement scope and external/release evidence remain partial.",
+      "remaining": "Declare load duration, saturation levels, tenant mixes and mixed transports, then meet explicit resource/fairness/latency thresholds with reproducible measurements.",
       "evidence": [
         "internal/budget/budget_test.go",
         "node.go",
@@ -6333,7 +6511,6 @@
         "spec/evidence/batch-109-cardinality.json",
         "doc/cardinality-diagnostics.md",
         "spec/evidence/batch-110-cardinality.json",
-        "doc/cardinality-diagnostics.md",
         "spec/evidence/batch-111-recipient-missing.json",
         "doc/conditional-recipient-diagnostics.md",
         "spec/evidence/batch-112-mms-missing.json",
@@ -6351,17 +6528,26 @@
         "spec/evidence/batch-119-interface-values.json",
         "doc/conditional-interface-values.md",
         "spec/evidence/batch-120-ecur-interface-values.json",
-        "doc/ecur-interface-values.md"
+        "doc/ecur-interface-values.md",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
       ],
       "batch89_evidence": "spec/evidence/batch-89-combined-cross-target.json",
       "batch90_evidence": "spec/evidence/batch-90-binding-recovery-consumption.json",
       "batch91_evidence": "spec/evidence/batch-91-release-checks.json",
-      "batch92_evidence": "spec/evidence/batch-92-bounded-load.json"
+      "batch92_evidence": "spec/evidence/batch-92-bounded-load.json",
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Pass finite admission/cache/diagnostic limits, peak-resource checks and isolation stress; distinguish logical bytes, heap and RSS.",
+        "full_release": "Declare load duration, saturation levels, tenant mixes and mixed transports, then meet explicit resource/fairness/latency thresholds with reproducible measurements.",
+        "external_evidence_or_owner": "Deployment workload and capacity targets; finite benchmarks are not production sizing."
+      }
     },
     {
       "id": "SPEC-TRANSPORT-01",
       "status": "partial",
-      "remaining": "Core and adapter full pure/race suites and native SCTP pressure rerun in batch94. Production transports/dependencies unchanged. New mixed-load isolation uses TCP only; Windows/386 remain SCTP stubs and arm64 has build-only evidence. Real DRA/target acceptance remains open.",
+      "remaining": "Obtain native and target interoperation evidence for every first-release advertised platform/transport combination, with explicit unsupported failures elsewhere.",
       "evidence": [
         "transport/transport.go",
         "internal/testkit/transport.go",
@@ -6550,13 +6736,22 @@
         "spec/tools/public_api_snapshot.py",
         "examples/contracts/contracts_test.go",
         "examples/contracts/README.md",
-        "spec/evidence/batch-94-mixed-pressure.json"
-      ]
+        "spec/evidence/batch-94-mixed-pressure.json",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
+      ],
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Pass native Linux/amd64 TCP/TLS/SCTP pure/race and pressure tests; separate cross-build evidence and unsupported stubs.",
+        "full_release": "Obtain native and target interoperation evidence for every first-release advertised platform/transport combination, with explicit unsupported failures elsewhere.",
+        "external_evidence_or_owner": "Native target platforms, kernel capabilities and real DRA/OCS/HSS paths."
+      }
     },
     {
       "id": "SPEC-SECURITY-01",
       "status": "partial",
-      "remaining": "Listener构造冻结TLS顶层策略，验证mTLS拒绝后再接纳、无明文回退；共享证书/callback、Diameter身份映射及完整安全资源验收仍属原边界",
+      "remaining": "Complete the first-release security/resource acceptance matrix for certificate ownership/callbacks, Diameter identity mapping, tenant isolation and configured trust boundaries.",
       "evidence": [
         "transport/tls/tls.go",
         "tls_integration_test.go",
@@ -6574,15 +6769,24 @@
         "internal/streamtransport/listener.go",
         "spec/local/batches/batch-12.md",
         "spec/evidence/batch-91-release-checks.json",
-        "spec/evidence/batch-92-bounded-load.json"
+        "spec/evidence/batch-92-bounded-load.json",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
       ],
       "batch91_evidence": "spec/evidence/batch-91-release-checks.json",
-      "batch92_evidence": "spec/evidence/batch-92-bounded-load.json"
+      "batch92_evidence": "spec/evidence/batch-92-bounded-load.json",
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Verify frozen TLS policy, mTLS rejection/admission, no plaintext fallback and bounded malformed-input/resource handling.",
+        "full_release": "Complete the first-release security/resource acceptance matrix for certificate ownership/callbacks, Diameter identity mapping, tenant isolation and configured trust boundaries.",
+        "external_evidence_or_owner": "Deployment certificates, identity authorization and security workload/threat assumptions."
+      }
     },
     {
       "id": "SPEC-RELEASE-01",
       "status": "partial",
-      "remaining": "Batch117 counted fuzz and failure evidence verified; new immutable publication, deployment-specific load and other release scope remain partial.",
+      "remaining": "Approve full-first-release scope/support policy, close required implementation and external gates, and record native/load/security/migration acceptance before any v1 claim.",
       "evidence": [
         "spec/reviews/2026-11-09-global-progress.json",
         "spec/local/batches/batch-79.md",
@@ -6653,87 +6857,26 @@
         "spec/evidence/batch-107-support-matrix.json",
         "doc/support-matrix-checks.md",
         "spec/evidence/batch-117-counted-fuzz.json",
-        "doc/count-bounded-fuzz.md"
+        "doc/count-bounded-fuzz.md",
+        "spec/release/v0.2.0-rc.1.json",
+        "spec/evidence/batch-121-rc-publication.json",
+        "doc/release-candidate-checklist.md"
       ],
       "batch87_evidence": "spec/evidence/batch-87-s6c-helpers.json",
       "batch88_evidence": "spec/evidence/batch-88-ro-recovery-consumption.json",
       "batch89_evidence": "spec/evidence/batch-89-combined-cross-target.json",
       "batch90_evidence": "spec/evidence/batch-90-binding-recovery-consumption.json",
       "batch91_evidence": "spec/evidence/batch-91-release-checks.json",
-      "batch92_evidence": "spec/evidence/batch-92-bounded-load.json"
+      "batch92_evidence": "spec/evidence/batch-92-bounded-load.json",
+      "rc_status": "pending_release_gates",
+      "completion_conditions": {
+        "rc": "Pass exact-candidate checkout CI, immutable core-first/adapter-second publication, independent local and hosted cold consumers, and publish truthful receipts.",
+        "full_release": "Approve full-first-release scope/support policy, close required implementation and external gates, and record native/load/security/migration acceptance before any v1 claim.",
+        "external_evidence_or_owner": "Target and application acceptance for claims included in the full-first-release scope."
+      }
     }
   ],
   "checks": [
-    {
-      "name": "interface-value-diagnostics",
-      "command": [
-        "go",
-        "test",
-        ".",
-        "./compat/smsfwro/combined",
-        "./internal/missingavp",
-        "./internal/excessavp",
-        "-run=Test(ECURInterfaceValue|RejectECURInterfaceValue|InterfaceValue|RejectInterfaceValue|ActionValue|RejectActionValue|ActionMissing|RejectActionMissing|MMSGroupMissing|RejectMMSGroupMissing|OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)",
-        "-count=1",
-        "-json",
-        "-timeout=10m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-corrected/interface-value-diagnostics.log",
-      "status": "passed",
-      "sha256": "6a7673a18998459f999601659938baba858c2879ba15aa13a32bee0e7b96a8c2",
-      "returncode": 0,
-      "test_subtest_seed_passes": 3386,
-      "test_skips": 0,
-      "suite": "corrected"
-    },
-    {
-      "name": "interface-value-diagnostics",
-      "command": [
-        "go",
-        "test",
-        ".",
-        "./compat/smsfwro/combined",
-        "./internal/missingavp",
-        "./internal/excessavp",
-        "-run=Test(ECURInterfaceValue|RejectECURInterfaceValue|InterfaceValue|RejectInterfaceValue|ActionValue|RejectActionValue|ActionMissing|RejectActionMissing|MMSGroupMissing|RejectMMSGroupMissing|OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)",
-        "-count=20",
-        "-json",
-        "-timeout=10m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-repeat-pure/interface-value-diagnostics.log",
-      "status": "passed",
-      "sha256": "057ff914241036d24706a5651e0680ef6af9cca7f35c98a42a96ded121d46f36",
-      "returncode": 0,
-      "test_subtest_seed_passes": 67720,
-      "test_skips": 0,
-      "suite": "repeat-pure"
-    },
-    {
-      "name": "interface-value-diagnostics",
-      "command": [
-        "go",
-        "test",
-        ".",
-        "./compat/smsfwro/combined",
-        "./internal/missingavp",
-        "./internal/excessavp",
-        "-run=Test(ECURInterfaceValue|RejectECURInterfaceValue|InterfaceValue|RejectInterfaceValue|ActionValue|RejectActionValue|ActionMissing|RejectActionMissing|MMSGroupMissing|RejectMMSGroupMissing|OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)",
-        "-count=20",
-        "-json",
-        "-timeout=10m",
-        "-race"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-repeat-race/interface-value-diagnostics.log",
-      "status": "passed",
-      "sha256": "2810b0dcf933d08c9daee2bddbb96b2fb5bee2c9a2e07d1e0b33a4c96a360157",
-      "returncode": 0,
-      "test_subtest_seed_passes": 67720,
-      "test_skips": 0,
-      "suite": "repeat-race"
-    },
     {
       "name": "toolchain",
       "command": [
@@ -6744,11 +6887,10 @@
         "GOHOSTARCH"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/toolchain.log",
+      "log": ".cache/b121-static/toolchain.log",
       "status": "passed",
       "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "adapter-manifest",
@@ -6759,11 +6901,10 @@
         "-json"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b120-static/adapter-manifest.log",
+      "log": ".cache/b121-static/adapter-manifest.log",
       "status": "passed",
       "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "workspace",
@@ -6774,12 +6915,11 @@
         "/home/skill/workspace/git/diameterkit",
         "/home/skill/workspace/git/diameterkit/adapters/sctp"
       ],
-      "cwd": "/tmp/diameterkit-ci-fw428tkq",
-      "log": ".cache/b120-static/workspace.log",
+      "cwd": "/tmp/diameterkit-ci-l74xrbqc",
+      "log": ".cache/b121-static/workspace.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "checkout-binding",
@@ -6789,12 +6929,11 @@
         "edit",
         "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
       ],
-      "cwd": "/tmp/diameterkit-ci-fw428tkq",
-      "log": ".cache/b120-static/checkout-binding.log",
+      "cwd": "/tmp/diameterkit-ci-l74xrbqc",
+      "log": ".cache/b121-static/checkout-binding.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "module-graph",
@@ -6806,11 +6945,10 @@
         "all"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b120-static/module-graph.log",
+      "log": ".cache/b121-static/module-graph.log",
       "status": "passed",
       "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "dependency-download",
@@ -6821,11 +6959,10 @@
         "github.com/skill215/sctp@v0.8.0"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b120-static/dependency-download.log",
+      "log": ".cache/b121-static/dependency-download.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "ai-disclosure",
@@ -6834,11 +6971,10 @@
         "spec/tools/check_ai_headers.py"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/ai-disclosure.log",
+      "log": ".cache/b121-static/ai-disclosure.log",
       "status": "passed",
       "sha256": "d2d24222f4cc21d9f630369135972921608307ca0f412b30fc2f30438634438f",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "tooling-tests",
@@ -6854,11 +6990,10 @@
         "-v"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/tooling-tests.log",
+      "log": ".cache/b121-static/tooling-tests.log",
       "status": "passed",
-      "sha256": "0cfd68fa1196fbcb10750ca04dad4af8f006f7f5af5080750913956d6f57edf8",
-      "returncode": 0,
-      "suite": "static"
+      "sha256": "11c7241d68f8ebbfd59b3438e9d21ef35440d3fbaf0f8760173ecfb0879fdc6b",
+      "returncode": 0
     },
     {
       "name": "support-matrix",
@@ -6867,11 +7002,10 @@
         "spec/tools/check_support_matrix.py"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/support-matrix.log",
+      "log": ".cache/b121-static/support-matrix.log",
       "status": "passed",
       "sha256": "699c2a840bdff32563bba5792dbf610949e134ec7a22a293f90a00d105bf5fd5",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "support-matrix-negative-control",
@@ -6879,13 +7013,12 @@
         "/usr/bin/python3",
         "spec/tools/check_support_matrix.py",
         "--matrix",
-        "/tmp/diameterkit-ci-fw428tkq/stale-matrix.json"
+        "/tmp/diameterkit-ci-l74xrbqc/stale-matrix.json"
       ],
       "status": "passed",
       "expected_failure": true,
-      "log": ".cache/b120-static/support-matrix-negative-control.log",
-      "sha256": "54d4a061f91b75bb4b453fd1599aa43d52d9951ee896a9f6b809ecd3c90ae4e2",
-      "suite": "static"
+      "log": ".cache/b121-static/support-matrix-negative-control.log",
+      "sha256": "54d4a061f91b75bb4b453fd1599aa43d52d9951ee896a9f6b809ecd3c90ae4e2"
     },
     {
       "name": "generator-build",
@@ -6893,20 +7026,19 @@
         "go",
         "build",
         "-o",
-        "/tmp/diameterkit-ci-fw428tkq/diameter-schema",
+        "/tmp/diameterkit-ci-l74xrbqc/diameter-schema",
         "./cmd/diameter-schema"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/generator-build.log",
+      "log": ".cache/b121-static/generator-build.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "generated-base",
       "command": [
-        "/tmp/diameterkit-ci-fw428tkq/diameter-schema",
+        "/tmp/diameterkit-ci-l74xrbqc/diameter-schema",
         "-in",
         "spec/base.json",
         "-out",
@@ -6914,16 +7046,15 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/generated-base.log",
+      "log": ".cache/b121-static/generated-base.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "generated-sh",
       "command": [
-        "/tmp/diameterkit-ci-fw428tkq/diameter-schema",
+        "/tmp/diameterkit-ci-l74xrbqc/diameter-schema",
         "-in",
         "spec/sh.json",
         "-out",
@@ -6931,16 +7062,15 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/generated-sh.log",
+      "log": ".cache/b121-static/generated-sh.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "generated-s6c",
       "command": [
-        "/tmp/diameterkit-ci-fw428tkq/diameter-schema",
+        "/tmp/diameterkit-ci-l74xrbqc/diameter-schema",
         "-in",
         "spec/s6c.json",
         "-out",
@@ -6948,16 +7078,15 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/generated-s6c.log",
+      "log": ".cache/b121-static/generated-s6c.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "generated-sgd",
       "command": [
-        "/tmp/diameterkit-ci-fw428tkq/diameter-schema",
+        "/tmp/diameterkit-ci-l74xrbqc/diameter-schema",
         "-in",
         "spec/sgd.json",
         "-out",
@@ -6965,16 +7094,15 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/generated-sgd.log",
+      "log": ".cache/b121-static/generated-sgd.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "generated-ro",
       "command": [
-        "/tmp/diameterkit-ci-fw428tkq/diameter-schema",
+        "/tmp/diameterkit-ci-l74xrbqc/diameter-schema",
         "-in",
         "spec/ro.json",
         "-out",
@@ -6982,16 +7110,15 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/generated-ro.log",
+      "log": ".cache/b121-static/generated-ro.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "generated-roabort",
       "command": [
-        "/tmp/diameterkit-ci-fw428tkq/diameter-schema",
+        "/tmp/diameterkit-ci-l74xrbqc/diameter-schema",
         "-in",
         "spec/roabort.json",
         "-out",
@@ -6999,16 +7126,15 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/generated-roabort.log",
+      "log": ".cache/b121-static/generated-roabort.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "generated-dcca",
       "command": [
-        "/tmp/diameterkit-ci-fw428tkq/diameter-schema",
+        "/tmp/diameterkit-ci-l74xrbqc/diameter-schema",
         "-in",
         "spec/dcca.json",
         "-out",
@@ -7016,16 +7142,15 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/generated-dcca.log",
+      "log": ".cache/b121-static/generated-dcca.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "generated-smsfwro",
       "command": [
-        "/tmp/diameterkit-ci-fw428tkq/diameter-schema",
+        "/tmp/diameterkit-ci-l74xrbqc/diameter-schema",
         "-in",
         "spec/smsfwro.json",
         "-out",
@@ -7033,16 +7158,15 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/generated-smsfwro.log",
+      "log": ".cache/b121-static/generated-smsfwro.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "generated-legacy420",
       "command": [
-        "/tmp/diameterkit-ci-fw428tkq/diameter-schema",
+        "/tmp/diameterkit-ci-l74xrbqc/diameter-schema",
         "-in",
         "spec/legacy420.json",
         "-out",
@@ -7050,16 +7174,15 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/generated-legacy420.log",
+      "log": ".cache/b121-static/generated-legacy420.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "generated-combined",
       "command": [
-        "/tmp/diameterkit-ci-fw428tkq/diameter-schema",
+        "/tmp/diameterkit-ci-l74xrbqc/diameter-schema",
         "-in",
         "spec/combined.json",
         "-out",
@@ -7067,16 +7190,15 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/generated-combined.log",
+      "log": ".cache/b121-static/generated-combined.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "generated-scap1",
       "command": [
-        "/tmp/diameterkit-ci-fw428tkq/diameter-schema",
+        "/tmp/diameterkit-ci-l74xrbqc/diameter-schema",
         "-in",
         "spec/scap1.json",
         "-out",
@@ -7084,27 +7206,25 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/generated-scap1.log",
+      "log": ".cache/b121-static/generated-scap1.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "generated-negative-control",
       "command": [
-        "/tmp/diameterkit-ci-fw428tkq/diameter-schema",
+        "/tmp/diameterkit-ci-l74xrbqc/diameter-schema",
         "-in",
         "/home/skill/workspace/git/diameterkit/spec/base.json",
         "-out",
-        "/tmp/diameterkit-ci-fw428tkq/stale.go",
+        "/tmp/diameterkit-ci-l74xrbqc/stale.go",
         "-check"
       ],
       "status": "passed",
       "expected_failure": true,
-      "log": ".cache/b120-static/generated-negative-control.log",
-      "sha256": "aa530fd03da4898e9266de8e6e10dbce1a3207e56dcc44ae9c3573db65929eb9",
-      "suite": "static"
+      "log": ".cache/b121-static/generated-negative-control.log",
+      "sha256": "db0185347d7073328000959ea3c5032335e8cc2f5b8f5cbb376a639c56ed551c"
     },
     {
       "name": "generator-determinism",
@@ -7118,13 +7238,12 @@
         "^TestGeneratedFilesCurrentAndDeterministic$"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/generator-determinism.log",
+      "log": ".cache/b121-static/generator-determinism.log",
       "status": "passed",
-      "sha256": "fd8a0fde289de0aacd9cd39df25a588bd6826544c0be60c92911f63ac97ea5ea",
+      "sha256": "aa94e0d706a9da2c1281d3f0587e522e3f4f1bf94ac6e121ee10414e752e22fa",
       "returncode": 0,
       "test_subtest_seed_passes": 1,
-      "test_skips": 0,
-      "suite": "static"
+      "test_skips": 0
     },
     {
       "name": "api-snapshot",
@@ -7133,14 +7252,13 @@
         "spec/tools/public_api_snapshot.py",
         "--check",
         "--workspace",
-        "/tmp/diameterkit-ci-fw428tkq/go.work"
+        "/tmp/diameterkit-ci-l74xrbqc/go.work"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/api-snapshot.log",
+      "log": ".cache/b121-static/api-snapshot.log",
       "status": "passed",
       "sha256": "1debc4cbb0d2bd5220fa0bdc632c40e3439560db79b82355c4d4a3c68d13dfcb",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "api-negative-control",
@@ -7149,15 +7267,14 @@
         "spec/tools/public_api_snapshot.py",
         "--check",
         "--output",
-        "/tmp/diameterkit-ci-fw428tkq/stale-api.json",
+        "/tmp/diameterkit-ci-l74xrbqc/stale-api.json",
         "--workspace",
-        "/tmp/diameterkit-ci-fw428tkq/go.work"
+        "/tmp/diameterkit-ci-l74xrbqc/go.work"
       ],
       "status": "passed",
       "expected_failure": true,
-      "log": ".cache/b120-static/api-negative-control.log",
-      "sha256": "64fa65d5163692d7809a4935279b295a5c3033511bfb5244d3fa97ce72c44f4c",
-      "suite": "static"
+      "log": ".cache/b121-static/api-negative-control.log",
+      "sha256": "64fa65d5163692d7809a4935279b295a5c3033511bfb5244d3fa97ce72c44f4c"
     },
     {
       "name": "core-vet",
@@ -7167,11 +7284,10 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-static/core-vet.log",
+      "log": ".cache/b121-static/core-vet.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
+      "returncode": 0
     },
     {
       "name": "adapter-vet",
@@ -7181,708 +7297,10 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b120-static/adapter-vet.log",
+      "log": ".cache/b121-static/adapter-vet.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "static"
-    },
-    {
-      "name": "toolchain",
-      "command": [
-        "go",
-        "env",
-        "GOVERSION",
-        "GOHOSTOS",
-        "GOHOSTARCH"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-pure/toolchain.log",
-      "status": "passed",
-      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
-      "returncode": 0,
-      "suite": "pure"
-    },
-    {
-      "name": "adapter-manifest",
-      "command": [
-        "go",
-        "mod",
-        "edit",
-        "-json"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b120-pure/adapter-manifest.log",
-      "status": "passed",
-      "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
-      "returncode": 0,
-      "suite": "pure"
-    },
-    {
-      "name": "workspace",
-      "command": [
-        "go",
-        "work",
-        "init",
-        "/home/skill/workspace/git/diameterkit",
-        "/home/skill/workspace/git/diameterkit/adapters/sctp"
-      ],
-      "cwd": "/tmp/diameterkit-ci-v45gl1w0",
-      "log": ".cache/b120-pure/workspace.log",
-      "status": "passed",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "pure"
-    },
-    {
-      "name": "checkout-binding",
-      "command": [
-        "go",
-        "work",
-        "edit",
-        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
-      ],
-      "cwd": "/tmp/diameterkit-ci-v45gl1w0",
-      "log": ".cache/b120-pure/checkout-binding.log",
-      "status": "passed",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "pure"
-    },
-    {
-      "name": "module-graph",
-      "command": [
-        "go",
-        "list",
-        "-m",
-        "-json",
-        "all"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b120-pure/module-graph.log",
-      "status": "passed",
-      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
-      "returncode": 0,
-      "suite": "pure"
-    },
-    {
-      "name": "dependency-download",
-      "command": [
-        "go",
-        "mod",
-        "download",
-        "github.com/skill215/sctp@v0.8.0"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b120-pure/dependency-download.log",
-      "status": "passed",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "pure"
-    },
-    {
-      "name": "core-pure",
-      "command": [
-        "go",
-        "test",
-        "-count=1",
-        "-timeout=10m",
-        "-json",
-        "./..."
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-pure/core-pure.log",
-      "status": "passed",
-      "sha256": "7e09264f47c1d3f333ff9250b3f8dcb0e4309aa2174251d8ae15f2d4a6089cf3",
-      "returncode": 0,
-      "test_subtest_seed_passes": 8734,
-      "test_skips": 0,
-      "suite": "pure"
-    },
-    {
-      "name": "adapter-pure",
-      "command": [
-        "go",
-        "test",
-        "-count=1",
-        "-timeout=10m",
-        "-json",
-        "./..."
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b120-pure/adapter-pure.log",
-      "status": "passed",
-      "sha256": "6c9cf76bb25e19dbc16a6cbe692a5f7ef4ef3a61f30439aa3505a3c9fa8143b5",
-      "returncode": 0,
-      "test_subtest_seed_passes": 114,
-      "test_skips": 0,
-      "suite": "pure"
-    },
-    {
-      "name": "toolchain",
-      "command": [
-        "go",
-        "env",
-        "GOVERSION",
-        "GOHOSTOS",
-        "GOHOSTARCH"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-race/toolchain.log",
-      "status": "passed",
-      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
-      "returncode": 0,
-      "suite": "race"
-    },
-    {
-      "name": "adapter-manifest",
-      "command": [
-        "go",
-        "mod",
-        "edit",
-        "-json"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b120-race/adapter-manifest.log",
-      "status": "passed",
-      "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
-      "returncode": 0,
-      "suite": "race"
-    },
-    {
-      "name": "workspace",
-      "command": [
-        "go",
-        "work",
-        "init",
-        "/home/skill/workspace/git/diameterkit",
-        "/home/skill/workspace/git/diameterkit/adapters/sctp"
-      ],
-      "cwd": "/tmp/diameterkit-ci-o34ekvg3",
-      "log": ".cache/b120-race/workspace.log",
-      "status": "passed",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "race"
-    },
-    {
-      "name": "checkout-binding",
-      "command": [
-        "go",
-        "work",
-        "edit",
-        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
-      ],
-      "cwd": "/tmp/diameterkit-ci-o34ekvg3",
-      "log": ".cache/b120-race/checkout-binding.log",
-      "status": "passed",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "race"
-    },
-    {
-      "name": "module-graph",
-      "command": [
-        "go",
-        "list",
-        "-m",
-        "-json",
-        "all"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b120-race/module-graph.log",
-      "status": "passed",
-      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
-      "returncode": 0,
-      "suite": "race"
-    },
-    {
-      "name": "dependency-download",
-      "command": [
-        "go",
-        "mod",
-        "download",
-        "github.com/skill215/sctp@v0.8.0"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b120-race/dependency-download.log",
-      "status": "passed",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "race"
-    },
-    {
-      "name": "core-race",
-      "command": [
-        "go",
-        "test",
-        "-count=1",
-        "-timeout=10m",
-        "-json",
-        "-race",
-        "./..."
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-race/core-race.log",
-      "status": "passed",
-      "sha256": "c1dcb02e883366da69a67bef4c1c01493a0997c4108f8761e63220d5cd99ec07",
-      "returncode": 0,
-      "test_subtest_seed_passes": 8734,
-      "test_skips": 0,
-      "suite": "race"
-    },
-    {
-      "name": "adapter-race",
-      "command": [
-        "go",
-        "test",
-        "-count=1",
-        "-timeout=10m",
-        "-json",
-        "-race",
-        "./..."
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b120-race/adapter-race.log",
-      "status": "passed",
-      "sha256": "648575ca7cc0ab97e99893aae40807196638e913b2b75113c6dcd4d9a2846483",
-      "returncode": 0,
-      "test_subtest_seed_passes": 114,
-      "test_skips": 0,
-      "suite": "race"
-    },
-    {
-      "name": "toolchain",
-      "command": [
-        "go",
-        "env",
-        "GOVERSION",
-        "GOHOSTOS",
-        "GOHOSTARCH"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/toolchain.log",
-      "status": "passed",
-      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "adapter-manifest",
-      "command": [
-        "go",
-        "mod",
-        "edit",
-        "-json"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b120-fuzz/adapter-manifest.log",
-      "status": "passed",
-      "sha256": "3535494f3939d8819c0368d478bef7a8a6390212b99743c357e0958102466e04",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "workspace",
-      "command": [
-        "go",
-        "work",
-        "init",
-        "/home/skill/workspace/git/diameterkit",
-        "/home/skill/workspace/git/diameterkit/adapters/sctp"
-      ],
-      "cwd": "/tmp/diameterkit-ci-kvh2bagy",
-      "log": ".cache/b120-fuzz/workspace.log",
-      "status": "passed",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "checkout-binding",
-      "command": [
-        "go",
-        "work",
-        "edit",
-        "-replace=github.com/skill215/diameterkit@v0.1.0-rc.2=/home/skill/workspace/git/diameterkit"
-      ],
-      "cwd": "/tmp/diameterkit-ci-kvh2bagy",
-      "log": ".cache/b120-fuzz/checkout-binding.log",
-      "status": "passed",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "module-graph",
-      "command": [
-        "go",
-        "list",
-        "-m",
-        "-json",
-        "all"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b120-fuzz/module-graph.log",
-      "status": "passed",
-      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "dependency-download",
-      "command": [
-        "go",
-        "mod",
-        "download",
-        "github.com/skill215/sctp@v0.8.0"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b120-fuzz/dependency-download.log",
-      "status": "passed",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-decode",
-      "command": [
-        "go",
-        "test",
-        "./codec",
-        "-run=^$",
-        "-fuzz=^FuzzDecode$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/fuzz-decode.log",
-      "status": "passed",
-      "sha256": "79ef26e58be8b2f987c615e67a9bcf4a4d8af6e2d2e57e6f9bf9a82e11d2e957",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-answer",
-      "command": [
-        "go",
-        "test",
-        "./codec",
-        "-run=^$",
-        "-fuzz=^FuzzDecodeAnswer$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/fuzz-answer.log",
-      "status": "passed",
-      "sha256": "6edae6da4221356515b5e7f9a67e95fa5f84d06a4b1d4b50bb5f008e54f010d0",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-canonical",
-      "command": [
-        "go",
-        "test",
-        "./codec",
-        "-run=^$",
-        "-fuzz=^FuzzCanonical$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/fuzz-canonical.log",
-      "status": "passed",
-      "sha256": "e8aca4404f0590d1d96c4e665c3591ec26e0f6fdb39eff5ee3d4af4a0ab562ff",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-missing-diagnostic",
-      "command": [
-        "go",
-        "test",
-        "./internal/missingavp",
-        "-run=^$",
-        "-fuzz=^FuzzMissingQuote$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/fuzz-missing-diagnostic.log",
-      "status": "passed",
-      "sha256": "08742c1ca42453d08e2dc8df1aa40f154a6c58865ef947875fb20a8c392056b2",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-excess-diagnostic",
-      "command": [
-        "go",
-        "test",
-        "./internal/excessavp",
-        "-run=^$",
-        "-fuzz=^FuzzExcessQuote$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/fuzz-excess-diagnostic.log",
-      "status": "passed",
-      "sha256": "1e49e599d5da6c74b2d317452c47423db211de1eb69d35c623acc07b0bcd0879",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-invalid-diagnostic",
-      "command": [
-        "go",
-        "test",
-        "./internal/excessavp",
-        "-run=^$",
-        "-fuzz=^FuzzInvalidQuote$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/fuzz-invalid-diagnostic.log",
-      "status": "passed",
-      "sha256": "93d67a79bf73160d83ecaf868e7d3612293ece54dd605240034c828eba9cd884",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-length-diagnostic",
-      "command": [
-        "go",
-        "test",
-        "./internal/excessavp",
-        "-run=^$",
-        "-fuzz=^FuzzLengthQuote$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/fuzz-length-diagnostic.log",
-      "status": "passed",
-      "sha256": "09ef7780e96a0e432e51f2ef8dac19f0ee375e81b384ca350f31cc44a6524b67",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-diameter-uri",
-      "command": [
-        "go",
-        "test",
-        "./avp",
-        "-run=^$",
-        "-fuzz=^FuzzDiameterURI$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/fuzz-diameter-uri.log",
-      "status": "passed",
-      "sha256": "f5e19f7e58aa97a3f2efa87a8d206e24456ab59e08ecf6d2f849f2377c09cc97",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-manual-diagnostic",
-      "command": [
-        "go",
-        "test",
-        "./base",
-        "-run=^$",
-        "-fuzz=^FuzzManualDiagnostics$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/fuzz-manual-diagnostic.log",
-      "status": "passed",
-      "sha256": "e193aa023f22b6ef5c58dfdac6ad06f22c43e413377920fe71ea0fb9e596c7f2",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-group-constraint",
-      "command": [
-        "go",
-        "test",
-        "./internal/groupavp",
-        "-run=^$",
-        "-fuzz=^FuzzGroupQuote$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/fuzz-group-constraint.log",
-      "status": "passed",
-      "sha256": "b9e6abe942bd09f142090042a2fd8f547ee022ef77300eada4a94af200d1d627",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-variable-minimum",
-      "command": [
-        "go",
-        "test",
-        "./internal/missingavp",
-        "-run=^$",
-        "-fuzz=^FuzzVariableMinimum$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/fuzz-variable-minimum.log",
-      "status": "passed",
-      "sha256": "60480c62f5768b86641c4b8759fde171a2221f2f287f675f9840ed4f187d2f78",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-conditional-minimum",
-      "command": [
-        "go",
-        "test",
-        "./internal/missingavp",
-        "-run=^$",
-        "-fuzz=^FuzzConditionalMinimum$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/fuzz-conditional-minimum.log",
-      "status": "passed",
-      "sha256": "755daf335f1f25ba8c982f1c820f129380af26d57c2e93ff1fdf088351ee4702",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-cardinality-minimum",
-      "command": [
-        "go",
-        "test",
-        "./internal/cardinalityavp",
-        "-run=^$",
-        "-fuzz=^FuzzCardinalityQuote$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/fuzz-cardinality-minimum.log",
-      "status": "passed",
-      "sha256": "eaec3659d85d61a825722a4b62200a5a3fde7fa1903641b831e4aedbbed4e91c",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-variable-group-minimum",
-      "command": [
-        "go",
-        "test",
-        "./internal/missingavp",
-        "-run=^$",
-        "-fuzz=^FuzzMinimumVariableTree$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/fuzz-variable-group-minimum.log",
-      "status": "passed",
-      "sha256": "f77f5a7b0338697c4d69a1d890e358c0fe422e96477fa805bd6a442fa342eee8",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-minimum-group",
-      "command": [
-        "go",
-        "test",
-        "./internal/missingavp",
-        "-run=^$",
-        "-fuzz=^FuzzMinimumTree$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/fuzz-minimum-group.log",
-      "status": "passed",
-      "sha256": "b325785ba15d198f9690901215a23f638b4241d00adf75dddd71a8a767f65485",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-shdata",
-      "command": [
-        "go",
-        "test",
-        "./app/sh/shdata",
-        "-run=^$",
-        "-fuzz=^FuzzParse$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b120-fuzz/fuzz-shdata.log",
-      "status": "passed",
-      "sha256": "472178525bbe4d15ce137e649743b636f32e018944961b6559cceb360d218749",
-      "returncode": 0,
-      "suite": "fuzz"
-    },
-    {
-      "name": "fuzz-sctp-mode",
-      "command": [
-        "go",
-        "test",
-        ".",
-        "-run=^$",
-        "-fuzz=^FuzzSCTPModeSelection$",
-        "-fuzztime=1000000x",
-        "-fuzzminimizetime=5s",
-        "-parallel=2",
-        "-timeout=2m"
-      ],
-      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b120-fuzz/fuzz-sctp-mode.log",
-      "status": "passed",
-      "sha256": "e134565cb2d89890ea5b8b24698045a2dd186343c9ae1808776fb880b9a32507",
-      "returncode": 0,
-      "suite": "fuzz"
+      "returncode": 0
     }
   ],
   "source_snapshot": [
@@ -7908,7 +7326,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "ff37b8979fa432bc3cf7a2067faff9d9d509e6b873ed7ea22dd912bf4a4aac08"
+      "sha256": "4ff4134aca7f4cc4f824d7e9addac991acdb49785e1ff77d61dd1340a155e92c"
     },
     {
       "path": "adapters/sctp/AI_DISCLOSURE.md",
@@ -7916,7 +7334,7 @@
     },
     {
       "path": "adapters/sctp/README.md",
-      "sha256": "c163fa1a0394dc2eda2220dc04c9df95e9a68644c5c58e3ca5d5fb810fdb01b9"
+      "sha256": "a0b7218101497bb20611d6e5751687d3b3cc06ed829a403bf5014dfe04fb0899"
     },
     {
       "path": "adapters/sctp/config.go",
@@ -8616,7 +8034,7 @@
     },
     {
       "path": "doc/README.md",
-      "sha256": "6746b4655e14ebe9e35a5e12cfa8bedd44e6a88aec6d178a3a41c9a7b948ab65"
+      "sha256": "7559885373368d1c5977c41d4ce193bcb841292cb45ae1fa9e24e2fe6f41ea44"
     },
     {
       "path": "doc/cardinality-diagnostics.md",
@@ -8724,7 +8142,7 @@
     },
     {
       "path": "doc/diameterkit-specification.md",
-      "sha256": "6b3e03b7dd3060ec4934e0093e2df182c59d0c4744fee90a43b0818f6fe6e522"
+      "sha256": "224b011f1fa044fcae7db3337e530fe8c1a6e390910790ed01ac039c4704d9e2"
     },
     {
       "path": "doc/diameterkit-state-consistency.md",
@@ -8732,7 +8150,7 @@
     },
     {
       "path": "doc/diameterkit-support-matrix.md",
-      "sha256": "c7464cb04b002c6eca86502b72d520c9f5ceedb2c3fd302a60dbd2c97fdf7fbf"
+      "sha256": "bc0dad3cfcd51a5c8693124fcc94a72b68e0228f357ed78b62b5ac2ee1dbe877"
     },
     {
       "path": "doc/diameterkit-usage-coverage.md",
@@ -8779,16 +8197,24 @@
       "sha256": "e38f2b710e7b3168c449a5cb3dd23ee7271d2597051e626b6080f98fa363f88a"
     },
     {
+      "path": "doc/release-candidate-checklist.md",
+      "sha256": "b248705a60cbe78cbc393e02b8bfb77bc13352b27ac86d7c62a6da4ab6b61897"
+    },
+    {
       "path": "doc/release-checks.md",
       "sha256": "6fedc245d8a36cccd48d37f871d52fdc944570349d85e547b474f5b88cfbdf1f"
     },
     {
       "path": "doc/releases/v0.1.0-rc.md",
-      "sha256": "4bc1a78d86acb6e810ea72ff44a4260cef006712d63077ac3840e4fa110d769c"
+      "sha256": "b2bf4e884dc1fe36538150028e8efb040cbf6edbda96a5fbb29e500b7580d17a"
+    },
+    {
+      "path": "doc/releases/v0.2.0-rc.1.md",
+      "sha256": "e57f28eb3259abdf5a199b53e528616534bf03770dbdb0bb321e03b072f79919"
     },
     {
       "path": "doc/remaining-gaps.md",
-      "sha256": "ca329c283c9f1c44eaffca8752b2441732b63caf42e868cf192fbe100019b84a"
+      "sha256": "22ba6053685576feb6794e65baa9d555f31fe37155410a917bb707c6cb1bc6c3"
     },
     {
       "path": "doc/ro-recovery-handoff.md",
@@ -8824,7 +8250,7 @@
     },
     {
       "path": "doc/version-install-policy.md",
-      "sha256": "d77ed53da20ec0db2dda661f797b7413398f6e44e5d5e0210e8c292466e2616d"
+      "sha256": "a39ea6cb092f3df2dba6f955ab252014424eb37e54c10d0832ace392495fc76e"
     },
     {
       "path": "dra_test.go",
@@ -10084,7 +9510,7 @@
     },
     {
       "path": "spec/README.md",
-      "sha256": "d98a5fb15dca92f42a82a453845fa34246969a860067e94dfbc1026ffa933152"
+      "sha256": "c25f07532ca17daca05832da6055ba71f50e151ee72b1af470bb038ebd8d4fe1"
     },
     {
       "path": "spec/base.json",
@@ -10181,6 +9607,10 @@
     {
       "path": "spec/evidence/batch-120-ecur-interface-values.json",
       "sha256": "1b82378967392b9b6162fb04a55393510ba99e5d48a489e3c9b2deb5f623be18"
+    },
+    {
+      "path": "spec/evidence/batch-121-rc-publication.json",
+      "sha256": "239ba00bbbfceabb493acaed9e925c577a247bb59dae480a199295f7bc88d58b"
     },
     {
       "path": "spec/evidence/batch-58-sctp-u3.json",
@@ -10557,6 +9987,10 @@
     {
       "path": "spec/history/batch-119.json",
       "sha256": "68dbc30d5000df1bd4c802327e7a710c58fbb4ac1399ee67db1c18cd527132e7"
+    },
+    {
+      "path": "spec/history/batch-120.json",
+      "sha256": "00d89f0fbd25ee3ac3234d64e271a2cc23534182b58c0894ee93639bb658fbaa"
     },
     {
       "path": "spec/history/batch-86.json",
@@ -10963,6 +10397,10 @@
       "sha256": "ee09fe214d0fbefe696144e22efc9b56b9a85f6eb6256202ad9943308de45dee"
     },
     {
+      "path": "spec/release/history/v0.1.0-rc.json",
+      "sha256": "9350576beca6a10948dec83dd5bf36c2b41b1b1ae91262520de9b1290491fb2e"
+    },
+    {
       "path": "spec/release/performance-baseline.json",
       "sha256": "72564be24fb41e5e0c5b62d6b9c6ba3cba3390f1b32f19d86250b7d9da60fa13"
     },
@@ -10976,11 +10414,15 @@
     },
     {
       "path": "spec/release/support-matrix.json",
-      "sha256": "4bc894446fc54c0631c301018e8f5a7d38df907e1ff0a46358fa9ecd12a6259c"
+      "sha256": "5def458ee7855f511854d5bb93c64168a21ac22c889d3f322132d6c048c03da3"
+    },
+    {
+      "path": "spec/release/v0.2.0-rc.1.json",
+      "sha256": "33ba14e207dcda603a4e321c108ee96a32a8eb9ed8c7008b4a26cecc426ff9c7"
     },
     {
       "path": "spec/release/version-policy.json",
-      "sha256": "fa29fa74c32297e7373b968e95739af76b95981ff6a9c275d1782d3f6e690d78"
+      "sha256": "5737e1b826d2c69658648b9767baf34e6dc9243b3204045b3b739af788f83f13"
     },
     {
       "path": "spec/reviews/2026-11-09-global-progress.json",
@@ -11184,10 +10626,14 @@
     }
   ],
   "next_batch": [
-    "Other present-value relations, mixed presence/value failures, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings. Batch120 closes only isolated INITIAL/TERMINATION originator/destination interface values.",
-    "New immutable core/adapter publication and cold GOWORK=off/no-replace installation.",
-    "Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence.",
-    "Upstream root-cause diagnosis of historical timed Go fuzz deadline exits remains unproven; the counted acceptance policy from batches117/118 remains in force."
+    "Seven checkout suites pass for the exact commit selected for the core tag.",
+    "Publish immutable core tag, verify remote commit, authenticated download and independent core-only cold consumer.",
+    "Pin adapter to the already published core; generate real sums and pass GOWORK=off installed-core pure/race/vet/API checks.",
+    "Seven checkout suites pass for the exact commit selected for the adapter tag.",
+    "Publish the separate immutable adapter tag and verify its commit.",
+    "Both independently empty-cache consumers pass exact graph/API/source/checksum/pure/race/native checks without replace.",
+    "Published-install workflow passes for the exact new core/adapter pair with artifact validation.",
+    "Publish final commits/checksums/CI/install receipts and current English installation/migration guidance."
   ],
   "deferred_from_this_batch": [
     "Complete four-application semantics/fields/contexts and full public release acceptance remain Partial/Planned; v1 includesRo andsmsfw migration, not a replacement-ready claim.",
@@ -11242,7 +10688,8 @@
     "Batch117 closes the counted acceptance and retained failure-evidence slice only; Wrong-interface and present-value diagnostics, other mixed presence/value conditions, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence.; Upstream root-cause diagnosis of historical timed Go fuzz deadline exits remains unproven; the default gate now uses a separately declared count budget.",
     "Batch118 closes only two selected EVENT action-value branches; Wrong-interface, other present-value and mixed presence/value diagnostics, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings. Selected EVENT action values alone are closed by batch118.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence.; Upstream root-cause diagnosis of historical timed Go fuzz deadline exits remains unproven; the counted acceptance policy from batch117 remains in force.",
     "Batch119 closes only isolated IEC interface-type values; Other interface and present-value diagnostics, mixed presence/value failures, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings. Batch119 closes only IEC present-address/wrong-interface Receive values.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence.; Upstream root-cause diagnosis of historical timed Go fuzz deadline exits remains unproven; the counted acceptance policy from batches117/118 remains in force.",
-    "Batch120 closes only isolated INITIAL/TERMINATION interface-type values; Other present-value relations, mixed presence/value failures, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings. Batch120 closes only isolated INITIAL/TERMINATION originator/destination interface values.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence.; Upstream root-cause diagnosis of historical timed Go fuzz deadline exits remains unproven; the counted acceptance policy from batches117/118 remains in force."
+    "Batch120 closes only isolated INITIAL/TERMINATION interface-type values; Other present-value relations, mixed presence/value failures, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings. Batch120 closes only isolated INITIAL/TERMINATION originator/destination interface values.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence.; Upstream root-cause diagnosis of historical timed Go fuzz deadline exits remains unproven; the counted acceptance policy from batches117/118 remains in force.",
+    "Batch121 publishes only the declared v0 subset; full-release conditions and excluded/external claims are explicit in spec/release/v0.2.0-rc.1.json"
   ],
   "history": [
     "spec/history/batch-01.json",
@@ -11364,9 +10811,10 @@
     "spec/history/batch-116.json",
     "spec/history/batch-117.json",
     "spec/history/batch-118.json",
-    "spec/history/batch-119.json"
+    "spec/history/batch-119.json",
+    "spec/history/batch-120.json"
   ],
-  "batch_contract": "spec/local/batches/batch-120.md",
+  "batch_contract": "spec/local/batches/batch-121.md",
   "prior_interop_evidence": [
     "interop/evidence/2026-11-06-base-s6c.json",
     "interop/evidence/2026-11-06-envelope.json",
@@ -11440,12 +10888,12 @@
     "evidence": "spec/evidence/batch-67-sctp-v080.json"
   },
   "global_review": {
-    "date": "2026-11-18",
+    "date": "2026-11-19",
     "status": "assessment_complete",
     "report": "doc/diameterkit-support-matrix.md",
     "evidence": "spec/evidence/batch-86-public-surface.json",
     "runtime_tests_run": true,
-    "resolution_batch": 120,
+    "resolution_batch": 121,
     "resolved_findings": [
       "DRA Relay-only capability negotiation",
       "Per-request destination binding on one DRA Peer:bounded configured targets only",
@@ -11503,14 +10951,14 @@
       "Batch119 Combined isolated IEC Originator-Interface value diagnostics completed in selected scope.",
       "Batch120 Combined isolated INITIAL/TERMINATION interface value diagnostics completed in selected scope."
     ],
-    "resolution_evidence": "spec/evidence/batch-120-ecur-interface-values.json",
-    "prior_resolution_evidence": "spec/evidence/batch-119-interface-values.json",
-    "production_sources_changed": true,
+    "resolution_evidence": "spec/evidence/batch-121-rc-publication.json",
+    "prior_resolution_evidence": "spec/evidence/batch-120-ecur-interface-values.json",
+    "production_sources_changed": false,
     "original_scan": {
       "evidence": "spec/reviews/2026-11-09-global-progress.json",
       "implementation_batch": 67
     },
-    "implementation_batch": 120,
+    "implementation_batch": 121,
     "open_findings": [
       {
         "name": "发布级自动验收",
@@ -11982,17 +11430,17 @@
         "remaining": "Other present-value relations, mixed presence/value failures, simultaneous conditional omissions and unreviewed whole groups; domain/handshake/malformed-header mappings. Batch120 closes only isolated INITIAL/TERMINATION originator/destination interface values.; New immutable core/adapter publication and cold GOWORK=off/no-replace installation.; Declared long-soak/saturation/tenant fairness/mixed transport and real-target/private compatibility evidence.; Upstream root-cause diagnosis of historical timed Go fuzz deadline exits remains unproven; the counted acceptance policy from batches117/118 remains in force."
       }
     ],
-    "production_change_scope": "Combined isolated INITIAL/TERMINATION interface value diagnostics",
-    "runtime_test_scope": "Selected20x pure/race, full dual-module pure/race and seventeen-target counted fuzz; hosted outcome separately recorded."
+    "production_change_scope": "Release docs/criteria and exact adapter dependency only; Go implementation unchanged.",
+    "runtime_test_scope": "Exact release checkout CI plus genuine installed-core adapter and independent local/hosted cold consumers; see recorded gates."
   },
   "public_api_evidence": "spec/evidence/batch-87-s6c-helpers.json",
   "local_notes_update": {
     "status": "completed",
-    "scope": "Batch120 Markdown stays ignored; English guides and JSON evidence maintained.",
+    "scope": "Batch121 Markdown stays ignored; public release records are English.",
     "directory": "spec/local/batches/",
     "publish": false,
-    "count": 119,
-    "range": "batch-02.md through batch-120.md; no batch-01.md existed",
+    "count": 120,
+    "range": "batch-02.md through batch-121.md; no batch-01.md existed",
     "ignore_rule": "/spec/local/batches/",
     "public_record_policy": "Current public Markdown links use retained history/evidence JSON. Frozen JSON and source provenance retain original paths/hashes; current relocation map resolves local notes.",
     "prior_patch_ignore_rules_removed": true,
@@ -12435,9 +11883,10 @@
       "spec/local/batches/batch-117.md",
       "spec/local/batches/batch-118.md",
       "spec/local/batches/batch-119.md",
-      "spec/local/batches/batch-120.md"
+      "spec/local/batches/batch-120.md",
+      "spec/local/batches/batch-121.md"
     ],
-    "latest_batch": 120
+    "latest_batch": 121
   },
   "release_installation": {
     "status": "passed",
@@ -12451,33 +11900,13 @@
     "current_development": "unreleased; planned corev0.2.0-rc.1 needs separate cold-install acceptance"
   },
   "api_change_review": {
-    "classification": "Public signatures/layouts unchanged. Selected INITIAL/TERMINATION Receive failures retain ErrUnsupported, add ErrField and change the path from2008 to873/2000/(2009 or2002)/2006; Build/Send unchanged. Combined version/digest and dependent Bundle fingerprints change.",
-    "generator_version": 23,
-    "operations_version": 9,
-    "review": [
-      {
-        "target": "linux/amd64",
-        "package": "github.com/skill215/diameterkit/compat/smsfwro/combined",
-        "source_changes": [
-          "compat/smsfwro/combined/ecur_interface_value.go",
-          "compat/smsfwro/combined/rules.go",
-          "compat/smsfwro/combined/zz_generated_messages.go"
-        ],
-        "documentation_change": "Version and DefinitionDigest constants only"
-      },
-      {
-        "target": "windows/amd64",
-        "package": "github.com/skill215/diameterkit/compat/smsfwro/combined",
-        "source_changes": [
-          "compat/smsfwro/combined/ecur_interface_value.go",
-          "compat/smsfwro/combined/rules.go",
-          "compat/smsfwro/combined/zz_generated_messages.go"
-        ],
-        "documentation_change": "Version and DefinitionDigest constants only"
-      }
-    ],
-    "version_choice": "Combined slice.15; planned core v0.2.0-rc.1 unchanged.",
-    "migration": "Keep original builds for prior recovery fingerprints. Never relabel published tags; new immutable publication and cold installation remain separate."
+    "classification": "No Go/API change relative to batch120. Core v0.2 covers prior v0 API/behavior/fingerprint changes; adapter v0.2 adopts the exact new-core dependency contract.",
+    "core": "v0.2.0-rc.1",
+    "adapter": "v0.2.0-rc.1",
+    "reviewed_snapshot": "bf7531888d211a6a193561fc52ffb83647c00fee294e84b0d4de5af946ef7719",
+    "migration": "Regenerate external bindings; retain original builds for old recovery records; never relabel tags or bypass Bundle fingerprints."
   },
-  "current_gap_overview": "doc/remaining-gaps.md"
+  "current_gap_overview": "doc/remaining-gaps.md",
+  "rc_release_status": "publication_in_progress",
+  "rc_checklist": "spec/release/v0.2.0-rc.1.json"
 }
