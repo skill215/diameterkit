@@ -120,6 +120,9 @@ func validateCCRSubset(m *CCR, mode validation.Mode) error {
 }
 func validateSMSRequest(m *CCR, mode validation.Mode) error {
 	if !m.MultipleServicesIndicator.Present || m.MultipleServicesIndicator.Value != 1 || !m.UserEquipmentInfo.Present || m.ServiceIdentifier.Present || m.Timezone.Present || m.RefundInformation.Present {
+		if mode == validation.Receive && m.MultipleServicesIndicator.Present && m.UserEquipmentInfo.Present && !m.ServiceIdentifier.Present && !m.Timezone.Present && !m.RefundInformation.Present {
+			return at(455, indicatorValue{})
+		}
 		return validation.ErrField
 	}
 	if !bytes.Equal(m.SubscriptionID[1].SubscriptionIDData, m.UserEquipmentInfo.Value.UserEquipmentInfoValue) {

@@ -260,7 +260,12 @@ func TestSMSValuePrecedence(t *testing.T) {
 						t.Fatal("accepted")
 					}
 					q, code, ok := excessavp.QuoteInvalid(raw[20:], cause, n.cfg.Limits, 4096)
-					if ok != (expected != 0) || code != expected || code == 5004 && !bytes.Equal(q, smsValueQuote(t, node, -1)) {
+					want := smsValueQuote(t, node, -1)
+					if fault == "marker" {
+						expected = 5004
+						want = invalidPart(t, avp.Key{Code: 455}, 64, []byte{0, 0, 0, 0})
+					}
+					if ok != (expected != 0) || code != expected || code == 5004 && !bytes.Equal(q, want) {
 						t.Fatal(cause, code, q)
 					}
 				})

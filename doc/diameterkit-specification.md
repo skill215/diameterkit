@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.124 — 2026-11-19, batch 123.** The [progress record](../spec/progress.json)
+**Draft 0.125 — 2026-11-19, batch 124.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1399,3 +1399,17 @@ public shapes, generator v23/ops9, pure Go and no persistence remain unchanged.
 All 24 full-release completion conditions remain separate. Published rc.1
 receipts describe frozen commits; development needs a future candidate's
 publication/install gates. See [the guide](conditional-unit-values.md).
+
+## Batch 124: isolated SMS indicator values and prior CI closure (2026-11-19)
+
+All seven Batch123 hosted archives now pass digest, step-log, test-count and
+bounded-fuzz receipt validation. The follow-up evidence preserves the original
+access failure as history. Combined SMS Multiple-Services-Indicator !=1 now
+provides bounded 5004 evidence only when both markers are present and all three
+forbidden fields are absent. Receive retains ErrField with precise path455;
+the quote copies the exact original12-byte AVP under source/output budgets.
+Build/Send, money selection, mixed failures and validation order are unchanged.
+Combined slice.18 changes the digest and Bundle fingerprints; public shapes,
+generator23/ops9, pure Go and no persistence remain unchanged. All24 full-release
+completion conditions remain separate; development changes remain unpublished.
+See [the guide](conditional-indicator-values.md).

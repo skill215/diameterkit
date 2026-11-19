@@ -117,7 +117,11 @@ func FuzzInvalidQuote(f *testing.F) {
 	for _, kind := range []uint32{1, 3, 4} {
 		f.Add(unitFixture(kind, 0), uint16(0), uint32(5004), uint16(32))
 	}
+	for _, kind := range []uint32{1, 3, 4} {
+		f.Add(indicatorFixture(kind, 0), uint16(0), uint32(5004), uint16(12))
+	}
 	f.Fuzz(func(t *testing.T, raw []byte, offset uint16, code uint32, budget uint16) {
+		fuzzIndicatorValue(t, raw, budget)
 		fuzzUnitValue(t, raw, budget, false)
 		fuzzUnitValue(t, raw, budget, true)
 		fuzzSMSValue(t, raw, budget, false)

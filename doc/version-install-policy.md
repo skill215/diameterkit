@@ -66,7 +66,7 @@ for published installation evidence.
 The current checkout may advance its API/profile fingerprints after publication.
 For the verified v0.2.0-rc.1 pair, use release-record commit
 `6897bebc71e6ebd291b0b15573567a17b56a8259` before running its install gate.
-Batch 122 and 123 changes are unpublished; the next planned pair is v0.2.0-rc.2 and
+Batch 122 through 124 changes are unpublished; the next planned pair is v0.2.0-rc.2 and
 requires its own immutable publication and cold-install evidence.
 
 ## Independent cold installation
