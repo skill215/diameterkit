@@ -122,7 +122,13 @@ func FuzzInvalidQuote(f *testing.F) {
 	}
 	f.Add(equipmentFixture(-1, nil, false), uint16(0), uint32(5004), uint16(20))
 	f.Add(equipmentFixture(1, []byte("id"), true), uint16(0), uint32(5004), uint16(20))
+	for _, group := range []uint32{886, 1201} {
+		f.Add(addressFixture(group, 0, nil, false), uint16(0), uint32(5004), uint16(52))
+		f.Add(addressFixture(group, -1, []byte("addr"), true), uint16(0), uint32(5004), uint16(52))
+	}
 	f.Fuzz(func(t *testing.T, raw []byte, offset uint16, code uint32, budget uint16) {
+		fuzzAddressValue(t, raw, budget, 886)
+		fuzzAddressValue(t, raw, budget, 1201)
 		fuzzEquipmentValue(t, raw, budget)
 		fuzzIndicatorValue(t, raw, budget)
 		fuzzUnitValue(t, raw, budget, false)

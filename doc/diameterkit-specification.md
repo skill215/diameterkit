@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.126 — 2026-11-19, batch 125.** The [progress record](../spec/progress.json)
+**Draft 0.127 — 2026-11-19, batch 126.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1427,3 +1427,18 @@ public shapes, generator23/ops9, pure Go and no persistence remain unchanged.
 Local affected-target fuzz and complete hosted17-target acceptance are separate
 receipts. All24 full-release conditions remain partial and development remains
 unpublished. See [the guide](conditional-equipment-values.md).
+
+## Batch 126: isolated address-type values (2026-11-19)
+
+Combined Address-Type !=1 now provides bounded Receive 5004 evidence only with
+NUL-free Address-Data and no extra selected group children. ErrUnsupported
+remains; ErrField is additive and the full vendor path 873/877/886/899 or
+873/877/1201/899 is preserved. Complete scans share a source budget and verify
+unique ancestors/children, flags, width and counterpart bytes. An owned 52-byte
+quote retains only the original Type under three minimal vendor group headers.
+Build/Send, mixed group failures and cross-group/wire/root-rule order remain
+unchanged. Combined slice.20 changes its digest and Bundle fingerprints; public
+shapes, generator23/ops9, pure Go and no persistence remain unchanged. Local
+one-target fuzz and hosted seventeen-target acceptance are separate receipts.
+All24 full-release conditions remain partial and development stays unpublished.
+See [the guide](conditional-address-values.md).

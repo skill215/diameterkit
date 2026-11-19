@@ -61,8 +61,11 @@ func validateSMSInformationSubset(m *SMSInformation, _ validation.Mode) error {
 	}
 	return extras(m.Extra)
 }
-func validateAddressSubset(m *Address, _ validation.Mode) error {
+func validateAddressSubset(m *Address, mode validation.Mode) error {
 	if m.AddressType != 1 {
+		if mode == validation.Receive && cstring(m.AddressData) == nil && len(m.Extra) == 0 {
+			return vendorAt(899, addressTypeValue{})
+		}
 		return vendorAt(899, validation.ErrUnsupported)
 	}
 	if e := cstring(m.AddressData); e != nil {
