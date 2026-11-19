@@ -1,7 +1,7 @@
 {
   "format": 1,
   "date": "2026-11-19",
-  "basis": "Batch126 isolated combined Address-Type value diagnostics. Combined slice.20, generator23/ops9 and public shapes unchanged. Current development is ahead of the frozen rc.1 publication.",
+  "basis": "Batch127 isolated combined money SMS-Node value diagnostics. Combined slice.21, generator23/ops9 and public shapes unchanged. Current development is ahead of the frozen rc.1 publication.",
   "release_status": "not_ready",
   "api_snapshot": "spec/release/public-api.json",
   "profiles": [
@@ -212,9 +212,9 @@
     {
       "binding": "combined",
       "profile": "smsfw-ro-five-template-wire-v1",
-      "version": "0.1.0-slice.20",
+      "version": "0.1.0-slice.21",
       "definition": "spec/combined.json",
-      "definition_sha256": "e80f971c394bdf6e80c3a45056a723862566258d1631fe3a0bc723ec3f101c98",
+      "definition_sha256": "cd820a69ae7fda03a161595f347b51f1e4cec1aeebde1e4cd306bca793c5177a",
       "requests": [
         {
           "name": "CCR",
@@ -388,10 +388,10 @@
         "SPEC-ERROR-01"
       ],
       "evidence": [
-        "spec/evidence/batch-126-address-values.json",
-        "doc/conditional-address-values.md"
+        "spec/evidence/batch-127-money-node-values.json",
+        "doc/conditional-money-node-values.md"
       ],
-      "remaining": "Other existing group value constraints (beyond the selected Address-Type branch), mixed values/omissions and unreviewed group/cardinality/domain/handshake/header mappings remain separate. The selected Address-Type branch excludes NUL-containing Address-Data and extra group children; retain safe close when no reviewed diagnostic is available."
+      "remaining": "Other existing conditional/value rules (including money Service-Identifier/Timezone and field relations), mixed values/omissions and unreviewed group/cardinality/domain/handshake/header mappings remain separate. The selected money SMS-Node branch excludes any of its seven forbidden SMS fields; retain safe close when no reviewed diagnostic is available."
     }
   ],
   "completed": [
@@ -955,6 +955,21 @@
         "doc/conditional-address-values.md"
       ],
       "remaining": "Other existing group value constraints (beyond the selected Address-Type branch), mixed values/omissions and unreviewed group/cardinality/domain/handshake/header mappings remain separate. The selected Address-Type branch excludes NUL-containing Address-Data and extra group children; retain safe close when no reviewed diagnostic is available."
+    },
+    {
+      "name": "Combined isolated money SMS-Node value diagnostics",
+      "status": "completed_selected_slice",
+      "requirement_refs": [
+        "SPEC-ERROR-01",
+        "SPEC-CODEC-01",
+        "SPEC-PROFILE-01",
+        "SPEC-BUDGET-01"
+      ],
+      "evidence": [
+        "spec/evidence/batch-127-money-node-values.json",
+        "doc/conditional-money-node-values.md"
+      ],
+      "remaining": "Other existing conditional/value rules (including money Service-Identifier/Timezone and field relations), mixed values/omissions and unreviewed group/cardinality/domain/handshake/header mappings remain separate. The selected money SMS-Node branch excludes any of its seven forbidden SMS fields; retain safe close when no reviewed diagnostic is available."
     }
   ],
   "current_gap_overview": "doc/remaining-gaps.md",

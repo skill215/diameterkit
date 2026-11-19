@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.127 — 2026-11-19, batch 126.** The [progress record](../spec/progress.json)
+**Draft 0.128 — 2026-11-19, batch 127.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1442,3 +1442,18 @@ shapes, generator23/ops9, pure Go and no persistence remain unchanged. Local
 one-target fuzz and hosted seventeen-target acceptance are separate receipts.
 All24 full-release conditions remain partial and development stays unpublished.
 See [the guide](conditional-address-values.md).
+
+## Batch 127: isolated money SMS-Node values (2026-11-19)
+
+Combined money SMS-Node !=2 provides Receive 5004 evidence only when its seven
+forbidden SMS fields are absent. ErrUnsupported remains, ErrField is additive
+and Receive names the original vendor path 873/2000/2016. Build/Send retain their
+prior vendor2000 error. An owned 40-byte quote contains the original node under
+two minimal vendor headers. Complete scans verify raw family, sequence, action,
+unit presence, selected instances and forbidden fields with shared source budgets.
+Mixed failures, unconstrained SM-Message-Type, preceding structural/action/unit
+checks and subsequent money conditions retain their order. Combined slice.21
+changes its digest and Bundle fingerprints; public shapes, generator23/ops9,
+pure Go and no persistence remain unchanged. Local one-target fuzz and hosted
+seventeen-target acceptance remain separate receipts. All24 full-release
+conditions remain partial; development is unpublished. See [the guide](conditional-money-node-values.md).

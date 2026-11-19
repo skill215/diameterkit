@@ -266,6 +266,9 @@ func validateMoneyRequest(m *CCR, mode validation.Mode) error {
 		return at(456, validation.ErrUnsupported)
 	}
 	if s.SMSNode != 2 || s.OriginatorSCCPAddress.Present || s.RecipientSCCPAddress.Present || s.SMSCAddress.Present || s.ReplyPathRequested.Present || s.SMUserDataHeader.Present || s.SMStatus.Present || s.DischargeTime.Present {
+		if mode == validation.Receive && s.SMSNode != 2 && !s.OriginatorSCCPAddress.Present && !s.RecipientSCCPAddress.Present && !s.SMSCAddress.Present && !s.ReplyPathRequested.Present && !s.SMUserDataHeader.Present && !s.SMStatus.Present && !s.DischargeTime.Present {
+			return invalidMoneyNode()
+		}
 		return vendorAt(2000, validation.ErrUnsupported)
 	}
 	r := u.RequestedServiceUnit.Value
