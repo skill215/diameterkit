@@ -139,7 +139,11 @@ func FuzzInvalidQuote(f *testing.F) {
 			f.Add(moneyClientFixture(action, data), uint16(0), uint32(2018), uint16(128))
 		}
 	}
+	for _, data := range [][]byte{{0}, {1, 0, 2}, bytes.Repeat([]byte{0}, 17)} {
+		f.Add(mmsKeyFixture(data, 31), uint16(0), uint32(1210), uint16(128))
+	}
 	f.Fuzz(func(t *testing.T, raw []byte, offset uint16, code uint32, budget uint16) {
+		fuzzMMSKey(t, raw, budget)
 		fuzzMoneyClient(t, raw, budget)
 		fuzzMoneyParameter(t, raw, budget, false)
 		fuzzMoneyParameter(t, raw, budget, true)

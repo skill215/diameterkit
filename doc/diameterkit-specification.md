@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.130 — 2026-11-23, batch 129.** The [progress record](../spec/progress.json)
+**Draft 0.131 — 2026-11-23, batch 130.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1490,3 +1490,19 @@ shapes, generator23/ops9, pure Go and no persistence remain unchanged. Local
 one-target fuzz and hosted seventeen-target acceptance are separate. All24
 full-release conditions stay partial; development remains unpublished.
 See [the guide](conditional-money-client-values.md).
+
+## Batch 130: isolated MMS SMSKey NUL values (2026-11-23)
+
+Combined MMS SMSKey containing NUL supplies Receive 5004 evidence only when the
+selected group has no extra children. ErrField and vendor path 873/877/1210 remain;
+Build/Send and mixed errors retain their previous behavior. Complete shared-budget
+scans verify unique ancestors and known MMS children, flags, scalar widths and
+the selected NUL-containing key. Address payloads remain the issuing decoder's
+responsibility. Owned quotes contain two minimal headers and the entire original
+padded key, sized 36+align4(payload length), with no address or sibling payload.
+Source, quote and full reply budgets reject truncation. Structural/group/request
+validation order remains unchanged. Combined slice.24 changes its digest and
+Bundle fingerprints; public shapes, generator23/ops9, pure Go and no persistence
+remain unchanged. Local one-target fuzz and hosted seventeen-target acceptance
+are separate. All24 full-release conditions stay partial; development remains
+unpublished. See [the guide](conditional-mms-key-values.md).

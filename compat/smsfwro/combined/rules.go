@@ -73,9 +73,12 @@ func validateAddressSubset(m *Address, mode validation.Mode) error {
 	}
 	return extras(m.Extra)
 }
-func validateMMSInformationSubset(m *MMSInformation, _ validation.Mode) error {
+func validateMMSInformationSubset(m *MMSInformation, mode validation.Mode) error {
 	if m.SMSKey.Present {
 		if e := cstring(m.SMSKey.Value); e != nil {
+			if mode == validation.Receive && len(m.Extra) == 0 {
+				return vendorAt(1210, mmsKeyValue{})
+			}
 			return vendorAt(1210, e)
 		}
 	}
