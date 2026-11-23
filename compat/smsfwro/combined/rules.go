@@ -72,6 +72,9 @@ func validateAddressSubset(m *Address, mode validation.Mode) error {
 		return vendorAt(899, validation.ErrUnsupported)
 	}
 	if e := cstring(m.AddressData); e != nil {
+		if mode == validation.Receive && len(m.Extra) == 0 {
+			return vendorAt(897, addressDataValue{})
+		}
 		return vendorAt(897, e)
 	}
 	return extras(m.Extra)

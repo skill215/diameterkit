@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.132 — 2026-11-23, batch 131.** The [progress record](../spec/progress.json)
+**Draft 0.133 — 2026-11-23, batch 132.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1523,3 +1523,21 @@ one-target fuzz and hosted seventeen-target evidence remain separate. The local
 expanded20-round inventory uses a15-minute total test ceiling; release/fuzz
 budgets are unchanged. All24 full-release conditions remain partial; development
 is unpublished. See [the guide](conditional-equipment-data-values.md).
+
+## Batch 132: isolated address data NUL errors (2026-11-23)
+
+Receive supplies named 5004 evidence for the existing Address-Data NUL rule only
+with Address-Type1 and no extra children. ErrField and Vendor10415 path
+873/877/(886 or1201)/897 remain unchanged. Complete shared-budget scans verify
+unique ancestors and both closed-group children. Owned 48+align4(n)-byte quotes
+preserve the entire original padded data under three minimal group headers.
+Build/Send, mixed type/data errors and structural/wire/group/request order stay
+unchanged. Earlier address errors retain priority over later MMS key errors.
+
+Exact source/quote/full-answer limits, two-group ordering, TCP/TLS ordinary and
+emergency consumption, twenty-round pure/race regression, full dual-module tests
+and counted fuzz are recorded with hosted CI artifact content acceptance in the
+[progress record](../spec/progress.json). Combined slice.26; public shapes,
+generator23, operations9, pure Go and no-persistence boundaries stay unchanged.
+All24 requirements remain partial, rc.1 is frozen and the next candidate remains
+unpublished. See [the guide](conditional-address-data-values.md).
