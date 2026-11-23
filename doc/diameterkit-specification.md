@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.129 — 2026-11-19, batch 128.** The [progress record](../spec/progress.json)
+**Draft 0.130 — 2026-11-23, batch 129.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1473,3 +1473,20 @@ and Bundle fingerprints; public shapes, generator23/ops9, pure Go and no
 persistence remain unchanged. Local one-target fuzz and hosted seventeen-target
 acceptance remain separate. All24 full-release conditions stay partial;
 development remains unpublished. See [the guide](conditional-money-parameter-values.md).
+
+## Batch 129: bounded money client-wire values (2026-11-23)
+
+Combined general/balance requests provide bounded Receive 5004 evidence when
+ClientAddressWire differs from the existing six-byte constant, including empty,
+short and long payloads. ErrUnsupported remains, ErrField is additive and Receive
+names vendor10415 path873/2000/2018. Build/Send retain the earlier vendor2018 error.
+The owned quote is36+align4(payload length) bytes: two minimal vendor headers and
+the entire original selected AVP, including padding. Complete shared-budget scans
+verify preceding raw counterparts and the wrong bytes. Earlier conditions and
+structural/group validation retain priority; later MMS exclusions stay later.
+The quote and full reply must fit, otherwise the connection closes without
+truncation. Combined slice.23 changes its digest and Bundle fingerprints; public
+shapes, generator23/ops9, pure Go and no persistence remain unchanged. Local
+one-target fuzz and hosted seventeen-target acceptance are separate. All24
+full-release conditions stay partial; development remains unpublished.
+See [the guide](conditional-money-client-values.md).

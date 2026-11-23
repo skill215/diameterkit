@@ -289,6 +289,9 @@ func validateMoneyRequest(m *CCR, mode validation.Mode) error {
 			return validation.ErrField
 		}
 		if !bytes.Equal(s.ClientAddressWire.Value, []byte{0, 1, 127, 0, 0, 1}) {
+			if mode == validation.Receive {
+				return invalidMoneyClient()
+			}
 			return vendorAt(2018, validation.ErrUnsupported)
 		}
 		mm := m.ServiceInformation.MMSInformation.Value

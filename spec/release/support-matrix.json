@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "date": "2026-11-19",
-  "basis": "Batch128 isolated combined Service-Identifier/Timezone value diagnostics. Combined slice.22, generator23/ops9 and public shapes unchanged. Current development is ahead of the frozen rc.1 publication.",
+  "date": "2026-11-23",
+  "basis": "Batch129 bounded combined money ClientAddressWire value diagnostics. Combined slice.23, generator23/ops9 and public shapes unchanged. Current development is ahead of the frozen rc.1 publication.",
   "release_status": "not_ready",
   "api_snapshot": "spec/release/public-api.json",
   "profiles": [
@@ -212,9 +212,9 @@
     {
       "binding": "combined",
       "profile": "smsfw-ro-five-template-wire-v1",
-      "version": "0.1.0-slice.22",
+      "version": "0.1.0-slice.23",
       "definition": "spec/combined.json",
-      "definition_sha256": "bd6d41be5585a8130df47b9f253ef645fe370f675ef236636922c1e3bead61a4",
+      "definition_sha256": "62095fd6a37b4e72e5ee7ce1a41928ee46116c424fd1a7a241143e03419df5d4",
       "requests": [
         {
           "name": "CCR",
@@ -388,10 +388,10 @@
         "SPEC-ERROR-01"
       ],
       "evidence": [
-        "spec/evidence/batch-128-money-parameter-values.json",
-        "doc/conditional-money-parameter-values.md"
+        "spec/evidence/batch-129-money-client-values.json",
+        "doc/conditional-money-client-values.md"
       ],
-      "remaining": "Other existing conditional/value rules (including request relations and remaining client/MMS constraints), mixed values/omissions and unreviewed group/cardinality/domain/handshake/header mappings remain separate. Both-wrong Service-Identifier/Timezone values and mixed presence failures keep bare ErrField; retain safe close when no reviewed diagnostic applies."
+      "remaining": "Other existing conditional/value rules (including request relations and remaining MMS constraints), mixed values/omissions and unreviewed group/cardinality/domain/handshake/header mappings remain separate. Earlier mixed presence or numeric failures retain their existing classification; safe close remains when no reviewed diagnostic applies."
     }
   ],
   "completed": [
@@ -985,6 +985,21 @@
         "doc/conditional-money-parameter-values.md"
       ],
       "remaining": "Other existing conditional/value rules (including request relations and remaining client/MMS constraints), mixed values/omissions and unreviewed group/cardinality/domain/handshake/header mappings remain separate. Both-wrong Service-Identifier/Timezone values and mixed presence failures keep bare ErrField; retain safe close when no reviewed diagnostic applies."
+    },
+    {
+      "name": "Combined bounded money ClientAddressWire value diagnostics",
+      "status": "completed_selected_slice",
+      "requirement_refs": [
+        "SPEC-ERROR-01",
+        "SPEC-CODEC-01",
+        "SPEC-PROFILE-01",
+        "SPEC-BUDGET-01"
+      ],
+      "evidence": [
+        "spec/evidence/batch-129-money-client-values.json",
+        "doc/conditional-money-client-values.md"
+      ],
+      "remaining": "Other existing conditional/value rules (including request relations and remaining MMS constraints), mixed values/omissions and unreviewed group/cardinality/domain/handshake/header mappings remain separate. Earlier mixed presence or numeric failures retain their existing classification; safe close remains when no reviewed diagnostic applies."
     }
   ],
   "current_gap_overview": "doc/remaining-gaps.md",
