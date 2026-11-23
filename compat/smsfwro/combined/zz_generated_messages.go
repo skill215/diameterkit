@@ -167,8 +167,8 @@ func profileTooMany(v wire.View, maximum int) error {
 	return validation.At(v.Key, &profileExcess{key: v.Key, flags: v.Flags, offset: v.Offset, maximum: maximum})
 }
 
-const Version = "0.1.0-slice.24"
-const DefinitionDigest = "dd6ad5f6be4609113eb67a3aee56772b245587f0fc0d748de5365b07b7948a22"
+const Version = "0.1.0-slice.25"
+const DefinitionDigest = "b86b549bcc07bad8daede7835dc9f79a213ea24511ce6006fbda48e9e0eba93e"
 
 func profileErrorUnsupported() []avp.Key {
 	return []avp.Key{

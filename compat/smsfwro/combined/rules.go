@@ -42,6 +42,9 @@ func validateUserEquipmentInfoSubset(m *UserEquipmentInfo, mode validation.Mode)
 		return at(459, validation.ErrUnsupported)
 	}
 	if e := cstring(m.UserEquipmentInfoValue); e != nil {
+		if mode == validation.Receive && len(m.Extra) == 0 {
+			return at(460, equipmentDataValue{})
+		}
 		return at(460, e)
 	}
 	return extras(m.Extra)

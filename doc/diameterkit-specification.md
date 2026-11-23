@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.131 — 2026-11-23, batch 130.** The [progress record](../spec/progress.json)
+**Draft 0.132 — 2026-11-23, batch 131.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1506,3 +1506,20 @@ Bundle fingerprints; public shapes, generator23/ops9, pure Go and no persistence
 remain unchanged. Local one-target fuzz and hosted seventeen-target acceptance
 are separate. All24 full-release conditions stay partial; development remains
 unpublished. See [the guide](conditional-mms-key-values.md).
+
+## Batch 131: isolated equipment Value NUL errors (2026-11-23)
+
+Combined User-Equipment-Info-Value containing NUL supplies Receive 5004 evidence
+only with Type0 and no extra selected-group children. ErrField and path458/460
+remain; no ErrUnsupported is added. Build/Send, mixed type/value errors, extra
+children and structural/wire/group/root order retain their previous behavior.
+Complete shared-budget scans verify unique group/type/value instances, flags,
+vendor, four-byte type and the zero type counterpart. Owned quotes contain one
+minimal header and the entire original padded value, sized16+align4(value length),
+without type or sibling fields. Source, quote and full reply budgets prevent
+truncation. Combined slice.25 changes its digest and Bundle fingerprints; public
+shapes, generator23/ops9, pure Go and no persistence remain unchanged. Local
+one-target fuzz and hosted seventeen-target evidence remain separate. The local
+expanded20-round inventory uses a15-minute total test ceiling; release/fuzz
+budgets are unchanged. All24 full-release conditions remain partial; development
+is unpublished. See [the guide](conditional-equipment-data-values.md).
