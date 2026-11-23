@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.133 — 2026-11-23, batch 132.** The [progress record](../spec/progress.json)
+**Draft 0.134 — 2026-11-23, batch 133.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1541,3 +1541,21 @@ and counted fuzz are recorded with hosted CI artifact content acceptance in the
 generator23, operations9, pure Go and no-persistence boundaries stay unchanged.
 All24 requirements remain partial, rc.1 is frozen and the next candidate remains
 unpublished. See [the guide](conditional-address-data-values.md).
+
+## Batch 133: repeated subscription data NUL errors (2026-11-23)
+
+Receive supplies static 5004 evidence for Subscription-Id-Data containing NUL
+when its group has no extras. ErrField and path443/444 remain. The bounded
+consumer resolves the first failing repeated group in wire order, verifies
+preceding closed NUL-free groups and preserves the entire original padded data
+under one minimal header. Quotes are16+align4(n) bytes. Root scans retain at
+most two groups and share counters; later group payloads remain opaque.
+
+Build/Send, mixed extras and structural/wire ordering stay unchanged. Subscription
+type pairing and request relations remain later. Both instances, reordered and
+simultaneously failing groups, exact budgets and six request paths over TCP/TLS
+are covered. Local twenty-round pure/race, full dual-module tests, counted fuzz
+and hosted artifact contents are recorded in [progress](../spec/progress.json).
+Combined slice.27; public shapes, generator23, operations9, pure Go and no
+persistence stay unchanged. All24 requirements remain partial; the next candidate
+is unpublished. See [the guide](conditional-subscription-data-values.md).

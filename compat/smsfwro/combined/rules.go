@@ -28,8 +28,11 @@ func cstring(v []byte) error {
 	}
 	return nil
 }
-func validateSubscriptionIDSubset(m *SubscriptionID, _ validation.Mode) error {
+func validateSubscriptionIDSubset(m *SubscriptionID, mode validation.Mode) error {
 	if e := cstring(m.SubscriptionIDData); e != nil {
+		if mode == validation.Receive && len(m.Extra) == 0 {
+			return at(444, subscriptionDataValue{})
+		}
 		return at(444, e)
 	}
 	return extras(m.Extra)

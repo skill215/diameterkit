@@ -236,7 +236,7 @@ func TestEquipmentDataPrecedence(t *testing.T) {
 				}
 				out, code, ok := excessavp.QuoteInvalid(raw[20:], cause, n.cfg.Limits, 4096)
 				expected := uint32(0)
-				if want || fault == "type-only" {
+				if want || fault == "type-only" || fault == "earlier-nul" {
 					expected = 5004
 				}
 				if fault == "type-width" || fault == "earlier-width" || fault == "reordered-width" {
@@ -254,6 +254,9 @@ func TestEquipmentDataPrecedence(t *testing.T) {
 				if fault == "type-only" && !bytes.Equal(out, equipmentValueQuote(t, 1)) {
 					t.Fatal("type priority")
 				}
+				if fault == "earlier-nul" && !bytes.Equal(out, subscriptionDataQuote(t, []byte{0})) {
+					t.Fatal("earlier subscription instance")
+				}
 				if fault == "extra" && (!errors.Is(cause, validation.ErrField) || errors.Is(cause, validation.ErrUnsupported)) {
 					t.Fatal("mixed extra", cause)
 				}
@@ -264,7 +267,7 @@ func TestEquipmentDataPrecedence(t *testing.T) {
 		}
 	}
 }
-func TestRejectEquipmentDataClosed(t *testing.T) {
+func TestRejectEquipmentDataEarlierOrClosed(t *testing.T) {
 	eachNetwork(t, func(t *testing.T, encrypted bool) {
 		for _, kind := range []string{"iec", "initial", "term"} {
 			for _, fault := range []string{"default", "type", "extra", "earlier-nul"} {
@@ -280,6 +283,18 @@ func TestRejectEquipmentDataClosed(t *testing.T) {
 					raw, _ := invalidRaw(t, co, combinedDuplicateRequest(t, n, co, kind, 13111, 23111), equipmentDataPath(), []byte{0}, avp.Key{})
 					raw = equipmentDataFault(t, raw, kind, fault)
 					sendRejectRaw(t, remote, raw)
+					if fault == "earlier-nul" {
+						h, _, e := wire.Header(raw, cfg.Limits)
+						if e != nil {
+							t.Fatal(e)
+						}
+						ans := readReject(t, remote, h, 5004)
+						if !ans.FailedAVP.Present || !bytes.Equal(ans.FailedAVP.Value.Data, subscriptionDataQuote(t, []byte{0})) {
+							t.Fatal("earlier subscription quote")
+						}
+						noDuplicateDelivery(t, p)
+						return
+					}
 					waitFor(t, func() bool { return !p.Info().Ready })
 					if b, e := readAdapter(ctxTest(t), remote); e == nil {
 						t.Fatalf("unexpected reply %x", b)
