@@ -14,7 +14,7 @@ import (
 	"testing"
 )
 
-func unitModeCheck(t *testing.T, m *CCR, mode validation.Mode, want, valid, reason bool, legacy uint32) {
+func unitModeCheck(t *testing.T, m *CCR, mode validation.Mode, want, valid, reason bool, legacy, excluded uint32) {
 	t.Helper()
 	err := validateCCRSubset(m, mode)
 	var proof interface{ DiameterUnitValueV1() string }
@@ -41,6 +41,12 @@ func unitModeCheck(t *testing.T, m *CCR, mode validation.Mode, want, valid, reas
 		if proof.DiameterUnitValueV1() != name {
 			t.Fatal("retained state")
 		}
+	} else if excluded != 0 {
+		var f *validation.FieldError
+		var marker interface{ DiameterExcludedECURUnitV1() }
+		if !errors.As(err, &marker) || !errors.Is(err, validation.ErrUnsupported) || !errors.As(err, &f) || len(f.Path) != 2 || f.Path[0] != (avp.Key{Code: 456}) || f.Path[1] != (avp.Key{Code: excluded}) {
+			t.Fatal(err)
+		}
 	} else if !valid {
 		var f *validation.FieldError
 		if !errors.Is(err, validation.ErrUnsupported) || errors.Is(err, validation.ErrField) || !errors.As(err, &f) || len(f.Path) != 1 || f.Path[0] != (avp.Key{Code: legacy}) {
@@ -58,7 +64,11 @@ func TestUnitValueModes(t *testing.T) {
 					u.RequestedServiceUnit.Present = mask&1 != 0
 					u.UsedServiceUnit.Present = mask&2 != 0
 					u.ReportingReason = avp.Optional[int32]{Present: mask&4 != 0, Value: value}
-					unitModeCheck(t, m, mode, mode == validation.Receive && mask == 6 && value != 2, mask == 6 && value == 2, true, 456)
+					var excluded uint32
+					if mode == validation.Receive && mask == 7 && value == 2 {
+						excluded = 437
+					}
+					unitModeCheck(t, m, mode, mode == validation.Receive && mask == 6 && value != 2, mask == 6 && value == 2, true, 456, excluded)
 				})
 			}
 		}
@@ -81,7 +91,11 @@ func TestUnitValueModes(t *testing.T) {
 						if mask&7 == 1 {
 							legacy = 437
 						}
-						unitModeCheck(t, m, mode, mode == validation.Receive && mask == 1 && value != 1, mask == 1 && value == 1, false, legacy)
+						var excluded uint32
+						if kind == "initial" && mode == validation.Receive && mask == 3 && value == 1 {
+							excluded = 446
+						}
+						unitModeCheck(t, m, mode, mode == validation.Receive && mask == 1 && value != 1, mask == 1 && value == 1, false, legacy, excluded)
 					})
 				}
 			}

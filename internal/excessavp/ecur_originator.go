@@ -29,9 +29,21 @@ func quoteECURExclusion(src []byte, cause error, l wire.Limits, budget int, rule
 	if d == nil {
 		return nil, 0, false
 	}
-	required := []uint32{uint32(rule), 2018, 2010, 2017, 2011, 2015, 2014, 2012}
+	selected, ok := scanECURExclusionSMS(d, kind, rule)
+	if !ok {
+		return nil, 0, false
+	}
+	return quoteServiceLeaf(area, selected, 2000, 5008, l, budget)
+}
+
+// A zero rule checks the normal SMS fields accompanying an MSCC exclusion.
+func scanECURExclusionSMS(d *wire.Decoder, kind uint32, rule smsRequestRule) (wire.View, bool) {
+	required := []uint32{2018, 2010, 2017, 2011, 2015, 2014, 2012}
 	if kind == 1 {
-		required = required[:6]
+		required = required[:5]
+	}
+	if rule != 0 {
+		required = append(required, uint32(rule))
 	}
 	var selected, client, smsc wire.View
 	ok := scanSMSGroup(d, required, func(v wire.View) bool {
@@ -72,8 +84,5 @@ func quoteECURExclusion(src []byte, cause error, l wire.Limits, budget int, rule
 		}
 		return true
 	})
-	if !ok || !bytes.Equal(client.Data, smsc.Data) {
-		return nil, 0, false
-	}
-	return quoteServiceLeaf(area, selected, 2000, 5008, l, budget)
+	return selected, ok && bytes.Equal(client.Data, smsc.Data)
 }

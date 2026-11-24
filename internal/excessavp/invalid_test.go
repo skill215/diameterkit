@@ -101,6 +101,9 @@ func FuzzInvalidQuote(f *testing.F) {
 	f.Add(raw, uint16(24), uint32(5001), uint16(12))
 	f.Add([]byte{1}, uint16(0), ^uint32(0), uint16(1))
 	f.Add(initialStatusArea([]byte{0}, 1), uint16(0), uint32(5008), uint16(40))
+	for _, kind := range []uint32{1, 3} {
+		f.Add(ecurUnitArea(kind), uint16(0), uint32(5008), uint16(32))
+	}
 	f.Add(initialStatusArea(nil, 1), uint16(0), uint32(5008), uint16(36))
 	f.Add(ecurOriginatorArea(1, nil, 3, 2), uint16(0), uint32(5008), uint16(36))
 	f.Add(ecurOriginatorArea(3, []byte{255, 2, 3}, 3, 2), uint16(0), uint32(5008), uint16(40))
@@ -176,6 +179,7 @@ func FuzzInvalidQuote(f *testing.F) {
 	}
 	f.Fuzz(func(t *testing.T, raw []byte, offset uint16, code uint32, budget uint16) {
 		checkECURFuzzQuote(t, raw, budget, 2014, initialStatusCause())
+		fuzzECURUnit(t, raw, budget)
 		fuzzECUROriginator(t, raw, budget)
 		fuzzECURAction(t, raw, budget)
 		fuzzExcludedMoneyMMSKey(t, raw, budget)

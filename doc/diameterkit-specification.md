@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.143 — 2026-11-24, batch 142.** The [progress record](../spec/progress.json)
+**Draft 0.144 — 2026-11-24, batch 143.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -12,6 +12,8 @@ boundaries remain unchanged. Dated implementation sections below are historical
 evidence; their old missing-work statements do not override later verified batches.
 
 The [rc.2 release decision](releases/v0.2.0-rc.2.md) records both immutable tags, all ten completed gates and the independent cold-install receipts.
+
+Batch 143 adds bounded 5008 for an isolated extra Used-Service-Unit in ECUR INITIAL or Requested-Service-Unit in TERMINATION. The complete 32-byte quote includes the original group and its MSCC header. See the [field evidence and mixed-error outcomes](ecur-unit-exclusions.md).
 
 Batch 142 adds bounded 5008 for an isolated SM-Status in combined ECUR INITIAL. Discharge-Time mixtures and earlier unit errors retain their established behavior. See the [field evidence and mixed-error outcomes](ecur-initial-status-exclusion.md).
 

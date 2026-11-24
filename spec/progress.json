@@ -1,10 +1,10 @@
 {
   "format": 1,
-  "baseline": "Draft 0.143",
+  "baseline": "Draft 0.144",
   "normative_spec": "doc/diameterkit-specification.md",
-  "batch": "Isolated SM-Status exclusion on combined ECUR INITIAL",
-  "status": "completed",
-  "status_meaning": "Batch 142 local dual-module pure/race, static checks, focused regression and bounded fuzz passed. Seven hosted check suites and their archive contents verified.",
+  "batch": "Isolated service-unit group exclusions on combined ECUR INITIAL and TERMINATION",
+  "status": "in_progress",
+  "status_meaning": "Batch 143 local dual-module pure/race, static checks, focused regression and bounded fuzz passed. Hosted suite and artifact verification pending.",
   "date": "2026-11-24",
   "toolchain": "go1.26.10 linux/amd64",
   "release_status": "not_ready",
@@ -552,7 +552,8 @@
     "Batch 139: Both well-formed mismatches are ambiguous. No new wire diagnostic; existing local paths and connection closure verified.",
     "Batch 140: Receive-only bounded 5008 for an isolated ECUR Requested-Action; both published negative fixtures and the explicit close policy exercised.",
     "Batch 141: Receive-only bounded 5008 for an isolated extra ECUR Originator-SCCP-Address. Both archived negative fixtures, variable-length limits, interface and mixed cases, and explicit TCP/TLS policies verified.",
-    "Batch 142: Receive-only bounded 5008 for an isolated INITIAL SM-Status. Verified opaque payloads, earlier unit rules, both discharge mixtures, and TCP/TLS failure policies."
+    "Batch 142: Receive-only bounded 5008 for an isolated INITIAL SM-Status. Verified opaque payloads, earlier unit rules, both discharge mixtures, and TCP/TLS failure policies.",
+    "Batch 143: Receive-only bounded 5008 for isolated extra ECUR service-unit groups. Verified exact 32-byte quotes, mixed unit shape and status, earlier action precedence and TCP/TLS failure policies."
   ],
   "requirements": [
     {
@@ -1763,7 +1764,8 @@
         "spec/evidence/batch-139-combined-sms-equality.json",
         "spec/evidence/batch-140-ecur-action-exclusion.json",
         "spec/evidence/batch-141-ecur-originator-exclusion.json",
-        "spec/evidence/batch-142-ecur-initial-status-exclusion.json"
+        "spec/evidence/batch-142-ecur-initial-status-exclusion.json",
+        "spec/evidence/batch-143-ecur-unit-exclusions.json"
       ],
       "remaining": "Resolve every required first-release field/type conflict through explicit definitions or named compatibility bindings, backed by source/target evidence and negative controls. Batch135 closes only the selected SMS client wire NUL/mismatch condition.",
       "rc_status": "verified_selected_scope",
@@ -3246,7 +3248,8 @@
         "spec/evidence/batch-139-combined-sms-equality.json",
         "spec/evidence/batch-140-ecur-action-exclusion.json",
         "spec/evidence/batch-141-ecur-originator-exclusion.json",
-        "spec/evidence/batch-142-ecur-initial-status-exclusion.json"
+        "spec/evidence/batch-142-ecur-initial-status-exclusion.json",
+        "spec/evidence/batch-143-ecur-unit-exclusions.json"
       ],
       "remaining": "Resolve and verify all validation rules within the declared first-release scope, while retaining explicitly excluded full-XSD/internationalization behavior.",
       "rc_status": "verified_selected_scope",
@@ -3646,7 +3649,8 @@
         "spec/evidence/batch-139-combined-sms-equality.json",
         "spec/evidence/batch-140-ecur-action-exclusion.json",
         "spec/evidence/batch-141-ecur-originator-exclusion.json",
-        "spec/evidence/batch-142-ecur-initial-status-exclusion.json"
+        "spec/evidence/batch-142-ecur-initial-status-exclusion.json",
+        "spec/evidence/batch-143-ecur-unit-exclusions.json"
       ],
       "remaining": "Enumerate each remaining promised condition/value/cardinality/group/domain/handshake/header mapping and either verify a bounded unambiguous diagnostic or record a justified safe-close classification. Batch135 closes only the selected SMS client wire NUL/mismatch condition.",
       "rc_status": "verified_selected_scope",
@@ -6688,7 +6692,8 @@
         "spec/evidence/batch-138-money-mms-exclusion.json",
         "spec/evidence/batch-140-ecur-action-exclusion.json",
         "spec/evidence/batch-141-ecur-originator-exclusion.json",
-        "spec/evidence/batch-142-ecur-initial-status-exclusion.json"
+        "spec/evidence/batch-142-ecur-initial-status-exclusion.json",
+        "spec/evidence/batch-143-ecur-unit-exclusions.json"
       ],
       "batch89_evidence": "spec/evidence/batch-89-combined-cross-target.json",
       "batch90_evidence": "spec/evidence/batch-90-binding-recovery-consumption.json",
@@ -7050,7 +7055,7 @@
         "GOHOSTARCH"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/toolchain.log",
+      "log": ".cache/b143-static/toolchain.log",
       "status": "passed",
       "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
       "returncode": 0,
@@ -7065,7 +7070,7 @@
         "-json"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b142-static/adapter-manifest.log",
+      "log": ".cache/b143-static/adapter-manifest.log",
       "status": "passed",
       "sha256": "78925274a34b0ea72f08fdbb215557864dfa98179c7d8fc08c222fa236dffce8",
       "returncode": 0,
@@ -7080,8 +7085,8 @@
         "/home/skill/workspace/git/diameterkit",
         "/home/skill/workspace/git/diameterkit/adapters/sctp"
       ],
-      "cwd": "/tmp/diameterkit-ci-9g_f6z9r",
-      "log": ".cache/b142-static/workspace.log",
+      "cwd": "/tmp/diameterkit-ci-r2r5da4c",
+      "log": ".cache/b143-static/workspace.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7095,8 +7100,8 @@
         "edit",
         "-replace=github.com/skill215/diameterkit@v0.2.0-rc.2=/home/skill/workspace/git/diameterkit"
       ],
-      "cwd": "/tmp/diameterkit-ci-9g_f6z9r",
-      "log": ".cache/b142-static/checkout-binding.log",
+      "cwd": "/tmp/diameterkit-ci-r2r5da4c",
+      "log": ".cache/b143-static/checkout-binding.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7112,7 +7117,7 @@
         "all"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b142-static/module-graph.log",
+      "log": ".cache/b143-static/module-graph.log",
       "status": "passed",
       "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
       "returncode": 0,
@@ -7127,7 +7132,7 @@
         "github.com/skill215/sctp@v0.8.0"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b142-static/dependency-download.log",
+      "log": ".cache/b143-static/dependency-download.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7140,9 +7145,9 @@
         "spec/tools/check_ai_headers.py"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/ai-disclosure.log",
+      "log": ".cache/b143-static/ai-disclosure.log",
       "status": "passed",
-      "sha256": "35ffaae1b750a991f1ab9a723d687df12b3aa8696c8287eff16ca60be21ef964",
+      "sha256": "8cc6f8d0fb18e897770ab1683dffa3b8e6f64b616725469e12c383e9a0d34a1d",
       "returncode": 0,
       "suite": "static"
     },
@@ -7160,9 +7165,9 @@
         "-v"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/tooling-tests.log",
+      "log": ".cache/b143-static/tooling-tests.log",
       "status": "passed",
-      "sha256": "eb3b679b4936ac76db3211177a5ddb2a17c36663fa311c3338b4c464d1fd39fb",
+      "sha256": "c6506fb577457ce1729fa0137338c41385b26a5f598f186d65990c1ef63d8a63",
       "returncode": 0,
       "suite": "static"
     },
@@ -7173,7 +7178,7 @@
         "spec/tools/check_support_matrix.py"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/support-matrix.log",
+      "log": ".cache/b143-static/support-matrix.log",
       "status": "passed",
       "sha256": "699c2a840bdff32563bba5792dbf610949e134ec7a22a293f90a00d105bf5fd5",
       "returncode": 0,
@@ -7185,11 +7190,11 @@
         "/usr/bin/python3",
         "spec/tools/check_support_matrix.py",
         "--matrix",
-        "/tmp/diameterkit-ci-9g_f6z9r/stale-matrix.json"
+        "/tmp/diameterkit-ci-r2r5da4c/stale-matrix.json"
       ],
       "status": "passed",
       "expected_failure": true,
-      "log": ".cache/b142-static/support-matrix-negative-control.log",
+      "log": ".cache/b143-static/support-matrix-negative-control.log",
       "sha256": "54d4a061f91b75bb4b453fd1599aa43d52d9951ee896a9f6b809ecd3c90ae4e2",
       "suite": "static"
     },
@@ -7199,11 +7204,11 @@
         "go",
         "build",
         "-o",
-        "/tmp/diameterkit-ci-9g_f6z9r/diameter-schema",
+        "/tmp/diameterkit-ci-r2r5da4c/diameter-schema",
         "./cmd/diameter-schema"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/generator-build.log",
+      "log": ".cache/b143-static/generator-build.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7212,7 +7217,7 @@
     {
       "name": "generated-base",
       "command": [
-        "/tmp/diameterkit-ci-9g_f6z9r/diameter-schema",
+        "/tmp/diameterkit-ci-r2r5da4c/diameter-schema",
         "-in",
         "spec/base.json",
         "-out",
@@ -7220,7 +7225,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/generated-base.log",
+      "log": ".cache/b143-static/generated-base.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7229,7 +7234,7 @@
     {
       "name": "generated-sh",
       "command": [
-        "/tmp/diameterkit-ci-9g_f6z9r/diameter-schema",
+        "/tmp/diameterkit-ci-r2r5da4c/diameter-schema",
         "-in",
         "spec/sh.json",
         "-out",
@@ -7237,7 +7242,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/generated-sh.log",
+      "log": ".cache/b143-static/generated-sh.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7246,7 +7251,7 @@
     {
       "name": "generated-s6c",
       "command": [
-        "/tmp/diameterkit-ci-9g_f6z9r/diameter-schema",
+        "/tmp/diameterkit-ci-r2r5da4c/diameter-schema",
         "-in",
         "spec/s6c.json",
         "-out",
@@ -7254,7 +7259,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/generated-s6c.log",
+      "log": ".cache/b143-static/generated-s6c.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7263,7 +7268,7 @@
     {
       "name": "generated-sgd",
       "command": [
-        "/tmp/diameterkit-ci-9g_f6z9r/diameter-schema",
+        "/tmp/diameterkit-ci-r2r5da4c/diameter-schema",
         "-in",
         "spec/sgd.json",
         "-out",
@@ -7271,7 +7276,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/generated-sgd.log",
+      "log": ".cache/b143-static/generated-sgd.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7280,7 +7285,7 @@
     {
       "name": "generated-ro",
       "command": [
-        "/tmp/diameterkit-ci-9g_f6z9r/diameter-schema",
+        "/tmp/diameterkit-ci-r2r5da4c/diameter-schema",
         "-in",
         "spec/ro.json",
         "-out",
@@ -7288,7 +7293,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/generated-ro.log",
+      "log": ".cache/b143-static/generated-ro.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7297,7 +7302,7 @@
     {
       "name": "generated-roabort",
       "command": [
-        "/tmp/diameterkit-ci-9g_f6z9r/diameter-schema",
+        "/tmp/diameterkit-ci-r2r5da4c/diameter-schema",
         "-in",
         "spec/roabort.json",
         "-out",
@@ -7305,7 +7310,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/generated-roabort.log",
+      "log": ".cache/b143-static/generated-roabort.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7314,7 +7319,7 @@
     {
       "name": "generated-dcca",
       "command": [
-        "/tmp/diameterkit-ci-9g_f6z9r/diameter-schema",
+        "/tmp/diameterkit-ci-r2r5da4c/diameter-schema",
         "-in",
         "spec/dcca.json",
         "-out",
@@ -7322,7 +7327,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/generated-dcca.log",
+      "log": ".cache/b143-static/generated-dcca.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7331,7 +7336,7 @@
     {
       "name": "generated-smsfwro",
       "command": [
-        "/tmp/diameterkit-ci-9g_f6z9r/diameter-schema",
+        "/tmp/diameterkit-ci-r2r5da4c/diameter-schema",
         "-in",
         "spec/smsfwro.json",
         "-out",
@@ -7339,7 +7344,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/generated-smsfwro.log",
+      "log": ".cache/b143-static/generated-smsfwro.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7348,7 +7353,7 @@
     {
       "name": "generated-legacy420",
       "command": [
-        "/tmp/diameterkit-ci-9g_f6z9r/diameter-schema",
+        "/tmp/diameterkit-ci-r2r5da4c/diameter-schema",
         "-in",
         "spec/legacy420.json",
         "-out",
@@ -7356,7 +7361,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/generated-legacy420.log",
+      "log": ".cache/b143-static/generated-legacy420.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7365,7 +7370,7 @@
     {
       "name": "generated-combined",
       "command": [
-        "/tmp/diameterkit-ci-9g_f6z9r/diameter-schema",
+        "/tmp/diameterkit-ci-r2r5da4c/diameter-schema",
         "-in",
         "spec/combined.json",
         "-out",
@@ -7373,7 +7378,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/generated-combined.log",
+      "log": ".cache/b143-static/generated-combined.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7382,7 +7387,7 @@
     {
       "name": "generated-scap1",
       "command": [
-        "/tmp/diameterkit-ci-9g_f6z9r/diameter-schema",
+        "/tmp/diameterkit-ci-r2r5da4c/diameter-schema",
         "-in",
         "spec/scap1.json",
         "-out",
@@ -7390,7 +7395,7 @@
         "-check"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/generated-scap1.log",
+      "log": ".cache/b143-static/generated-scap1.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7399,17 +7404,17 @@
     {
       "name": "generated-negative-control",
       "command": [
-        "/tmp/diameterkit-ci-9g_f6z9r/diameter-schema",
+        "/tmp/diameterkit-ci-r2r5da4c/diameter-schema",
         "-in",
         "/home/skill/workspace/git/diameterkit/spec/base.json",
         "-out",
-        "/tmp/diameterkit-ci-9g_f6z9r/stale.go",
+        "/tmp/diameterkit-ci-r2r5da4c/stale.go",
         "-check"
       ],
       "status": "passed",
       "expected_failure": true,
-      "log": ".cache/b142-static/generated-negative-control.log",
-      "sha256": "362e7d15153674120ed916e003f47a26c2e42e68c8f75a862fb4b146e0d9e5d5",
+      "log": ".cache/b143-static/generated-negative-control.log",
+      "sha256": "fd850a9333584f0dbf87b51e0ccae9dc71e7b3f8f03eb7313e44abe4976cf975",
       "suite": "static"
     },
     {
@@ -7424,9 +7429,9 @@
         "^TestGeneratedFilesCurrentAndDeterministic$"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/generator-determinism.log",
+      "log": ".cache/b143-static/generator-determinism.log",
       "status": "passed",
-      "sha256": "8f13e832534f2f593c4f7f67af2f102ceb15eee6511e77f77e034fa01ccab1ea",
+      "sha256": "86d46b8e734427829b1590b7ab9bdda40f9d17d87fffed1614e8d99150cf210a",
       "returncode": 0,
       "test_subtest_seed_passes": 1,
       "test_skips": 0,
@@ -7440,8 +7445,8 @@
         "init",
         "example.org/contextconsumer"
       ],
-      "cwd": "/tmp/diameterkit-ci-9g_f6z9r/consumer",
-      "log": ".cache/b142-static/context-consumer-init.log",
+      "cwd": "/tmp/diameterkit-ci-r2r5da4c/consumer",
+      "log": ".cache/b143-static/context-consumer-init.log",
       "status": "passed",
       "sha256": "28ca8b659fbc71b66d3678f143793885b1b4af5b6d61e9dc4e5fc246a4c0f9e8",
       "returncode": 0,
@@ -7456,8 +7461,8 @@
         "-require=github.com/skill215/diameterkit@v0.0.0",
         "-replace=github.com/skill215/diameterkit=/home/skill/workspace/git/diameterkit"
       ],
-      "cwd": "/tmp/diameterkit-ci-9g_f6z9r/consumer",
-      "log": ".cache/b142-static/context-consumer-binding.log",
+      "cwd": "/tmp/diameterkit-ci-r2r5da4c/consumer",
+      "log": ".cache/b143-static/context-consumer-binding.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7473,10 +7478,10 @@
         "-json",
         "."
       ],
-      "cwd": "/tmp/diameterkit-ci-9g_f6z9r/consumer",
-      "log": ".cache/b142-static/context-consumer.log",
+      "cwd": "/tmp/diameterkit-ci-r2r5da4c/consumer",
+      "log": ".cache/b143-static/context-consumer.log",
       "status": "passed",
-      "sha256": "5f5561626c6d32d06507d99d7d9a2c5a00e43abc2a79c2109a722972b8ca1c4d",
+      "sha256": "d2922fa0dc80b2c3ebaf2781f3465dbd438351aece18ab73d71718303e78f982",
       "returncode": 0,
       "test_subtest_seed_passes": 1,
       "test_skips": 0,
@@ -7489,10 +7494,10 @@
         "spec/tools/public_api_snapshot.py",
         "--check",
         "--workspace",
-        "/tmp/diameterkit-ci-9g_f6z9r/go.work"
+        "/tmp/diameterkit-ci-r2r5da4c/go.work"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/api-snapshot.log",
+      "log": ".cache/b143-static/api-snapshot.log",
       "status": "passed",
       "sha256": "1debc4cbb0d2bd5220fa0bdc632c40e3439560db79b82355c4d4a3c68d13dfcb",
       "returncode": 0,
@@ -7505,13 +7510,13 @@
         "spec/tools/public_api_snapshot.py",
         "--check",
         "--output",
-        "/tmp/diameterkit-ci-9g_f6z9r/stale-api.json",
+        "/tmp/diameterkit-ci-r2r5da4c/stale-api.json",
         "--workspace",
-        "/tmp/diameterkit-ci-9g_f6z9r/go.work"
+        "/tmp/diameterkit-ci-r2r5da4c/go.work"
       ],
       "status": "passed",
       "expected_failure": true,
-      "log": ".cache/b142-static/api-negative-control.log",
+      "log": ".cache/b143-static/api-negative-control.log",
       "sha256": "64fa65d5163692d7809a4935279b295a5c3033511bfb5244d3fa97ce72c44f4c",
       "suite": "static"
     },
@@ -7522,11 +7527,11 @@
         "spec/tools/public_api_snapshot.py",
         "--check",
         "--workspace",
-        "/tmp/diameterkit-ci-9g_f6z9r/go.work"
+        "/tmp/diameterkit-ci-r2r5da4c/go.work"
       ],
       "status": "passed",
       "expected_failure": true,
-      "log": ".cache/b142-static/context-method-negative-control.log",
+      "log": ".cache/b143-static/context-method-negative-control.log",
       "sha256": "64fa65d5163692d7809a4935279b295a5c3033511bfb5244d3fa97ce72c44f4c",
       "suite": "static"
     },
@@ -7538,7 +7543,7 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-static/core-vet.log",
+      "log": ".cache/b143-static/core-vet.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7552,7 +7557,7 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b142-static/adapter-vet.log",
+      "log": ".cache/b143-static/adapter-vet.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7568,7 +7573,7 @@
         "GOHOSTARCH"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-pure/toolchain.log",
+      "log": ".cache/b143-pure/toolchain.log",
       "status": "passed",
       "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
       "returncode": 0,
@@ -7583,7 +7588,7 @@
         "-json"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b142-pure/adapter-manifest.log",
+      "log": ".cache/b143-pure/adapter-manifest.log",
       "status": "passed",
       "sha256": "78925274a34b0ea72f08fdbb215557864dfa98179c7d8fc08c222fa236dffce8",
       "returncode": 0,
@@ -7598,8 +7603,8 @@
         "/home/skill/workspace/git/diameterkit",
         "/home/skill/workspace/git/diameterkit/adapters/sctp"
       ],
-      "cwd": "/tmp/diameterkit-ci-_9b_abv2",
-      "log": ".cache/b142-pure/workspace.log",
+      "cwd": "/tmp/diameterkit-ci-thkxs3pi",
+      "log": ".cache/b143-pure/workspace.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7613,8 +7618,8 @@
         "edit",
         "-replace=github.com/skill215/diameterkit@v0.2.0-rc.2=/home/skill/workspace/git/diameterkit"
       ],
-      "cwd": "/tmp/diameterkit-ci-_9b_abv2",
-      "log": ".cache/b142-pure/checkout-binding.log",
+      "cwd": "/tmp/diameterkit-ci-thkxs3pi",
+      "log": ".cache/b143-pure/checkout-binding.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7630,7 +7635,7 @@
         "all"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b142-pure/module-graph.log",
+      "log": ".cache/b143-pure/module-graph.log",
       "status": "passed",
       "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
       "returncode": 0,
@@ -7645,7 +7650,7 @@
         "github.com/skill215/sctp@v0.8.0"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b142-pure/dependency-download.log",
+      "log": ".cache/b143-pure/dependency-download.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7662,11 +7667,11 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-pure/core-pure.log",
+      "log": ".cache/b143-pure/core-pure.log",
       "status": "passed",
-      "sha256": "385e2e61af0319027f2089ae0ef92a40907bec1471a3f61bf456303750367b31",
+      "sha256": "3d10647978775a913a2fde6310324095cd77c98161e1a5fbed88a7b19782cf3c",
       "returncode": 0,
-      "test_subtest_seed_passes": 30668,
+      "test_subtest_seed_passes": 30768,
       "test_skips": 0,
       "suite": "pure"
     },
@@ -7681,9 +7686,9 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b142-pure/adapter-pure.log",
+      "log": ".cache/b143-pure/adapter-pure.log",
       "status": "passed",
-      "sha256": "579cd07cd6d4dacbbe331012134fef6b6ea0aeb0b75b5ca2787697b7fd36b48d",
+      "sha256": "a77f4a43ce462f263b4ea9afc115d2a636aec7f18e764249b338e4162628c26a",
       "returncode": 0,
       "test_subtest_seed_passes": 114,
       "test_skips": 0,
@@ -7699,7 +7704,7 @@
         "GOHOSTARCH"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-race/toolchain.log",
+      "log": ".cache/b143-race/toolchain.log",
       "status": "passed",
       "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
       "returncode": 0,
@@ -7714,7 +7719,7 @@
         "-json"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b142-race/adapter-manifest.log",
+      "log": ".cache/b143-race/adapter-manifest.log",
       "status": "passed",
       "sha256": "78925274a34b0ea72f08fdbb215557864dfa98179c7d8fc08c222fa236dffce8",
       "returncode": 0,
@@ -7729,8 +7734,8 @@
         "/home/skill/workspace/git/diameterkit",
         "/home/skill/workspace/git/diameterkit/adapters/sctp"
       ],
-      "cwd": "/tmp/diameterkit-ci-45305qg2",
-      "log": ".cache/b142-race/workspace.log",
+      "cwd": "/tmp/diameterkit-ci-k6bcjrvs",
+      "log": ".cache/b143-race/workspace.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7744,8 +7749,8 @@
         "edit",
         "-replace=github.com/skill215/diameterkit@v0.2.0-rc.2=/home/skill/workspace/git/diameterkit"
       ],
-      "cwd": "/tmp/diameterkit-ci-45305qg2",
-      "log": ".cache/b142-race/checkout-binding.log",
+      "cwd": "/tmp/diameterkit-ci-k6bcjrvs",
+      "log": ".cache/b143-race/checkout-binding.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7761,7 +7766,7 @@
         "all"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b142-race/module-graph.log",
+      "log": ".cache/b143-race/module-graph.log",
       "status": "passed",
       "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
       "returncode": 0,
@@ -7776,7 +7781,7 @@
         "github.com/skill215/sctp@v0.8.0"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b142-race/dependency-download.log",
+      "log": ".cache/b143-race/dependency-download.log",
       "status": "passed",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "returncode": 0,
@@ -7794,11 +7799,11 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-race/core-race.log",
+      "log": ".cache/b143-race/core-race.log",
       "status": "passed",
-      "sha256": "3340262c8285ed89398021c4eade63ebc9a9585152d7b62ce6fe9f3c32bdbb0c",
+      "sha256": "434d41ebeb7be97add19f5be587941178dd05d0fdbb121e599938d4c5194bb00",
       "returncode": 0,
-      "test_subtest_seed_passes": 30668,
+      "test_subtest_seed_passes": 30768,
       "test_skips": 0,
       "suite": "race"
     },
@@ -7814,9 +7819,9 @@
         "./..."
       ],
       "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
-      "log": ".cache/b142-race/adapter-race.log",
+      "log": ".cache/b143-race/adapter-race.log",
       "status": "passed",
-      "sha256": "75232074ee4744273e8269c70faeff5d24afbe017121c87dcbbb65ca9c8d8c4d",
+      "sha256": "49196daed3fedc7432afe8e7edee42d713abe45f251d15cdaa6b4046a65a3d91",
       "returncode": 0,
       "test_subtest_seed_passes": 114,
       "test_skips": 0,
@@ -7830,17 +7835,17 @@
         "-count=1",
         "-json",
         "-timeout=5m",
-        "-run=^Test(InitialStatus|ECUROriginator|UnitValue|ECURAction)",
+        "-run=^Test(ECURUnit|InitialStatus|RejectUnitValue|ECUROriginator|UnitValue|ECURAction)",
         ".",
         "./compat/smsfwro/combined",
         "./internal/excessavp"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-focused-pure/status.log",
+      "log": ".cache/b143-focused-pure/status.log",
       "status": "passed",
-      "sha256": "9f1bb665e6ea47305fc5847594b9774b9cd76c0226944dd445dbf45f0c469e86",
+      "sha256": "b98f44e95dfc4ca3a7f70b92ea5b4f7241897e080137fa24ec931aa62c15f462",
       "returncode": 0,
-      "test_subtest_seed_passes": 1778,
+      "test_subtest_seed_passes": 1934,
       "test_skips": 0,
       "suite": "focused-pure"
     },
@@ -7853,17 +7858,17 @@
         "-count=1",
         "-json",
         "-timeout=5m",
-        "-run=^Test(InitialStatus|ECUROriginator|UnitValue|ECURAction)",
+        "-run=^Test(ECURUnit|InitialStatus|RejectUnitValue|ECUROriginator|UnitValue|ECURAction)",
         ".",
         "./compat/smsfwro/combined",
         "./internal/excessavp"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-focused-race/status.log",
+      "log": ".cache/b143-focused-race/status.log",
       "status": "passed",
-      "sha256": "bc42a2fd1dc59e3fba765597dde0ca4f24be5f0f7df3387650b87b4b46eb76ef",
+      "sha256": "8e767880fb8cdd54216e8a99736e893db300e32087e63615cb4a8093d0443321",
       "returncode": 0,
-      "test_subtest_seed_passes": 1778,
+      "test_subtest_seed_passes": 1934,
       "test_skips": 0,
       "suite": "focused-race"
     },
@@ -7881,9 +7886,9 @@
         "-timeout=2m"
       ],
       "cwd": "/home/skill/workspace/git/diameterkit",
-      "log": ".cache/b142-target-fuzz/fuzz-invalid-diagnostic.log",
+      "log": ".cache/b143-target-fuzz/fuzz-invalid-diagnostic.log",
       "status": "passed",
-      "sha256": "4574f05a32fa2cef4dba5151646fd22d662c2ac539037a298aaf2a6d0edc3391",
+      "sha256": "7cbfeab76bc2493d03697b6e788f3005c7d7b06f6dc60c2fc7085ee9368f9ab5",
       "returncode": 0,
       "suite": "target-fuzz"
     }
@@ -8531,7 +8536,7 @@
     },
     {
       "path": "compat/smsfwro/combined/ecur_interface_value.go",
-      "sha256": "f945f08d4cf719fe1a925d8429b39eae517af90660c486343dc692ffc169e14b"
+      "sha256": "020a0f5ab4db7a36ea1231e48f46c1c76931a9e4ef7866f533e3ee7a861129ff"
     },
     {
       "path": "compat/smsfwro/combined/ecur_interface_value_test.go",
@@ -8540,6 +8545,10 @@
     {
       "path": "compat/smsfwro/combined/ecur_originator_test.go",
       "sha256": "7ba786aaf8a55207a6be191f8c3ba0f7d9daaeea386cfa954bc3990e4494a5d7"
+    },
+    {
+      "path": "compat/smsfwro/combined/ecur_unit_test.go",
+      "sha256": "8e086e9232971b4fe6d9360edfcca9d44f6f4e9f4993976187e7fd735beeb2a0"
     },
     {
       "path": "compat/smsfwro/combined/equality_test.go",
@@ -8655,7 +8664,7 @@
     },
     {
       "path": "compat/smsfwro/combined/rules.go",
-      "sha256": "7b31687e91a09d9e0d9b09d236557c44eb07fd597de0c73932e34aaa63c7b466"
+      "sha256": "c75bef64b7f7d05022557e1811f7b23d0d9db0bb37cdd13fb9306e3121453064"
     },
     {
       "path": "compat/smsfwro/combined/sms_client.go",
@@ -8703,11 +8712,11 @@
     },
     {
       "path": "compat/smsfwro/combined/unit_value_test.go",
-      "sha256": "f5f37e567bb6e986f06541316ef8113b173774dfe9a8b459e4b250cc509a1543"
+      "sha256": "19e00e3abd4b59f9ca7a4f1b92be366816596d9243c6faa968c1d3117e8d6474"
     },
     {
       "path": "compat/smsfwro/combined/zz_generated_messages.go",
-      "sha256": "afacf5a333cfb7824fcce18ff7d90ae1310d71c9fd53a1355d3f20328aa5460a"
+      "sha256": "a72eaf6fb90e64f9fe5e33b41f0b4612e43182f1206fe94a3d23ae31d56dc556"
     },
     {
       "path": "compat/smsfwro/ecur.go",
@@ -8927,7 +8936,7 @@
     },
     {
       "path": "doc/diameterkit-specification.md",
-      "sha256": "baf77519ffbede8ae356bee1cd92a4468614935d8883bcfb85d66a73dd397c86"
+      "sha256": "2fa84075e538d7018606d18b90c4d3f36a8b93f195ac60bc9e765d4071e2ba68"
     },
     {
       "path": "doc/diameterkit-state-consistency.md",
@@ -8935,7 +8944,7 @@
     },
     {
       "path": "doc/diameterkit-support-matrix.md",
-      "sha256": "f2498073e6af4af01ba3a9a12e878445c1b762dd6d97ca04c53e73fccbae4a70"
+      "sha256": "3d1191fc94ccf2396476a23f453999e38518fd17dc486d6f99aed7d14e55c79d"
     },
     {
       "path": "doc/diameterkit-usage-coverage.md",
@@ -8956,6 +8965,10 @@
     {
       "path": "doc/ecur-originator-exclusion.md",
       "sha256": "1ea553eae7453e1083da79483c9c61841ef3378833b0f271aa75f46717b807f1"
+    },
+    {
+      "path": "doc/ecur-unit-exclusions.md",
+      "sha256": "b2adf6ff75d5c43f9903a7acbf4e6512319c4cc5b450e77673cedeafb3e00c6b"
     },
     {
       "path": "doc/excess-avp-diagnostics.md",
@@ -9019,7 +9032,7 @@
     },
     {
       "path": "doc/remaining-gaps.md",
-      "sha256": "6f7c134ed62e54719c75a134e2c6c8cfe0b6c6fba261ddcb2bf83df310880059"
+      "sha256": "c8ead9bba81e7e8ee4b9d1a202cf6898363c26f1ab95c65e7ada140f7d12e846"
     },
     {
       "path": "doc/ro-recovery-handoff.md",
@@ -9395,11 +9408,19 @@
     },
     {
       "path": "internal/excessavp/ecur_originator.go",
-      "sha256": "d1d93cc83306111b82678490303a0de99b20332472ca852d639635a6ce8d23c5"
+      "sha256": "4c1f4527fcf93681052ea9e8e16591c4efefd58568d9ba6dfb364653f60fd12a"
     },
     {
       "path": "internal/excessavp/ecur_originator_test.go",
       "sha256": "88c4a46e433e10bb237d281f03b9bf005e1a2a114dbd9dd694314171bc6d7dff"
+    },
+    {
+      "path": "internal/excessavp/ecur_unit.go",
+      "sha256": "f94a8a64b1af84d420ecb61574d10c169814e6dbf2c03ef45205f785434124b6"
+    },
+    {
+      "path": "internal/excessavp/ecur_unit_test.go",
+      "sha256": "52a6e7010e985ea113f90e4bac8ac643147c5d6d46c131d42c9141de9a4fd803"
     },
     {
       "path": "internal/excessavp/equipment.go",
@@ -9419,7 +9440,7 @@
     },
     {
       "path": "internal/excessavp/excess.go",
-      "sha256": "b7fbe182b139fe34a5b9ce168acdcaa05240d902d24aea5073bb710db7bcc32c"
+      "sha256": "561765163d4ed72e72b88f301f67503babc1404e70f13b25ff7abff95ac1d6ce"
     },
     {
       "path": "internal/excessavp/excess_test.go",
@@ -9447,7 +9468,7 @@
     },
     {
       "path": "internal/excessavp/invalid_test.go",
-      "sha256": "b54e6c9ef25d1cc3a7d8687e3532a8b10e542c23bba243fbb7226aed776d9c86"
+      "sha256": "74f464a3ff562098db5d62edd501eb8a8749b5563676681a28367a736953ef0f"
     },
     {
       "path": "internal/excessavp/length_test.go",
@@ -10114,6 +10135,10 @@
       "sha256": "447d13c17dad58b75c1ae56cccb8e0cd62a8b8868efb8ae81eb227b2f1af7487"
     },
     {
+      "path": "reject_ecur_unit_test.go",
+      "sha256": "545f16b88cf9afe7a4eaeade2d19e4309ef2a0b83c0e9192bae3c93ea77361d6"
+    },
+    {
       "path": "reject_equipment_data_test.go",
       "sha256": "4ffedbfd4551e2936149183bf817d60a19c6e94344c7b103711277cbb79b142e"
     },
@@ -10543,7 +10568,7 @@
     },
     {
       "path": "spec/combined.json",
-      "sha256": "723ec9eb78be538f54f4245fc13a45b8a3b4cabe7d61e58efcd30a97dbb61358"
+      "sha256": "2a9298b2a925be312648da66f46902111cfbccd6c92b08f714747d892558bce9"
     },
     {
       "path": "spec/dcca.json",
@@ -10728,6 +10753,10 @@
     {
       "path": "spec/evidence/batch-142-ecur-initial-status-exclusion.json",
       "sha256": "50767d6907a170dde4a029479a35f70e5ba3e912e7504b919cd3df25c0922a73"
+    },
+    {
+      "path": "spec/evidence/batch-143-ecur-unit-exclusions.json",
+      "sha256": "b2f42cd41a1e366fc322a3ab18dceb64d601690089d3aeeffa03069774858675"
     },
     {
       "path": "spec/evidence/batch-58-sctp-u3.json",
@@ -11194,6 +11223,10 @@
       "sha256": "c6a52bc47cc5434169fa07901d3624903f1e11c8a700e2739c7ad6628a4ca41d"
     },
     {
+      "path": "spec/history/batch-142.json",
+      "sha256": "499d94c1f942a34d35aadc12c608a20f3c68e73e295812a5412055d889644d21"
+    },
+    {
       "path": "spec/history/batch-86.json",
       "sha256": "238abe052f6dd93cff40ea490dbe3d721f85099c4f0b20fc3364bcf98cb78d49"
     },
@@ -11615,7 +11648,7 @@
     },
     {
       "path": "spec/release/public-api.json",
-      "sha256": "93a9995deb157afe45048f21b9a55e1b2a0b2659e5a3464ddea5c99152244b92"
+      "sha256": "6565d25dc58f8ea12f75b09b900461bfb297fafe5ba09697e38274334610894f"
     },
     {
       "path": "spec/release/published-modules.json",
@@ -11623,7 +11656,7 @@
     },
     {
       "path": "spec/release/support-matrix.json",
-      "sha256": "927cf4f0d92edf690e64b7bff10c64715c24d930465d88f0be404b76db8f6e4b"
+      "sha256": "d524f9fcc373a132b385309441bc5f69fc9e7643018cd573975c1d3be1fe7ac9"
     },
     {
       "path": "spec/release/v0.2.0-rc.1.json",
@@ -11839,7 +11872,7 @@
     }
   ],
   "next_batch": [
-    "Review paired ECUR INITIAL Used-Service-Unit and TERMINATION Requested-Service-Unit exclusion fixtures, including minimum and full-group quotation budgets.",
+    "Review the paired ECUR INITIAL missing Requested-Service-Unit and TERMINATION missing Used-Service-Unit fixtures for conditional 5005, including the minimum valid group and mixed omissions.",
     "Require additional template evidence before enabling field-specific 5008 for the other five MMS exclusions."
   ],
   "deferred_from_this_batch": [
@@ -12054,9 +12087,10 @@
     "spec/history/batch-138.json",
     "spec/history/batch-139.json",
     "spec/history/batch-140.json",
-    "spec/history/batch-141.json"
+    "spec/history/batch-141.json",
+    "spec/history/batch-142.json"
   ],
-  "batch_contract": "spec/local/batches/batch-142.md",
+  "batch_contract": "spec/local/batches/batch-143.md",
   "prior_interop_evidence": [
     "interop/evidence/2026-11-06-base-s6c.json",
     "interop/evidence/2026-11-06-envelope.json",
@@ -12135,7 +12169,7 @@
     "report": "doc/diameterkit-support-matrix.md",
     "evidence": "spec/evidence/batch-86-public-surface.json",
     "runtime_tests_run": true,
-    "resolution_batch": 142,
+    "resolution_batch": 143,
     "resolved_findings": [
       "DRA Relay-only capability negotiation",
       "Per-request destination binding on one DRA Peer:bounded configured targets only",
@@ -12210,14 +12244,14 @@
       "Batch135 SMS client wire NUL/mismatch errors completed in selected scope.",
       "Batch 136 covers validation.Context alias method drift and duplicated SMS group scanning."
     ],
-    "resolution_evidence": "spec/evidence/batch-142-ecur-initial-status-exclusion.json",
-    "prior_resolution_evidence": "spec/evidence/batch-141-ecur-originator-exclusion.json",
+    "resolution_evidence": "spec/evidence/batch-143-ecur-unit-exclusions.json",
+    "prior_resolution_evidence": "spec/evidence/batch-142-ecur-initial-status-exclusion.json",
     "production_sources_changed": true,
     "original_scan": {
       "evidence": "spec/reviews/2026-11-09-global-progress.json",
       "implementation_batch": 67
     },
-    "implementation_batch": 142,
+    "implementation_batch": 143,
     "open_findings": [
       {
         "name": "发布级自动验收",
@@ -12267,7 +12301,9 @@
           "spec/evidence/batch-141-ecur-originator-exclusion.json",
           "doc/ecur-originator-exclusion.md",
           "spec/evidence/batch-142-ecur-initial-status-exclusion.json",
-          "doc/ecur-initial-status-exclusion.md"
+          "doc/ecur-initial-status-exclusion.md",
+          "spec/evidence/batch-143-ecur-unit-exclusions.json",
+          "doc/ecur-unit-exclusions.md"
         ],
         "remaining": "Other conditional and value rules, the five remaining money MMS field exclusions, mixed failures and unreviewed group, cardinality, domain, handshake and header mappings remain open. For the two reviewed SMS equality checks, differing valid values have no unique wire attribution and require closure."
       },
@@ -13014,19 +13050,33 @@
           "spec/evidence/batch-142-ecur-initial-status-exclusion.json",
           "doc/ecur-initial-status-exclusion.md"
         ]
+      },
+      {
+        "name": "Isolated service-unit group exclusions on combined ECUR INITIAL and TERMINATION",
+        "requirement_refs": [
+          "SPEC-ERROR-01",
+          "SPEC-VALID-01",
+          "SPEC-BUDGET-01",
+          "SPEC-PROFILE-01"
+        ],
+        "status": "acceptance_in_progress",
+        "evidence": [
+          "spec/evidence/batch-143-ecur-unit-exclusions.json",
+          "doc/ecur-unit-exclusions.md"
+        ]
       }
     ],
-    "production_change_scope": "Isolated SM-Status exclusion on combined ECUR INITIAL",
-    "runtime_test_scope": "Local profile matrix, wire budgets, TCP/TLS, dual-module pure/race and bounded diagnostic fuzz. Seven hosted check suites and their archive contents verified."
+    "production_change_scope": "Isolated service-unit group exclusions on combined ECUR INITIAL and TERMINATION",
+    "runtime_test_scope": "Local profile matrix, wire budgets, TCP/TLS, dual-module pure/race and bounded diagnostic fuzz. Hosted suite and artifact verification pending."
   },
   "public_api_evidence": "spec/evidence/batch-87-s6c-helpers.json",
   "local_notes_update": {
     "status": "completed",
-    "scope": "Batch 142 Markdown remains ignored.",
+    "scope": "Batch 143 Markdown remains ignored.",
     "directory": "spec/local/batches/",
     "publish": false,
-    "count": 141,
-    "range": "batch-02.md through batch-142.md; no batch-01.md existed",
+    "count": 142,
+    "range": "batch-02.md through batch-143.md; no batch-01.md existed",
     "ignore_rule": "/spec/local/batches/",
     "public_record_policy": "Current public Markdown links use retained history/evidence JSON. Frozen JSON and source provenance retain original paths/hashes; current relocation map resolves local notes.",
     "prior_patch_ignore_rules_removed": true,
@@ -13491,9 +13541,10 @@
       "spec/local/batches/batch-139.md",
       "spec/local/batches/batch-140.md",
       "spec/local/batches/batch-141.md",
-      "spec/local/batches/batch-142.md"
+      "spec/local/batches/batch-142.md",
+      "spec/local/batches/batch-143.md"
     ],
-    "latest_batch": 142
+    "latest_batch": 143
   },
   "release_installation": {
     "status": "passed",
@@ -13505,7 +13556,7 @@
     "command": "python3 spec/tools/release_install.py --core-version v0.2.0-rc.2 --adapter-version v0.2.0-rc.2 --output .cache/published-install-rc2-new"
   },
   "api_change_review": {
-    "classification": "Combined slice.32 to slice.33, profile digest and dependent Bundle fingerprints change.",
+    "classification": "Combined slice.33 to slice.34, profile digest and dependent Bundle fingerprints change.",
     "review": [
       {
         "target": "linux/amd64",
@@ -13541,7 +13592,7 @@
     "core_commit": "bfb2e8d317aba8e148429a7a9ead219d69db2ce6",
     "adapter_commit": "480c8353227d406d9ef8dc1944b086a98dfd47c4",
     "current_checkout_covered": false,
-    "scope": "The verified published rc.2 pair predates the combined slice.33 development checkout."
+    "scope": "The verified published rc.2 pair predates the combined slice.34 development checkout."
   },
   "rc_candidate_checklist": "spec/release/v0.2.0-rc.2.json"
 }

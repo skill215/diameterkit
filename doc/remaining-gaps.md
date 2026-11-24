@@ -1,11 +1,13 @@
 # Current remaining gaps
 
-This is the current implementation overview for **batch 142, Draft 0.143**
+This is the current implementation overview for **batch 143, Draft 0.144**
 (2026-11-24). [Progress](../spec/progress.json) records actual check completion;
 the broad release status remains `not_ready`. The 24 SPEC IDs span implementation,
 verification and external acceptance; their `partial` labels are not a percentage
 of unfinished code. Dated specification sections and frozen batch records retain
 their historical meaning.
+
+Batch 143 adds bounded 5008 for an isolated extra Used-Service-Unit in ECUR INITIAL or Requested-Service-Unit in TERMINATION. The complete 32-byte quote includes the original group and its MSCC header. See the [field evidence and mixed-error outcomes](ecur-unit-exclusions.md).
 
 Batch 142 adds bounded 5008 for an isolated SM-Status in combined ECUR INITIAL. Discharge-Time mixtures and earlier unit errors retain their established behavior. See the [field evidence and mixed-error outcomes](ecur-initial-status-exclusion.md).
 

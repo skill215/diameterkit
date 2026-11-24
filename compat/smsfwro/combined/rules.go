@@ -258,6 +258,9 @@ func validateSMSUnitsAndStatus(m *CCR, mode validation.Mode) error {
 	u := m.MultipleServicesCreditControl
 	if m.CCRequestType == 3 {
 		if u.RequestedServiceUnit.Present || !u.UsedServiceUnit.Present || !u.ReportingReason.Present || u.ReportingReason.Value != 2 {
+			if mode == validation.Receive && isolatedECURUnit(m) {
+				return at(456, at(437, excludedECURUnit{}))
+			}
 			if mode == validation.Receive && !u.RequestedServiceUnit.Present && u.UsedServiceUnit.Present && u.ReportingReason.Present {
 				return invalidUnitValue(true)
 			}
@@ -275,6 +278,9 @@ func validateSMSUnitsAndStatus(m *CCR, mode validation.Mode) error {
 		}
 	} else {
 		if !u.RequestedServiceUnit.Present || u.UsedServiceUnit.Present || u.ReportingReason.Present {
+			if mode == validation.Receive && isolatedECURUnit(m) {
+				return at(456, at(446, excludedECURUnit{}))
+			}
 			return at(456, validation.ErrUnsupported)
 		}
 		r := u.RequestedServiceUnit.Value
