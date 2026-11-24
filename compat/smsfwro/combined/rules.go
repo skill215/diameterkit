@@ -215,7 +215,6 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 
 func validateSMSOperation(m *CCR, mode validation.Mode) error {
 	s := m.ServiceInformation.SMSInformation
-	u := m.MultipleServicesCreditControl
 	if m.CCRequestType == 4 {
 		if !m.RequestedAction.Present || m.RequestedAction.Value != 0 {
 			if mode == validation.Receive && !m.RequestedAction.Present {
@@ -237,6 +236,9 @@ func validateSMSOperation(m *CCR, mode validation.Mode) error {
 		}
 	} else {
 		if s.OriginatorSCCPAddress.Present || s.DestinationInterface.InterfaceType != 2 || s.OriginatorInterface.InterfaceType != 3 {
+			if mode == validation.Receive && s.OriginatorSCCPAddress.Present && s.DestinationInterface.InterfaceType == 2 && s.OriginatorInterface.InterfaceType == 3 && cstring(s.OriginatorSCCPAddress.Value) == nil && len(m.Extra) == 0 && validateSMSUnitsAndStatus(m, validation.Build) == nil {
+				return vendorAt(873, vendorAt(2000, vendorAt(2008, excludedECUROriginator{})))
+			}
 			if mode == validation.Receive && !s.OriginatorSCCPAddress.Present {
 				if s.DestinationInterface.InterfaceType == 2 && s.OriginatorInterface.InterfaceType != 3 {
 					return invalidECURInterface(true)
@@ -248,6 +250,12 @@ func validateSMSOperation(m *CCR, mode validation.Mode) error {
 			return vendorAt(2008, validation.ErrUnsupported)
 		}
 	}
+	return validateSMSUnitsAndStatus(m, mode)
+}
+
+func validateSMSUnitsAndStatus(m *CCR, mode validation.Mode) error {
+	s := m.ServiceInformation.SMSInformation
+	u := m.MultipleServicesCreditControl
 	if m.CCRequestType == 3 {
 		if u.RequestedServiceUnit.Present || !u.UsedServiceUnit.Present || !u.ReportingReason.Present || u.ReportingReason.Value != 2 {
 			if mode == validation.Receive && !u.RequestedServiceUnit.Present && u.UsedServiceUnit.Present && u.ReportingReason.Present {

@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"github.com/skill215/diameterkit/avp"
 	"github.com/skill215/diameterkit/validation"
+	"slices"
 	"testing"
 )
 
@@ -64,9 +65,13 @@ func TestECURInterfaceValueModes(t *testing.T) {
 										t.Fatal("classification changed", err)
 									}
 									if !valid && !action {
+										wantPath := []avp.Key{{VendorID: 10415, Code: 2008}}
+										if address && mode == validation.Receive && origin == 3 && dest == 2 {
+											wantPath = []avp.Key{{VendorID: 10415, Code: 873}, {VendorID: 10415, Code: 2000}, {VendorID: 10415, Code: 2008}}
+										}
 										var field *validation.FieldError
-										if !errors.As(err, &field) || len(field.Path) != 1 || field.Path[0] != (avp.Key{VendorID: 10415, Code: 2008}) {
-											t.Fatal("legacy path", err)
+										if !errors.As(err, &field) || !slices.Equal(field.Path, wantPath) {
+											t.Fatal("error path", err)
 										}
 									}
 								}

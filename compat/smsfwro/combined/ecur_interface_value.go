@@ -32,3 +32,9 @@ func invalidECURInterface(origin bool) error {
 	}
 	return &validation.FieldError{Path: []avp.Key{{VendorID: 10415, Code: 873}, {VendorID: 10415, Code: 2000}, {VendorID: 10415, Code: code}, {VendorID: 10415, Code: 2006}}, Rule: "wire", Cause: ecurInterfaceValue(origin)}
 }
+
+type excludedECUROriginator struct{}
+
+func (excludedECUROriginator) Error() string                     { return validation.ErrUnsupported.Error() }
+func (excludedECUROriginator) Unwrap() error                     { return validation.ErrUnsupported }
+func (excludedECUROriginator) DiameterExcludedECUROriginatorV1() {}

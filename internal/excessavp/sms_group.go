@@ -8,6 +8,7 @@ package excessavp
 
 import (
 	"encoding/binary"
+	"github.com/skill215/diameterkit/avp"
 
 	"github.com/skill215/diameterkit/wire"
 )
@@ -77,4 +78,42 @@ func quoteServiceLeaf(area []byte, leaf wire.View, group, result uint32, l wire.
 	}
 	copy(out[24:], area[leaf.Offset:leaf.Offset+leafSize])
 	return out, result, true
+}
+
+// Select the SMS group using the original decoder budget. ECUR also excludes
+// Requested-Action and requires the corresponding INITIAL or TERMINATION sequence.
+func smsRequestGroup(src []byte, l wire.Limits, ecurOnly bool) (*wire.Decoder, []byte, uint32) {
+	var forbidden avp.Key
+	if ecurOnly {
+		forbidden = avp.Key{Code: 436}
+	}
+	d := wire.NewDecoder(src, l)
+	top, ok := interfaceFieldsAbsent(d, forbidden, avp.Key{Code: 416}, avp.Key{Code: 415}, avp.Key{Code: 455}, avp.Key{Code: 458}, avp.Key{VendorID: 10415, Code: 873})
+	if !ok {
+		return nil, nil, 0
+	}
+	for _, v := range top[:3] {
+		if v.Flags != 64 || len(v.Data) != 4 {
+			return nil, nil, 0
+		}
+	}
+	kind, number := binary.BigEndian.Uint32(top[0].Data), binary.BigEndian.Uint32(top[1].Data)
+	if (ecurOnly && kind == 4) || !((kind == 1 || kind == 4) && number == 0 || kind == 3 && number == 1) || binary.BigEndian.Uint32(top[2].Data) != 1 || top[3].Flags != 64 || top[4].Flags != 192 {
+		return nil, nil, 0
+	}
+	service, e := d.Child(top[4].Data)
+	if e != nil {
+		return nil, nil, 0
+	}
+	middle, ok := interfaceFields(service, avp.Key{VendorID: 10415, Code: 2000})
+	if !ok || middle[0].Flags != 192 {
+		return nil, nil, 0
+	}
+	area := middle[0].Data
+	d, e = service.Child(area)
+	if e != nil {
+		return nil, nil, 0
+	}
+
+	return d, area, kind
 }

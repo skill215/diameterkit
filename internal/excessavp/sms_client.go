@@ -28,36 +28,13 @@ func quoteSMSClient(src []byte, cause error, proof smsClientEvidence, l wire.Lim
 			return nil, 0, false
 		}
 	}
-	d := wire.NewDecoder(src, l)
-	top, ok := interfaceFields(d, avp.Key{Code: 416}, avp.Key{Code: 415}, avp.Key{Code: 455}, avp.Key{Code: 458}, f.Path[0])
-	if !ok {
-		return nil, 0, false
-	}
-	for _, v := range top[:3] {
-		if v.Flags != 64 || len(v.Data) != 4 {
-			return nil, 0, false
-		}
-	}
-	kind, number := binary.BigEndian.Uint32(top[0].Data), binary.BigEndian.Uint32(top[1].Data)
-	if !((kind == 1 || kind == 4) && number == 0 || kind == 3 && number == 1) || binary.BigEndian.Uint32(top[2].Data) != 1 || top[3].Flags != 64 || top[4].Flags != 192 {
-		return nil, 0, false
-	}
-	service, e := d.Child(top[4].Data)
-	if e != nil {
-		return nil, 0, false
-	}
-	middle, ok := interfaceFields(service, f.Path[1])
-	if !ok || middle[0].Flags != 192 {
-		return nil, 0, false
-	}
-	area := middle[0].Data
-	d, e = service.Child(area)
-	if e != nil {
+	d, area, _ := smsRequestGroup(src, l, false)
+	if d == nil {
 		return nil, 0, false
 	}
 
 	var leaf, smsc wire.View
-	ok = scanSMSGroup(d, []uint32{2018, 2010, 2017, 2011, 2015}, func(v wire.View) bool {
+	ok := scanSMSGroup(d, []uint32{2018, 2010, 2017, 2011, 2015}, func(v wire.View) bool {
 		if smsAddress(v.Key.Code) && bytes.IndexByte(v.Data, 0) >= 0 {
 			return false
 		}

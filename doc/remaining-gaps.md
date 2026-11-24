@@ -1,11 +1,13 @@
 # Current remaining gaps
 
-This is the current implementation overview for **batch 140, Draft 0.141**
+This is the current implementation overview for **batch 141, Draft 0.142**
 (2026-11-24). [Progress](../spec/progress.json) records actual check completion;
 the broad release status remains `not_ready`. The 24 SPEC IDs span implementation,
 verification and external acceptance; their `partial` labels are not a percentage
 of unfinished code. Dated specification sections and frozen batch records retain
 their historical meaning.
+
+Batch 141 adds bounded 5008 for an isolated Originator-SCCP-Address in combined ECUR INITIAL and TERMINATION. Both template-specific interface types are checked. See the [field evidence and mixed-error outcomes](ecur-originator-exclusion.md).
 
 Batch 140 adds bounded 5008 for an isolated Requested-Action in combined ECUR INITIAL and TERMINATION. The two original template negatives, policy behavior and mixed failures are covered in the [ECUR action decision](ecur-action-exclusion.md).
 
