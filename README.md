@@ -24,6 +24,8 @@ SGd/Gdd, and Ro** procedures, built-in TCP/TLS, and an optional Linux SCTP adapt
 > and [RC scope checklist](doc/release-candidate-checklist.md); this is not stable-v1.
 > The development checkout adds [bounded conditional/value diagnostics](doc/remaining-gaps.md) beyond that published pair, including [SMS client wire values](doc/conditional-sms-client-values.md).
 
+The [rc.2 release decision](doc/releases/v0.2.0-rc.2.md) fixes the candidate scope and lists the remaining publication gates in order.
+
 ## Why diameterkit
 
 - **Typed protocol tools.** Concrete Go messages, explicit optional fields,
