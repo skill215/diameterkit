@@ -34,17 +34,22 @@ func TestActionValueWireMatrix(t *testing.T) {
 					raw, want = invalidRaw(t, co, req, actionPath(), data[:], avp.Key{})
 				} else {
 					raw = reqBytes(t, co, req)
-					raw = append(raw, invalidPart(t, avp.Key{Code: 436}, 64, data[:])...)
+					want = invalidPart(t, avp.Key{Code: 436}, 64, data[:])
+					raw = append(raw, want...)
 					wire.Put24(raw[1:4], uint32(len(raw)))
 				}
 				_, cause := co.Decode(raw)
 				q, code, ok := excessavp.QuoteInvalid(raw[20:], cause, n.cfg.Limits, 12)
-				proof := event && (kind == "iec" && value != 0 || value > 2)
-				if ok != proof || ok && (code != 5004 || !bytes.Equal(q, want)) {
+				proof := !event || kind == "iec" && value != 0 || value > 2
+				expected := uint32(5004)
+				if !event {
+					expected = 5008
+				}
+				if ok != proof || ok && (code != expected || !bytes.Equal(q, want)) {
 					t.Fatal(cause, code, q)
 				}
 				if proof {
-					if !errors.Is(cause, validation.ErrUnsupported) || !errors.Is(cause, validation.ErrField) || errors.Is(cause, validation.ErrMissing) {
+					if !errors.Is(cause, validation.ErrUnsupported) || errors.Is(cause, validation.ErrField) != event || errors.Is(cause, validation.ErrMissing) {
 						t.Fatal(cause)
 					}
 					reply, e := n.rejectFrame(raw, 4096, rejectDecode, cause)

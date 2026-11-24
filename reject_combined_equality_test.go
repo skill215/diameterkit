@@ -173,6 +173,7 @@ func TestCombinedEqualityClose(t *testing.T) {
 				}{{"default", false}, {"automatic", true}} {
 					t.Run(kind+"/"+relation+"/"+policy.name, func(t *testing.T) {
 						cfg := combinedConfig(t)
+						cfg.Peers[0].InboundCommands[0].FailurePolicy = CloseOnFailure
 						if policy.automatic {
 							cfg.Peers[0].InboundCommands[0].FailurePolicy = BaseErrorFailures
 						}

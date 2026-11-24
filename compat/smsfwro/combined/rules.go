@@ -152,7 +152,6 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 		return at(458, at(460, validation.ErrField))
 	}
 	s := m.ServiceInformation.SMSInformation
-	u := m.MultipleServicesCreditControl
 	if s.SMSNode != 0 || s.SMMessageType != 0 {
 		if mode == validation.Receive {
 			if s.SMSNode != 0 && s.SMMessageType == 0 {
@@ -204,6 +203,19 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 	if m.EventTimestamp != mm.SubmissionTime.Value {
 		return vendorAt(1202, validation.ErrField)
 	}
+	if m.CCRequestType != 4 && m.RequestedAction.Present {
+		// A later interface or unit error leaves the original action failure unquoted.
+		if mode == validation.Receive && len(m.Extra) == 0 && validateSMSOperation(m, validation.Build) == nil {
+			return at(436, excludedECURAction{})
+		}
+		return at(436, validation.ErrUnsupported)
+	}
+	return validateSMSOperation(m, mode)
+}
+
+func validateSMSOperation(m *CCR, mode validation.Mode) error {
+	s := m.ServiceInformation.SMSInformation
+	u := m.MultipleServicesCreditControl
 	if m.CCRequestType == 4 {
 		if !m.RequestedAction.Present || m.RequestedAction.Value != 0 {
 			if mode == validation.Receive && !m.RequestedAction.Present {
@@ -224,9 +236,6 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 			return vendorAt(2008, validation.ErrUnsupported)
 		}
 	} else {
-		if m.RequestedAction.Present {
-			return at(436, validation.ErrUnsupported)
-		}
 		if s.OriginatorSCCPAddress.Present || s.DestinationInterface.InterfaceType != 2 || s.OriginatorInterface.InterfaceType != 3 {
 			if mode == validation.Receive && !s.OriginatorSCCPAddress.Present {
 				if s.DestinationInterface.InterfaceType == 2 && s.OriginatorInterface.InterfaceType != 3 {

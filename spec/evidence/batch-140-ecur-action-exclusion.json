@@ -1,0 +1,948 @@
+{
+  "batch": 140,
+  "date": "2026-11-24",
+  "scope": "Isolated prohibited Requested-Action on combined ECUR INITIAL and TERMINATION",
+  "baseline_commit": "d1f0b3192accbfddef37fdb75cd999f7af3e7e03",
+  "status": "acceptance_in_progress",
+  "field_evidence": "doc/ecur-action-exclusion.md",
+  "negative_fixtures": {
+    "testdata/codec/b43-init-action.hex": "f0847b60952c8cb584b694dbc9093ca79e8a4fc53e68fb073eb477badd24ed3f",
+    "testdata/codec/b43-term-action.hex": "2beaa8753972eb3b00438f5c7a474852113484e345deb4a48bb5308063150947"
+  },
+  "boundaries": [
+    "Both ECUR sequences prohibit the same top-level action independently of its value. Source-derived negative fixtures and the complete receive path prove the isolated exclusion.",
+    "Earlier errors retain precedence; mixed later operation failures close. The quote is exactly 12 original bytes under separate source, quote and full-answer budgets.",
+    "Two explicit inbound policies over TCP/TLS loopback. Real-target testing remains deferred."
+  ],
+  "test_fixture_correction": "The initial regression run exposed inherited BaseErrorFailures in the helper and whitespace in archived hex. Explicitly selected CloseOnFailure for both the batch 139 equality controls and this batch, and decoded the archived fixtures as whitespace-separated hex.",
+  "checks": [
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b140-static/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "78925274a34b0ea72f08fdbb215557864dfa98179c7d8fc08c222fa236dffce8",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-7s4hoej4",
+      "log": ".cache/b140-static/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.2.0-rc.2=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-7s4hoej4",
+      "log": ".cache/b140-static/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b140-static/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b140-static/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "ai-disclosure",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/check_ai_headers.py"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/ai-disclosure.log",
+      "status": "passed",
+      "sha256": "0c4241a333ba3e08676039835ec4199c691bf5d70f7114b9d5e737c219fe9a4b",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "tooling-tests",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "spec/tools",
+        "-p",
+        "test_release*.py",
+        "-v"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/tooling-tests.log",
+      "status": "passed",
+      "sha256": "0c79da5d3559b6b7117c56f959022a4d4359cb621ce9b9f83785aacce0dbd671",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "support-matrix",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/check_support_matrix.py"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/support-matrix.log",
+      "status": "passed",
+      "sha256": "699c2a840bdff32563bba5792dbf610949e134ec7a22a293f90a00d105bf5fd5",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "support-matrix-negative-control",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/check_support_matrix.py",
+        "--matrix",
+        "/tmp/diameterkit-ci-7s4hoej4/stale-matrix.json"
+      ],
+      "status": "passed",
+      "expected_failure": true,
+      "log": ".cache/b140-static/support-matrix-negative-control.log",
+      "sha256": "54d4a061f91b75bb4b453fd1599aa43d52d9951ee896a9f6b809ecd3c90ae4e2",
+      "suite": "static"
+    },
+    {
+      "name": "generator-build",
+      "command": [
+        "go",
+        "build",
+        "-o",
+        "/tmp/diameterkit-ci-7s4hoej4/diameter-schema",
+        "./cmd/diameter-schema"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/generator-build.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "generated-base",
+      "command": [
+        "/tmp/diameterkit-ci-7s4hoej4/diameter-schema",
+        "-in",
+        "spec/base.json",
+        "-out",
+        "base/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/generated-base.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "generated-sh",
+      "command": [
+        "/tmp/diameterkit-ci-7s4hoej4/diameter-schema",
+        "-in",
+        "spec/sh.json",
+        "-out",
+        "app/sh/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/generated-sh.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "generated-s6c",
+      "command": [
+        "/tmp/diameterkit-ci-7s4hoej4/diameter-schema",
+        "-in",
+        "spec/s6c.json",
+        "-out",
+        "app/s6c/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/generated-s6c.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "generated-sgd",
+      "command": [
+        "/tmp/diameterkit-ci-7s4hoej4/diameter-schema",
+        "-in",
+        "spec/sgd.json",
+        "-out",
+        "app/sgd/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/generated-sgd.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "generated-ro",
+      "command": [
+        "/tmp/diameterkit-ci-7s4hoej4/diameter-schema",
+        "-in",
+        "spec/ro.json",
+        "-out",
+        "app/ro/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/generated-ro.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "generated-roabort",
+      "command": [
+        "/tmp/diameterkit-ci-7s4hoej4/diameter-schema",
+        "-in",
+        "spec/roabort.json",
+        "-out",
+        "app/ro/abort/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/generated-roabort.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "generated-dcca",
+      "command": [
+        "/tmp/diameterkit-ci-7s4hoej4/diameter-schema",
+        "-in",
+        "spec/dcca.json",
+        "-out",
+        "app/ro/dcca/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/generated-dcca.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "generated-smsfwro",
+      "command": [
+        "/tmp/diameterkit-ci-7s4hoej4/diameter-schema",
+        "-in",
+        "spec/smsfwro.json",
+        "-out",
+        "compat/smsfwro/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/generated-smsfwro.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "generated-legacy420",
+      "command": [
+        "/tmp/diameterkit-ci-7s4hoej4/diameter-schema",
+        "-in",
+        "spec/legacy420.json",
+        "-out",
+        "compat/smsfwro/legacy420/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/generated-legacy420.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "generated-combined",
+      "command": [
+        "/tmp/diameterkit-ci-7s4hoej4/diameter-schema",
+        "-in",
+        "spec/combined.json",
+        "-out",
+        "compat/smsfwro/combined/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/generated-combined.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "generated-scap1",
+      "command": [
+        "/tmp/diameterkit-ci-7s4hoej4/diameter-schema",
+        "-in",
+        "spec/scap1.json",
+        "-out",
+        "compat/scap1/zz_generated_messages.go",
+        "-check"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/generated-scap1.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "generated-negative-control",
+      "command": [
+        "/tmp/diameterkit-ci-7s4hoej4/diameter-schema",
+        "-in",
+        "/home/skill/workspace/git/diameterkit/spec/base.json",
+        "-out",
+        "/tmp/diameterkit-ci-7s4hoej4/stale.go",
+        "-check"
+      ],
+      "status": "passed",
+      "expected_failure": true,
+      "log": ".cache/b140-static/generated-negative-control.log",
+      "sha256": "cd64f6bed0c0527d1624622b5b71076b8f55877d4873e0bbb0ef14f4b56151ef",
+      "suite": "static"
+    },
+    {
+      "name": "generator-determinism",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-json",
+        "./internal/codegen",
+        "-run",
+        "^TestGeneratedFilesCurrentAndDeterministic$"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/generator-determinism.log",
+      "status": "passed",
+      "sha256": "35da6581ecb67f6658144bb4138269e04bd23335ab6a94cb1696523b2496fa28",
+      "returncode": 0,
+      "test_subtest_seed_passes": 1,
+      "test_skips": 0,
+      "suite": "static"
+    },
+    {
+      "name": "context-consumer-init",
+      "command": [
+        "go",
+        "mod",
+        "init",
+        "example.org/contextconsumer"
+      ],
+      "cwd": "/tmp/diameterkit-ci-7s4hoej4/consumer",
+      "log": ".cache/b140-static/context-consumer-init.log",
+      "status": "passed",
+      "sha256": "28ca8b659fbc71b66d3678f143793885b1b4af5b6d61e9dc4e5fc246a4c0f9e8",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "context-consumer-binding",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-require=github.com/skill215/diameterkit@v0.0.0",
+        "-replace=github.com/skill215/diameterkit=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-7s4hoej4/consumer",
+      "log": ".cache/b140-static/context-consumer-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "context-consumer",
+      "command": [
+        "go",
+        "test",
+        "-mod=readonly",
+        "-count=1",
+        "-json",
+        "."
+      ],
+      "cwd": "/tmp/diameterkit-ci-7s4hoej4/consumer",
+      "log": ".cache/b140-static/context-consumer.log",
+      "status": "passed",
+      "sha256": "de9f338dbff104223b523d7544d8068eb827ec5ec50d5047c479fc28d2aa0cb3",
+      "returncode": 0,
+      "test_subtest_seed_passes": 1,
+      "test_skips": 0,
+      "suite": "static"
+    },
+    {
+      "name": "api-snapshot",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/public_api_snapshot.py",
+        "--check",
+        "--workspace",
+        "/tmp/diameterkit-ci-7s4hoej4/go.work"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/api-snapshot.log",
+      "status": "passed",
+      "sha256": "1debc4cbb0d2bd5220fa0bdc632c40e3439560db79b82355c4d4a3c68d13dfcb",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "api-negative-control",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/public_api_snapshot.py",
+        "--check",
+        "--output",
+        "/tmp/diameterkit-ci-7s4hoej4/stale-api.json",
+        "--workspace",
+        "/tmp/diameterkit-ci-7s4hoej4/go.work"
+      ],
+      "status": "passed",
+      "expected_failure": true,
+      "log": ".cache/b140-static/api-negative-control.log",
+      "sha256": "64fa65d5163692d7809a4935279b295a5c3033511bfb5244d3fa97ce72c44f4c",
+      "suite": "static"
+    },
+    {
+      "name": "context-method-negative-control",
+      "command": [
+        "/usr/bin/python3",
+        "spec/tools/public_api_snapshot.py",
+        "--check",
+        "--workspace",
+        "/tmp/diameterkit-ci-7s4hoej4/go.work"
+      ],
+      "status": "passed",
+      "expected_failure": true,
+      "log": ".cache/b140-static/context-method-negative-control.log",
+      "sha256": "64fa65d5163692d7809a4935279b295a5c3033511bfb5244d3fa97ce72c44f4c",
+      "suite": "static"
+    },
+    {
+      "name": "core-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-static/core-vet.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "adapter-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b140-static/adapter-vet.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "static"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-pure/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
+      "returncode": 0,
+      "suite": "pure"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b140-pure/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "78925274a34b0ea72f08fdbb215557864dfa98179c7d8fc08c222fa236dffce8",
+      "returncode": 0,
+      "suite": "pure"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-e71echtu",
+      "log": ".cache/b140-pure/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "pure"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.2.0-rc.2=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-e71echtu",
+      "log": ".cache/b140-pure/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "pure"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b140-pure/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
+      "returncode": 0,
+      "suite": "pure"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b140-pure/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "pure"
+    },
+    {
+      "name": "core-pure",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-pure/core-pure.log",
+      "status": "passed",
+      "sha256": "db1e46cf3717e8cab67f937559049560b8737c5aeeb287e57bb36b919f017cb1",
+      "returncode": 0,
+      "test_subtest_seed_passes": 30521,
+      "test_skips": 0,
+      "suite": "pure"
+    },
+    {
+      "name": "adapter-pure",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b140-pure/adapter-pure.log",
+      "status": "passed",
+      "sha256": "a004f3133eab921b22ed11ce2897b5c697cb3a72f71698cf65f5d2c0b2f3bd85",
+      "returncode": 0,
+      "test_subtest_seed_passes": 114,
+      "test_skips": 0,
+      "suite": "pure"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "go",
+        "env",
+        "GOVERSION",
+        "GOHOSTOS",
+        "GOHOSTARCH"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-race/toolchain.log",
+      "status": "passed",
+      "sha256": "d09c7f6d0c9580c237eb5e27b9e769d1ef876164eafc7ae2ded9002197222c4e",
+      "returncode": 0,
+      "suite": "race"
+    },
+    {
+      "name": "adapter-manifest",
+      "command": [
+        "go",
+        "mod",
+        "edit",
+        "-json"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b140-race/adapter-manifest.log",
+      "status": "passed",
+      "sha256": "78925274a34b0ea72f08fdbb215557864dfa98179c7d8fc08c222fa236dffce8",
+      "returncode": 0,
+      "suite": "race"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "go",
+        "work",
+        "init",
+        "/home/skill/workspace/git/diameterkit",
+        "/home/skill/workspace/git/diameterkit/adapters/sctp"
+      ],
+      "cwd": "/tmp/diameterkit-ci-axhakdl4",
+      "log": ".cache/b140-race/workspace.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "race"
+    },
+    {
+      "name": "checkout-binding",
+      "command": [
+        "go",
+        "work",
+        "edit",
+        "-replace=github.com/skill215/diameterkit@v0.2.0-rc.2=/home/skill/workspace/git/diameterkit"
+      ],
+      "cwd": "/tmp/diameterkit-ci-axhakdl4",
+      "log": ".cache/b140-race/checkout-binding.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "race"
+    },
+    {
+      "name": "module-graph",
+      "command": [
+        "go",
+        "list",
+        "-m",
+        "-json",
+        "all"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b140-race/module-graph.log",
+      "status": "passed",
+      "sha256": "0b9bba1a00e30370d277eddcac2df27e324fac88c22f35a0d02471cceb517942",
+      "returncode": 0,
+      "suite": "race"
+    },
+    {
+      "name": "dependency-download",
+      "command": [
+        "go",
+        "mod",
+        "download",
+        "github.com/skill215/sctp@v0.8.0"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b140-race/dependency-download.log",
+      "status": "passed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "returncode": 0,
+      "suite": "race"
+    },
+    {
+      "name": "core-race",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "-race",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-race/core-race.log",
+      "status": "passed",
+      "sha256": "312eef2da18874401dd92ab3d29bddeacac5f49998fe05e5a08ece574b93931c",
+      "returncode": 0,
+      "test_subtest_seed_passes": 30521,
+      "test_skips": 0,
+      "suite": "race"
+    },
+    {
+      "name": "adapter-race",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout=10m",
+        "-json",
+        "-race",
+        "./..."
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit/adapters/sctp",
+      "log": ".cache/b140-race/adapter-race.log",
+      "status": "passed",
+      "sha256": "6baee00398e7b6a03c50162a4242fafb312024fb9e215db3f483a62422f3f224",
+      "returncode": 0,
+      "test_subtest_seed_passes": 114,
+      "test_skips": 0,
+      "suite": "race"
+    },
+    {
+      "name": "action",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-json",
+        "-timeout=5m",
+        "-run=^Test(ECURAction|ActionValue|ActionMissing|CombinedEquality)",
+        ".",
+        "./compat/smsfwro/combined",
+        "./internal/excessavp"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-focused-pure/action.log",
+      "status": "passed",
+      "sha256": "807fb31a298ece0cfeaae215f9fd35ebace18d1b5ce42a766b2be8d97be7bbd0",
+      "returncode": 0,
+      "test_subtest_seed_passes": 738,
+      "test_skips": 0,
+      "suite": "focused-pure"
+    },
+    {
+      "name": "action",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "-timeout=5m",
+        "-run=^Test(ECURAction|ActionValue|ActionMissing|CombinedEquality)",
+        ".",
+        "./compat/smsfwro/combined",
+        "./internal/excessavp"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-focused-race/action.log",
+      "status": "passed",
+      "sha256": "03e62b688202100f1d97bfbf179eac12fb13701a26c661abe10aa874bf6da84c",
+      "returncode": 0,
+      "test_subtest_seed_passes": 738,
+      "test_skips": 0,
+      "suite": "focused-race"
+    },
+    {
+      "name": "fuzz-invalid-diagnostic",
+      "command": [
+        "go",
+        "test",
+        "./internal/excessavp",
+        "-run=^$",
+        "-fuzz=^FuzzInvalidQuote$",
+        "-fuzztime=1000000x",
+        "-fuzzminimizetime=5s",
+        "-parallel=2",
+        "-timeout=2m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b140-target-fuzz/fuzz-invalid-diagnostic.log",
+      "status": "passed",
+      "sha256": "8b043d2765c16a2f38832f8f4f588baa8d69a84f2e7d7b665fc5356ccbc8c74e",
+      "returncode": 0,
+      "suite": "target-fuzz"
+    }
+  ],
+  "counts": {
+    "generator-determinism": 1,
+    "context-consumer": 1,
+    "core-pure": 30521,
+    "adapter-pure": 114,
+    "core-race": 30521,
+    "adapter-race": 114,
+    "focused-pure": 738,
+    "focused-race": 738
+  },
+  "target_fuzz": {
+    "target": "FuzzInvalidQuote",
+    "status": "passed",
+    "budget_kind": "executions",
+    "requested_executions": 1000000,
+    "max_executions": 1000062,
+    "workers": 2,
+    "minimization_seconds": 5,
+    "timeout_seconds": 120,
+    "executions": 1000000,
+    "execution_overrun": 0,
+    "corpus": [],
+    "log": "fuzz-invalid-diagnostic.log",
+    "sha256": "8b043d2765c16a2f38832f8f4f588baa8d69a84f2e7d7b665fc5356ccbc8c74e"
+  },
+  "api_review": {
+    "classification": "Combined slice.30 to slice.31, profile digest and dependent Bundle fingerprints change.",
+    "review": [
+      {
+        "target": "linux/amd64",
+        "package": "github.com/skill215/diameterkit/compat/smsfwro/combined",
+        "source_changes": [
+          "compat/smsfwro/combined/action_value.go",
+          "compat/smsfwro/combined/rules.go",
+          "compat/smsfwro/combined/zz_generated_messages.go"
+        ],
+        "documentation_change": "Version and DefinitionDigest constants only"
+      },
+      {
+        "target": "windows/amd64",
+        "package": "github.com/skill215/diameterkit/compat/smsfwro/combined",
+        "source_changes": [
+          "compat/smsfwro/combined/action_value.go",
+          "compat/smsfwro/combined/rules.go",
+          "compat/smsfwro/combined/zz_generated_messages.go"
+        ],
+        "documentation_change": "Version and DefinitionDigest constants only"
+      }
+    ],
+    "version_choice": "Unpublished development checkout after v0.2.0-rc.2.",
+    "migration": "Keep matching earlier builds for existing recovery records."
+  },
+  "hosted_ci": {
+    "status": "pending"
+  },
+  "source_sha256": {
+    "compat/smsfwro/combined/action_value.go": "8ad7fa61fa2f1aed47a9be1b74fa01bb6933fc9d7ecd79e6cd31c8338c16cc3a",
+    "compat/smsfwro/combined/ecur_action_test.go": "d11fc9b7b8f9fb518cb68dac323e2802b3ee3951efe0e496489673f4594cf00c",
+    "compat/smsfwro/combined/rules.go": "c9639c2af9e49555a7a837685d998174960fc13fcfe9b982bb6fd27a6be5b22c",
+    "compat/smsfwro/combined/zz_generated_messages.go": "56ac74bb027bd4dc2135aff0bee03e3f6fb471104cf43ddf5cd26a543bc76f86",
+    "doc/diameterkit-specification.md": "26eb840b2aba7ab36da1460d7f21792ec3771b6fa9178b447904f72419e1ea8c",
+    "doc/diameterkit-support-matrix.md": "229170f85b0a895afe0c2acc069c135fe522235763326c68557d069866c9c22a",
+    "doc/ecur-action-exclusion.md": "c5a94f16f022d6345f6c7ba10d488fde400baf353b529d57e93ebfa564cadc6b",
+    "doc/remaining-gaps.md": "7309ab14738b9f5df7feb1df3c5693efc6d005acc58999893193798668028672",
+    "internal/excessavp/action.go": "b013e471cbfb840e5774058438b157c70752c17a26c0283dfdad8adc266e13fd",
+    "internal/excessavp/ecur_action_test.go": "1eeac17bf812f4602e62bd745b4b35bec10c405bc904c33336e09db3d5319891",
+    "internal/excessavp/excess.go": "1774ba3541a544b1a7e7f8ee90d46299d4bf386a7848e04233767170f1e80a8b",
+    "internal/excessavp/invalid_test.go": "cf9274eab0409c32a6f00c862e50b041adad5a91666b1291ff60ff76eeb53a85",
+    "reject_action_missing_test.go": "2b665bca8bced316001b0ba542f5fc0666f077349563ef1c35800c9a9e404ea2",
+    "reject_action_value_test.go": "d1231c22ae00eff001b1601d7a2cdf5773bb0bc0a949a224068e86213f034aa7",
+    "reject_combined_equality_test.go": "c1f32a8dd11430998ed47339e8d8033b3936cbd471e3b91f33ea9f75194ec354",
+    "reject_ecur_action_test.go": "8b349f6a9533a171348d782be3692112c27f6fb99bda22cb334da40b39d4d629",
+    "spec/combined.json": "37891cf2f02db554d7c617e06f1ad9c8e3a1ee6c4d4c5e033b30695f6197bd0d",
+    "spec/history/batch-139.json": "6f550528a68bd7b87eca780ad84afdb2ee0d0219686383dd6abedb2499921fc8",
+    "spec/release/public-api.json": "3ae7e376033794ec13d286f63f50ffc5bd65690c202eaf76b6fedcd0cba3dd8a",
+    "spec/release/support-matrix.json": "d05d759d95d2d0f6f117490ab53217f8737c5cac76e5e47cf0aa566b68df368c"
+  },
+  "reproduce": [
+    "python3 spec/tools/release_check.py --suite all",
+    "See doc/ecur-action-exclusion.md for targeted commands."
+  ]
+}

@@ -59,7 +59,7 @@ func TestActionMissingWireMatrix(t *testing.T) {
 					if proof && !errors.Is(cause, validation.ErrUnsupported) {
 						t.Fatal(cause)
 					}
-					if !valid && !proof && !(present && event && (kind == "iec" && value != 0 || value > 2)) {
+					if event && !valid && !proof && !(present && (kind == "iec" && value != 0 || value > 2)) {
 						if _, e := n.rejectFrame(raw, 4096, rejectDecode, cause); !errors.Is(e, ErrUnsupported) {
 							t.Fatal("present value acquired reply", e)
 						}

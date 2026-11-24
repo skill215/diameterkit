@@ -25,3 +25,9 @@ func (e requestedActionValue) DiameterActionValueV1() string { return string(e) 
 func invalidRequestedAction(rule string) error {
 	return validation.At(avp.Key{Code: 436}, requestedActionValue(rule))
 }
+
+type excludedECURAction struct{}
+
+func (excludedECURAction) Error() string                 { return validation.ErrUnsupported.Error() }
+func (excludedECURAction) Unwrap() error                 { return validation.ErrUnsupported }
+func (excludedECURAction) DiameterExcludedECURActionV1() {}

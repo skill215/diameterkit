@@ -7,6 +7,7 @@
 package excessavp
 
 import (
+	"bytes"
 	"encoding/binary"
 	"errors"
 	"github.com/skill215/diameterkit/avp"
@@ -92,4 +93,30 @@ func quoteAction(src []byte, cause error, proof actionEvidence, limits wire.Limi
 	out := make([]byte, 12)
 	copy(out, src[action.Offset:action.Offset+12])
 	return out, 5004, true
+}
+
+// The callback establishes the isolated violation. Recheck the precise action
+// and SMS operation selectors on the complete bounded top-level wire area.
+func quoteExcludedECURAction(src []byte, cause error, l wire.Limits, budget int) ([]byte, uint32, bool) {
+	var field *validation.FieldError
+	if l.Validate() != nil || len(src) > l.MaxFrameBytes-20 || l.MaxFrameBytes < 40 || l.MaxFieldBytes < 12 || budget < 12 ||
+		!errors.Is(cause, validation.ErrUnsupported) || !errors.As(cause, &field) || len(field.Path) != 1 || field.Path[0] != (avp.Key{Code: 436}) {
+		return nil, 0, false
+	}
+	top, ok := interfaceFields(wire.NewDecoder(src, l), avp.Key{Code: 416}, avp.Key{Code: 415}, avp.Key{Code: 436}, avp.Key{Code: 455}, avp.Key{Code: 458})
+	if !ok {
+		return nil, 0, false
+	}
+	for _, v := range top[:4] {
+		if v.Flags != avp.MandatoryFlag || len(v.Data) != 4 {
+			return nil, 0, false
+		}
+	}
+	kind := binary.BigEndian.Uint32(top[0].Data)
+	number := binary.BigEndian.Uint32(top[1].Data)
+	if !((kind == 1 && number == 0) || (kind == 3 && number == 1)) || binary.BigEndian.Uint32(top[3].Data) != 1 || top[4].Flags != avp.MandatoryFlag {
+		return nil, 0, false
+	}
+	offset := top[2].Offset
+	return bytes.Clone(src[offset : offset+12]), 5008, true
 }
