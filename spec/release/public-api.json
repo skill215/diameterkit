@@ -1,5 +1,5 @@
 {
-  "format": 1,
+  "format": 2,
   "scope": "development documentation snapshot;not API stability or semantic compatibility proof",
   "toolchain": "go1.26.10",
   "selection": "build-selected GoFiles;exclude internal,main,test-only packages;CGO_ENABLED=0;no network",
@@ -781,7 +781,51 @@
             }
           ],
           "documentation_sha256": "bec3903b75ee4dfa87caef90df2705113a24f3580fae99dde8172b78b3a06bc0",
-          "documentation": "package validation // import \"github.com/skill215/diameterkit/validation\"\n\nPackage validation defines bounded, protocol-neutral validation results.\n\nVARIABLES\n\nvar (\n\tErrResultConflict  = errors.New(\"conflicting application results\")\n\tErrField           = errors.New(\"invalid field\")\n\tErrMissing         = errors.New(\"missing required AVP\")\n\tErrDuplicate       = errors.New(\"AVP cardinality exceeded\")\n\tErrUnsupported     = errors.New(\"unsupported protocol capability\")\n\tErrType            = errors.New(\"body type does not match command\")\n\tErrEnvelope        = errors.New(\"conflicting envelope\")\n\tErrUnmatchedAnswer = errors.New(\"answer does not match request header\")\n\tErrInvalidAnswer   = errors.New(\"matched answer is invalid\")\n\tErrSource          = errors.New(\"answer origin is not authorized\")\n)\nvar (\n\tErrContext         = errors.New(\"invalid protocol context\")\n\tErrContextRequired = errors.New(\"protocol context required\")\n\tErrExpired         = errors.New(\"validation handle expired\")\n)\n\nFUNCTIONS\n\nfunc At(k avp.Key, err error) error\n\nTYPES\n\ntype Context = contextvalue.Value\n\ntype FieldError struct {\n\tPath  []avp.Key\n\tRule  string\n\tCause error\n}\n    FieldError never includes subscriber data. Path is ordered outermost first.\n\nfunc (e *FieldError) Error() string\n\nfunc (e *FieldError) Unwrap() error\n\ntype Mode uint8\n\nconst (\n\tBuild Mode = iota\n\tSend\n\tReceive\n)\ntype Report struct {\n\tScope          string\n\tState          State\n\tComplete       bool\n\tCheckedRules   []string\n\tViolations     []error\n\tMissingContext []string\n\tLocalErrors    []error\n}\n    Report is an owned, first-failure report for its explicit Scope.\n    Complete does not assert full protocol coverage, peer authority or business\n    acceptance. Current engine reports contain at most four checked rules, two\n    missing names and one diagnostic. Diagnostics contain fixed classifications,\n    never payloads.\n\nfunc (r Report) Clone() Report\n    Clone owns all mutable report collections. Engine diagnostics are immutable\n    sentinel errors; no callback error, FieldError pointer or message is\n    retained.\n\nfunc (r Report) Err() error\n    Err returns the first bounded report classification, including missing\n    context.\n\nfunc (r *Report) Failure(err error)\n    Failure records one bounded classification. Detailed paths remain available\n    through the existing error APIs; this summary deliberately retains no input.\n\ntype State uint8\n    State describes validation, independently of response submission or business\n    success.\n\nconst (\n\tUnchecked State = iota\n\tNeedsApplication\n\tReady\n\tRejected\n\tExpired\n)\n"
+          "documentation": "package validation // import \"github.com/skill215/diameterkit/validation\"\n\nPackage validation defines bounded, protocol-neutral validation results.\n\nVARIABLES\n\nvar (\n\tErrResultConflict  = errors.New(\"conflicting application results\")\n\tErrField           = errors.New(\"invalid field\")\n\tErrMissing         = errors.New(\"missing required AVP\")\n\tErrDuplicate       = errors.New(\"AVP cardinality exceeded\")\n\tErrUnsupported     = errors.New(\"unsupported protocol capability\")\n\tErrType            = errors.New(\"body type does not match command\")\n\tErrEnvelope        = errors.New(\"conflicting envelope\")\n\tErrUnmatchedAnswer = errors.New(\"answer does not match request header\")\n\tErrInvalidAnswer   = errors.New(\"matched answer is invalid\")\n\tErrSource          = errors.New(\"answer origin is not authorized\")\n)\nvar (\n\tErrContext         = errors.New(\"invalid protocol context\")\n\tErrContextRequired = errors.New(\"protocol context required\")\n\tErrExpired         = errors.New(\"validation handle expired\")\n)\n\nFUNCTIONS\n\nfunc At(k avp.Key, err error) error\n\nTYPES\n\ntype Context = contextvalue.Value\n\ntype FieldError struct {\n\tPath  []avp.Key\n\tRule  string\n\tCause error\n}\n    FieldError never includes subscriber data. Path is ordered outermost first.\n\nfunc (e *FieldError) Error() string\n\nfunc (e *FieldError) Unwrap() error\n\ntype Mode uint8\n\nconst (\n\tBuild Mode = iota\n\tSend\n\tReceive\n)\ntype Report struct {\n\tScope          string\n\tState          State\n\tComplete       bool\n\tCheckedRules   []string\n\tViolations     []error\n\tMissingContext []string\n\tLocalErrors    []error\n}\n    Report is an owned, first-failure report for its explicit Scope.\n    Complete does not assert full protocol coverage, peer authority or business\n    acceptance. Current engine reports contain at most four checked rules, two\n    missing names and one diagnostic. Diagnostics contain fixed classifications,\n    never payloads.\n\nfunc (r Report) Clone() Report\n    Clone owns all mutable report collections. Engine diagnostics are immutable\n    sentinel errors; no callback error, FieldError pointer or message is\n    retained.\n\nfunc (r Report) Err() error\n    Err returns the first bounded report classification, including missing\n    context.\n\nfunc (r *Report) Failure(err error)\n    Failure records one bounded classification. Detailed paths remain available\n    through the existing error APIs; this summary deliberately retains no input.\n\ntype State uint8\n    State describes validation, independently of response submission or business\n    success.\n\nconst (\n\tUnchecked State = iota\n\tNeedsApplication\n\tReady\n\tRejected\n\tExpired\n)\n",
+          "method_sets": {
+            "Context": {
+              "pointer": [
+                "Alert() (github.com/skill215/diameterkit/internal/contextvalue.Alert, bool)",
+                "Empty() bool",
+                "Endpoints() (string, string, string, string, bool)",
+                "IMSMO() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "IMSMOSender() (imsi string, msisdn string, msisdnPresent bool, ok bool)",
+                "IMSMT() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "MCCMNCRouting() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "MOForwarding() (github.com/skill215/diameterkit/internal/contextvalue.T4Charging, bool)",
+                "Retransmission() (github.com/skill215/diameterkit/internal/contextvalue.Retransmission, bool)",
+                "RouterAlert() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "RouterRouting() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "Routing() (github.com/skill215/diameterkit/internal/contextvalue.Routing, bool)",
+                "S6cIMSAlert() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "S6cIMSReport() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "S6cIMSRouting() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "S6cT4() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "Sh() (github.com/skill215/diameterkit/internal/contextvalue.Sh, bool)",
+                "T4Charging() (github.com/skill215/diameterkit/internal/contextvalue.T4Charging, bool)"
+              ],
+              "value": [
+                "Alert() (github.com/skill215/diameterkit/internal/contextvalue.Alert, bool)",
+                "Empty() bool",
+                "Endpoints() (string, string, string, string, bool)",
+                "IMSMO() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "IMSMOSender() (imsi string, msisdn string, msisdnPresent bool, ok bool)",
+                "IMSMT() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "MCCMNCRouting() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "MOForwarding() (github.com/skill215/diameterkit/internal/contextvalue.T4Charging, bool)",
+                "Retransmission() (github.com/skill215/diameterkit/internal/contextvalue.Retransmission, bool)",
+                "RouterAlert() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "RouterRouting() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "Routing() (github.com/skill215/diameterkit/internal/contextvalue.Routing, bool)",
+                "S6cIMSAlert() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "S6cIMSReport() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "S6cIMSRouting() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "S6cT4() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "Sh() (github.com/skill215/diameterkit/internal/contextvalue.Sh, bool)",
+                "T4Charging() (github.com/skill215/diameterkit/internal/contextvalue.T4Charging, bool)"
+              ]
+            }
+          }
         },
         {
           "import_path": "github.com/skill215/diameterkit/wire",
@@ -1583,7 +1627,51 @@
             }
           ],
           "documentation_sha256": "bec3903b75ee4dfa87caef90df2705113a24f3580fae99dde8172b78b3a06bc0",
-          "documentation": "package validation // import \"github.com/skill215/diameterkit/validation\"\n\nPackage validation defines bounded, protocol-neutral validation results.\n\nVARIABLES\n\nvar (\n\tErrResultConflict  = errors.New(\"conflicting application results\")\n\tErrField           = errors.New(\"invalid field\")\n\tErrMissing         = errors.New(\"missing required AVP\")\n\tErrDuplicate       = errors.New(\"AVP cardinality exceeded\")\n\tErrUnsupported     = errors.New(\"unsupported protocol capability\")\n\tErrType            = errors.New(\"body type does not match command\")\n\tErrEnvelope        = errors.New(\"conflicting envelope\")\n\tErrUnmatchedAnswer = errors.New(\"answer does not match request header\")\n\tErrInvalidAnswer   = errors.New(\"matched answer is invalid\")\n\tErrSource          = errors.New(\"answer origin is not authorized\")\n)\nvar (\n\tErrContext         = errors.New(\"invalid protocol context\")\n\tErrContextRequired = errors.New(\"protocol context required\")\n\tErrExpired         = errors.New(\"validation handle expired\")\n)\n\nFUNCTIONS\n\nfunc At(k avp.Key, err error) error\n\nTYPES\n\ntype Context = contextvalue.Value\n\ntype FieldError struct {\n\tPath  []avp.Key\n\tRule  string\n\tCause error\n}\n    FieldError never includes subscriber data. Path is ordered outermost first.\n\nfunc (e *FieldError) Error() string\n\nfunc (e *FieldError) Unwrap() error\n\ntype Mode uint8\n\nconst (\n\tBuild Mode = iota\n\tSend\n\tReceive\n)\ntype Report struct {\n\tScope          string\n\tState          State\n\tComplete       bool\n\tCheckedRules   []string\n\tViolations     []error\n\tMissingContext []string\n\tLocalErrors    []error\n}\n    Report is an owned, first-failure report for its explicit Scope.\n    Complete does not assert full protocol coverage, peer authority or business\n    acceptance. Current engine reports contain at most four checked rules, two\n    missing names and one diagnostic. Diagnostics contain fixed classifications,\n    never payloads.\n\nfunc (r Report) Clone() Report\n    Clone owns all mutable report collections. Engine diagnostics are immutable\n    sentinel errors; no callback error, FieldError pointer or message is\n    retained.\n\nfunc (r Report) Err() error\n    Err returns the first bounded report classification, including missing\n    context.\n\nfunc (r *Report) Failure(err error)\n    Failure records one bounded classification. Detailed paths remain available\n    through the existing error APIs; this summary deliberately retains no input.\n\ntype State uint8\n    State describes validation, independently of response submission or business\n    success.\n\nconst (\n\tUnchecked State = iota\n\tNeedsApplication\n\tReady\n\tRejected\n\tExpired\n)\n"
+          "documentation": "package validation // import \"github.com/skill215/diameterkit/validation\"\n\nPackage validation defines bounded, protocol-neutral validation results.\n\nVARIABLES\n\nvar (\n\tErrResultConflict  = errors.New(\"conflicting application results\")\n\tErrField           = errors.New(\"invalid field\")\n\tErrMissing         = errors.New(\"missing required AVP\")\n\tErrDuplicate       = errors.New(\"AVP cardinality exceeded\")\n\tErrUnsupported     = errors.New(\"unsupported protocol capability\")\n\tErrType            = errors.New(\"body type does not match command\")\n\tErrEnvelope        = errors.New(\"conflicting envelope\")\n\tErrUnmatchedAnswer = errors.New(\"answer does not match request header\")\n\tErrInvalidAnswer   = errors.New(\"matched answer is invalid\")\n\tErrSource          = errors.New(\"answer origin is not authorized\")\n)\nvar (\n\tErrContext         = errors.New(\"invalid protocol context\")\n\tErrContextRequired = errors.New(\"protocol context required\")\n\tErrExpired         = errors.New(\"validation handle expired\")\n)\n\nFUNCTIONS\n\nfunc At(k avp.Key, err error) error\n\nTYPES\n\ntype Context = contextvalue.Value\n\ntype FieldError struct {\n\tPath  []avp.Key\n\tRule  string\n\tCause error\n}\n    FieldError never includes subscriber data. Path is ordered outermost first.\n\nfunc (e *FieldError) Error() string\n\nfunc (e *FieldError) Unwrap() error\n\ntype Mode uint8\n\nconst (\n\tBuild Mode = iota\n\tSend\n\tReceive\n)\ntype Report struct {\n\tScope          string\n\tState          State\n\tComplete       bool\n\tCheckedRules   []string\n\tViolations     []error\n\tMissingContext []string\n\tLocalErrors    []error\n}\n    Report is an owned, first-failure report for its explicit Scope.\n    Complete does not assert full protocol coverage, peer authority or business\n    acceptance. Current engine reports contain at most four checked rules, two\n    missing names and one diagnostic. Diagnostics contain fixed classifications,\n    never payloads.\n\nfunc (r Report) Clone() Report\n    Clone owns all mutable report collections. Engine diagnostics are immutable\n    sentinel errors; no callback error, FieldError pointer or message is\n    retained.\n\nfunc (r Report) Err() error\n    Err returns the first bounded report classification, including missing\n    context.\n\nfunc (r *Report) Failure(err error)\n    Failure records one bounded classification. Detailed paths remain available\n    through the existing error APIs; this summary deliberately retains no input.\n\ntype State uint8\n    State describes validation, independently of response submission or business\n    success.\n\nconst (\n\tUnchecked State = iota\n\tNeedsApplication\n\tReady\n\tRejected\n\tExpired\n)\n",
+          "method_sets": {
+            "Context": {
+              "pointer": [
+                "Alert() (github.com/skill215/diameterkit/internal/contextvalue.Alert, bool)",
+                "Empty() bool",
+                "Endpoints() (string, string, string, string, bool)",
+                "IMSMO() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "IMSMOSender() (imsi string, msisdn string, msisdnPresent bool, ok bool)",
+                "IMSMT() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "MCCMNCRouting() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "MOForwarding() (github.com/skill215/diameterkit/internal/contextvalue.T4Charging, bool)",
+                "Retransmission() (github.com/skill215/diameterkit/internal/contextvalue.Retransmission, bool)",
+                "RouterAlert() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "RouterRouting() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "Routing() (github.com/skill215/diameterkit/internal/contextvalue.Routing, bool)",
+                "S6cIMSAlert() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "S6cIMSReport() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "S6cIMSRouting() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "S6cT4() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "Sh() (github.com/skill215/diameterkit/internal/contextvalue.Sh, bool)",
+                "T4Charging() (github.com/skill215/diameterkit/internal/contextvalue.T4Charging, bool)"
+              ],
+              "value": [
+                "Alert() (github.com/skill215/diameterkit/internal/contextvalue.Alert, bool)",
+                "Empty() bool",
+                "Endpoints() (string, string, string, string, bool)",
+                "IMSMO() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "IMSMOSender() (imsi string, msisdn string, msisdnPresent bool, ok bool)",
+                "IMSMT() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "MCCMNCRouting() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "MOForwarding() (github.com/skill215/diameterkit/internal/contextvalue.T4Charging, bool)",
+                "Retransmission() (github.com/skill215/diameterkit/internal/contextvalue.Retransmission, bool)",
+                "RouterAlert() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "RouterRouting() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "Routing() (github.com/skill215/diameterkit/internal/contextvalue.Routing, bool)",
+                "S6cIMSAlert() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "S6cIMSReport() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "S6cIMSRouting() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "S6cT4() (github.com/skill215/diameterkit/internal/contextvalue.SMSIdentity, bool)",
+                "Sh() (github.com/skill215/diameterkit/internal/contextvalue.Sh, bool)",
+                "T4Charging() (github.com/skill215/diameterkit/internal/contextvalue.T4Charging, bool)"
+              ]
+            }
+          }
         },
         {
           "import_path": "github.com/skill215/diameterkit/wire",

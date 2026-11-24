@@ -13,6 +13,7 @@ import shutil
 import subprocess
 import tempfile
 
+from public_api_snapshot import CONTEXT_PACKAGE, context_methods
 from release_check import Checks, CORE, ADAPTER, UPSTREAM, ROOT, digest, objects
 
 POLICY = ROOT / "spec/release/version-policy.json"
@@ -136,6 +137,10 @@ def check_api(checks, consumer, downloads):
             actual = packages[p["import_path"]]
             if actual.get("CgoFiles"):
                 raise RuntimeError("cgo in public library")
+            if p["import_path"] == CONTEXT_PACKAGE:
+                methods = context_methods(consumer, dict(checks.env, **extra))
+                if methods != p["method_sets"]["Context"]:
+                    raise RuntimeError("installed validation.Context method set differs")
             expected = {Path(f["path"]).name: f["sha256"] for f in p["files"]}
             if set(actual["GoFiles"]) != set(expected) or any(digest(Path(actual["Dir"]) / f) != h for f, h in expected.items()):
                 raise RuntimeError("installed API source differs: " + p["import_path"])

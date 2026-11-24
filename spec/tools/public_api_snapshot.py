@@ -24,13 +24,27 @@ def objects(raw):
         yield item
 
 
+CONTEXT_PACKAGE = "github.com/skill215/diameterkit/validation"
+
+
+def context_methods(directory, env):
+    """Inspect target archives with a host executable, including aliased methods."""
+    archives = subprocess.check_output(
+        ["go", "list", "-mod=readonly", "-export", "-deps", "-json=ImportPath,Export", CONTEXT_PACKAGE],
+        cwd=directory, env=env)
+    host = {k: v for k, v in env.items() if k not in ("GOOS", "GOARCH")}
+    return json.loads(subprocess.check_output(
+        ["go", "run", str(ROOT / "cmd/internal/methodset/main.go"), CONTEXT_PACKAGE, "Context"],
+        input=archives, cwd=directory, env=host))
+
+
 def snapshot(workspace=None):
     env = os.environ.copy()
     env.update(CGO_ENABLED="0", GOWORK=str(workspace) if workspace else "off", GOTOOLCHAIN="local",
                GOPROXY="off", GOSUMDB="off")
     def run(args, cwd, e):
         return subprocess.check_output(["go"] + args, cwd=cwd, env=e, text=True)
-    result = {"format": 1, "scope": "development documentation snapshot;not API stability or semantic compatibility proof",
+    result = {"format": 2, "scope": "development documentation snapshot;not API stability or semantic compatibility proof",
               "toolchain": run(["env", "GOVERSION"], ROOT, env).strip(),
               "selection": "build-selected GoFiles;exclude internal,main,test-only packages;CGO_ENABLED=0;no network",
               "targets": []}
@@ -55,6 +69,8 @@ def snapshot(workspace=None):
                                  "module": p["Module"]["Path"], "files": files,
                                  "documentation_sha256": hashlib.sha256(docs.encode()).hexdigest(),
                                  "documentation": docs})
+                if p["ImportPath"] == CONTEXT_PACKAGE:
+                    selected[-1]["method_sets"] = {"Context": context_methods(module_dir, e)}
         result["targets"].append({"target": target, "packages": sorted(selected, key=lambda p:p["import_path"])})
     return result
 

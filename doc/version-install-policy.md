@@ -38,6 +38,13 @@ checks exact package/source/documentation drift; it is not a semantic
 compatibility proof and CI never auto-refreshes it. Record the changed module,
 old/new behavior, compatibility classification, version and evidence.
 
+For `validation.Context`, the snapshot includes the exported methods of both
+the value and pointer on each target. It resolves the public alias through Go
+compiler export data. The checkout gate compiles a consumer in a separate
+module with `GOWORK=off` and checks that adding a pointer method to the alias
+target causes drift. The immutable-install gate compares the downloaded
+module against the same method sets.
+
 Regenerate external bindings. Keep original builds for earlier recovery records;
 never relabel those records or bypass Bundle fingerprint checks. Use keyed
 struct literals for extended error-answer fields. Application migration, durable

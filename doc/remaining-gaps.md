@@ -1,11 +1,16 @@
 # Current remaining gaps
 
-This is the current implementation overview for **batch 135, Draft 0.136**
+This is the current implementation overview for **batch 136, Draft 0.137**
 (2026-11-24). [Progress](../spec/progress.json) records actual check completion;
 the broad release status remains `not_ready`. The 24 SPEC IDs span implementation,
 verification and external acceptance; their `partial` labels are not a percentage
 of unfinished code. Dated specification sections and frozen batch records retain
 their historical meaning.
+
+Batch 136 adds an external consumer and a method-set gate for
+`validation.Context`. The SMS address and client diagnostics share their bounded
+group scanner and retain their existing error precedence. See the
+[API policy](version-install-policy.md) and [SMS validation order](conditional-sms-client-values.md).
 
 ## Current RC and full-release work
 

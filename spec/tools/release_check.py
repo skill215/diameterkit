@@ -10,6 +10,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -96,10 +97,10 @@ class Checks:
         step["status"] = "passed"
         return raw
 
-    def reject(self, name, command, message):
+    def reject(self, name, command, message, extra=None):
         print("RUN " + name, flush=True)
         log = self.output / (name + ".log")
-        result = subprocess.run(command, cwd=ROOT, env=self.env, capture_output=True, text=True, timeout=900)
+        result = subprocess.run(command, cwd=ROOT, env={**self.env, **(extra or {})}, capture_output=True, text=True, timeout=900)
         log.write_text(result.stdout + result.stderr, encoding="utf-8")
         step = {"name": name, "command": [str(c) for c in command], "status": "failed",
                 "expected_failure": True, "log": log.name, "sha256": digest(log)}
@@ -180,6 +181,15 @@ def execute(suite, output):
                     raise RuntimeError("support matrix check rewrote its baseline")
                 check_generated(checks, temp)
                 checks.run("generator-determinism", ["go", "test", "-count=1", "-json", "./internal/codegen", "-run", "^TestGeneratedFilesCurrentAndDeterministic$"], tests=True)
+                consumer = temp / "consumer"
+                consumer.mkdir()
+                isolated = {"GOWORK": "off"}
+                checks.run("context-consumer-init", ["go", "mod", "init", "example.org/contextconsumer"], consumer, isolated)
+                checks.run("context-consumer-binding", ["go", "mod", "edit", "-require=" + CORE + "@v0.0.0",
+                           "-replace=" + CORE + "=" + str(ROOT)], consumer, isolated)
+                shutil.copyfile(ROOT / "examples/contracts/context_test.go", consumer / "context_test.go")
+                checks.run("context-consumer", ["go", "test", "-mod=readonly", "-count=1", "-json", "."],
+                           consumer, isolated, tests=True)
                 checks.run("api-snapshot", [sys.executable, "spec/tools/public_api_snapshot.py", "--check", "--workspace", str(temp / "go.work")])
                 stale = temp / "stale-api.json"
                 baseline = json.loads((ROOT / "spec/release/public-api.json").read_text())
@@ -189,6 +199,15 @@ def execute(suite, output):
                 checks.reject("api-negative-control", [sys.executable, "spec/tools/public_api_snapshot.py", "--check", "--output", str(stale), "--workspace", str(temp / "go.work")], "public API snapshot differs")
                 if digest(stale) != original:
                     raise RuntimeError("API check rewrote its baseline")
+                # Exercise the compiler view: change only the hidden alias target.
+                source = ROOT / "internal/contextvalue/value.go"
+                edited = temp / "value.go"
+                edited.write_text(source.read_text() + "\nfunc (*Value) SnapshotProbe() {}\n")
+                overlay = temp / "overlay.json"
+                overlay.write_text(json.dumps({"Replace": {str(source): str(edited)}}))
+                checks.reject("context-method-negative-control", [sys.executable, "spec/tools/public_api_snapshot.py",
+                              "--check", "--workspace", str(temp / "go.work")], "public API snapshot differs",
+                              {"GOFLAGS": "-mod=readonly -overlay=" + str(overlay)})
                 for name, cwd in MODULES.items():
                     checks.run(name + "-vet", ["go", "vet", "./..."], cwd)
             for mode in ("pure", "race"):

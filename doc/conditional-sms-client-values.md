@@ -23,6 +23,11 @@ the exact path `873/2000/2018`; Build/Send retain their original single-field
 `2018` path. Static private evidence holds no request or address data.
 `BaseErrorFailures` enables the reply; `CloseOnFailure` keeps connection closure.
 
+The address and client diagnostics share a bounded scan of SMS-Information.
+It checks the vendor, flags, uniqueness, integer widths and required fields
+with the caller’s decoder budget. Each diagnostic supplies its own value
+checks. Both copy the original padded leaf only after the output fits.
+
 ## Validation order
 
 The proof is issued at the existing failure branch. Sequence/subscription

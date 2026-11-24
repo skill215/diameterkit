@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.136 — 2026-11-24, batch 135.** The [progress record](../spec/progress.json)
+**Draft 0.137 — 2026-11-24, batch 136.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -10,6 +10,11 @@ The first-release scope includes Sh, S6c, SGd/Gdd, Ro/DCCA, the selected sms-fw
 templates, SCAP1 and RO-06 recovery. Pure Go, library-only and no persistence
 boundaries remain unchanged. Dated implementation sections below are historical
 evidence; their old missing-work statements do not override later verified batches.
+
+Batch 136 adds an external consumer and a method-set gate for
+`validation.Context`. The SMS address and client diagnostics share their bounded
+group scanner and retain their existing error precedence. See the
+[API policy](version-install-policy.md) and [SMS validation order](conditional-sms-client-values.md).
 
 Batch 107 repairs eight stale current support-matrix definition hashes and adds
 a check-only gate for all twelve bindings, identities, versions, request metadata
