@@ -112,7 +112,8 @@ func TestInterfaceValuePrecedence(t *testing.T) {
 				want = invalidPart(t, avp.Key{Code: 436}, 64, []byte{0, 0, 0, 3})
 			case "address-nul":
 				edit(smsPath(2008), []byte{0})
-				expected = 0
+				expected = 5004
+				want = smsDataQuote(t, 2008, []byte{0})
 			case "both":
 				raw = smsOmit(t, raw, 2008)
 				expected = 0

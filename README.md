@@ -22,7 +22,7 @@ SGd/Gdd, and Ro** procedures, built-in TCP/TLS, and an optional Linux SCTP adapt
 > **Development preview.** Published core and SCTP adapter: `v0.2.0-rc.1`.
 > Independent cold installation is verified. See the [release record](doc/releases/v0.2.0-rc.1.md)
 > and [RC scope checklist](doc/release-candidate-checklist.md); this is not stable-v1.
-> The development checkout adds [bounded conditional/value diagnostics](doc/remaining-gaps.md) beyond that published pair, including [subscription data values](doc/conditional-subscription-data-values.md).
+> The development checkout adds [bounded conditional/value diagnostics](doc/remaining-gaps.md) beyond that published pair, including [SMS address values](doc/conditional-sms-data-values.md).
 
 ## Why diameterkit
 

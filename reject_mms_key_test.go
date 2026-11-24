@@ -255,7 +255,7 @@ func TestMMSKeyPrecedence(t *testing.T) {
 				}
 				out, code, ok := excessavp.QuoteInvalid(raw[20:], cause, n.cfg.Limits, 4096)
 				expected := uint32(0)
-				if want || fault == "address" || fault == "address-nul" {
+				if want || fault == "address" || fault == "address-nul" || fault == "earlier-nul" {
 					expected = 5004
 				}
 				if fault == "scalar-width" || fault == "earlier-width" {
@@ -269,6 +269,9 @@ func TestMMSKeyPrecedence(t *testing.T) {
 				}
 				if fault == "address-nul" && !bytes.Equal(out, addressDataQuote(t, 886, []byte{0})) {
 					t.Fatal("earlier address instance")
+				}
+				if fault == "earlier-nul" && !bytes.Equal(out, smsDataQuote(t, 2017, []byte{0})) {
+					t.Fatal("earlier SMS instance")
 				}
 				if want && !bytes.Equal(out, mmsKeyQuote(t, []byte{1, 0, 2})) {
 					t.Fatal("wrong instance")
@@ -300,13 +303,17 @@ func TestRejectMMSKeyEarlierOrClosed(t *testing.T) {
 					raw = mmsKeyFault(t, raw, "iec", fault)
 				}
 				sendRejectRaw(t, remote, raw)
-				if fault == "address-nul" {
+				if fault == "address-nul" || fault == "earlier-nul" {
 					h, _, e := wire.Header(raw, cfg.Limits)
 					if e != nil {
 						t.Fatal(e)
 					}
 					ans := readReject(t, remote, h, 5004)
-					if !ans.FailedAVP.Present || !bytes.Equal(ans.FailedAVP.Value.Data, addressDataQuote(t, 886, []byte{0})) {
+					want := addressDataQuote(t, 886, []byte{0})
+					if fault == "earlier-nul" {
+						want = smsDataQuote(t, 2017, []byte{0})
+					}
+					if !ans.FailedAVP.Present || !bytes.Equal(ans.FailedAVP.Value.Data, want) {
 						t.Fatal("earlier address quote")
 					}
 					noDuplicateDelivery(t, p)

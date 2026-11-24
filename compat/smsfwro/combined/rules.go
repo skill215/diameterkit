@@ -55,12 +55,17 @@ func validateUserEquipmentInfoSubset(m *UserEquipmentInfo, mode validation.Mode)
 func validateServiceUnitSubset(m *ServiceUnit, _ validation.Mode) error { return extras(m.Extra) }
 func validateRequestMSCCSubset(m *RequestMSCC, _ validation.Mode) error { return extras(m.Extra) }
 func validateInterfaceSubset(m *Interface, _ validation.Mode) error     { return extras(m.Extra) }
-func validateSMSInformationSubset(m *SMSInformation, _ validation.Mode) error {
+func validateSMSInformationSubset(m *SMSInformation, mode validation.Mode) error {
 	// 2018 always remains wire octets. The complete request rule checks its exact
 	// template relation; neither this decoder nor the builder parses its content.
 	for _, v := range []avp.Optional[[]byte]{m.OriginatorSCCPAddress, m.RecipientSCCPAddress, m.SMSCAddress} {
 		if v.Present {
 			if e := cstring(v.Value); e != nil {
+				if mode == validation.Receive {
+					if err := diagnoseSMSData(m); err != nil {
+						return err
+					}
+				}
 				return e
 			}
 		}

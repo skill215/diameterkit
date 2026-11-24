@@ -155,7 +155,15 @@ func FuzzInvalidQuote(f *testing.F) {
 		f.Add(selected, uint16(0), uint32(444), uint16(128))
 		f.Add(append(subscriptionFixture(0, []byte("ok"), true), selected...), uint16(0), uint32(444), uint16(128))
 	}
+	for _, code := range []uint32{2008, 2010, 2017} {
+		for _, data := range [][]byte{{0}, {1, 0, 2}, bytes.Repeat([]byte{0}, 17)} {
+			f.Add(smsDataFixture(code, data, 127), uint16(0), code, uint16(128))
+		}
+	}
 	f.Fuzz(func(t *testing.T, raw []byte, offset uint16, code uint32, budget uint16) {
+		for _, c := range []uint32{2008, 2010, 2017} {
+			fuzzSMSData(t, raw, budget, c)
+		}
 		fuzzSubscriptionData(t, raw, budget)
 		fuzzAddressData(t, raw, budget, 886)
 		fuzzAddressData(t, raw, budget, 1201)

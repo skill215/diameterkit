@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.134 — 2026-11-23, batch 133.** The [progress record](../spec/progress.json)
+**Draft 0.135 — 2026-11-23, batch 134.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1559,3 +1559,23 @@ and hosted artifact contents are recorded in [progress](../spec/progress.json).
 Combined slice.27; public shapes, generator23, operations9, pure Go and no
 persistence stay unchanged. All24 requirements remain partial; the next candidate
 is unpublished. See [the guide](conditional-subscription-data-values.md).
+
+## Batch 134: isolated SMS address NUL errors (2026-11-23)
+
+Receive supplies static5004 evidence when exactly one of Originator-SCCP,
+Recipient-SCCP and SMSC-Address contains NUL and the SMS group has no extras.
+ErrField remains; the selected Receive path extends to Vendor10415
+873/2000/(2008 or2010 or2017). Mixed errors and Build/Send retain the old group
+path. Complete shared-budget scans verify the closed group, required children,
+scalar widths and all address counterparts. Owned36+align4(n)-byte quotes
+preserve the original padded address under two minimal group headers.
+
+Client wire/protocol/header/status bytes stay opaque to this rule. Structural,
+wire and group ordering, and later request relations, stay unchanged. The guide
+covers exact budgets, combinations, ownership and six-request TCP/TLS acceptance.
+Twenty-round pure/race, full dual-module tests, counted fuzz and hosted artifact
+contents are recorded in [progress](../spec/progress.json). Combined slice.28;
+public shapes, generator23, operations9, pure Go and no persistence stay unchanged.
+All24 requirements remain partial; the next candidate is unpublished. See
+[the guide](conditional-sms-data-values.md). The batch133 recovery observation
+remains unconfirmed historical evidence, not a claimed fix.
