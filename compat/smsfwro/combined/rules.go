@@ -285,6 +285,9 @@ func validateSMSUnitsAndStatus(m *CCR, mode validation.Mode) error {
 			return at(437, validation.ErrUnsupported)
 		}
 		if s.SMStatus.Present || s.DischargeTime.Present {
+			if mode == validation.Receive && m.CCRequestType == 1 && s.SMStatus.Present && !s.DischargeTime.Present && len(m.Extra) == 0 {
+				return vendorAt(873, vendorAt(2000, vendorAt(2014, excludedInitialStatus{})))
+			}
 			return vendorAt(2000, validation.ErrUnsupported)
 		}
 	}

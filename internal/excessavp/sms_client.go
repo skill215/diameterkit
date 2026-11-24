@@ -28,7 +28,7 @@ func quoteSMSClient(src []byte, cause error, proof smsClientEvidence, l wire.Lim
 			return nil, 0, false
 		}
 	}
-	d, area, _ := smsRequestGroup(src, l, false)
+	d, area, _ := smsRequestGroup(src, l, smsClientRule)
 	if d == nil {
 		return nil, 0, false
 	}

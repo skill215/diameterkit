@@ -38,3 +38,9 @@ type excludedECUROriginator struct{}
 func (excludedECUROriginator) Error() string                     { return validation.ErrUnsupported.Error() }
 func (excludedECUROriginator) Unwrap() error                     { return validation.ErrUnsupported }
 func (excludedECUROriginator) DiameterExcludedECUROriginatorV1() {}
+
+type excludedInitialStatus struct{}
+
+func (excludedInitialStatus) Error() string                    { return validation.ErrUnsupported.Error() }
+func (excludedInitialStatus) Unwrap() error                    { return validation.ErrUnsupported }
+func (excludedInitialStatus) DiameterExcludedInitialStatusV1() {}

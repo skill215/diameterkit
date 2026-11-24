@@ -24,13 +24,16 @@ func ecurOriginatorCause() *validation.FieldError {
 	return &validation.FieldError{Path: []avp.Key{{VendorID: 10415, Code: 873}, {VendorID: 10415, Code: 2000}, {VendorID: 10415, Code: 2008}}, Cause: ecurOriginatorProof{}}
 }
 func ecurOriginatorArea(kind uint32, address []byte, orig, dest int32) []byte {
+	return ecurSMSArea(kind, 2008, address, orig, dest)
+}
+func ecurSMSArea(kind, field uint32, payload []byte, orig, dest int32) []byte {
 	number := uint32(0)
 	if kind == 3 {
 		number = 1
 	}
 	top := bytes.Join([][]byte{actionWord(416, kind), actionWord(415, number), actionWord(455, 1), unitPart(458, nil)}, nil)
 	var sms []byte
-	for _, code := range []uint32{2001, 2002, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2017, 2018} {
+	for _, code := range []uint32{2001, 2002, 2007, field, 2009, 2010, 2011, 2013, 2015, 2016, 2017, 2018} {
 		var data []byte
 		switch code {
 		case 2001, 2007, 2011, 2016:
@@ -39,8 +42,8 @@ func ecurOriginatorArea(kind uint32, address []byte, orig, dest int32) []byte {
 			data = interfaceLeaf(dest)
 		case 2009:
 			data = interfaceLeaf(orig)
-		case 2008:
-			data = address
+		case field:
+			data = payload
 		}
 		sms = append(sms, interfacePart(code, data)...)
 	}
@@ -115,12 +118,15 @@ func TestECUROriginatorConsumer(t *testing.T) {
 }
 
 func fuzzECUROriginator(t *testing.T, raw []byte, budget uint16) {
+	checkECURFuzzQuote(t, raw, budget, 2008, ecurOriginatorCause())
+}
+func checkECURFuzzQuote(t *testing.T, raw []byte, budget uint16, field uint32, cause error) {
 	l := wire.DefaultLimits()
 	l.MaxFrameBytes = 4096
 	l.MaxFieldBytes = 2048
 	l.MaxAVPs = 64
 	l.MaxRepeated = 64
-	q, c, ok := QuoteInvalid(raw, ecurOriginatorCause(), l, int(budget))
+	q, c, ok := QuoteInvalid(raw, cause, l, int(budget))
 	if !ok {
 		if q != nil || c != 0 {
 			t.Fatal("partial quote")
@@ -132,7 +138,7 @@ func fuzzECUROriginator(t *testing.T, raw []byte, budget uint16) {
 	}
 	// Resolve the quoted path independently against the original wire area.
 	area := raw
-	for _, code := range []uint32{873, 2000, 2008} {
+	for _, code := range []uint32{873, 2000, field} {
 		d := wire.NewDecoder(area, l)
 		var selected wire.View
 		for {
@@ -153,9 +159,9 @@ func fuzzECUROriginator(t *testing.T, raw []byte, budget uint16) {
 		if selected.Key.Code != code {
 			t.Fatal("missing field", code)
 		}
-		if code == 2008 {
+		if code == field {
 			end := selected.Offset + ((12 + len(selected.Data) + 3) &^ 3)
-			if bytes.IndexByte(selected.Data, 0) >= 0 || !bytes.Equal(q, interfacePart(873, interfacePart(2000, area[selected.Offset:end]))) {
+			if (field == 2008 && bytes.IndexByte(selected.Data, 0) >= 0) || !bytes.Equal(q, interfacePart(873, interfacePart(2000, area[selected.Offset:end]))) {
 				t.Fatal("original field")
 			}
 		}

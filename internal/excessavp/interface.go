@@ -28,25 +28,30 @@ func interfaceFields(d *wire.Decoder, keys ...avp.Key) ([5]wire.View, bool) {
 // An optional forbidden key is checked in the same bounded scan.
 func interfaceFieldsAbsent(d *wire.Decoder, forbidden avp.Key, keys ...avp.Key) ([5]wire.View, bool) {
 	var values [5]wire.View
-	var seen [5]bool
-	if len(keys) == 0 || len(keys) > len(values) {
-		return values, false
+	ok := readInterfaceFields(d, forbidden, values[:], keys)
+	return values, ok
+}
+
+func readInterfaceFields(d *wire.Decoder, forbidden avp.Key, values []wire.View, keys []avp.Key) bool {
+	var seen [6]bool
+	if len(keys) == 0 || len(keys) > len(values) || len(keys) > len(seen) {
+		return false
 	}
 	for {
 		v, ok, err := d.Next()
 		if err != nil {
-			return values, false
+			return false
 		}
 		if !ok {
 			break
 		}
 		if forbidden.Code != 0 && v.Key == forbidden {
-			return values, false
+			return false
 		}
 		for i, key := range keys {
 			if v.Key == key {
 				if seen[i] {
-					return values, false
+					return false
 				}
 				seen[i] = true
 				values[i] = v
@@ -55,10 +60,10 @@ func interfaceFieldsAbsent(d *wire.Decoder, forbidden avp.Key, keys ...avp.Key) 
 	}
 	for i := range keys {
 		if !seen[i] {
-			return values, false
+			return false
 		}
 	}
-	return values, true
+	return true
 }
 func quoteInterface(src []byte, cause error, proof interfaceEvidence, limits wire.Limits, maxBytes int) ([]byte, uint32, bool) {
 	switch proof.DiameterInterfaceValueV1() {

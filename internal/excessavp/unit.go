@@ -109,19 +109,11 @@ func quoteUnitValue(src []byte, cause error, proof unitEvidence, limits wire.Lim
 		}
 		leaf, area = fields[1], top[3].Data
 	} else {
-		fields, ok := unitFields(mscc, []avp.Key{{Code: 446}, {VendorID: 10415, Code: 872}}, path[1])
-		if !ok || fields[0].Flags != 64 {
+		var ok bool
+		area, leaf, ok = requestedUnitLeaf(mscc)
+		if !ok || binary.BigEndian.Uint64(leaf.Data) == 1 {
 			return nil, 0, false
 		}
-		requested, err := mscc.Child(fields[0].Data)
-		if err != nil {
-			return nil, 0, false
-		}
-		values, ok := unitFields(requested, []avp.Key{{Code: 420}, {Code: 413}}, path[2])
-		if !ok || values[0].Flags != 64 || len(values[0].Data) != 8 || binary.BigEndian.Uint64(values[0].Data) == 1 {
-			return nil, 0, false
-		}
-		leaf, area = values[0], fields[0].Data
 	}
 	// The two leaf wire types both occupy exactly 16 original bytes. No sibling
 	// content survives. Source and complete quote limits precede allocation.
@@ -134,4 +126,21 @@ func quoteUnitValue(src []byte, cause error, proof unitEvidence, limits wire.Lim
 	}
 	copy(out[size-16:], area[leaf.Offset:leaf.Offset+16])
 	return out, 5004, true
+}
+
+// Return the sole structurally eligible requested-unit value and its original containing area.
+func requestedUnitLeaf(mscc *wire.Decoder) ([]byte, wire.View, bool) {
+	fields, ok := unitFields(mscc, []avp.Key{{Code: 446}, {VendorID: 10415, Code: 872}}, avp.Key{Code: 437})
+	if !ok || fields[0].Flags != 64 {
+		return nil, wire.View{}, false
+	}
+	requested, err := mscc.Child(fields[0].Data)
+	if err != nil {
+		return nil, wire.View{}, false
+	}
+	values, ok := unitFields(requested, []avp.Key{{Code: 420}, {Code: 413}}, avp.Key{Code: 417})
+	if !ok || values[0].Flags != 64 || len(values[0].Data) != 8 {
+		return nil, wire.View{}, false
+	}
+	return fields[0].Data, values[0], true
 }

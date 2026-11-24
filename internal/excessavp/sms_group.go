@@ -80,16 +80,29 @@ func quoteServiceLeaf(area []byte, leaf wire.View, group, result uint32, l wire.
 	return out, result, true
 }
 
+// Selectors used by the bounded SMS request diagnostics.
+type smsRequestRule uint32
+
+const (
+	smsClientRule  smsRequestRule = 2018
+	ecurOriginator smsRequestRule = 2008
+	initialStatus  smsRequestRule = 2014
+)
+
 // Select the SMS group using the original decoder budget. ECUR also excludes
 // Requested-Action and requires the corresponding INITIAL or TERMINATION sequence.
-func smsRequestGroup(src []byte, l wire.Limits, ecurOnly bool) (*wire.Decoder, []byte, uint32) {
+func smsRequestGroup(src []byte, l wire.Limits, rule smsRequestRule) (*wire.Decoder, []byte, uint32) {
 	var forbidden avp.Key
-	if ecurOnly {
+	if rule != smsClientRule {
 		forbidden = avp.Key{Code: 436}
 	}
 	d := wire.NewDecoder(src, l)
-	top, ok := interfaceFieldsAbsent(d, forbidden, avp.Key{Code: 416}, avp.Key{Code: 415}, avp.Key{Code: 455}, avp.Key{Code: 458}, avp.Key{VendorID: 10415, Code: 873})
-	if !ok {
+	keys := []avp.Key{{Code: 416}, {Code: 415}, {Code: 455}, {Code: 458}, {VendorID: 10415, Code: 873}, {Code: 456}}
+	if rule != initialStatus {
+		keys = keys[:5]
+	}
+	var top [6]wire.View
+	if !readInterfaceFields(d, forbidden, top[:], keys) {
 		return nil, nil, 0
 	}
 	for _, v := range top[:3] {
@@ -98,8 +111,21 @@ func smsRequestGroup(src []byte, l wire.Limits, ecurOnly bool) (*wire.Decoder, [
 		}
 	}
 	kind, number := binary.BigEndian.Uint32(top[0].Data), binary.BigEndian.Uint32(top[1].Data)
-	if (ecurOnly && kind == 4) || !((kind == 1 || kind == 4) && number == 0 || kind == 3 && number == 1) || binary.BigEndian.Uint32(top[2].Data) != 1 || top[3].Flags != 64 || top[4].Flags != 192 {
+	if (rule != smsClientRule && kind == 4) || !((kind == 1 || kind == 4) && number == 0 || kind == 3 && number == 1) || binary.BigEndian.Uint32(top[2].Data) != 1 || top[3].Flags != 64 || top[4].Flags != 192 {
 		return nil, nil, 0
+	}
+	if rule == initialStatus {
+		if kind != 1 || top[5].Flags != 64 {
+			return nil, nil, 0
+		}
+		mscc, e := d.Child(top[5].Data)
+		if e != nil {
+			return nil, nil, 0
+		}
+		_, value, ok := requestedUnitLeaf(mscc)
+		if !ok || binary.BigEndian.Uint64(value.Data) != 1 {
+			return nil, nil, 0
+		}
 	}
 	service, e := d.Child(top[4].Data)
 	if e != nil {

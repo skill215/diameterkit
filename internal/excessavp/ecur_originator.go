@@ -15,39 +15,48 @@ import (
 	"github.com/skill215/diameterkit/wire"
 )
 
-func quoteExcludedECUROriginator(src []byte, cause error, l wire.Limits, budget int) ([]byte, uint32, bool) {
+func quoteECURExclusion(src []byte, cause error, l wire.Limits, budget int, rule smsRequestRule) ([]byte, uint32, bool) {
 	var f *validation.FieldError
 	if l.Validate() != nil || len(src) > l.MaxFrameBytes-20 || budget < 36 || l.MaxFieldBytes < 36 || l.MaxDepth < 4 || !errors.Is(cause, validation.ErrUnsupported) || !errors.As(cause, &f) || len(f.Path) != 3 {
 		return nil, 0, false
 	}
-	for i, c := range [...]uint32{873, 2000, 2008} {
+	for i, c := range [...]uint32{873, 2000, uint32(rule)} {
 		if f.Path[i] != (avp.Key{VendorID: 10415, Code: c}) {
 			return nil, 0, false
 		}
 	}
-	d, area, kind := smsRequestGroup(src, l, true)
+	d, area, kind := smsRequestGroup(src, l, rule)
 	if d == nil {
 		return nil, 0, false
 	}
-	required := []uint32{2008, 2018, 2010, 2017, 2011, 2015, 2014, 2012}
+	required := []uint32{uint32(rule), 2018, 2010, 2017, 2011, 2015, 2014, 2012}
 	if kind == 1 {
 		required = required[:6]
 	}
-	var address, client, smsc wire.View
+	var selected, client, smsc wire.View
 	ok := scanSMSGroup(d, required, func(v wire.View) bool {
 		if smsAddress(v.Key.Code) && bytes.IndexByte(v.Data, 0) >= 0 {
 			return false
 		}
 		switch v.Key.Code {
 		case 2008:
-			address = v
+			if rule != ecurOriginator {
+				return false
+			}
+			selected = v
+		case 2014:
+			if rule == initialStatus {
+				selected = v
+				return true
+			}
+			return kind == 3
 		case 2018:
 			client = v
 		case 2017:
 			smsc = v
 		case 2016, 2007:
 			return binary.BigEndian.Uint32(v.Data) == 0
-		case 2014, 2012:
+		case 2012:
 			return kind == 3
 		case 2009, 2002:
 			expected := uint32(2)
@@ -66,5 +75,5 @@ func quoteExcludedECUROriginator(src []byte, cause error, l wire.Limits, budget 
 	if !ok || !bytes.Equal(client.Data, smsc.Data) {
 		return nil, 0, false
 	}
-	return quoteServiceLeaf(area, address, 2000, 5008, l, budget)
+	return quoteServiceLeaf(area, selected, 2000, 5008, l, budget)
 }
