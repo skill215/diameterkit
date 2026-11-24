@@ -2,12 +2,12 @@
   "format": 1,
   "date": "2026-11-24",
   "candidate": "v0.2.0-rc.2",
-  "status": "core_checkout_verified",
+  "status": "adapter_checkout_verified",
   "core_version": "v0.2.0-rc.2",
   "adapter_version": "v0.2.0-rc.2",
   "full_release_status": "not_ready",
   "core_candidate_commit": "bfb2e8d317aba8e148429a7a9ead219d69db2ce6",
-  "adapter_candidate_commit": null,
+  "adapter_candidate_commit": "480c8353227d406d9ef8dc1944b086a98dfd47c4",
   "scope": "Selected v0 Diameter bindings with bounded behavior and application-owned persistence.",
   "generator_version": 23,
   "operations_version": 9,
@@ -214,20 +214,26 @@
     {
       "id": "RC-CORE-PUBLISH",
       "completion_condition": "Publish immutable core tag, verify remote commit, authenticated download and independent core-only cold consumer.",
-      "status": "pending",
-      "evidence": []
+      "status": "passed",
+      "evidence": [
+        "spec/evidence/batch-137-core-release-adapter-pin.json"
+      ]
     },
     {
       "id": "RC-ADAPTER-PIN",
       "completion_condition": "Pin adapter to the already published core; generate real sums and pass GOWORK=off installed-core pure/race/vet/API checks.",
-      "status": "pending",
-      "evidence": []
+      "status": "passed",
+      "evidence": [
+        "spec/evidence/batch-137-core-release-adapter-pin.json"
+      ]
     },
     {
       "id": "RC-ADAPTER-CI",
       "completion_condition": "Seven checkout suites pass for the exact commit selected for the adapter tag.",
-      "status": "pending",
-      "evidence": []
+      "status": "passed",
+      "evidence": [
+        "spec/evidence/batch-137-core-release-adapter-pin.json"
+      ]
     },
     {
       "id": "RC-ADAPTER-PUBLISH",
@@ -517,7 +523,17 @@
       "evidence_ref": "spec/progress.json#SPEC-RELEASE-01"
     }
   ],
-  "publications": {},
+  "publications": {
+    "core": {
+      "tag": "v0.2.0-rc.2",
+      "commit": "bfb2e8d317aba8e148429a7a9ead219d69db2ce6",
+      "tag_object": "871122a2c58556d7101a645418b018ec8072d641",
+      "checkout_ci": "https://github.com/skill215/diameterkit/actions/runs/45318998457",
+      "status": "published",
+      "Sum": "h1:7LT8V3wlIDGiCoFCor9t/krs+RUoLAcPpIQYVBh993c=",
+      "GoModSum": "h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk="
+    }
+  },
   "known_observations": [
     {
       "name": "Unreproduced legacy420 restart import refusal",
@@ -531,6 +547,7 @@
   ],
   "evidence": [
     "doc/releases/v0.2.0-rc.2.md",
-    "spec/evidence/batch-136-context-and-sms-scanner.json"
+    "spec/evidence/batch-136-context-and-sms-scanner.json",
+    "spec/evidence/batch-137-core-release-adapter-pin.json"
   ]
 }

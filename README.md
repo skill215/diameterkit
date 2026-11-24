@@ -19,10 +19,10 @@ SGd/Gdd, and Ro** procedures, built-in TCP/TLS, and an optional Linux SCTP adapt
 [Install](#install) · [Try it](#try-it) · [Examples](#examples) ·
 [Documentation](#documentation) · [Benchmarks](#benchmarks)
 
-> **Development preview.** Published core and SCTP adapter: `v0.2.0-rc.1`.
+> **Development preview.** The core is published at `v0.2.0-rc.2`; the latest verified core/adapter pair is `v0.2.0-rc.1`.
 > Independent cold installation is verified. See the [release record](doc/releases/v0.2.0-rc.1.md)
 > and [RC scope checklist](doc/release-candidate-checklist.md); this is not stable-v1.
-> The development checkout adds [bounded conditional/value diagnostics](doc/remaining-gaps.md) beyond that published pair, including [SMS client wire values](doc/conditional-sms-client-values.md).
+> Core rc.2 includes [bounded conditional/value diagnostics](doc/remaining-gaps.md) and has passed independent cold installation.
 
 The [rc.2 release decision](doc/releases/v0.2.0-rc.2.md) fixes the candidate scope and lists the remaining publication gates in order.
 
@@ -45,7 +45,7 @@ Install the **core**. It contains the protocol types, codecs, Node/Peer runtime,
 application helpers, and TCP/TLS transports. The root Go package is `diameter`.
 
 ```sh
-go get github.com/skill215/diameterkit@v0.2.0-rc.1
+go get github.com/skill215/diameterkit@v0.2.0-rc.2
 ```
 
 ### SCTP

@@ -9,15 +9,14 @@ SPDX-AI-Date: 2026-11-19
 # Version, API and immutable installation policy
 
 The [machine policy](../spec/release/version-policy.json) governs two independent
-v0 modules. The selected new pair is core and SCTP adapter v0.2.0-rc.1.
-Check the [current release record](releases/v0.2.0-rc.1.md) for actual publication
-and installation status. The [previous pair](releases/v0.1.0-rc.md) remains
-immutable. No v0 candidate implies stable-v1 or full protocol/target conformance.
+v0 modules. Core-only consumers can install v0.2.0-rc.2. The latest pair with
+completed installation receipts is [core and adapter v0.2.0-rc.1](releases/v0.2.0-rc.1.md).
+The [rc.2 release decision](releases/v0.2.0-rc.2.md) records each module's status.
 
-| Module | Tag format | Selected candidate |
+| Module | Published version | rc.2 status |
 | --- | --- | --- |
-| github.com/skill215/diameterkit | v0.MINOR.PATCH[-rc.N] | v0.2.0-rc.1 |
-| github.com/skill215/diameterkit/adapters/sctp | adapters/sctp/v0.MINOR.PATCH[-rc.N] | v0.2.0-rc.1 |
+| github.com/skill215/diameterkit | v0.2.0-rc.2 | Core tag and public cold install verified |
+| github.com/skill215/diameterkit/adapters/sctp | v0.2.0-rc.1 | Candidate pinned to core rc.2 and checkout verified |
 
 ## Version and compatibility rules
 
@@ -73,8 +72,7 @@ for published installation evidence.
 The current checkout may advance its API/profile fingerprints after publication.
 For the verified v0.2.0-rc.1 pair, use release-record commit
 `6897bebc71e6ebd291b0b15573567a17b56a8259` before running its install gate.
-Batch 122 through 131 changes are unpublished; the next planned pair is v0.2.0-rc.2 and
-requires its own immutable publication and cold-install evidence.
+Core v0.2.0-rc.2 has its own installation receipt. Pair acceptance follows publication of the rc.2 adapter.
 
 ## Independent cold installation
 

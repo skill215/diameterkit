@@ -19,8 +19,8 @@ The [rc.2 release decision](releases/v0.2.0-rc.2.md) fixes the candidate scope a
 [The RC checklist](release-candidate-checklist.md) separates required publication
 gates from unsupported and external-evidence claims, with explicit completion
 conditions for all 24 SPEC requirements. Batch 121 verified the published pair through ordered publication and cold installation.
-Batches 122 through 135 add unpublished conditional/value diagnostics, including money SMS-Node, Service-Identifier/Timezone, client bytes, MMS SMSKey, equipment identity, address, subscription and SMS address data values, plus SMS client wire conditions; the earlier RC receipt does not
-certify the newer checkout. A future release needs fresh publication/install evidence.
+Batches 122 through 135 add conditional/value diagnostics shipped in core rc.2, including money SMS-Node, Service-Identifier/Timezone, client bytes, MMS SMSKey, equipment identity, address, subscription and SMS address data values, plus SMS client wire conditions; the earlier RC receipt does not
+certify the newer checkout. Core rc.2 passed cold installation. The adapter checkout passed independent pin and CI checks. Its tag and the new pair installation receipts are pending.
 The broad not_ready status refers to the full first-release scope, not a failed
 checkout or a requirement to complete every diagnostic before a v0 candidate.
 
