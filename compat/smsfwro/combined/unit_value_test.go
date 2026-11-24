@@ -14,7 +14,7 @@ import (
 	"testing"
 )
 
-func unitModeCheck(t *testing.T, m *CCR, mode validation.Mode, want, valid, reason bool, legacy, excluded uint32) {
+func unitModeCheck(t *testing.T, m *CCR, mode validation.Mode, want, valid, reason bool, legacy, excluded, missing uint32) {
 	t.Helper()
 	err := validateCCRSubset(m, mode)
 	var proof interface{ DiameterUnitValueV1() string }
@@ -40,6 +40,11 @@ func unitModeCheck(t *testing.T, m *CCR, mode validation.Mode, want, valid, reas
 		*m = CCR{}
 		if proof.DiameterUnitValueV1() != name {
 			t.Fatal("retained state")
+		}
+	} else if missing != 0 {
+		var f *validation.FieldError
+		if !errors.Is(err, validation.ErrMissing) || !errors.Is(err, validation.ErrUnsupported) || !errors.As(err, &f) || len(f.Path) != 2 || f.Path[0] != (avp.Key{Code: 456}) || f.Path[1] != (avp.Key{Code: missing}) {
+			t.Fatal(err)
 		}
 	} else if excluded != 0 {
 		var f *validation.FieldError
@@ -68,7 +73,11 @@ func TestUnitValueModes(t *testing.T) {
 					if mode == validation.Receive && mask == 7 && value == 2 {
 						excluded = 437
 					}
-					unitModeCheck(t, m, mode, mode == validation.Receive && mask == 6 && value != 2, mask == 6 && value == 2, true, 456, excluded)
+					var missing uint32
+					if mode == validation.Receive && mask == 4 && value == 2 {
+						missing = 446
+					}
+					unitModeCheck(t, m, mode, mode == validation.Receive && mask == 6 && value != 2, mask == 6 && value == 2, true, 456, excluded, missing)
 				})
 			}
 		}
@@ -95,7 +104,11 @@ func TestUnitValueModes(t *testing.T) {
 						if kind == "initial" && mode == validation.Receive && mask == 3 && value == 1 {
 							excluded = 446
 						}
-						unitModeCheck(t, m, mode, mode == validation.Receive && mask == 1 && value != 1, mask == 1 && value == 1, false, legacy, excluded)
+						var missing uint32
+						if mode == validation.Receive && kind == "initial" && mask&7 == 0 {
+							missing = 437
+						}
+						unitModeCheck(t, m, mode, mode == validation.Receive && mask == 1 && value != 1, mask == 1 && value == 1, false, legacy, excluded, missing)
 					})
 				}
 			}

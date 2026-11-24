@@ -318,7 +318,7 @@ func TestUnitValuePrecedence(t *testing.T) {
 		}
 	}
 }
-func TestRejectUnitValueClosed(t *testing.T) {
+func TestRejectUnitValueFailurePolicy(t *testing.T) {
 	eachNetwork(t, func(t *testing.T, encrypted bool) {
 		for _, kind := range []string{"iec", "initial", "term"} {
 			faults := []string{"default", "forbidden-unit", "missing-unit"}
@@ -337,9 +337,18 @@ func TestRejectUnitValueClosed(t *testing.T) {
 					n, co := newInboundNode(t, cfg)
 					defer closeDuplicateNode(t, n)
 					p, remote := networkConnectNode(t, n, co, encrypted)
-					raw, _ := invalidRaw(t, co, combinedDuplicateRequest(t, n, co, kind, 12312, 22312), unitValuePath(kind), unitValueData(kind, 0), avp.Key{})
+					req := combinedDuplicateRequest(t, n, co, kind, 12312, 22312)
+					raw, _ := invalidRaw(t, co, req, unitValuePath(kind), unitValueData(kind, 0), avp.Key{})
 					raw = unitValueFault(t, raw, kind, fault)
 					sendRejectRaw(t, remote, raw)
+					if kind == "initial" && fault == "missing-unit" {
+						ans := readReject(t, remote, req.Header, 5005)
+						if !ans.FailedAVP.Present || !bytes.Equal(ans.FailedAVP.Value.Data, unitValueQuote(t, "initial", 0)) {
+							t.Fatal(ans.FailedAVP)
+						}
+						noDuplicateDelivery(t, p)
+						return
+					}
 					waitFor(t, func() bool { return !p.Info().Ready })
 					if b, e := readAdapter(ctxTest(t), remote); e == nil {
 						t.Fatalf("unexpected reply %x", b)

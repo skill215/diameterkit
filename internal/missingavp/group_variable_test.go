@@ -8,6 +8,7 @@ package missingavp
 
 import (
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	"github.com/skill215/diameterkit/avp"
 	"github.com/skill215/diameterkit/validation"
@@ -175,6 +176,11 @@ func FuzzMinimumVariableTree(f *testing.F) {
 		}
 		f.Add([]byte(planRecord(k, 64, 0, 2)+typedRecord(avp.Key{VendorID: 193, Code: 9002}, 128, width, 0, kind)+planRecord(avp.Key{Code: 450}, 64, 4, 0)), uint16(128), uint8(4))
 	}
+	for _, group := range []uint32{437, 446} {
+		plan := planRecord(avp.Key{Code: 456}, 64, 0, 1) + planRecord(avp.Key{Code: group}, 64, 0, 1) + planRecord(avp.Key{Code: 417}, 64, 8, 0)
+		f.Add([]byte(plan), uint16(32), uint8(3))
+		f.Add([]byte(plan), uint16(31), uint8(3))
+	}
 	f.Fuzz(func(t *testing.T, plan []byte, budget uint16, depth uint8) {
 		if len(plan) > 1024 {
 			return
@@ -183,7 +189,11 @@ func FuzzMinimumVariableTree(f *testing.F) {
 		l.MaxAVPs = 64
 		l.MaxRepeated = 16
 		l.MaxDepth = int(depth % 65)
-		q, ok := Quote(validation.At(k, &typedTreeProof{key: k, flags: 64, plan: string(plan)}), l, int(budget))
+		root := k
+		if len(plan) >= 8 && binary.BigEndian.Uint32(plan[4:8]) == 456 {
+			root.Code = 456
+		}
+		q, ok := Quote(validation.At(root, &typedTreeProof{key: root, flags: 64, plan: string(plan)}), l, int(budget))
 		if !ok {
 			if q != nil {
 				t.Fatal("partial")

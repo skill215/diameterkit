@@ -258,6 +258,9 @@ func validateSMSUnitsAndStatus(m *CCR, mode validation.Mode) error {
 	u := m.MultipleServicesCreditControl
 	if m.CCRequestType == 3 {
 		if u.RequestedServiceUnit.Present || !u.UsedServiceUnit.Present || !u.ReportingReason.Present || u.ReportingReason.Value != 2 {
+			if mode == validation.Receive && len(m.Extra) == 0 && !u.RequestedServiceUnit.Present && !u.UsedServiceUnit.Present && u.ReportingReason.Present && u.ReportingReason.Value == 2 && s.SMStatus.Present && s.DischargeTime.Present {
+				return missingECURUnit(false)
+			}
 			if mode == validation.Receive && isolatedECURUnit(m) {
 				return at(456, at(437, excludedECURUnit{}))
 			}
@@ -278,6 +281,9 @@ func validateSMSUnitsAndStatus(m *CCR, mode validation.Mode) error {
 		}
 	} else {
 		if !u.RequestedServiceUnit.Present || u.UsedServiceUnit.Present || u.ReportingReason.Present {
+			if mode == validation.Receive && len(m.Extra) == 0 && m.CCRequestType == 1 && !u.RequestedServiceUnit.Present && !u.UsedServiceUnit.Present && !u.ReportingReason.Present && !s.SMStatus.Present && !s.DischargeTime.Present {
+				return missingECURUnit(true)
+			}
 			if mode == validation.Receive && isolatedECURUnit(m) {
 				return at(456, at(446, excludedECURUnit{}))
 			}

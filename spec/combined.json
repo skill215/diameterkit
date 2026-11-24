@@ -2,7 +2,7 @@
   "format": 1,
   "package": "combined",
   "profile": "smsfw-ro-five-template-wire-v1",
-  "version": "0.1.0-slice.34",
+  "version": "0.1.0-slice.35",
   "sources": [
     "Actual sms-fw five CCR templates, AvpsTemplate/AvpImpl/dia-message sources and frozen batch41-44 source projections. spec/batch-47.md defines explicit combined deployment boundary; not standard Ro.",
     "One static App4/272 schema. Vendor0 CCR/456/437/420 remains Grouped money and413 is separate. 10415/873/2000/2018 always owned opaque wire octets: general builder supplies exact RFC Address bytes00017f000001; IEC/ECUR builders supply unchanged SMSC STRING bytes; refund omits. Rules validate template presence/value relations, never select a decoder by action, length or content. No implicit text/address conversion.",
@@ -39,7 +39,8 @@
     "Batch140: an isolated top-level Requested-Action in named ECUR INITIAL or TERMINATION is prohibited at Receive. Quote its original UInt32 AVP under 5008. Earlier failures retain precedence; mixed later operation failures retain the original unquoted action error. Build, Send and EVENT behavior are preserved.",
     "Batch141: isolated Originator-SCCP-Address in ECUR INITIAL and TERMINATION has bounded Receive-only 5008 with original padded leaf and two ancestor headers. Both interface types and the remainder of the operation must be valid. Earlier group and request errors keep precedence.",
     "Batch142: isolated SM-Status in ECUR INITIAL with a valid requested unit gets bounded Receive-only 5008. Opaque bytes including NUL retain their original padding. Discharge-Time alone or together with status remains unquoted; earlier request and unit errors retain precedence.",
-    "Batch143: ECUR INITIAL excludes Used-Service-Unit and TERMINATION excludes Requested-Service-Unit. An isolated extra group with exactly one UInt64 CC-Service-Specific-Units child receives 5008 with an owned full-group quote under a minimal MSCC header. Mixed unit/status shapes retain the original validation order."
+    "Batch143: ECUR INITIAL excludes Used-Service-Unit and TERMINATION excludes Requested-Service-Unit. An isolated extra group with exactly one UInt64 CC-Service-Specific-Units child receives 5008 with an owned full-group quote under a minimal MSCC header. Mixed unit/status shapes retain the original validation order.",
+    "Batch144: isolated ECUR INITIAL Requested-Service-Unit and TERMINATION Used-Service-Unit omissions provide bounded Receive 5005 under MSCC. Each missing group has one zero-filled UInt64 child. Mixed unit/status conditions retain their earlier outcomes."
   ],
   "groups": [
     {
