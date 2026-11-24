@@ -3,8 +3,8 @@
   "baseline": "Draft 0.136",
   "normative_spec": "doc/diameterkit-specification.md",
   "batch": "Combined SMS ClientAddressWire NUL and mismatch diagnostics",
-  "status": "in_progress",
-  "status_meaning": "Batch135 full pure/race, static and counted fuzz passed; twenty-round regression pending; hosted checkout pending. All24 full-release requirements remain partial; rc.1 receipt is frozen historical evidence.",
+  "status": "completed",
+  "status_meaning": "Batch135 full pure/race, static and counted fuzz passed; twenty-round regression passed; all seven hosted suites and artifact contents verified. All24 full-release requirements remain partial; rc.1 receipt is frozen historical evidence.",
   "date": "2026-11-24",
   "toolchain": "go1.26.10 linux/amd64",
   "release_status": "not_ready",
@@ -7028,6 +7028,53 @@
       "suite": "corrected2"
     },
     {
+      "name": "sms-client-diagnostics",
+      "command": [
+        "go",
+        "test",
+        ".",
+        "./compat/smsfwro/combined",
+        "./internal/missingavp",
+        "./internal/excessavp",
+        "-run=Test(SMSClient|RejectSMSClient|SMSData|RejectSMSData|SubscriptionData|RejectSubscriptionData|AddressData|RejectAddressData|EquipmentData|RejectEquipmentData|MMSKey|RejectMMSKey|MoneyClient|RejectMoneyClient|MoneyParameter|RejectMoneyParameter|MoneyNode|RejectMoneyNode|AddressValue|RejectAddressValue|EquipmentValue|RejectEquipmentValue|IndicatorValue|RejectIndicatorValue|UnitValue|RejectUnitValue|SMSValue|RejectSMSValue|ECURInterfaceValue|RejectECURInterfaceValue|InterfaceValue|RejectInterfaceValue|ActionValue|RejectActionValue|ActionMissing|RejectActionMissing|MMSGroupMissing|RejectMMSGroupMissing|OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)",
+        "-count=20",
+        "-json",
+        "-timeout=15m"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b135-repeat-pure/sms-client-diagnostics.log",
+      "status": "passed",
+      "sha256": "5f14bd5dbafd3bcfe5ef089e624898d9ca7651235c6cf9db5e8f64d225b891d6",
+      "returncode": 0,
+      "test_subtest_seed_passes": 492220,
+      "test_skips": 0,
+      "suite": "repeat-pure"
+    },
+    {
+      "name": "sms-client-diagnostics",
+      "command": [
+        "go",
+        "test",
+        ".",
+        "./compat/smsfwro/combined",
+        "./internal/missingavp",
+        "./internal/excessavp",
+        "-run=Test(SMSClient|RejectSMSClient|SMSData|RejectSMSData|SubscriptionData|RejectSubscriptionData|AddressData|RejectAddressData|EquipmentData|RejectEquipmentData|MMSKey|RejectMMSKey|MoneyClient|RejectMoneyClient|MoneyParameter|RejectMoneyParameter|MoneyNode|RejectMoneyNode|AddressValue|RejectAddressValue|EquipmentValue|RejectEquipmentValue|IndicatorValue|RejectIndicatorValue|UnitValue|RejectUnitValue|SMSValue|RejectSMSValue|ECURInterfaceValue|RejectECURInterfaceValue|InterfaceValue|RejectInterfaceValue|ActionValue|RejectActionValue|ActionMissing|RejectActionMissing|MMSGroupMissing|RejectMMSGroupMissing|OriginatorMissing|RejectOriginatorMissing|SMSMissing|RejectSMSMissing|MMSMissing|RejectMMSMissing|RecipientMissing|RejectRecipientMissing|MinimumVariable|RejectMinimumVariable|VariableMinimum)",
+        "-count=20",
+        "-json",
+        "-timeout=15m",
+        "-race"
+      ],
+      "cwd": "/home/skill/workspace/git/diameterkit",
+      "log": ".cache/b135-repeat-race/sms-client-diagnostics.log",
+      "status": "passed",
+      "sha256": "b8bf89a9be3a19e8c6639f12259a55adf8051e57e69bc8b5beb2450cec13d22d",
+      "returncode": 0,
+      "test_subtest_seed_passes": 492220,
+      "test_skips": 0,
+      "suite": "repeat-race"
+    },
+    {
       "name": "toolchain",
       "command": [
         "go",
@@ -10468,7 +10515,7 @@
     },
     {
       "path": "spec/evidence/batch-135-sms-client-values.json",
-      "sha256": "a25de0f3fc552f07c9699476cf891e83c8f39d11fb0d4e4de84d5cb31a8f9a8a"
+      "sha256": "88cd17b888132eb24bd0abb612b4aac2f8c42e9c38ed27b09c7dcfa0ddbc5419"
     },
     {
       "path": "spec/evidence/batch-58-sctp-u3.json",
