@@ -1,7 +1,7 @@
 {
   "format": 1,
   "date": "2026-11-24",
-  "basis": "Batch 138 development checkout: combined slice.30 with one named money MMS exclusion. The verified rc.2 pair ships slice.29.",
+  "basis": "Batch 139 development checkout: combined slice.30. Timestamp and equipment equality failures have reviewed close behavior. The verified rc.2 pair ships slice.29.",
   "release_status": "not_ready",
   "api_snapshot": "spec/release/public-api.json",
   "profiles": [
@@ -389,9 +389,12 @@
       ],
       "evidence": [
         "spec/evidence/batch-135-sms-client-values.json",
-        "doc/conditional-sms-client-values.md"
+        "doc/conditional-sms-client-values.md",
+        "spec/evidence/batch-138-money-mms-exclusion.json",
+        "spec/evidence/batch-139-combined-sms-equality.json",
+        "doc/combined-sms-equality.md"
       ],
-      "remaining": "Other existing conditional/value rules (including request relations, MMS field exclusions and cross-field timestamp/equipment equality constraints), mixed values/omissions and unreviewed group/cardinality/domain/handshake/header mappings remain separate. Keep safe close when no reviewed diagnostic applies."
+      "remaining": "Other conditional and value rules, the five remaining money MMS field exclusions, mixed failures and unreviewed group, cardinality, domain, handshake and header mappings remain open. For the two reviewed SMS equality checks, differing valid values have no unique wire attribution and require closure."
     }
   ],
   "completed": [
@@ -1103,6 +1106,19 @@
         "doc/money-mms-exclusion.md",
         "spec/evidence/batch-138-money-mms-exclusion.json"
       ]
+    },
+    {
+      "name": "Combined SMS timestamp and equipment equality attribution",
+      "status": "completed_selected_slice",
+      "requirement_refs": [
+        "SPEC-ERROR-01",
+        "SPEC-VALID-01"
+      ],
+      "evidence": [
+        "spec/evidence/batch-139-combined-sms-equality.json",
+        "doc/combined-sms-equality.md"
+      ],
+      "exit": "Both mutation histories produce identical frames in all three SMS operations. Mixed failures follow existing order and both inbound policies close on an isolated mismatch."
     }
   ],
   "current_gap_overview": "doc/remaining-gaps.md",
