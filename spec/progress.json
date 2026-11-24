@@ -3,8 +3,8 @@
   "baseline": "Draft 0.138",
   "normative_spec": "doc/diameterkit-specification.md",
   "batch": "Freeze and verify the v0.2.0-rc.2 release boundary",
-  "status": "in_progress",
-  "status_meaning": "Six of ten rc.2 gates passed. Core published and cold verified. Exact adapter pin verified locally and on hosted CI. Adapter publication, dual cold installation and final receipts pending.",
+  "status": "completed",
+  "status_meaning": "Batch 137 completed all ten rc.2 gates, including immutable adapter publication and independent local and hosted cold installation. All 24 broader first-release requirements remain partial.",
   "date": "2026-11-24",
   "toolchain": "go1.26.10 linux/amd64",
   "release_status": "not_ready",
@@ -546,7 +546,8 @@
     "Batch135: SMS ClientAddressWire NUL and NUL-free SMSC mismatch provide distinct bounded Receive5004 evidence with exact873/2000/2018 path, retaining ErrField and original Build/Send single-field paths. Shared root/ancestor counters, request markers and a closed14-field SMS group verify the selected condition before owned36+align4(n)-byte original padded quotes. Prior conditions/group errors, NUL-before-equality and later MMS rules retain order; money binary client handling remains independent. Combined slice.29; no public shape or persistence change.",
     "Batch 136: External validation.Context consumer and target-specific compiler method sets for value and pointer. A shared scanner retains the separate SMS address/client policies, validation order and bounded original-byte quotes.",
     "Batch 137 froze the rc.2 core SHA, twelve profile definitions, public API delta and three verified prepublication gates.",
-    "Batch 137: Published core rc.2 with authenticated cold consumption. Verified adapter pin without workspace or replacements and all seven checkout artifacts on the exact adapter commit."
+    "Batch 137: Published core rc.2 with authenticated cold consumption. Verified adapter pin without workspace or replacements and all seven checkout artifacts on the exact adapter commit.",
+    "Batch 137 closed all ten rc.2 release gates. The immutable SCTP adapter pins the verified core. Local and hosted independent consumers passed using matching public module and manifest checksums."
   ],
   "requirements": [
     {
@@ -6996,7 +6997,9 @@
         "spec/evidence/batch-124-prior-ci.json",
         "spec/evidence/batch-136-context-and-sms-scanner.json",
         "spec/release/v0.2.0-rc.2.json",
-        "spec/evidence/batch-137-core-release-adapter-pin.json"
+        "spec/evidence/batch-137-core-release-adapter-pin.json",
+        "spec/release/history/v0.2.0-rc.2.json",
+        "spec/evidence/batch-137-published-pair.json"
       ],
       "batch87_evidence": "spec/evidence/batch-87-s6c-helpers.json",
       "batch88_evidence": "spec/evidence/batch-88-ro-recovery-consumption.json",
@@ -7028,6 +7031,21 @@
       "name": "rc.2 core publication, cold install, adapter genuine-core independent checks and exact SHA CI artifacts",
       "status": "passed",
       "evidence": "spec/evidence/batch-137-core-release-adapter-pin.json"
+    },
+    {
+      "name": "rc.2 immutable pair, independent local/hosted cold consumers and artifact contents",
+      "status": "passed",
+      "evidence": "spec/evidence/batch-137-published-pair.json",
+      "counts": {
+        "local/core/consumer-pure": 444,
+        "local/core/consumer-race": 444,
+        "local/adapter/consumer-pure": 445,
+        "local/adapter/consumer-race": 445,
+        "hosted/core/consumer-pure": 444,
+        "hosted/core/consumer-race": 444,
+        "hosted/adapter/consumer-pure": 445,
+        "hosted/adapter/consumer-race": 445
+      }
     }
   ],
   "source_snapshot": [
@@ -7053,7 +7071,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "87141404638688d1e9628985816586469757280c2ff46692759ea70b6e986319"
+      "sha256": "b38143fc0141a2a7362ed145ba7af81fc9378e32e14ad521f79cb5df6dc555a2"
     },
     {
       "path": "adapters/sctp/AI_DISCLOSURE.md",
@@ -7061,7 +7079,7 @@
     },
     {
       "path": "adapters/sctp/README.md",
-      "sha256": "a0b7218101497bb20611d6e5751687d3b3cc06ed829a403bf5014dfe04fb0899"
+      "sha256": "1d997226a4f83098b4ab9ed49ecbf56ffcb7bd93e9cc2d00f4c4256d4110ce07"
     },
     {
       "path": "adapters/sctp/config.go",
@@ -8041,7 +8059,7 @@
     },
     {
       "path": "doc/diameterkit-specification.md",
-      "sha256": "d16807daa901727a8e34ca35d58b72c014c9f39e2db7658ba77403bfc0673c78"
+      "sha256": "aa5b74a67b63c972565a3e87dc7b09954c6cf381dd6b987625012e3f003f53d1"
     },
     {
       "path": "doc/diameterkit-state-consistency.md",
@@ -8049,7 +8067,7 @@
     },
     {
       "path": "doc/diameterkit-support-matrix.md",
-      "sha256": "464e969b169c1a70f8e56ad26c7aeed58425f8adc5042154340db1111e6ee8cb"
+      "sha256": "73723372765da70e2bbbfd831d053648d353f088f07961aff181cb7b90b4545c"
     },
     {
       "path": "doc/diameterkit-usage-coverage.md",
@@ -8097,7 +8115,7 @@
     },
     {
       "path": "doc/release-candidate-checklist.md",
-      "sha256": "c02ae8cbeec49d802acde674ed7c91ce5f9dceaae893c650830cffcf9ed6051a"
+      "sha256": "3babd9535c923eaf6ee1c9964dec2b6e98ccfee1d0c6f38f6d518099815fdda9"
     },
     {
       "path": "doc/release-checks.md",
@@ -8109,15 +8127,15 @@
     },
     {
       "path": "doc/releases/v0.2.0-rc.1.md",
-      "sha256": "a2df282d1e649ff9845e6516b427dce1884c710755573d71913da994a0d3827f"
+      "sha256": "e2e3c095d71d91877db5029ecb8f24ea50ce1dd09e6b72b4b2f7ac3a5b480f3b"
     },
     {
       "path": "doc/releases/v0.2.0-rc.2.md",
-      "sha256": "44077c63bdc8c919e0af779e48a7e38f3131115b420d25e5730d3cc2b6195b0d"
+      "sha256": "46d343730f2c7aa5efcfda586ec771a3dd1f8716402754197f035aaf2b07dd9f"
     },
     {
       "path": "doc/remaining-gaps.md",
-      "sha256": "e559ddaae3d112a93301d3389c08d728a7da1edf213246c7fd2b301ab222e632"
+      "sha256": "bf5e5dca31ea53666d88ec8a6030ad992a53e16e536b09297c51a8d9eb211c68"
     },
     {
       "path": "doc/ro-recovery-handoff.md",
@@ -8153,7 +8171,7 @@
     },
     {
       "path": "doc/version-install-policy.md",
-      "sha256": "e4c36963c4f22d16fabe790927b3d77ed4fb06e3f71353507728bf036676d01d"
+      "sha256": "41ad20e682d6ffcdcd2f505a449a84b49d7b59be1e252246137c324406a7fed7"
     },
     {
       "path": "dra_test.go",
@@ -9760,6 +9778,10 @@
       "sha256": "90dc7a03b7c9c94b74e1d99e991b05351f7df99f2f6e0f6aafe867d5814e7903"
     },
     {
+      "path": "spec/evidence/batch-137-published-pair.json",
+      "sha256": "f3d74d398a03e0d79a0a8eedb7c1419e7f588652cf81abe01417cfc18b03b619"
+    },
+    {
       "path": "spec/evidence/batch-58-sctp-u3.json",
       "sha256": "ff2f2d2be8219dc8a676149312b1a7c58217106e5c17a900ebcdf54bc67ee385"
     },
@@ -10612,6 +10634,14 @@
       "sha256": "9350576beca6a10948dec83dd5bf36c2b41b1b1ae91262520de9b1290491fb2e"
     },
     {
+      "path": "spec/release/history/v0.2.0-rc.1.json",
+      "sha256": "e14cdafc173341f982aa1523c81a2a1ca9d66dbca55623b31abdab2a74859dc1"
+    },
+    {
+      "path": "spec/release/history/v0.2.0-rc.2.json",
+      "sha256": "b57cc301f083f09ba7ff0a5b865888eea05ef986786c750268dcba01d64f26e3"
+    },
+    {
       "path": "spec/release/performance-baseline.json",
       "sha256": "72564be24fb41e5e0c5b62d6b9c6ba3cba3390f1b32f19d86250b7d9da60fa13"
     },
@@ -10621,11 +10651,11 @@
     },
     {
       "path": "spec/release/published-modules.json",
-      "sha256": "e14cdafc173341f982aa1523c81a2a1ca9d66dbca55623b31abdab2a74859dc1"
+      "sha256": "b57cc301f083f09ba7ff0a5b865888eea05ef986786c750268dcba01d64f26e3"
     },
     {
       "path": "spec/release/support-matrix.json",
-      "sha256": "808ea874812a194b39f776fb69bea33912ba42d7f63dca9f4d59df1252fe7128"
+      "sha256": "3fb7e099f5e40a7a6e9b88d2aa51aa5632754eab7bfa870eac7af6f2563c5d7b"
     },
     {
       "path": "spec/release/v0.2.0-rc.1.json",
@@ -10633,11 +10663,11 @@
     },
     {
       "path": "spec/release/v0.2.0-rc.2.json",
-      "sha256": "4d0da77a8c83669d902b73696bddf9a566fa682f0c21a27f7461e3e0e1bc2cc3"
+      "sha256": "09b77f57eebc4540cdb49b480401f627d06acf7c6d1f1b202c77ad2a1ae0cbe3"
     },
     {
       "path": "spec/release/version-policy.json",
-      "sha256": "3a48c2ec8a8f894ed09215ee9f34c27df1bf8db79792e56557daae370a8f9284"
+      "sha256": "9ffa247e28255d7a3917d710782525aba2ba5f101e1819b69aa0999d01dcef61"
     },
     {
       "path": "spec/reviews/2026-11-09-global-progress.json",
@@ -10841,10 +10871,8 @@
     }
   ],
   "next_batch": [
-    "Publish the separate immutable adapter tag and verify its commit.",
-    "Both independently empty-cache consumers pass exact graph/API/source/checksum/pure/race/native checks without replace.",
-    "Published-install workflow passes for the exact new core/adapter pair with artifact validation.",
-    "Publish final commits/checksums/CI/install receipts and current English installation/migration guidance."
+    "Review remaining conditional and mixed diagnostic cases against the documented safe-close boundary.",
+    "Obtain private template, recovery-domain and declared deployment workload evidence before expanding the associated claims."
   ],
   "deferred_from_this_batch": [
     "Complete four-application semantics/fields/contexts and full public release acceptance remain Partial/Planned; v1 includesRo andsmsfw migration, not a replacement-ready claim.",
@@ -12413,14 +12441,12 @@
   },
   "release_installation": {
     "status": "passed",
-    "evidence": "spec/evidence/batch-93-published-install.json",
-    "receipt": "spec/release/published-modules.json",
-    "core": "v0.1.0-rc.2",
-    "adapter": "v0.1.0-rc.1",
-    "command": "python3 spec/tools/release_install.py --core-version v0.1.0-rc.2 --adapter-version v0.1.0-rc.1 --output .cache/published-install-new",
-    "scope": "Historical published rc.2/rc.1 receipt only; current generatorv23/ops9 and protocol slices have different fingerprints.",
-    "reproduce_checkout": "416d66fce4ef4109462582ef6f1e66a80d86a647",
-    "current_development": "unreleased; planned corev0.2.0-rc.1 needs separate cold-install acceptance"
+    "evidence": "spec/evidence/batch-137-published-pair.json",
+    "receipt": "spec/release/history/v0.2.0-rc.2.json",
+    "core": "v0.2.0-rc.2",
+    "adapter": "v0.2.0-rc.2",
+    "reproduce_checkout": "480c8353227d406d9ef8dc1944b086a98dfd47c4",
+    "command": "python3 spec/tools/release_install.py --core-version v0.2.0-rc.2 --adapter-version v0.2.0-rc.2 --output .cache/published-install-rc2-new"
   },
   "api_change_review": {
     "classification": "Combined slice.15 to slice.29 with reviewed 5004 diagnostic behavior and Bundle fingerprint changes.",
@@ -12458,13 +12484,16 @@
     "migration": "Regenerate affected bindings and preserve earlier builds for existing records."
   },
   "current_gap_overview": "doc/remaining-gaps.md",
-  "rc_release_status": "adapter_checkout_verified",
+  "rc_release_status": "verified_development_candidate",
   "rc_checklist": "spec/release/v0.2.0-rc.2.json",
-  "development_release_status": "core_published_adapter_candidate_verified",
+  "development_release_status": "published_verified_pair",
   "rc_verification_scope": {
-    "checklist": "spec/release/v0.2.0-rc.1.json",
-    "release_record_commit": "6897bebc71e6ebd291b0b15573567a17b56a8259",
-    "current_checkout_covered": false
+    "checklist": "spec/release/v0.2.0-rc.2.json",
+    "receipt": "spec/release/history/v0.2.0-rc.2.json",
+    "core_commit": "bfb2e8d317aba8e148429a7a9ead219d69db2ce6",
+    "adapter_commit": "480c8353227d406d9ef8dc1944b086a98dfd47c4",
+    "current_checkout_covered": false,
+    "scope": "Installation evidence covers the two published commits. Later release documentation and receipt commits are outside the tag checkouts."
   },
   "rc_candidate_checklist": "spec/release/v0.2.0-rc.2.json"
 }

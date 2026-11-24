@@ -12,15 +12,14 @@ Batch 136 adds an external consumer and a method-set gate for
 group scanner and retain their existing error precedence. See the
 [API policy](version-install-policy.md) and [SMS validation order](conditional-sms-client-values.md).
 
-The [rc.2 release decision](releases/v0.2.0-rc.2.md) fixes the candidate scope and lists the remaining publication gates in order.
+The [rc.2 release decision](releases/v0.2.0-rc.2.md) records the published scope and all ten completed release gates.
 
 ## Current RC and full-release work
 
 [The RC checklist](release-candidate-checklist.md) separates required publication
 gates from unsupported and external-evidence claims, with explicit completion
 conditions for all 24 SPEC requirements. Batch 121 verified the published pair through ordered publication and cold installation.
-Batches 122 through 135 add conditional/value diagnostics shipped in core rc.2, including money SMS-Node, Service-Identifier/Timezone, client bytes, MMS SMSKey, equipment identity, address, subscription and SMS address data values, plus SMS client wire conditions; the earlier RC receipt does not
-certify the newer checkout. Core rc.2 passed cold installation. The adapter checkout passed independent pin and CI checks. Its tag and the new pair installation receipts are pending.
+Batches 122 through 135 add conditional/value diagnostics shipped in core rc.2, including money SMS-Node, Service-Identifier/Timezone, client bytes, MMS SMSKey, equipment identity, address, subscription and SMS address data values, plus SMS client wire conditions; both rc.2 modules passed independent local and hosted installation.
 The broad not_ready status refers to the full first-release scope, not a failed
 checkout or a requirement to complete every diagnostic before a v0 candidate.
 
@@ -34,7 +33,7 @@ boundaries below remain unchanged.
 | Error diagnostics | Selected Base and generated fixed/variable-field 5005; reviewed whole-group minima, including three groups with variable children; first-excess 5009; isolated-value 5004, unknown-M 5001 and typed-length 5014; bounded Redirect 3006; selected Proxy/VSAI leaf, condition and omission diagnostics; selected SRR conditional SM-RP-SMEA omission; combined two-subscription shortage and SCAP1 ordered-parameter shortage; isolated conditional combined Recipient-Address, five MMS fields, five common SMS fields, two termination fields isolated IEC Originator-SCCP omission conditional whole MMS-Information omission and EVENT Requested-Action omission; selected IEC/money EVENT action-value 5004; isolated IEC and INITIAL/TERMINATION interface-type 5004; isolated SMS-Node and SM-Message-Type 5004; isolated Reporting-Reason and CC-Service-Specific-Units 5004; isolated Multiple-Services-Indicator 5004; isolated User-Equipment-Info-Type 5004; isolated Address-Type 5004; isolated money SMS-Node 5004; isolated Service-Identifier/Timezone 5004; bounded money ClientAddressWire 5004; isolated MMS SMSKey NUL 5004; isolated equipment Value NUL 5004; isolated Address-Data NUL 5004; repeated Subscription-Id-Data NUL 5004; isolated SMS address NUL 5004; SMS ClientAddressWire NUL/mismatch 5004 | Other conditional/cardinality and unreviewed group omissions, domain/handshake mappings and malformed-header length diagnostics |
 | Duplicate acceptance | Generic and combined cross-peer TCP/TLS tests; four-profile identity, simultaneous arrivals and shared/independent slot/byte cache acceptance | Larger tenant and mixed-transport workloads, real-target deduplication domains and durable application behavior |
 | Load acceptance | Seventeen count-bounded fuzz targets with bounded observed work and retained failure receipts, pure/race finite TCP/SCTP stress, four-application TCP isolation and measured benchmarks | Declared long-soak, saturation, tenant fairness and mixed-transport workloads |
-| Publication | Reviewed API/generated output and exact dual-module checkout CI; core/adapter v0.2.0-rc.1 published and cold-installed locally and on hosted CI | Full-first-release scope and external acceptance; future versions need their own publication receipts |
+| Publication | Reviewed API/generated output and exact dual-module checkout CI; core/adapter v0.2.0-rc.2 published and cold-installed locally and on hosted CI | Full-first-release scope and external acceptance; future versions need their own publication receipts |
 
 The selected combined cross-peer and mixed-profile cache slice is now covered by
 [batch 99 acceptance](cross-peer-duplicate-acceptance.md). The [batch 100 extension](length-avp-diagnostics.md) now covers selected generated

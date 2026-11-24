@@ -8,6 +8,8 @@ SPDX-AI-Date: 2026-11-19
 
 # v0.2.0-rc.1 release checklist
 
+For the current published pair, see the [rc.2 release record](releases/v0.2.0-rc.2.md) and [verified gate checklist](../spec/release/v0.2.0-rc.2.json). This page retains the rc.1 scope and the broader SPEC completion conditions.
+
 This candidate ships the verified v0 subset. It does not complete the full
 first-release/v1 scope. The [machine checklist](../spec/release/v0.2.0-rc.1.json)
 and [release receipt](releases/v0.2.0-rc.1.md) carry current gate status.

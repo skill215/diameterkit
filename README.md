@@ -19,12 +19,7 @@ SGd/Gdd, and Ro** procedures, built-in TCP/TLS, and an optional Linux SCTP adapt
 [Install](#install) · [Try it](#try-it) · [Examples](#examples) ·
 [Documentation](#documentation) · [Benchmarks](#benchmarks)
 
-> **Development preview.** The core is published at `v0.2.0-rc.2`; the latest verified core/adapter pair is `v0.2.0-rc.1`.
-> Independent cold installation is verified. See the [release record](doc/releases/v0.2.0-rc.1.md)
-> and [RC scope checklist](doc/release-candidate-checklist.md); this is not stable-v1.
-> Core rc.2 includes [bounded conditional/value diagnostics](doc/remaining-gaps.md) and has passed independent cold installation.
-
-The [rc.2 release decision](doc/releases/v0.2.0-rc.2.md) fixes the candidate scope and lists the remaining publication gates in order.
+> **Development preview.** Core and the optional SCTP adapter are both published at `v0.2.0-rc.2`. Independent local and hosted consumers verified both installations. [Release scope and receipts](doc/releases/v0.2.0-rc.2.md).
 
 ## Why diameterkit
 
@@ -54,7 +49,7 @@ Add the **SCTP adapter** only when your peer uses SCTP. It connects SCTP sockets
 to the same core runtime and requires a supported Linux kernel.
 
 ```sh
-go get github.com/skill215/diameterkit/adapters/sctp@v0.2.0-rc.1
+go get github.com/skill215/diameterkit/adapters/sctp@v0.2.0-rc.2
 ```
 
 The adapter depends on the core and `github.com/skill215/sctp`; Go resolves both
@@ -115,7 +110,7 @@ before adding cancellation, reconnection, or recovery.
 ## Documentation
 
 - **Learn:** [documentation index](doc/README.md), [protocol support](doc/diameterkit-support-matrix.md), [runtime basics](doc/runtime-basics.md).
-- **Ship:** [version and installation policy](doc/version-install-policy.md), [release status](doc/releases/v0.2.0-rc.1.md), [remaining gaps](doc/remaining-gaps.md).
+- **Ship:** [version and installation policy](doc/version-install-policy.md), [release status](doc/releases/v0.2.0-rc.2.md), [remaining gaps](doc/remaining-gaps.md).
 - **Contribute:** [CI and local checks](doc/release-checks.md), [measurement methodology](doc/load-checks.md), [specification and evidence](spec/README.md).
 
 Licensed under [Apache-2.0](LICENSE). OpenAI Codex generated and revised this

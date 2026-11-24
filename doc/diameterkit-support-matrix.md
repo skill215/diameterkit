@@ -65,7 +65,7 @@ build. The [current gap list](remaining-gaps.md) separates implementation,
 verification and external evidence from historical batch descriptions.
 
 - **Release:** exact available versions, commits, authenticated checksums and cold
-  consumers are recorded in the [publication record](releases/v0.2.0-rc.1.md).
+  consumers are recorded in the [publication record](releases/v0.2.0-rc.2.md).
 - **Private bindings:** original six-template inputs, private ACA/PSP/1292 mappings,
   420/2018 acceptance, deduplication domains and session continuity need named evidence.
 - **Deployment:** peer/terminal identities, target recovery permission and real

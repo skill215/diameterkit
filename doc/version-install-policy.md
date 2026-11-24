@@ -9,14 +9,12 @@ SPDX-AI-Date: 2026-11-19
 # Version, API and immutable installation policy
 
 The [machine policy](../spec/release/version-policy.json) governs two independent
-v0 modules. Core-only consumers can install v0.2.0-rc.2. The latest pair with
-completed installation receipts is [core and adapter v0.2.0-rc.1](releases/v0.2.0-rc.1.md).
-The [rc.2 release decision](releases/v0.2.0-rc.2.md) records each module's status.
+v0 modules. The [verified pair](releases/v0.2.0-rc.2.md) uses separate immutable tags.
 
-| Module | Published version | rc.2 status |
+| Module | Published tag | Required dependencies |
 | --- | --- | --- |
-| github.com/skill215/diameterkit | v0.2.0-rc.2 | Core tag and public cold install verified |
-| github.com/skill215/diameterkit/adapters/sctp | v0.2.0-rc.1 | Candidate pinned to core rc.2 and checkout verified |
+| github.com/skill215/diameterkit | v0.2.0-rc.2 | Go standard library |
+| github.com/skill215/diameterkit/adapters/sctp | adapters/sctp/v0.2.0-rc.2 | Core v0.2.0-rc.2 and upstream SCTP v0.8.0 |
 
 ## Version and compatibility rules
 
@@ -72,19 +70,19 @@ for published installation evidence.
 The current checkout may advance its API/profile fingerprints after publication.
 For the verified v0.2.0-rc.1 pair, use release-record commit
 `6897bebc71e6ebd291b0b15573567a17b56a8259` before running its install gate.
-Core v0.2.0-rc.2 has its own installation receipt. Pair acceptance follows publication of the rc.2 adapter.
+Use the adapter tag `adapters/sctp/v0.2.0-rc.2` to reproduce the hosted rc.2 verification with the same tool, API inventory and consumer tests.
 
 ## Independent cold installation
 
 Use the pinned Go toolchain, Python3, Linux/amd64 with SCTP and a compiler for the
-race instrumentation. From the final release-record checkout choose a nonexistent
+race instrumentation. From the adapter-tag checkout choose a nonexistent
 output directory:
 
 ```sh
 python3 spec/tools/release_install.py \
-  --core-version v0.2.0-rc.1 \
-  --adapter-version v0.2.0-rc.1 \
-  --output .cache/published-install-v0.2.0-rc.1
+  --core-version v0.2.0-rc.2 \
+  --adapter-version v0.2.0-rc.2 \
+  --output .cache/published-install-v0.2.0-rc.2
 ```
 
 The gate never publishes or edits module manifests. It rejects branch/latest,

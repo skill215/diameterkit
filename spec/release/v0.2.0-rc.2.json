@@ -2,7 +2,7 @@
   "format": 1,
   "date": "2026-11-24",
   "candidate": "v0.2.0-rc.2",
-  "status": "adapter_checkout_verified",
+  "status": "verified_development_candidate",
   "core_version": "v0.2.0-rc.2",
   "adapter_version": "v0.2.0-rc.2",
   "full_release_status": "not_ready",
@@ -238,26 +238,35 @@
     {
       "id": "RC-ADAPTER-PUBLISH",
       "completion_condition": "Publish the separate immutable adapter tag and verify its commit.",
-      "status": "pending",
-      "evidence": []
+      "status": "passed",
+      "evidence": [
+        "spec/evidence/batch-137-published-pair.json"
+      ]
     },
     {
       "id": "RC-COLD-LOCAL",
       "completion_condition": "Both independently empty-cache consumers pass exact graph/API/source/checksum/pure/race/native checks without replace.",
-      "status": "pending",
-      "evidence": []
+      "status": "passed",
+      "evidence": [
+        "spec/evidence/batch-137-published-pair.json"
+      ]
     },
     {
       "id": "RC-COLD-HOSTED",
       "completion_condition": "Published-install workflow passes for the exact new core/adapter pair with artifact validation.",
-      "status": "pending",
-      "evidence": []
+      "status": "passed",
+      "evidence": [
+        "spec/evidence/batch-137-published-pair.json"
+      ]
     },
     {
       "id": "RC-RECEIPTS",
       "completion_condition": "Publish final commits/checksums/CI/install receipts and current English installation/migration guidance.",
-      "status": "pending",
-      "evidence": []
+      "status": "passed",
+      "evidence": [
+        "spec/release/history/v0.2.0-rc.2.json",
+        "spec/evidence/batch-137-published-pair.json"
+      ]
     }
   ],
   "explicitly_unsupported": [
@@ -311,7 +320,7 @@
       "rc_completion_condition": "Build both modules with CGO_ENABLED=0; disclose the exact profile/platform inventory and v0 support limits.",
       "full_release_completion_condition": "Approve the complete first-release A/B scope inventory and demonstrate every included capability; make a separate stable-v1 compatibility decision.",
       "external_evidence_or_owner": "Project maintainer; target owners for claimed native platforms.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-SCOPE-01"
     },
@@ -320,7 +329,7 @@
       "rc_completion_condition": "Public consumers keep subscriber, charging, retry authority and durable state outside the library; no persistence dependency is introduced.",
       "full_release_completion_condition": "Trace every first-release workflow to explicit library/application responsibility and exercise the corresponding public API without moving durable state into the library.",
       "external_evidence_or_owner": "Application owners provide durable intent, fencing and reconciliation evidence; no library database is required.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-SCOPE-02"
     },
@@ -329,7 +338,7 @@
       "rc_completion_condition": "All12 reviewed binding identities, fixed wire types and definition hashes match the support matrix; reject conflicting bindings.",
       "full_release_completion_condition": "Resolve every required first-release field/type conflict through explicit definitions or named compatibility bindings, backed by source/target evidence and negative controls.",
       "external_evidence_or_owner": "Original six-template source/version and target wire samples for disputed private fields.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-PROFILE-01"
     },
@@ -338,7 +347,7 @@
       "rc_completion_condition": "Publish command, result, field and platform limits separately from Application-ID advertisement; verify independent public consumers.",
       "full_release_completion_condition": "Map the full first-release usage inventory to supported profiles and enforce every declaration/advertisement boundary with executable acceptance.",
       "external_evidence_or_owner": "Target capability advertisements and configured endpoint roles where those claims are included.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-PROFILE-02"
     },
@@ -347,7 +356,7 @@
       "rc_completion_condition": "Reproduce all11 generated files offline, reject drift and preserve the reviewed generator23/ops9/profile version ledger.",
       "full_release_completion_condition": "Cover all definitions required by the declared first-release inventory and audit handwritten-rule changes against explicit version/migration decisions; do not treat DefinitionDigest as a whole-source signature.",
       "external_evidence_or_owner": "No external evidence for the existing generation mechanism; additional private definitions need authoritative inputs.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-GEN-01"
     },
@@ -356,7 +365,7 @@
       "rc_completion_condition": "Pass owned codec, malformed input, canonicalization and bounded fuzz tests for the declared slices, including exact diagnostic instances.",
       "full_release_completion_condition": "Complete the codec/vector/negative-case inventory for every required first-release field and binding, including authoritative private layouts.",
       "external_evidence_or_owner": "Canonical target captures for private or disputed wire layouts.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-CODEC-01"
     },
@@ -365,7 +374,7 @@
       "rc_completion_condition": "Pass buffer mutation, snapshot, handoff, duplicate-arrival envelope and Close/Wait resource retirement tests in pure/race modes.",
       "full_release_completion_condition": "Provide a requirement-to-test inventory covering ownership and lifetime at every first-release public message, transport handoff and recovery boundary.",
       "external_evidence_or_owner": "Application integration evidence for external buffer/worker ownership; library must not own application storage.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-OWN-01"
     },
@@ -374,7 +383,7 @@
       "rc_completion_condition": "Keep framing/type/presence checks separate from domain and explicit Sh XML interpretation; reject unsupported cases.",
       "full_release_completion_condition": "Resolve and verify all validation rules within the declared first-release scope, while retaining explicitly excluded full-XSD/internationalization behavior.",
       "external_evidence_or_owner": "Authoritative rules or named compatibility evidence for disputed Realm, timing and private relations.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-VALID-01"
     },
@@ -383,7 +392,7 @@
       "rc_completion_condition": "Public S6c/Ro consumers distinguish command, service, experimental and business outcomes; selected failure mappings remain bounded.",
       "full_release_completion_condition": "Complete result interpretation and paired request/answer tests for every first-release operation and required private result mapping.",
       "external_evidence_or_owner": "PSP/private ACA/1292 and target result semantics; protocol success alone is insufficient.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-RESULT-01"
     },
@@ -392,7 +401,7 @@
       "rc_completion_condition": "Selected5001/5004/5005/5009/5014/3006 diagnostics pass bounds and original-instance tests; unreviewed failures retain safe close/unsupported behavior.",
       "full_release_completion_condition": "Enumerate each remaining promised condition/value/cardinality/group/domain/handshake/header mapping and either verify a bounded unambiguous diagnostic or record a justified safe-close classification.",
       "external_evidence_or_owner": "Direct protocol or named target evidence where error attribution is ambiguous; do not guess repairs.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-ERROR-01"
     },
@@ -401,7 +410,7 @@
       "rc_completion_condition": "Installed public consumers exercise selected Sh/S6c/SGd/Ro, S6c helpers and named recovery bindings without library persistence.",
       "full_release_completion_condition": "Cover the declared first-release A/B application calls, six-template operations, required outcomes and recovery entry points through public API acceptance.",
       "external_evidence_or_owner": "Original complete template inputs/outputs, deployment versions and target application mappings.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-APP-01"
     },
@@ -410,7 +419,7 @@
       "rc_completion_condition": "Use explicit fixed bindings and reject wrong-binding imports or ungranted targets; preserve independent advertised applications.",
       "full_release_completion_condition": "Validate all first-release DRA/terminal roles, compatibility binding selections and target protection conditions against deployment fixtures.",
       "external_evidence_or_owner": "DRA versus ultimate HSS/MME/OCS roles and target recovery permissions.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-BIND-01"
     },
@@ -419,7 +428,7 @@
       "rc_completion_condition": "Verify correlation, deadlines, cancel/late-answer races, one completion and single-attempt default through public consumers.",
       "full_release_completion_condition": "Complete first-release flow/paired-message and fault-injection coverage across all claimed roles/transports; demonstrate actual deployment interoperation.",
       "external_evidence_or_owner": "Named target request/answer traces and end-to-end fault scenarios.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-EXCHANGE-01"
     },
@@ -428,7 +437,7 @@
       "rc_completion_condition": "Verify selected same-target/cross-target/import recovery with original identity, cumulative limits and explicit permission; no automatic durable retry.",
       "full_release_completion_condition": "Close the required RO-06/template recovery matrix with target deduplication domains, retention and ECUR continuity plus application fencing/unknown-result drills.",
       "external_evidence_or_owner": "Real deduplication keys/content/retention, session continuity, independent SCAP1 authorization and application durable history.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-REPLAY-01"
     },
@@ -437,7 +446,7 @@
       "rc_completion_condition": "Preserve write-stage uncertainty, final protocol result and one business notification; do not convert timeout or receipt into financial success.",
       "full_release_completion_condition": "Exercise every first-release uncertain-send/cancel/late-answer/failure transition and document its application interpretation with corresponding evidence.",
       "external_evidence_or_owner": "Target financial/delivery outcomes and application reconciliation records.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-EVIDENCE-01"
     },
@@ -446,7 +455,7 @@
       "rc_completion_condition": "Verify bounded receive/respond/reject, explicit result selection, Session/Proxy preservation and retirement without business session decisions.",
       "full_release_completion_condition": "Cover every inbound first-release operation/result and authorization boundary through the public responder API and target role fixtures.",
       "external_evidence_or_owner": "Application-owned session decisions and target authorization mappings.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-INBOUND-01"
     },
@@ -455,7 +464,7 @@
       "rc_completion_condition": "Pass combined cross-peer and four-profile identity/cache budget/expiry/conflict tests; preserve per-arrival envelopes.",
       "full_release_completion_condition": "Complete declared tenant/transport duplicate workloads and verify real target deduplication boundaries, without promising persistent exactly-once semantics.",
       "external_evidence_or_owner": "Target identity/retention domains and declared tenant workload distributions.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-DUP-01"
     },
@@ -464,7 +473,7 @@
       "rc_completion_condition": "Pass capability negotiation, watchdog, election, reconnect and named advertisement tests with no implicit replay.",
       "full_release_completion_condition": "Close all first-release peer/role/platform interoperation scenarios, including target capability and failover behavior.",
       "external_evidence_or_owner": "Real peer advertisements, DRA topology and configured failure/protection policies.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-PEER-01"
     },
@@ -473,7 +482,7 @@
       "rc_completion_condition": "Verify drain/close/wait, disconnected-primary handling and zero charged resources after retirement in pure/race tests.",
       "full_release_completion_condition": "Demonstrate shutdown and worker handover under declared long-soak/failure workloads with no stale ownership or hidden charged resources.",
       "external_evidence_or_owner": "Deployment shutdown, fencing and process handover acceptance.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-CLOSE-01"
     },
@@ -482,7 +491,7 @@
       "rc_completion_condition": "Verify bounded ID exhaustion, active/quarantine intervals and explicit recovery-space import; reject conflicting imports.",
       "full_release_completion_condition": "Demonstrate first-release deployment-wide uniqueness and startup isolation across workers/restarts using application-provided identity history.",
       "external_evidence_or_owner": "Boot/worker allocation, historical ID intervals and traffic isolation; no library durable allocator.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-ID-01"
     },
@@ -491,7 +500,7 @@
       "rc_completion_condition": "Pass finite admission/cache/diagnostic limits, peak-resource checks and isolation stress; distinguish logical bytes, heap and RSS.",
       "full_release_completion_condition": "Declare load duration, saturation levels, tenant mixes and mixed transports, then meet explicit resource/fairness/latency thresholds with reproducible measurements.",
       "external_evidence_or_owner": "Deployment workload and capacity targets; finite benchmarks are not production sizing.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-BUDGET-01"
     },
@@ -500,7 +509,7 @@
       "rc_completion_condition": "Pass native Linux/amd64 TCP/TLS/SCTP pure/race and pressure tests; separate cross-build evidence and unsupported stubs.",
       "full_release_completion_condition": "Obtain native and target interoperation evidence for every first-release advertised platform/transport combination, with explicit unsupported failures elsewhere.",
       "external_evidence_or_owner": "Native target platforms, kernel capabilities and real DRA/OCS/HSS paths.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-TRANSPORT-01"
     },
@@ -509,7 +518,7 @@
       "rc_completion_condition": "Verify frozen TLS policy, mTLS rejection/admission, no plaintext fallback and bounded malformed-input/resource handling.",
       "full_release_completion_condition": "Complete the first-release security/resource acceptance matrix for certificate ownership/callbacks, Diameter identity mapping, tenant isolation and configured trust boundaries.",
       "external_evidence_or_owner": "Deployment certificates, identity authorization and security workload/threat assumptions.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-SECURITY-01"
     },
@@ -518,7 +527,7 @@
       "rc_completion_condition": "Pass exact-candidate checkout CI, immutable core-first/adapter-second publication, independent local and hosted cold consumers, and publish truthful receipts.",
       "full_release_completion_condition": "Approve full-first-release scope/support policy, close required implementation and external gates, and record native/load/security/migration acceptance before any v1 claim.",
       "external_evidence_or_owner": "Target and application acceptance for claims included in the full-first-release scope.",
-      "rc_status": "awaiting_publication_gates",
+      "rc_status": "verified_selected_scope",
       "full_release_status": "partial",
       "evidence_ref": "spec/progress.json#SPEC-RELEASE-01"
     }
@@ -532,6 +541,15 @@
       "status": "published",
       "Sum": "h1:7LT8V3wlIDGiCoFCor9t/krs+RUoLAcPpIQYVBh993c=",
       "GoModSum": "h1:wYqZ57oOgwB1LnrfarXlwKRtCK4FacVC1xxBGr2Z+uk="
+    },
+    "adapter": {
+      "tag": "adapters/sctp/v0.2.0-rc.2",
+      "commit": "480c8353227d406d9ef8dc1944b086a98dfd47c4",
+      "tag_object": "74642ed3ff1a13e87dcaca52209216a2a785128e",
+      "checkout_ci": "https://github.com/skill215/diameterkit/actions/runs/45330162245",
+      "status": "published",
+      "Sum": "h1:fqFoTUc9ka773zn1LqseEIJqtD0lrnUlq+h89+WSyPE=",
+      "GoModSum": "h1:+V+TO9Cix348e0TioXX1oKCCUoLJ7moeOjVWyD94h3Q="
     }
   },
   "known_observations": [
@@ -548,6 +566,9 @@
   "evidence": [
     "doc/releases/v0.2.0-rc.2.md",
     "spec/evidence/batch-136-context-and-sms-scanner.json",
-    "spec/evidence/batch-137-core-release-adapter-pin.json"
-  ]
+    "spec/evidence/batch-137-core-release-adapter-pin.json",
+    "spec/evidence/batch-137-published-pair.json",
+    "spec/release/history/v0.2.0-rc.2.json"
+  ],
+  "receipt": "spec/release/history/v0.2.0-rc.2.json"
 }
