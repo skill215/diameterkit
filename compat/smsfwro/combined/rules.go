@@ -175,9 +175,15 @@ func validateSMSRequest(m *CCR, mode validation.Mode) error {
 		return vendorAt(2000, validation.ErrMissing)
 	}
 	if e := cstring(s.ClientAddressWire.Value); e != nil {
+		if mode == validation.Receive {
+			return invalidSMSClient(true)
+		}
 		return vendorAt(2018, e)
 	}
 	if !bytes.Equal(s.ClientAddressWire.Value, s.SMSCAddress.Value) {
+		if mode == validation.Receive {
+			return invalidSMSClient(false)
+		}
 		return vendorAt(2018, validation.ErrField)
 	}
 	if !m.ServiceInformation.MMSInformation.Present {

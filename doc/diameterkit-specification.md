@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.135 — 2026-11-23, batch 134.** The [progress record](../spec/progress.json)
+**Draft 0.136 — 2026-11-24, batch 135.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -1579,3 +1579,23 @@ public shapes, generator23, operations9, pure Go and no persistence stay unchang
 All24 requirements remain partial; the next candidate is unpublished. See
 [the guide](conditional-sms-data-values.md). The batch133 recovery observation
 remains unconfirmed historical evidence, not a claimed fix.
+
+## Batch 135: SMS client wire conditions (2026-11-24)
+
+Receive supplies separate static 5004 evidence for ClientAddressWire NUL and
+NUL-free SMSC mismatch, retaining ErrField and extending the path to
+873/2000/2018. Build/Send retain their single-field path. Prior sequence,
+subscription/equipment, node/type, presence and structural checks keep their
+order; NUL remains before equality, with MMS/action/interface/unit rules later.
+Money binary client handling remains independent.
+
+Complete shared-budget root/ancestor scans and a closed fourteen-field SMS
+scan verify markers, eleven required fields, scalar widths and counterparts.
+Owned 36+align4(n)-byte quotes preserve the original padded client AVP without
+copying sibling values. Exact and one-less source/output bounds, mixed errors,
+TCP/TLS ordinary/emergency consumption and ownership are covered by
+[the guide](conditional-sms-client-values.md). Actual full dual-module, twenty-round
+pure/race, counted fuzz and hosted artifact content results appear in
+[progress](../spec/progress.json). Combined slice.29; public shapes, generator23,
+operations9, pure Go and no persistence remain unchanged. All24 completion
+conditions and frozen rc.1 publication evidence remain separate.

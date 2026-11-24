@@ -1,7 +1,7 @@
 {
   "format": 1,
   "date": "2026-11-24",
-  "basis": "Batch134 isolated combined SMS address NUL diagnostics. Combined slice.28, generator23/ops9 and public shapes unchanged. Current development is ahead of the frozen rc.1 publication.",
+  "basis": "Batch135 combined SMS client wire NUL and mismatch diagnostics. Combined slice.29, generator23/ops9 and public shapes unchanged. Current development is ahead of the frozen rc.1 publication.",
   "release_status": "not_ready",
   "api_snapshot": "spec/release/public-api.json",
   "profiles": [
@@ -212,9 +212,9 @@
     {
       "binding": "combined",
       "profile": "smsfw-ro-five-template-wire-v1",
-      "version": "0.1.0-slice.28",
+      "version": "0.1.0-slice.29",
       "definition": "spec/combined.json",
-      "definition_sha256": "1d59423ab6c5f518a91f38b7e4ccf79b9cd9bfb721c7cb87a6676721969ec89b",
+      "definition_sha256": "7cba4f41b2523a6c13a48ff157c238cadf156f398b02d86d1fe672e3b8b9c28a",
       "requests": [
         {
           "name": "CCR",
@@ -388,10 +388,10 @@
         "SPEC-ERROR-01"
       ],
       "evidence": [
-        "spec/evidence/batch-134-sms-data-values.json",
-        "doc/conditional-sms-data-values.md"
+        "spec/evidence/batch-135-sms-client-values.json",
+        "doc/conditional-sms-client-values.md"
       ],
-      "remaining": "Other existing conditional/value rules (including request relations, MMS field exclusions and SMS C-string constraints), mixed values/omissions and unreviewed group/cardinality/domain/handshake/header mappings remain separate. Keep safe close when no reviewed diagnostic applies."
+      "remaining": "Other existing conditional/value rules (including request relations, MMS field exclusions and cross-field timestamp/equipment equality constraints), mixed values/omissions and unreviewed group/cardinality/domain/handshake/header mappings remain separate. Keep safe close when no reviewed diagnostic applies."
     }
   ],
   "completed": [
@@ -1075,6 +1075,21 @@
         "doc/conditional-sms-data-values.md"
       ],
       "remaining": "Other existing conditional/value rules (including request relations, MMS field exclusions and SMS C-string constraints), mixed values/omissions and unreviewed group/cardinality/domain/handshake/header mappings remain separate. Keep safe close when no reviewed diagnostic applies."
+    },
+    {
+      "name": "Combined SMS ClientAddressWire NUL and mismatch diagnostics",
+      "status": "completed_selected_slice",
+      "requirement_refs": [
+        "SPEC-ERROR-01",
+        "SPEC-CODEC-01",
+        "SPEC-PROFILE-01",
+        "SPEC-BUDGET-01"
+      ],
+      "evidence": [
+        "spec/evidence/batch-135-sms-client-values.json",
+        "doc/conditional-sms-client-values.md"
+      ],
+      "remaining": "Other existing conditional/value rules (including request relations, MMS field exclusions and cross-field timestamp/equipment equality constraints), mixed values/omissions and unreviewed group/cardinality/domain/handshake/header mappings remain separate. Keep safe close when no reviewed diagnostic applies."
     }
   ],
   "current_gap_overview": "doc/remaining-gaps.md",
