@@ -83,5 +83,5 @@ func quoteSMSClient(src []byte, cause error, proof smsClientEvidence, l wire.Lim
 		return nil, 0, false
 	}
 
-	return quoteSMSLeaf(area, leaf, l, budget)
+	return quoteServiceLeaf(area, leaf, 2000, 5004, l, budget)
 }

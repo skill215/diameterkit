@@ -318,7 +318,13 @@ func validateMoneyRequest(m *CCR, mode validation.Mode) error {
 			return vendorAt(2018, validation.ErrUnsupported)
 		}
 		mm := m.ServiceInformation.MMSInformation.Value
-		if mm.RecipientAddress.Present || mm.SubmissionTime.Present || mm.Priority.Present || mm.UserDataLength.Present || mm.SMSKey.Present || mm.StatusReportRequest.Present {
+		if mm.RecipientAddress.Present || mm.SubmissionTime.Present || mm.Priority.Present || mm.UserDataLength.Present || mm.StatusReportRequest.Present {
+			return vendorAt(877, validation.ErrUnsupported)
+		}
+		if mm.SMSKey.Present {
+			if mode == validation.Receive {
+				return excludedMoneyMMSKey()
+			}
 			return vendorAt(877, validation.ErrUnsupported)
 		}
 	}

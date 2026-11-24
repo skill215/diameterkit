@@ -27,10 +27,25 @@ func quoteMoneyClient(src []byte, cause error, proof moneyClientEvidence, l wire
 			return nil, 0, false
 		}
 	}
-	d := wire.NewDecoder(src, l)
+	g, ok := scanMoneyClientGroups(wire.NewDecoder(src, l))
+	if !ok || validMoneyClientBytes(g.client.Data) {
+		return nil, 0, false
+	}
+	return quoteServiceLeaf(g.sms.Data, g.client, 2000, 5004, l, budget)
+}
+
+func validMoneyClientBytes(data []byte) bool { return bytes.Equal(data, []byte{0, 1, 127, 0, 0, 1}) }
+
+type moneyClientGroups struct {
+	service          *wire.Decoder
+	sms, mms, client wire.View
+}
+
+// Keep the original decoder budget when moving from SMS to its MMS sibling.
+func scanMoneyClientGroups(d *wire.Decoder) (moneyClientGroups, bool) {
 	root, ok := moneyParameterRoot(d)
 	if !ok {
-		return nil, 0, false
+		return moneyClientGroups{}, false
 	}
 	for _, i := range []int{0, 1, 2, 5, 6} {
 		flags := byte(64)
@@ -38,44 +53,44 @@ func quoteMoneyClient(src []byte, cause error, proof moneyClientEvidence, l wire
 			flags = 192
 		}
 		if root[i].Flags != flags || len(root[i].Data) != 4 {
-			return nil, 0, false
+			return moneyClientGroups{}, false
 		}
 	}
 	action := binary.BigEndian.Uint32(root[2].Data)
 	if binary.BigEndian.Uint32(root[0].Data) != 4 || binary.BigEndian.Uint32(root[1].Data) != 0 || (action != 0 && action != 2) || root[3].Flags != 64 || root[4].Flags != 192 {
-		return nil, 0, false
+		return moneyClientGroups{}, false
 	}
 	id, zone := binary.BigEndian.Uint32(root[5].Data), binary.BigEndian.Uint32(root[6].Data)
 	if id != 1 || zone != 0 {
-		return nil, 0, false
+		return moneyClientGroups{}, false
 	}
 	units, e := d.Child(root[3].Data)
 	if e != nil {
-		return nil, 0, false
+		return moneyClientGroups{}, false
 	}
 	u, ok := unitFields(units, []avp.Key{{Code: 446}, {VendorID: 10415, Code: 872}}, avp.Key{Code: 437})
 	if !ok || u[0].Flags != 64 {
-		return nil, 0, false
+		return moneyClientGroups{}, false
 	}
 	requested, e := units.Child(u[0].Data)
 	if e != nil {
-		return nil, 0, false
+		return moneyClientGroups{}, false
 	}
 	money, ok := unitFields(requested, []avp.Key{{Code: 420}}, avp.Key{Code: 413})
 	if !ok || money[0].Flags != 64 {
-		return nil, 0, false
+		return moneyClientGroups{}, false
 	}
 	service, e := d.Child(root[4].Data)
 	if e != nil {
-		return nil, 0, false
+		return moneyClientGroups{}, false
 	}
 	info, ok := interfaceFields(service, avp.Key{VendorID: 10415, Code: 2000}, avp.Key{VendorID: 10415, Code: 877})
 	if !ok || info[0].Flags != 192 || info[1].Flags != 192 {
-		return nil, 0, false
+		return moneyClientGroups{}, false
 	}
 	sms, e := service.Child(info[0].Data)
 	if e != nil {
-		return nil, 0, false
+		return moneyClientGroups{}, false
 	}
 	forbidden := [7]avp.Key{}
 	for i, c := range [7]uint32{2008, 2010, 2017, 2011, 2015, 2014, 2012} {
@@ -83,28 +98,7 @@ func quoteMoneyClient(src []byte, cause error, proof moneyClientEvidence, l wire
 	}
 	fields, ok := unitFields(sms, forbidden[:], avp.Key{VendorID: 10415, Code: 2016}, avp.Key{VendorID: 10415, Code: 2018})
 	if !ok || fields[0].Flags != 192 || len(fields[0].Data) != 4 || binary.BigEndian.Uint32(fields[0].Data) != 2 || fields[1].Flags != 192 {
-		return nil, 0, false
+		return moneyClientGroups{}, false
 	}
-
-	leaf := fields[1]
-	if bytes.Equal(leaf.Data, []byte{0, 1, 127, 0, 0, 1}) {
-		return nil, 0, false
-	}
-	// Parent scans validate the complete padded source span. Check the whole
-	// variable-size quote before allocation; never truncate client bytes.
-	leafSize := (12 + len(leaf.Data) + 3) &^ 3
-	size := 24 + leafSize
-	if size > budget || size > l.MaxFieldBytes || size+28 > l.MaxFrameBytes {
-		return nil, 0, false
-	}
-	out := make([]byte, size)
-	for i, c := range [2]uint32{873, 2000} {
-		off := i * 12
-		binary.BigEndian.PutUint32(out[off:], c)
-		out[off+4] = 192
-		wire.Put24(out[off+5:off+8], uint32(size-off))
-		binary.BigEndian.PutUint32(out[off+8:], 10415)
-	}
-	copy(out[24:], info[0].Data[leaf.Offset:leaf.Offset+leafSize])
-	return out, 5004, true
+	return moneyClientGroups{service: service, sms: info[0], mms: info[1], client: fields[1]}, true
 }

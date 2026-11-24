@@ -165,7 +165,11 @@ func FuzzInvalidQuote(f *testing.F) {
 			f.Add(smsClientFixture(kind, data, 7), uint16(0), uint32(2018), uint16(128))
 		}
 	}
+	for _, action := range []uint32{0, 2} {
+		f.Add(moneyMMSFixture(action, []byte("abc")), uint16(0), uint32(5008), uint16(40))
+	}
 	f.Fuzz(func(t *testing.T, raw []byte, offset uint16, code uint32, budget uint16) {
+		fuzzExcludedMoneyMMSKey(t, raw, budget)
 		fuzzSMSClient(t, raw, budget, false)
 		fuzzSMSClient(t, raw, budget, true)
 		for _, c := range []uint32{2008, 2010, 2017} {

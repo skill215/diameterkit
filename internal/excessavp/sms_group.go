@@ -61,14 +61,14 @@ func scanSMSGroup(d *wire.Decoder, extraRequired []uint32, visit func(wire.View)
 
 func smsAddress(code uint32) bool { return code == 2008 || code == 2010 || code == 2017 }
 
-func quoteSMSLeaf(area []byte, leaf wire.View, l wire.Limits, budget int) ([]byte, uint32, bool) {
+func quoteServiceLeaf(area []byte, leaf wire.View, group, result uint32, l wire.Limits, budget int) ([]byte, uint32, bool) {
 	leafSize := (12 + len(leaf.Data) + 3) &^ 3
 	size := 24 + leafSize
 	if size > budget || size > l.MaxFieldBytes || size+28 > l.MaxFrameBytes {
 		return nil, 0, false
 	}
 	out := make([]byte, size)
-	for i, c := range [2]uint32{873, 2000} {
+	for i, c := range [2]uint32{873, group} {
 		off := 12 * i
 		binary.BigEndian.PutUint32(out[off:], c)
 		out[off+4] = 192
@@ -76,5 +76,5 @@ func quoteSMSLeaf(area []byte, leaf wire.View, l wire.Limits, budget int) ([]byt
 		binary.BigEndian.PutUint32(out[off+8:], 10415)
 	}
 	copy(out[24:], area[leaf.Offset:leaf.Offset+leafSize])
-	return out, 5004, true
+	return out, result, true
 }

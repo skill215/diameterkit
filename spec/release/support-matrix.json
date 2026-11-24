@@ -1,7 +1,7 @@
 {
   "format": 1,
   "date": "2026-11-24",
-  "basis": "Batch 137 published core and adapter rc.2. All 12 frozen binding definitions, combined slice.29, generator 23 and ops 9 are covered by the selected release.",
+  "basis": "Batch 138 development checkout: combined slice.30 with one named money MMS exclusion. The verified rc.2 pair ships slice.29.",
   "release_status": "not_ready",
   "api_snapshot": "spec/release/public-api.json",
   "profiles": [
@@ -212,9 +212,9 @@
     {
       "binding": "combined",
       "profile": "smsfw-ro-five-template-wire-v1",
-      "version": "0.1.0-slice.29",
+      "version": "0.1.0-slice.30",
       "definition": "spec/combined.json",
-      "definition_sha256": "7cba4f41b2523a6c13a48ff157c238cadf156f398b02d86d1fe672e3b8b9c28a",
+      "definition_sha256": "95b1e554ed70221d34f8af724c2c6a88d975685537be0586cdbbf641593309c1",
       "requests": [
         {
           "name": "CCR",
@@ -1090,10 +1090,23 @@
         "doc/conditional-sms-client-values.md"
       ],
       "remaining": "Other existing conditional/value rules (including request relations, MMS field exclusions and cross-field timestamp/equipment equality constraints), mixed values/omissions and unreviewed group/cardinality/domain/handshake/header mappings remain separate. Keep safe close when no reviewed diagnostic applies."
+    },
+    {
+      "name": "Combined money MMS key exclusion",
+      "status": "completed_selected_slice",
+      "requirement_refs": [
+        "SPEC-ERROR-01",
+        "SPEC-VALID-01",
+        "SPEC-BUDGET-01"
+      ],
+      "evidence": [
+        "doc/money-mms-exclusion.md",
+        "spec/evidence/batch-138-money-mms-exclusion.json"
+      ]
     }
   ],
   "current_gap_overview": "doc/remaining-gaps.md",
   "candidate_release_status": "verified_development_candidate",
   "candidate_checklist": "spec/release/v0.2.0-rc.2.json",
-  "development_release_status": "published_verified_pair"
+  "development_release_status": "unpublished_changes"
 }

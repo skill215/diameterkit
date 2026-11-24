@@ -1,11 +1,13 @@
 # Current remaining gaps
 
-This is the current implementation overview for **batch 137, Draft 0.138**
+This is the current implementation overview for **batch 138, Draft 0.139**
 (2026-11-24). [Progress](../spec/progress.json) records actual check completion;
 the broad release status remains `not_ready`. The 24 SPEC IDs span implementation,
 verification and external acceptance; their `partial` labels are not a percentage
 of unfinished code. Dated specification sections and frozen batch records retain
 their historical meaning.
+
+Batch 138 adds a bounded 5008 for one isolated, well-formed SMSKey in combined general debit and balance requests. Five other MMS fields and mixed exclusions retain their existing behavior. The published rc.2 pair remains at combined slice.29. See the [field evidence and acceptance](money-mms-exclusion.md).
 
 Batch 136 adds an external consumer and a method-set gate for
 `validation.Context`. The SMS address and client diagnostics share their bounded

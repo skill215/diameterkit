@@ -8,7 +8,6 @@ package excessavp
 
 import (
 	"bytes"
-	"encoding/binary"
 	"errors"
 	"github.com/skill215/diameterkit/avp"
 	"github.com/skill215/diameterkit/validation"
@@ -85,19 +84,5 @@ func quoteMMSKey(src []byte, cause error, proof mmsKeyEvidence, l wire.Limits, b
 	if !seen[0] || !seen[5] || bytes.IndexByte(leaf.Data, 0) < 0 {
 		return nil, 0, false
 	}
-	leafSize := (12 + len(leaf.Data) + 3) &^ 3
-	size := 24 + leafSize
-	if size > budget || size > l.MaxFieldBytes || size+28 > l.MaxFrameBytes {
-		return nil, 0, false
-	}
-	out := make([]byte, size)
-	for i, c := range [2]uint32{873, 877} {
-		off := 12 * i
-		binary.BigEndian.PutUint32(out[off:], c)
-		out[off+4] = 192
-		wire.Put24(out[off+5:off+8], uint32(size-off))
-		binary.BigEndian.PutUint32(out[off+8:], 10415)
-	}
-	copy(out[24:], area[leaf.Offset:leaf.Offset+leafSize])
-	return out, 5004, true
+	return quoteServiceLeaf(area, leaf, 877, 5004, l, budget)
 }

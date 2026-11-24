@@ -2,7 +2,7 @@
 
 ## Current implementation status
 
-**Draft 0.138 — 2026-11-24, batch 137.** The [progress record](../spec/progress.json)
+**Draft 0.139 — 2026-11-24, batch 138.** The [progress record](../spec/progress.json)
 records current test and hosted-CI completion. Start with the English
 [current remaining gaps](remaining-gaps.md) and [support matrix](diameterkit-support-matrix.md).
 All 24 broader requirements remain partial and release readiness remains `not_ready`.
@@ -12,6 +12,8 @@ boundaries remain unchanged. Dated implementation sections below are historical
 evidence; their old missing-work statements do not override later verified batches.
 
 The [rc.2 release decision](releases/v0.2.0-rc.2.md) records both immutable tags, all ten completed gates and the independent cold-install receipts.
+
+Batch 138 adds a bounded 5008 for one isolated, well-formed SMSKey in combined general debit and balance requests. Five other MMS fields and mixed exclusions retain their existing behavior. The published rc.2 pair remains at combined slice.29. See the [field evidence and acceptance](money-mms-exclusion.md).
 
 Batch 136 adds an external consumer and a method-set gate for
 `validation.Context`. The SMS address and client diagnostics share their bounded
